@@ -67,6 +67,16 @@ class Message
     }
 
     /**
+     * Gets the message id
+     *
+     * @return mixed
+     **/
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return bool
      */
     public function getIsRead()

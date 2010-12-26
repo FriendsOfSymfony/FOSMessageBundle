@@ -2,3 +2,17 @@
     <h1>{% trans "Inbox" %}</h1>
     {% include "MessageBundle:Message:pagination.twig" with {"messages": messages.pages} %}
 </div>
+<div class="list">
+    {% for message in messages %}
+        <div class="message">
+            <span class="infos">
+                <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+                sent you a message {{ ago(message.createdAt)|raw }}
+            </span>
+            <span class="actions">
+                <a class="mark_as_read" href="{{ url('ornicar_message_message_read', {"id": message.id}) }}">Mark as read</a>
+            </span>
+            <a class="subject" href="{{ url('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
+        </div>
+    {% endfor %}
+</div>

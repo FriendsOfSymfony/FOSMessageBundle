@@ -29,4 +29,9 @@
         <requirement key="_method">GET</requirement>
     </route>
 
+    <route id="ornicar_message_message_read" pattern="/:id/read">
+        <default key="_controller">ornicar_message.controller.message:readAction</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
 </routes>
