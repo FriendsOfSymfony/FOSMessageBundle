@@ -26,6 +26,9 @@
             <index unique="false">
                 <key name="createdAt" order="desc" />
             </index>
+            <index unique="false">
+                <key name="isRead" order="desc" />
+            </index>
         </indexes>
 
     </mapped-superclass>
