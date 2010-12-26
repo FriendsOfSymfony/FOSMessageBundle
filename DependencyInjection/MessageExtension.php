@@ -26,9 +26,14 @@ class MessageExtension extends Extension
         }
 
         // load all service configuration files (the db_driver first)
-        foreach (array($config['db_driver'], 'model', 'controller', 'form', 'templating', 'messenger') as $basename) {
+        foreach (array($config['db_driver'], 'model', 'controller', 'form', 'templating', 'messenger', 'paginator') as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
+
+        $this->remapParametersNamespaces($config, $container, array(
+            'form_name' => 'ornicar_message.form.%s.name',
+            'paginator' => 'ornicar_message.paginator.%s'
+        ));
 
         $this->remapParametersNamespaces($config['class'], $container, array(
             'model'         => 'ornicar_message.model.%s.class',
