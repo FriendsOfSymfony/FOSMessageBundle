@@ -8,6 +8,13 @@ use DateTime;
 class Message
 {
     /**
+     * Unique id of the message
+     *
+     * @var mixed
+     */
+    protected $id;
+
+    /**
      * User who sent the message
      *
      * @var User

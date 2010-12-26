@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ornicar_message.model.user.class">Bundle\Ornicar\MessageBundle\Document\Message</parameter>
+        <parameter key="ornicar_message.model.message.class">Bundle\Ornicar\MessageBundle\Document\Message</parameter>
     </parameters>
 
     <services>
