@@ -2,19 +2,21 @@
 
 namespace Bundle\Ornicar\MessageBundle\Document;
 
+use Doctrine\ODM\MongoDB\DocumentRepository;
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use Bundle\FOS\UserBundle\Model\User;
 use Zend\Paginator\Paginator;
 use ZendPaginatorAdapter\DoctrineMongoDBAdapter;
 use MongoId;
 
-class MessageRepository implements MessageRepositoryInterface
+class MessageRepository extends DocumentRepository implements MessageRepositoryInterface
 {
     /**
-     * @see MessageRepositoryInterface::findRecentUnreadByUser
+     * @see MessageRepositoryInterface::findRecentByUser
      */
-    public function findRecentUnreadByUser(User $user, $asPaginator = false)
+    public function findRecentByUser(User $user, $asPaginator = false)
     {
-        $query = $this->createUserUnreadQuery($user)->sort('createdAt', 'DESC');
+        $query = $this->createByUserQuery($user)->sort('createdAt', 'DESC');
 
         if ($asPaginator) {
             return new Paginator(new DoctrineMongoDBAdapter($query));
@@ -25,13 +27,16 @@ class MessageRepository implements MessageRepositoryInterface
 
     public function countUnreadByUser(User $user)
     {
-        return $this->createUserUnreadQuery($user)->getQuery()->count();
+        return $this->createByUserUnreadQuery($user)->getQuery()->count();
     }
 
-    protected function createUserUnreadQuery(User $user)
+    protected function createByUserQuery(User $user)
     {
-        return $this->createQueryBuilder()
-            ->field('user.$id')->equals(new MongoId($user->getId()))
-            ->field('isRead')->equals(false);
+        return $this->createQueryBuilder()->field('to.$id')->equals(new MongoId($user->getId()));
+    }
+
+    protected function createByUserUnreadQuery(User $user)
+    {
+        return $this->createByUserQuery($user)->field('isRead')->equals(false);
     }
 }
