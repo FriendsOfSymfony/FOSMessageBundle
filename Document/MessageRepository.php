@@ -25,9 +25,19 @@ class MessageRepository extends DocumentRepository implements MessageRepositoryI
         return array_values($query->getQuery()->execute()->toArray());
     }
 
+    /**
+     * @see MessageRepositoryInterface::countUnreadByUser
+     */
     public function countUnreadByUser(User $user)
     {
         return $this->createByUserUnreadQuery($user)->getQuery()->count();
+    }
+
+    public function createNewMessage()
+    {
+        $class = $this->getDocumentName();
+
+        return new $class();
     }
 
     protected function createByUserQuery(User $user)

@@ -9,4 +9,6 @@ interface MessageRepositoryInterface
     function findRecentByUser(User $user, $asPaginator = false);
 
     function countUnreadByUser(User $user);
+
+    function createNewMessage();
 }
