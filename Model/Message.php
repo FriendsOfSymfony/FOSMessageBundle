@@ -175,4 +175,9 @@ class Message
     {
       $this->to = $to;
     }
+
+    public function isVisibleBy(User $user)
+    {
+        return $user->is($this->getTo()) || $user->is($this->getFrom());
+    }
 }

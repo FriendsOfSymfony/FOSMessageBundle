@@ -1,0 +1,15 @@
+<div class="message_show">
+    <div class="head">
+        <h1>{{ message.subject }}</h1>
+    </div>
+    <div class="message">
+        <span class="infos">
+            <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+            said {{ ago(message.createdAt)|raw }}
+        </span>
+        <span class="actions">
+            <a class="delete" href="{{ url('ornicar_message_message_delete', {"id": message.id}) }}">Delete</a>
+        </span>
+        <div class="body">{{ message.body }}</div>
+    </div>
+</div>
