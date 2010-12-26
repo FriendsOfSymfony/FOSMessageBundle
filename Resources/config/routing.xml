@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.symfony-project.org/schema/routing http://www.symfony-project.org/schema/routing/routing-1.0.xsd">
 
-    <route id="ornicar_message_message_list" pattern="/list">
+    <route id="ornicar_message_message_list" pattern="/">
         <default key="_controller">ornicar_message.controller.message:listAction</default>
         <requirement key="_method">GET</requirement>
     </route>

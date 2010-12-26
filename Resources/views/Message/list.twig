@@ -1,0 +1,4 @@
+<div class="head">
+    <h1>{% trans "Inbox" %}</h1>
+    {% include "MessageBundle:Message:pagination.twig" with {"messages": messages.pages} %}
+</div>
