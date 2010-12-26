@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="ornicar_message.model.user.class">Bundle\Ornicar\MessageBundle\Document\Message</parameter>
+    </parameters>
+
+    <services>
+        <!-- Object Manager Service -->
+        <service id="ornicar_message.object_manager" alias="doctrine.odm.mongodb.document_manager" />
+    </services>
+
+</container>
