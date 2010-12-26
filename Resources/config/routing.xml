@@ -9,6 +9,11 @@
         <requirement key="_method">GET</requirement>
     </route>
 
+    <route id="ornicar_message_message_sent" pattern="/sent">
+        <default key="_controller">ornicar_message.controller.message:sentAction</default>
+        <requirement key="_method">GET</requirement>
+    </route>
+
     <route id="ornicar_message_message_new" pattern="/new">
         <default key="_controller">ornicar_message.controller.message:newAction</default>
         <requirement key="_method">GET</requirement>

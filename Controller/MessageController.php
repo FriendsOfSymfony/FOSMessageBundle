@@ -51,6 +51,19 @@ class MessageController extends Controller
         ));
     }
 
+    public function sentAction()
+    {
+        $user = $this->get('security.context')->getUser();
+        $messages = $this->get('ornicar_message.repository.message')->findRecentSentByUser($user, true);
+        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
+        $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
+        $messages->setPageRange(5);
+
+        return $this->render('MessageBundle:Message:sent.twig', array(
+            'messages' => $messages
+        ));
+    }
+
     public function showAction($id)
     {
         $message = $this->getVisibleMessage($id);
@@ -87,8 +100,10 @@ class MessageController extends Controller
     protected function markAsRead(Message $message)
     {
         if(!$message->getIsRead()) {
-            $message->setIsRead(true);
-            $this->get('ornicar_message.object_manager')->flush();
+            if($message->getTo()->is($this->get('security.context')->getUser())) {
+                $message->setIsRead(true);
+                $this->get('ornicar_message.object_manager')->flush();
+            }
         }
     }
 
