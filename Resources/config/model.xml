@@ -4,7 +4,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="ornicar_message.model.composition.class">Bundle\Ornicar\MessageBundle\Model\Composition</parameter>
+    </parameters>
+
     <services>
+        <service id="ornicar_message.model.composition" class="%ornicar_message.model.composition.class%" shared="false">
+            <argument type="service" id="fos_user.repository.user" />
+        </service>
         <!-- Message Repository Service -->
         <service id="ornicar_message.repository.message" class="Bundle\Ornicar\MessageBundle\DependencyInjection\MessageExtension" shared="true" factory-method="getRepository">
             <argument type="service" id="ornicar_message.object_manager" />

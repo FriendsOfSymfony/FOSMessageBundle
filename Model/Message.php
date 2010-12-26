@@ -25,7 +25,6 @@ class Message
      * User who received the message
      *
      * @var User
-     * @validation:NotBlank(message="Missing to")
      */
     protected $to = null;
 
@@ -33,8 +32,6 @@ class Message
      * Text body of the message
      *
      * @var string
-     * @validation:NotBlank(message="Please write a message")
-     * @validation:MinLength(limit=4, message="Just a little too short.")
      */
     protected $body = null;
 
@@ -42,8 +39,6 @@ class Message
      * Text subject of the message
      *
      * @var string
-     * @validation:NotBlank(message="Please write a message")
-     * @validation:MinLength(limit=2, message="Just a little too short.")
      */
     protected $subject = null;
 
@@ -154,7 +149,7 @@ class Message
      * @param  User
      * @return null
      */
-    public function setFrom($from)
+    public function setFrom(User $from)
     {
       $this->from = $from;
     }
@@ -171,7 +166,7 @@ class Message
      * @param  User
      * @return null
      */
-    public function setTo($to)
+    public function setTo(User $to)
     {
       $this->to = $to;
     }
