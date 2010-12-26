@@ -21,4 +21,9 @@
     {% else %}
     <span class="next">{% trans "Next" %}</span>
     {% endif %}
+    {% if pager.last and pager.last != pager.current %}
+    | <a class="last" href="{{ url }}?page={{ pager.last }}">{% trans "Last" %}</a>
+    {% else %}
+    | <span class="last">{% trans "Last" %}</span>
+    {% endif %}
 {% endif %}
