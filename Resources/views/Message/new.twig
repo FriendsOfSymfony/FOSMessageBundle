@@ -1,0 +1,27 @@
+<div class="message_new">
+    <h1>{% trans "Compose message" %}</h1>
+    <form action="{{ url("ornicar_message_message_create") }}" method="post">
+        <div class="actions">
+            <input class="send" type="submit" value="{% trans "Send" %}" />
+            <a class="cancel" href="{{ url("ornicar_message_message_list") }}">Cancel</a>
+        </div>
+        <div class="field_to">
+            {{ form.to|render_label('To:') }}
+            {{ form.to|render }}
+            {{ form.to|render_errors }}
+        </div>
+        <div class="field_subject">
+            {{ form.subject|render_label('Subject') }}
+            {{ form.subject|render }}
+            {{ form.subject|render_errors }}
+        </div>
+        <div class="field_body">
+            {{ form.body|render }}
+            {{ form.body|render_errors }}
+        </div>
+        <div class="actions">
+            <input class="send" type="submit" value="{% trans "Send" %}" />
+            <a class="cancel" href="{{ url("ornicar_message_message_list") }}">Cancel</a>
+        </div>
+    </form>
+</div>

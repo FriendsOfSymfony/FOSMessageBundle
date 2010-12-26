@@ -3,6 +3,7 @@
         <h1>{% trans "Inbox" %}</h1>
         {% include "MessageBundle:Message:pagination.twig" with {"pager": messages.pages} %}
     </div>
+    <a class="compose" href="{{ url("ornicar_message_message_new") }}">Compose</a>
     <div class="list">
         {% for message in messages %}
             <div class="message {{ message.isRead ? "read" : "unread" }}">

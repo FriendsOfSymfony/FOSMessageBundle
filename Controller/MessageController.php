@@ -4,16 +4,45 @@ namespace Bundle\Ornicar\MessageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Bundle\Ornicar\MessageBundle\Model\Message;
 
 class MessageController extends Controller
 {
+    public function newAction()
+    {
+        $form = $this->get('ornicar_message.form.composition');
+        $form->getData()->to = $this->get('request')->query->get('to');
+
+        return $this->render('MessageBundle:Message:new.twig', array(
+            'form' => $form
+        ));
+    }
+
+    public function createAction()
+    {
+        $form = $this->get('ornicar_message.form.composition');
+        $form->bind($this->get('request')->request->get($form->getName()));
+
+        if ($form->isValid()) {
+            $message = $form->getData()->getMessage();
+            $message->setFrom($this->get('security.context')->getUser());
+            $this->get('ornicar_message.messenger')->send($message);
+            $this->get('ornicar_message.object_manager')->flush();
+            $this->get('session')->setFlash('ornicar_message_message_create', 'success');
+
+            return $this->redirectToInbox();
+        }
+
+        return $this->render('MessageBundle:Message:new.twig', array(
+            'form' => $form
+        ));
+    }
+
     public function listAction()
     {
         $user = $this->get('security.context')->getUser();
         $messages = $this->get('ornicar_message.repository.message')->findRecentByUser($user, true);
-
-        $page = $this->get('request')->query->get('page', 1);
-        $messages->setCurrentPageNumber($page);
+        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
         $messages->setPageRange(5);
 
@@ -25,11 +54,7 @@ class MessageController extends Controller
     public function showAction($id)
     {
         $message = $this->getVisibleMessage($id);
-
-        if(!$message->getIsRead()) {
-            $message->setIsRead(true);
-            $this->get('ornicar_message.object_manager')->flush();
-        }
+        $this->markAsRead($message);
 
         return $this->render('MessageBundle:Message:show.twig', array(
             'message' => $message
@@ -39,11 +64,7 @@ class MessageController extends Controller
     public function readAction($id)
     {
         $message = $this->getVisibleMessage($id);
-
-        if(!$message->getIsRead()) {
-            $message->setIsRead(true);
-            $this->get('ornicar_message.object_manager')->flush();
-        }
+        $this->markAsRead($message);
 
         return $this->redirect($this->get('request')->headers->get('Referer'));
     }
@@ -55,7 +76,20 @@ class MessageController extends Controller
         $this->get('ornicar_message.object_manager')->remove($message);
         $this->get('ornicar_message.object_manager')->flush();
 
+        return $this->redirectToInbox();
+    }
+
+    protected function redirectToInbox()
+    {
         return $this->redirect($this->generateUrl('ornicar_message_message_list'));
+    }
+
+    protected function markAsRead(Message $message)
+    {
+        if(!$message->getIsRead()) {
+            $message->setIsRead(true);
+            $this->get('ornicar_message.object_manager')->flush();
+        }
     }
 
     protected function getVisibleMessage($id)
