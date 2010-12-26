@@ -8,6 +8,8 @@ interface MessageRepositoryInterface
 {
     function findRecentByUser(User $user, $asPaginator = false);
 
+    function findRecentSentByUser(User $user, $asPaginator = false);
+
     function countUnreadByUser(User $user);
 
     function createNewMessage();

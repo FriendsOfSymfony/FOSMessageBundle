@@ -26,6 +26,20 @@ class MessageRepository extends DocumentRepository implements MessageRepositoryI
     }
 
     /**
+     * @see MessageRepositoryInterface::findRecentSentByUser
+     */
+    public function findRecentSentByUser(User $user, $asPaginator = false)
+    {
+        $query = $this->createSentByUserQuery($user)->sort('createdAt', 'DESC');
+
+        if ($asPaginator) {
+            return new Paginator(new DoctrineMongoDBAdapter($query));
+        }
+
+        return array_values($query->getQuery()->execute()->toArray());
+    }
+
+    /**
      * @see MessageRepositoryInterface::countUnreadByUser
      */
     public function countUnreadByUser(User $user)
@@ -43,6 +57,11 @@ class MessageRepository extends DocumentRepository implements MessageRepositoryI
     protected function createByUserQuery(User $user)
     {
         return $this->createQueryBuilder()->field('to.$id')->equals(new MongoId($user->getId()));
+    }
+
+    protected function createSentByUserQuery(User $user)
+    {
+        return $this->createQueryBuilder()->field('from.$id')->equals(new MongoId($user->getId()));
     }
 
     protected function createByUserUnreadQuery(User $user)
