@@ -1,3 +1,5 @@
+{% extends "MessageBundle::container.twig" %}
+{% block content %}
 <div class="message_list">
     <div class="head">
         <h1>{% trans "Sent messages" %}</h1>
@@ -19,3 +21,4 @@
         {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
     </div>
 </div>
+{% endblock %}

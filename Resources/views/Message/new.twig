@@ -1,3 +1,5 @@
+{% extends "MessageBundle::container.twig" %}
+{% block content %}
 <div class="message_new">
     <h1>{% trans "Compose message" %}</h1>
     {% include "MessageBundle::sidebar.twig" %}
@@ -26,3 +28,4 @@
         </div>
     </form>
 </div>
+{% endblock %}

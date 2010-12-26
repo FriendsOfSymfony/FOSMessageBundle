@@ -1,3 +1,5 @@
+{% extends "MessageBundle::container.twig" %}
+{% block content %}
 <div class="message_show">
     <div class="head">
         <h1>{{ message.subject }}</h1>
@@ -14,3 +16,4 @@
         <div class="body">{{ message.body }}</div>
     </div>
 </div>
+{% endblock %}
