@@ -1,9 +1,10 @@
 <div class="message_list">
     <div class="head">
         <h1>{% trans "Inbox" %}</h1>
-        {% include "MessageBundle:Message:pagination.twig" with {"pager": messages.pages} %}
+        {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
     </div>
     <a class="compose" href="{{ url("ornicar_message_message_new") }}">Compose</a>
+    {% include "MessageBundle::sidebar.twig" %}
     <div class="list">
         {% for message in messages %}
             <div class="message {{ message.isRead ? "read" : "unread" }}">
@@ -19,6 +20,6 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "MessageBundle:Message:pagination.twig" with {"pager": messages.pages} %}
+        {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
     </div>
 </div>
