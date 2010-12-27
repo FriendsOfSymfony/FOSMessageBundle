@@ -2,12 +2,11 @@
 {% block content %}
 <div class="message_list">
     <div class="head">
-        <h1>{% trans "Inbox" %}</h1>
         {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
+        <h1>{% trans "Inbox" %}</h1>
     </div>
-    <a class="compose" href="{{ url("ornicar_message_message_new") }}">Compose</a>
     {% include "MessageBundle::sidebar.twig" %}
-    <div class="list">
+    <div class="center list">
         {% for message in messages %}
             <div class="message {{ message.isRead ? "read" : "unread" }}">
                 <span class="infos">
@@ -19,6 +18,8 @@
                 </span>
                 <a class="subject" href="{{ url('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
             </div>
+        {% else %}
+            <div class="no_messages">No messages yet</div>
         {% endfor %}
     </div>
     <div class="foot">

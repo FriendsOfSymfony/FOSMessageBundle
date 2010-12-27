@@ -1,9 +1,5 @@
 {% if pager.pageCount %}
-    {% if pager.first and pager.first != pager.current %}
-    <a class="first" href="{{ url }}?page={{ pager.first }}">{% trans "First" %}</a>
-    {% else %}
-    <span class="first">{% trans "First" %}</span>
-    {% endif %} |
+<div class="pagination">
     {% if pager.previous %}
     <a class="previous" href="{{ url }}?page={{ pager.previous }}">{% trans "Previous" %}</a>
     {% else %}
@@ -21,9 +17,5 @@
     {% else %}
     <span class="next">{% trans "Next" %}</span>
     {% endif %}
-    {% if pager.last and pager.last != pager.current %}
-    | <a class="last" href="{{ url }}?page={{ pager.last }}">{% trans "Last" %}</a>
-    {% else %}
-    | <span class="last">{% trans "Last" %}</span>
-    {% endif %}
+</div>
 {% endif %}

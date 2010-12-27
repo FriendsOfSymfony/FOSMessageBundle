@@ -5,13 +5,13 @@
         <h1>{{ message.subject }}</h1>
     </div>
     {% include "MessageBundle::sidebar.twig" %}
-    <div class="message">
-        <span class="infos">
-            <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-            said {{ ago(message.createdAt)|raw }}
-        </span>
+    <div class="center show">
         <span class="actions">
             <a class="delete" href="{{ url('ornicar_message_message_delete', {"id": message.id}) }}">Delete</a>
+        </span>
+        <span class="infos">
+            <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+            said {{ ago(message.createdAt)|raw }}:
         </span>
         <div class="body">{{ message.body }}</div>
     </div>
