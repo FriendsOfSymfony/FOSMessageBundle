@@ -26,7 +26,7 @@ class MessageExtension extends Extension
         }
 
         // load all service configuration files (the db_driver first)
-        foreach (array($config['db_driver'], 'model', 'controller', 'form', 'templating', 'messenger', 'paginator') as $basename) {
+        foreach (array($config['db_driver'], 'model', 'controller', 'form', 'twig', 'messenger', 'paginator') as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
