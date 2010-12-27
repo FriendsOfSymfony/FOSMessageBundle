@@ -1,0 +1,5 @@
+{% for key, flash in _view.session.get('_flash') %}
+<div class="{{ flash }}">
+    {% trans key %}
+</div>
+{% endfor %}

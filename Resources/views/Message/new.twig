@@ -5,17 +5,13 @@
     {% include "MessageBundle::sidebar.twig" %}
     <div class="center form">
         <form action="{{ url("ornicar_message_message_create") }}" method="post">
-            <div class="actions">
-                <input class="send" type="submit" value="{% trans "Send" %}" />
-                <a class="cancel" href="{{ url("ornicar_message_message_list") }}">Cancel</a>
-            </div>
             <div class="field_to">
                 {{ form.to|render_label('To:') }}
                 {{ form.to|render }}
                 {{ form.to|render_errors }}
             </div>
             <div class="field_subject">
-                {{ form.subject|render_label('Subject') }}
+                {{ form.subject|render_label('Subject:') }}
                 {{ form.subject|render }}
                 {{ form.subject|render_errors }}
             </div>
@@ -24,8 +20,8 @@
                 {{ form.body|render_errors }}
             </div>
             <div class="actions">
-                <input class="send" type="submit" value="{% trans "Send" %}" />
-                <a class="cancel" href="{{ url("ornicar_message_message_list") }}">Cancel</a>
+                <input class="send button" type="submit" value="{% trans "Send" %}" />
+                <a class="cancel" href="{{ url("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
             </div>
         </form>
     </div>

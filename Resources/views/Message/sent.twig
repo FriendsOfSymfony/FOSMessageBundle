@@ -10,7 +10,7 @@
         {% for message in messages %}
             <div class="message">
                 <span class="infos">
-                    You sent <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+                    You sent <a class="user" href="{{ url('fos_user_user_show', {"username": message.to.username}) }}">{{ message.to }}</a>
                     a message {{ ago(message.createdAt)|raw }}
                 </span>
                 <a class="subject" href="{{ url('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
