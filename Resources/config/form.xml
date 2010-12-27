@@ -7,12 +7,21 @@
     <parameters>
         <parameter key="ornicar_message.form.composition.class">Bundle\Ornicar\MessageBundle\Form\CompositionForm</parameter>
         <parameter key="ornicar_message.form.composition.name">ornicar_message_composition_form</parameter>
+        <parameter key="ornicar_message.form.answer.class">Bundle\Ornicar\MessageBundle\Form\AnswerForm</parameter>
+        <parameter key="ornicar_message.form.answer.name">ornicar_message_answer_form</parameter>
     </parameters>
 
     <services>
         <service id="ornicar_message.form.composition" class="%ornicar_message.form.composition.class%">
             <argument>%ornicar_message.form.composition.name%</argument>
             <argument type="service" id="ornicar_message.model.composition"></argument>
+            <argument type="service" id="validator" />
+            <argument type="collection"></argument>
+            <argument type="service" id="fos_user.repository.user" />
+        </service>
+        <service id="ornicar_message.form.answer" class="%ornicar_message.form.answer.class%">
+            <argument>%ornicar_message.form.answer.name%</argument>
+            <argument type="service" id="ornicar_message.model.answer"></argument>
             <argument type="service" id="validator" />
             <argument type="collection"></argument>
             <argument type="service" id="fos_user.repository.user" />

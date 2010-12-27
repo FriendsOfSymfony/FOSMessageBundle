@@ -6,10 +6,15 @@
 
     <parameters>
         <parameter key="ornicar_message.model.composition.class">Bundle\Ornicar\MessageBundle\Model\Composition</parameter>
+        <parameter key="ornicar_message.model.answer.class">Bundle\Ornicar\MessageBundle\Model\Answer</parameter>
     </parameters>
 
     <services>
         <service id="ornicar_message.model.composition" class="%ornicar_message.model.composition.class%" shared="false">
+            <argument type="service" id="fos_user.repository.user" />
+            <argument type="service" id="ornicar_message.repository.message" />
+        </service>
+        <service id="ornicar_message.model.answer" class="%ornicar_message.model.answer.class%" shared="false">
             <argument type="service" id="fos_user.repository.user" />
             <argument type="service" id="ornicar_message.repository.message" />
         </service>
