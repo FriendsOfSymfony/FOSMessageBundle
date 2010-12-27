@@ -10,6 +10,8 @@ class MessageExtension extends \Twig_Extension
     protected $messageRepository;
     protected $securityContext;
 
+    protected $cache = array();
+
     public function __construct(MessageRepositoryInterface $messageRepository, SecurityContext $securityContext)
     {
         $this->messageRepository = $messageRepository;
@@ -30,12 +32,17 @@ class MessageExtension extends \Twig_Extension
 
     public function countNewMessages()
     {
+        if(array_key_exists('new_messages', $this->cache)) {
+            return $this->cache['new_messages'];
+        }
         $user = $this->securityContext->getUser();
         if(!$user) {
             return 0;
         }
 
-        return $this->messageRepository->countUnreadByUser($user);
+        $nb = $this->messageRepository->countUnreadByUser($user);
+
+        return $this->cache['new_messages'] = $nb;
     }
 
     /**
