@@ -4,7 +4,7 @@
     <h1>{% trans "Compose message" %}</h1>
     {% include "MessageBundle::sidebar.twig" %}
     <div class="center form">
-        <form action="{{ url("ornicar_message_message_create") }}" method="post">
+        <form action="{{ path("ornicar_message_message_create") }}" method="post">
             <div class="field_to">
                 {{ form.to|render_label('To:') }}
                 {{ form.to|render }}
@@ -21,7 +21,7 @@
             </div>
             <div class="actions">
                 <input class="send button" type="submit" value="{% trans "Send" %}" />
-                <a class="cancel" href="{{ url("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
+                <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
             </div>
         </form>
     </div>

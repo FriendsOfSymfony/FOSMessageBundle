@@ -7,28 +7,30 @@
     {% include "MessageBundle::sidebar.twig" %}
     <div class="center show">
         <span class="actions">
-            <a class="delete" href="{{ url('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
+            <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
         </span>
         <span class="infos">
-            <a class="user" href="{{ url('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+            <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
             said {{ ago(message.createdAt)|raw }}:
         </span>
         <div class="body">{{ message.body }}</div>
-        <div class="answer">
-            {% trans "Reply" %}
-            <form action="{{ url("ornicar_message_message_create") }}" method="post">
-                {{ form.to|render }}
-                {{ form.subject|render }}
-                <div class="field_body">
-                    {{ form.body|render }}
-                    {{ form.body|render_errors }}
-                </div>
-                <div class="actions">
-                    <input class="send button" type="submit" value="{% trans "Send" %}" />
-                    <a class="cancel" href="{{ url("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
-                </div>
-            </form>
-        </div>
+        {% if form %}
+            <div class="answer">
+                {% trans "Reply" %}
+                <form action="{{ path("ornicar_message_message_create") }}" method="post">
+                    {{ form.to|render }}
+                    {{ form.subject|render }}
+                    <div class="field_body">
+                        {{ form.body|render }}
+                        {{ form.body|render_errors }}
+                    </div>
+                    <div class="actions">
+                        <input class="send button" type="submit" value="{% trans "Send" %}" />
+                        <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
