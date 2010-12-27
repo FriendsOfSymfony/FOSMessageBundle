@@ -68,9 +68,16 @@ class MessageController extends Controller
     {
         $message = $this->getVisibleMessage($id);
         $this->markAsRead($message);
+        if($message->getTo()->is($this->get('security.context')->getUser())) {
+            $form = $this->get('ornicar_message.form.answer');
+            $form->setOriginalMessage($message);
+        } else {
+            $form = null;
+        }
 
         return $this->render('MessageBundle:Message:show.twig', array(
-            'message' => $message
+            'message' => $message,
+            'form' => $form
         ));
     }
 
