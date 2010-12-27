@@ -11,7 +11,7 @@ class MessageController extends Controller
     public function newAction()
     {
         $form = $this->get('ornicar_message.form.composition');
-        $form->getData()->to = $this->get('request')->query->get('to');
+        $form['to']->setData($this->get('request')->query->get('to'));
 
         return $this->render('MessageBundle:Message:new.twig', array(
             'form' => $form
@@ -30,7 +30,7 @@ class MessageController extends Controller
             $this->get('ornicar_message.object_manager')->flush();
             $this->get('session')->setFlash('ornicar_message_message_create', 'success');
 
-            return $this->redirectToInbox();
+            return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
 
         return $this->render('MessageBundle:Message:new.twig', array(
