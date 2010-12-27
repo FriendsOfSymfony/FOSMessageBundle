@@ -11,6 +11,7 @@
     <services>
         <service id="ornicar_message.messenger" class="%ornicar_message.messenger.class%">
             <argument type="service" id="ornicar_message.object_manager" />
+            <argument type="service" id="ornicar_message.repository.message" />
         </service>
     </services>
 </container>

@@ -108,7 +108,7 @@ class MessageController extends Controller
     {
         if(!$message->getIsRead()) {
             if($message->getTo()->is($this->get('security.context')->getUser())) {
-                $message->setIsRead(true);
+                $this->get('ornicar_message.messenger')->markAsRead($message);
                 $this->get('ornicar_message.object_manager')->flush();
             }
         }
