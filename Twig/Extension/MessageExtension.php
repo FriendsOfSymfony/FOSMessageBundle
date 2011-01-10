@@ -23,10 +23,10 @@ class MessageExtension extends \Twig_Extension
      *
      * @return array An array of global functions
      */
-    public function getGlobals()
+    public function getFunctions()
     {
         return array(
-            'fn_new_messages'  => new \Twig_Function($this, 'countNewMessages')
+            'new_messages'  => new \Twig_Function_Method($this, 'countNewMessages')
         );
     }
 
