@@ -3,11 +3,11 @@
 namespace Bundle\Ornicar\MessageBundle\Model;
 
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
-use Bundle\FOS\UserBundle\Model\UserRepositoryInterface;
+use Bundle\FOS\UserBundle\Model\UserManagerInterface;
 
 class Composition
 {
-    protected $userRepository;
+    protected $userManager;
     protected $messageRepository;
 
     /**
@@ -36,9 +36,9 @@ class Composition
      */
     public $subject = null;
 
-    public function __construct(UserRepositoryInterface $userRepository, MessageRepositoryInterface $messageRepository)
+    public function __construct(UserManagerInterface $userManager, MessageRepositoryInterface $messageRepository)
     {
-        $this->userRepository = $userRepository;
+        $this->userManager= $userManager;
         $this->messageRepository = $messageRepository;
     }
 
@@ -47,7 +47,7 @@ class Composition
      */
     public function getTo()
     {
-        return $this->userRepository->findOneByUsername($this->to);
+        return $this->userManager->findUserByUsername($this->to);
     }
 
     public function getMessage()
