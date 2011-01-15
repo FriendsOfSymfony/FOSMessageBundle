@@ -6,12 +6,12 @@
     <div class="center form">
         <form action="{{ path("ornicar_message_message_create") }}" method="post">
             <div class="field_to">
-                {{ form.to|render_label('To:') }}
+                {{ form_label(form.to, 'To:') }}
                 {{ form_field(form.to) }}
                 {{ form_errors(form.to) }}
             </div>
             <div class="field_subject">
-                {{ form.subject|render_label('Subject:') }}
+                {{ form_label(form.subject, 'Subject:') }}
                 {{ form_field(form.subject) }}
                 {{ form_errors(form.subject) }}
             </div>
