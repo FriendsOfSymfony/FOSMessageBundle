@@ -18,11 +18,11 @@
             <div class="answer">
                 {% trans "Reply" %}
                 <form action="{{ path("ornicar_message_message_create") }}" method="post">
-                    {{ form.to|render }}
-                    {{ form.subject|render }}
+                    {{ form_field(form.to) }}
+                    {{ form_field(form.subject) }}
                     <div class="field_body">
-                        {{ form.body|render }}
-                        {{ form.body|render_errors }}
+                        {{ form_field(form.body) }}
+                        {{ form_errors(form.body) }}
                     </div>
                     <div class="actions">
                         <input class="send button" type="submit" value="{% trans "Send" %}" />

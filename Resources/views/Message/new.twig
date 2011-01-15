@@ -7,17 +7,17 @@
         <form action="{{ path("ornicar_message_message_create") }}" method="post">
             <div class="field_to">
                 {{ form.to|render_label('To:') }}
-                {{ form.to|render }}
-                {{ form.to|render_errors }}
+                {{ form_field(form.to) }}
+                {{ form_errors(form.to) }}
             </div>
             <div class="field_subject">
                 {{ form.subject|render_label('Subject:') }}
-                {{ form.subject|render }}
-                {{ form.subject|render_errors }}
+                {{ form_field(form.subject) }}
+                {{ form_errors(form.subject) }}
             </div>
             <div class="field_body">
-                {{ form.body|render }}
-                {{ form.body|render_errors }}
+                {{ form_field(form.body) }}
+                {{ form_errors(form.body) }}
             </div>
             <div class="actions">
                 <input class="send button" type="submit" value="{% trans "Send" %}" />
