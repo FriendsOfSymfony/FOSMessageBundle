@@ -3,7 +3,7 @@
 namespace Bundle\Ornicar\MessageBundle\Twig\Extension;
 
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
-use Symfony\Component\Security\SecurityContext;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class MessageExtension extends \Twig_Extension
 {

@@ -4,7 +4,7 @@ namespace Bundle\Ornicar\MessageBundle\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
-use Bundle\FOS\UserBundle\Model\User;
+use FOS\UserBundle\Model\User;
 use Zend\Paginator\Paginator;
 use ZendPaginatorAdapter\DoctrineMongoDBAdapter;
 use MongoId;

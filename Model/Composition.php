@@ -3,7 +3,7 @@
 namespace Bundle\Ornicar\MessageBundle\Model;
 
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
-use Bundle\FOS\UserBundle\Model\UserManagerInterface;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 class Composition
 {

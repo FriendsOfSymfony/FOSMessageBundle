@@ -1,11 +1,11 @@
-{% extends "MessageBundle::container.twig" %}
+{% extends "MessageBundle::container.html.twig" %}
 {% block content %}
 <div class="message_sent">
     <div class="head">
-        {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
+        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
         <h1>{% trans "Sent messages" %}</h1>
     </div>
-    {% include "MessageBundle::sidebar.twig" %}
+    {% include "MessageBundle::sidebar.html.twig" %}
     <div class="center list">
         {% for message in messages %}
             <div class="message">
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "MessageBundle::pagination.twig" with {"pager": messages.pages} %}
+        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
     </div>
 </div>
 {% endblock %}

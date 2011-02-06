@@ -3,7 +3,7 @@
 namespace Bundle\Ornicar\MessageBundle\Model;
 
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
-use Bundle\FOS\UserBundle\Model\UserRepositoryInterface;
+use FOS\UserBundle\Model\UserRepositoryInterface;
 
 class Answer extends Composition
 {

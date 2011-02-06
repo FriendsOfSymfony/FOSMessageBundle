@@ -9,25 +9,32 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class MessageExtension extends Extension
 {
-    public function configLoad(array $config, ContainerBuilder $container)
+    public function configLoad(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        foreach ($configs as $config) {
+            $this->doConfigLoad($config, $container);
+        }
+    }
 
-        // ensure the db_driver is configured
-        if (!isset($config['db_driver'])) {
-            throw new \InvalidArgumentException('The db_driver parameter must be defined');
-        } elseif (!in_array($config['db_driver'], array('orm', 'odm'))) {
-            throw new \InvalidArgumentException(sprintf('The db_driver "%s" is not supported (choose either "odm" or "orm")', $config['db_driver']));
+    public function doConfigLoad(array $config, ContainerBuilder $container)
+    {
+        if(!$container->hasDefinition('ornicar_message.repository.message')) {
+            // ensure the db_driver is configured
+            if (!isset($config['db_driver'])) {
+                throw new \InvalidArgumentException('The db_driver parameter must be defined');
+            } elseif (!in_array($config['db_driver'], array('orm', 'odm'))) {
+                throw new \InvalidArgumentException(sprintf('The db_driver "%s" is not supported (choose either "odm" or "orm")', $config['db_driver']));
+            }
+            $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+            // load all service configuration files (the db_driver first)
+            foreach (array($config['db_driver'], 'model', 'controller', 'form', 'twig', 'messenger', 'paginator') as $basename) {
+                $loader->load(sprintf('%s.xml', $basename));
+            }
         }
 
         // ensure the user model class is configured
         if (!isset($config['class']['model']['message'])) {
             throw new \InvalidArgumentException('The message model class must be defined');
-        }
-
-        // load all service configuration files (the db_driver first)
-        foreach (array($config['db_driver'], 'model', 'controller', 'form', 'twig', 'messenger', 'paginator') as $basename) {
-            $loader->load(sprintf('%s.xml', $basename));
         }
 
         $this->remapParametersNamespaces($config, $container, array(
@@ -72,19 +79,6 @@ class MessageExtension extends Extension
                 }
             }
         }
-    }
-
-    /**
-     * Get a (Document|Entity)Repository, based on db driver configuration
-     *
-     * @param  DocumentManager|EntityManager $objectManager
-     * @param  string                        $objectClass
-     *
-     * @return DocumentRepository|EntityRepository
-     */
-    public static function getRepository($objectManager, $objectClass)
-    {
-        return $objectManager->getRepository($objectClass);
     }
 
     /**

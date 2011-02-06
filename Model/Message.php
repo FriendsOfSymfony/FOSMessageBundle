@@ -2,7 +2,7 @@
 
 namespace Bundle\Ornicar\MessageBundle\Model;
 
-use Bundle\FOS\UserBundle\Model\User;
+use FOS\UserBundle\Model\User;
 use DateTime;
 
 class Message

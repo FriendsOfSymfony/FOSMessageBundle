@@ -1,8 +1,8 @@
-{% extends "MessageBundle::container.twig" %}
+{% extends "MessageBundle::container.html.twig" %}
 {% block content %}
 <div class="message_new">
     <h1>{% trans "Compose message" %}</h1>
-    {% include "MessageBundle::sidebar.twig" %}
+    {% include "MessageBundle::sidebar.html.twig" %}
     <div class="center form">
         <form action="{{ path("ornicar_message_message_create") }}" method="post">
             <div class="field_to">
