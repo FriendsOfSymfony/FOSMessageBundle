@@ -1,17 +1,17 @@
-{% extends "MessageBundle::container.html.twig" %}
+{% extends "OrnicarMessageBundle::container.html.twig" %}
 {% block content %}
 <div class="message_sent">
     <div class="head">
-        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
         <h1>{% trans "Sent messages" %}</h1>
     </div>
-    {% include "MessageBundle::sidebar.html.twig" %}
+    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
     <div class="center list">
         {% for message in messages %}
             <div class="message">
                 <span class="infos">
                     You sent <a class="user" href="{{ path('fos_user_user_show', {"username": message.to.username}) }}">{{ message.to }}</a>
-                    a message {{ ago(message.createdAt)|raw }}
+                    a message {{ time_diff(message.createdAt)|raw }}
                 </span>
                 <a class="subject" href="{{ path('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
             </div>
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
     </div>
 </div>
 {% endblock %}

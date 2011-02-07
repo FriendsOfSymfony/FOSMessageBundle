@@ -1,17 +1,17 @@
-{% extends "MessageBundle::container.html.twig" %}
+{% extends "OrnicarMessageBundle::container.html.twig" %}
 {% block content %}
 <div class="message_list">
     <div class="head">
-        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
         <h1>{% trans "Inbox" %}</h1>
     </div>
-    {% include "MessageBundle::sidebar.html.twig" %}
+    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
     <div class="center list">
         {% for message in messages %}
             <div class="message {{ message.isRead ? "read" : "unread" }}">
                 <span class="infos">
                     <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-                    sent you a message {{ ago(message.createdAt)|raw }}
+                    sent you a message {{ time_diff(message.createdAt)|raw }}
                 </span>
                 <span class="actions">
                     {% if not message.isRead %}
@@ -25,7 +25,7 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "MessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
     </div>
 </div>
 {% endblock %}

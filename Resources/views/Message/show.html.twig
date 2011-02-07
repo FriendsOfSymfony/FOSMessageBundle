@@ -1,17 +1,17 @@
-{% extends "MessageBundle::container.html.twig" %}
+{% extends "OrnicarMessageBundle::container.html.twig" %}
 {% block content %}
 <div class="message_show">
     <div class="head">
         <h1>{{ message.subject }}</h1>
     </div>
-    {% include "MessageBundle::sidebar.html.twig" %}
+    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
     <div class="center show">
         <span class="actions">
             <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
         </span>
         <span class="infos">
             <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-            said {{ ago(message.createdAt)|raw }}:
+            said {{ time_diff(message.createdAt)|raw }}:
         </span>
         <div class="body">{{ message.body }}</div>
         {% if form %}
