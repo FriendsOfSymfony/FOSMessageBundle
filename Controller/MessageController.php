@@ -13,7 +13,7 @@ class MessageController extends Controller
         $form = $this->get('ornicar_message.form.composition');
         $form['to']->setData($this->get('request')->query->get('to'));
 
-        return $this->render('MessageBundle:Message:new.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
             'form' => $form
         ));
     }
@@ -33,7 +33,7 @@ class MessageController extends Controller
             return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
 
-        return $this->render('MessageBundle:Message:new.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
             'form' => $form
         ));
     }
@@ -46,7 +46,7 @@ class MessageController extends Controller
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
         $messages->setPageRange(5);
 
-        return $this->render('MessageBundle:Message:list.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:list.html.twig', array(
             'messages' => $messages
         ));
     }
@@ -59,7 +59,7 @@ class MessageController extends Controller
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
         $messages->setPageRange(5);
 
-        return $this->render('MessageBundle:Message:sent.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
             'messages' => $messages
         ));
     }
@@ -75,7 +75,7 @@ class MessageController extends Controller
             $form = null;
         }
 
-        return $this->render('MessageBundle:Message:show.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:show.html.twig', array(
             'message' => $message,
             'form' => $form
         ));
