@@ -14,10 +14,12 @@
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="ornicar_message.repository.message" />
         </service>
+
         <service id="ornicar_message.model.answer" class="%ornicar_message.model.answer.class%">
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="ornicar_message.repository.message" />
         </service>
+
         <!-- Message Repository Service -->
         <service id="ornicar_message.repository.message" class="Bundle\Ornicar\MessageBundle\Document\MessageRepository" factory-service="doctrine.odm.mongodb.document_manager" factory-method="getRepository">
             <argument>%ornicar_message.model.message.class%</argument>

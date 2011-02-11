@@ -5,17 +5,17 @@ namespace Bundle\Ornicar\MessageBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Bundle\Ornicar\MessageBundle\Model\Message;
+use Bundle\Ornicar\MessageBundle\Model\Composition;
 
 class MessageController extends Controller
 {
     public function newAction()
     {
+        $composition = $this->get('ornicar_message.model.composition');
         $form = $this->get('ornicar_message.form.composition');
         $form['to']->setData($this->get('request')->query->get('to'));
 
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
-            'form' => $form
-        ));
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
     }
 
     public function createAction()
@@ -33,9 +33,7 @@ class MessageController extends Controller
             return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
 
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
-            'form' => $form
-        ));
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
     }
 
     public function listAction()
