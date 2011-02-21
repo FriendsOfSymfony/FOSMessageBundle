@@ -35,7 +35,11 @@ class MessageExtension extends \Twig_Extension
         if(array_key_exists('new_messages', $this->cache)) {
             return $this->cache['new_messages'];
         }
-        $user = $this->securityContext->getUser();
+        $token = $this->securityContext->getToken();
+        if(!$token) {
+            return 0;
+        }
+        $user = $token->getUser();
         if(!$user) {
             return 0;
         }

@@ -6,24 +6,22 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\FileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\FileLocator;
+use Symfony\Component\Config\FileLocator;
 
-class MessageExtension extends Extension
+class OrnicarMessageExtension extends Extension
 {
-    public function configLoad(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         foreach (array('model', 'controller', 'form', 'twig', 'messenger', 'paginator') as $basename) {
             $loader->load(sprintf('%s.xml', $basename));
         }
 
-        foreach ($configs as $config) {
-            $this->doConfigLoad($config, $container, $loader);
+        $config = array();
+        foreach ($configs as $c) {
+            $config = array_merge($config, $c);
         }
-    }
 
-    public function doConfigLoad(array $config, ContainerBuilder $container, FileLoader $loader)
-    {
         // ensure the db_driver is configured
         if (!isset($config['db_driver'])) {
             throw new \InvalidArgumentException('The db_driver parameter must be defined');
