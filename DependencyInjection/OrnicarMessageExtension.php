@@ -2,7 +2,7 @@
 
 namespace Bundle\Ornicar\MessageBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\FileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -77,30 +77,5 @@ class OrnicarMessageExtension extends Extension
                 }
             }
         }
-    }
-
-    /**
-     * Returns the namespace to be used for this extension (XML namespace).
-     *
-     * @return string The XML namespace
-     */
-    public function getNamespace()
-    {
-        return 'http://www.symfony-project.org/shemas/dic/symfony';
-    }
-
-    /**
-     * Returns the base path for the XSD files.
-     *
-     * @return string The XSD base path
-     */
-    public function getXsdValidationBasePath()
-    {
-        return null;
-    }
-
-    public function getAlias()
-    {
-        return 'ornicar_message';
     }
 }
