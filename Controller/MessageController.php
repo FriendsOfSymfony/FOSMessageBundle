@@ -26,7 +26,7 @@ class MessageController extends Controller
 
         if ($form->isValid()) {
             $message = $form->getData()->getMessage();
-            $message->setFrom($this->get('security.context')->getUser());
+            $message->setFrom($this->get('security.context')->getToken()->getUser());
             $this->get('ornicar_message.messenger')->send($message);
             $this->get('ornicar_message.object_manager')->flush();
             $this->get('session')->setFlash('ornicar_message_message_create', 'success');
@@ -39,7 +39,7 @@ class MessageController extends Controller
 
     public function listAction()
     {
-        $user = $this->get('security.context')->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $messages = $this->get('ornicar_message.repository.message')->findRecentByUser($user, true);
         $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
@@ -52,7 +52,7 @@ class MessageController extends Controller
 
     public function sentAction()
     {
-        $user = $this->get('security.context')->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $messages = $this->get('ornicar_message.repository.message')->findRecentSentByUser($user, true);
         $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
@@ -67,7 +67,7 @@ class MessageController extends Controller
     {
         $message = $this->getVisibleMessage($id);
         $this->markAsRead($message);
-        if($message->getTo()->is($this->get('security.context')->getUser())) {
+        if($message->getTo()->is($this->get('security.context')->getToken()->getUser())) {
             $form = $this->get('ornicar_message.form.answer');
             $form->setOriginalMessage($message);
         } else {
@@ -106,7 +106,7 @@ class MessageController extends Controller
     protected function markAsRead(Message $message)
     {
         if(!$message->getIsRead()) {
-            if($message->getTo()->is($this->get('security.context')->getUser())) {
+            if($message->getTo()->is($this->get('security.context')->getToken()->getUser())) {
                 $this->get('ornicar_message.messenger')->markAsRead($message);
                 $this->get('ornicar_message.object_manager')->flush();
             }
@@ -115,7 +115,7 @@ class MessageController extends Controller
 
     protected function getVisibleMessage($id)
     {
-        $user = $this->get('security.context')->getUser();
+        $user = $this->get('security.context')->getToken()->getUser();
         $message = $this->get('ornicar_message.repository.message')->find($id);
 
         if(!$message) {
