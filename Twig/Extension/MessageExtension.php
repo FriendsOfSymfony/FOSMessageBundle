@@ -2,19 +2,19 @@
 
 namespace Bundle\Ornicar\MessageBundle\Twig\Extension;
 
-use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use Bundle\Ornicar\MessageBundle\Messenger;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class MessageExtension extends \Twig_Extension
 {
-    protected $messageRepository;
+    protected $messenger;
     protected $securityContext;
 
     protected $cache = array();
 
-    public function __construct(MessageRepositoryInterface $messageRepository, SecurityContext $securityContext)
+    public function __construct(Messenger $messenger, SecurityContext $securityContext)
     {
-        $this->messageRepository = $messageRepository;
+        $this->messenger = $messenger;
         $this->securityContext = $securityContext;
     }
 
@@ -44,7 +44,7 @@ class MessageExtension extends \Twig_Extension
             return 0;
         }
 
-        $nb = $this->messageRepository->countUnreadByUser($user);
+        $nb = $this->messenger->countUnreadByUser($user);
 
         return $this->cache['new_messages'] = $nb;
     }

@@ -4,6 +4,7 @@ namespace Bundle\Ornicar\MessageBundle;
 
 use Bundle\Ornicar\MessageBundle\Model\Message;
 use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use FOS\UserBundle\Model\User;
 
 class Messenger
 {
@@ -33,5 +34,10 @@ class Messenger
             throw new LogicException('The message is already read');
         }
         $message->setIsRead(true);
+    }
+
+    public function countUnreadByUser(User $user)
+    {
+        return $this->messageRepository->countUnreadByUser($user);
     }
 }
