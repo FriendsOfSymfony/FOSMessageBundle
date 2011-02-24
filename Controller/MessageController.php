@@ -12,7 +12,6 @@ class MessageController extends Controller
 {
     public function newAction()
     {
-        $composition = $this->get('ornicar_message.model.composition');
         $form = $this->get('ornicar_message.form.composition');
         $form['to']->setData($this->get('request')->query->get('to'));
 
@@ -22,7 +21,7 @@ class MessageController extends Controller
     public function createAction()
     {
         $form = $this->get('ornicar_message.form.composition');
-        $form->bind($this->get('request')->request->get($form->getName()));
+        $form->bind($this->get('request'), $this->get('ornicar_message.model.factory')->createComposition());
 
         if ($form->isValid()) {
             $message = $form->getData()->getMessage();
@@ -69,6 +68,7 @@ class MessageController extends Controller
         $this->markAsRead($message);
         if($message->getTo()->is($this->get('security.context')->getToken()->getUser())) {
             $form = $this->get('ornicar_message.form.answer');
+            $form->setData($this->get('ornicar_message.model.factory')->createAnswer($message));
             $form->setOriginalMessage($message);
         } else {
             $form = null;

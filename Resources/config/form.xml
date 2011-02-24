@@ -19,13 +19,12 @@
             <argument>%ornicar_message.form.composition.name%</argument>
         </service>
 
-        <service id="ornicar_message.form.answer" class="%ornicar_message.form.answer.class%" parent="ornicar_message.form.composition">
+        <service id="ornicar_message.form.answer"
+            class="%ornicar_message.form.answer.class%"
+            factory-class="%ornicar_message.form.answer.class%"
+            factory-method="create">
             <argument type="service" id="form.context" />
             <argument>%ornicar_message.form.composition.name%</argument>
-            <argument type="collection">
-                <argument key="user_repository" type="service" id="fos_user.repository.user" />
-                <argument key="answer" type="service" id="ornicar_message.model.answer" />
-            </argument>
         </service>
     </services>
 

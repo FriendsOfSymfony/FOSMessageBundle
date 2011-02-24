@@ -10,14 +10,11 @@
     </parameters>
 
     <services>
-        <service id="ornicar_message.model.composition" class="%ornicar_message.model.composition.class%">
+        <service id="ornicar_message.model.factory" class="Bundle\Ornicar\MessageBundle\Model\Factory">
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="ornicar_message.repository.message" />
-        </service>
-
-        <service id="ornicar_message.model.answer" class="%ornicar_message.model.answer.class%">
-            <argument type="service" id="fos_user.user_manager" />
-            <argument type="service" id="ornicar_message.repository.message" />
+            <argument>%ornicar_message.model.composition.class%</argument>
+            <argument>%ornicar_message.model.answer.class%</argument>
         </service>
 
         <!-- Message Repository Service -->
