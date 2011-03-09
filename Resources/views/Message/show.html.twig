@@ -11,7 +11,7 @@
         </span>
         <span class="infos">
             <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-            said {{ time_diff(message.createdAt)|raw }}:
+            said {{ message.createdAt }}:
         </span>
         <div class="body">{{ message.body }}</div>
         {% if form %}
