@@ -11,7 +11,7 @@
         </span>
         <span class="infos">
             <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-            said {{ message.createdAt }}:
+            said {{ message.createdAt|date }}:
         </span>
         <div class="body">{{ message.body }}</div>
         {% if form %}

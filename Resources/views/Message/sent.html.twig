@@ -11,7 +11,7 @@
             <div class="message">
                 <span class="infos">
                     You sent <a class="user" href="{{ path('fos_user_user_show', {"username": message.to.username}) }}">{{ message.to }}</a>
-                    a message {{ message.createdAt }}
+                    a message {{ message.createdAt|date }}
                 </span>
                 <a class="subject" href="{{ path('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
             </div>

@@ -11,7 +11,7 @@
             <div class="message {{ message.isRead ? "read" : "unread" }}">
                 <span class="infos">
                     <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-                    sent you a message {{ message.createdAt }}
+                    sent you a message {{ message.createdAt|date }}
                 </span>
                 <span class="actions">
                     {% if not message.isRead %}
