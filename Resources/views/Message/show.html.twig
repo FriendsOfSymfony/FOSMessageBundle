@@ -10,7 +10,11 @@
             <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
         </span>
         <span class="infos">
-            <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
+            {% if message.from == app.user %}
+                You said to <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.to }}</a>
+            {% else %}
+                <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a> said
+            {% endif %}
             said {{ message.createdAt|date }}:
         </span>
         <div class="body">{{ message.body }}</div>
