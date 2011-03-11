@@ -2,7 +2,7 @@
 {% block content %}
 <div class="message_list">
     <div class="head">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
         <h1>{% trans "Inbox" %}</h1>
     </div>
     {% include "OrnicarMessageBundle::sidebar.html.twig" %}
@@ -25,7 +25,7 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages} %}
+        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
     </div>
 </div>
 {% endblock %}

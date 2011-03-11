@@ -45,7 +45,8 @@ class MessageController extends Controller
         $messages->setPageRange(5);
 
         return $this->render('OrnicarMessageBundle:Message:list.html.twig', array(
-            'messages' => $messages
+            'messages' => $messages,
+            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_list')
         ));
     }
 
@@ -58,7 +59,8 @@ class MessageController extends Controller
         $messages->setPageRange(5);
 
         return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
-            'messages' => $messages
+            'messages' => $messages,
+            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_list')
         ));
     }
 
