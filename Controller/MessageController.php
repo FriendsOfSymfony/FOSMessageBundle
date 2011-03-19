@@ -60,7 +60,7 @@ class MessageController extends Controller
 
         return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
             'messages' => $messages,
-            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_list')
+            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_sent')
         ));
     }
 
