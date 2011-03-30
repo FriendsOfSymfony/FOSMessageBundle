@@ -1,10 +1,10 @@
-{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% extends "OrnicarMessage::container.html.twig" %}
 {% block content %}
 <div class="message_show">
     <div class="head">
         <h1>{{ message.subject }}</h1>
     </div>
-    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
+    {% include "OrnicarMessage::sidebar.html.twig" %}
     <div class="center show">
         <span class="actions">
             <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>

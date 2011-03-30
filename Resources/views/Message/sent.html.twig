@@ -1,11 +1,11 @@
-{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% extends "OrnicarMessage::container.html.twig" %}
 {% block content %}
 <div class="message_sent">
     <div class="head">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
+        {% include "OrnicarMessage::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
         <h1>{% trans "Sent messages" %}</h1>
     </div>
-    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
+    {% include "OrnicarMessage::sidebar.html.twig" %}
     <div class="center list">
         {% for message in messages %}
             <div class="message">
@@ -20,7 +20,7 @@
         {% endfor %}
     </div>
     <div class="foot">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
+        {% include "OrnicarMessage::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
     </div>
 </div>
 {% endblock %}
