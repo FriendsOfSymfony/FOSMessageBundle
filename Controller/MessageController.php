@@ -15,7 +15,7 @@ class MessageController extends Controller
         $form = $this->get('ornicar_message.form.composition');
         $form['to']->setData($this->get('request')->query->get('to'));
 
-        return $this->render('OrnicarMessage:Message:new.html.twig', compact('form'));
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
     }
 
     public function createAction()
@@ -33,7 +33,7 @@ class MessageController extends Controller
             return new RedirectResponse($this->generateUrl('ornicar_message_message_sent'));
         }
 
-        return $this->render('OrnicarMessage:Message:new.html.twig', compact('form'));
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
     }
 
     public function listAction()
@@ -44,7 +44,7 @@ class MessageController extends Controller
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
         $messages->setPageRange(5);
 
-        return $this->render('OrnicarMessage:Message:list.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:list.html.twig', array(
             'messages' => $messages,
             'pagerUrl' => $this->get('router')->generate('ornicar_message_message_list')
         ));
@@ -58,7 +58,7 @@ class MessageController extends Controller
         $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
         $messages->setPageRange(5);
 
-        return $this->render('OrnicarMessage:Message:sent.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
             'messages' => $messages,
             'pagerUrl' => $this->get('router')->generate('ornicar_message_message_sent')
         ));
@@ -76,7 +76,7 @@ class MessageController extends Controller
             $form = null;
         }
 
-        return $this->render('OrnicarMessage:Message:show.html.twig', array(
+        return $this->render('OrnicarMessageBundle:Message:show.html.twig', array(
             'message' => $message,
             'form' => $form
         ));
