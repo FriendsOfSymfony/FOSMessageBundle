@@ -18,7 +18,7 @@
         </service>
 
         <!-- Message Repository Service -->
-        <service id="ornicar_message.repository.message" class="Ornicar\MessageBundle\Document\MessageRepository" factory-service="doctrine.odm.mongodb.document_manager" factory-method="getRepository">
+        <service id="ornicar_message.repository.message" class="%ornicar_message.repository.message.class%" factory-service="ornicar_message.object_manager" factory-method="getRepository">
             <argument>%ornicar_message.model.message.class%</argument>
         </service>
     </services>

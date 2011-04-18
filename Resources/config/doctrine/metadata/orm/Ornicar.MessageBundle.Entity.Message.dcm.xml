@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass
+        name="Ornicar\MessageBundle\Entity\Message"
+        table="messages">
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="subject" column="subject" type="string" />
+
+        <field name="body" column="body" type="string" />
+
+        <field name="isRead" column="is_read" type="boolean" />
+
+        <field name="createdAt" column="created_at" type="date" />
+
+        <many-to-one field="to" target-entity="SeriesTV\UserBundle\Entity\User">
+            <join-columns>
+                <join-column name="to_user_id" referenced-column-name="id" />
+            </join-columns>
+        </many-to-one>
+
+        <many-to-one field="from" target-entity="SeriesTV\UserBundle\Entity\User">
+            <join-columns>
+                <join-column name="from_user_id" referenced-column-name="id" />
+            </join-columns>
+        </many-to-one>
+
+    </mapped-superclass>
+
+</doctrine-mapping>

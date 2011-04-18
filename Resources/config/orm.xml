@@ -5,13 +5,13 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ornicar_message.model.message.class">Ornicar\MessageBundle\Document\Message</parameter>
-        <parameter key="ornicar_message.repository.message.class">Ornicar\MessageBundle\Document\MessageRepository</parameter>
+        <parameter key="ornicar_message.model.message.class">Ornicar\MessageBundle\Entity\Message</parameter>
+        <parameter key="ornicar_message.repository.message.class">Ornicar\MessageBundle\Entity\MessageRepository</parameter>
     </parameters>
 
     <services>
         <!-- Object Manager Service -->
-        <service id="ornicar_message.object_manager" alias="doctrine.odm.mongodb.document_manager" />
+        <service id="ornicar_message.object_manager" alias="doctrine.orm.entity_manager" />
     </services>
 
 </container>
