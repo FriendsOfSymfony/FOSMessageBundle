@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="ornicar_message.twig.extension.message.class">Bundle\Ornicar\MessageBundle\Twig\Extension\MessageExtension</parameter>
+        <parameter key="ornicar_message.twig.extension.message.class">Ornicar\MessageBundle\Twig\Extension\MessageExtension</parameter>
     </parameters>
 
     <services>

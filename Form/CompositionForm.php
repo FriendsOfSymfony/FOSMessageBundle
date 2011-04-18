@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Form;
+namespace Ornicar\MessageBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\TextField;

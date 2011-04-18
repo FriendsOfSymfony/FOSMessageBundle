@@ -1,11 +1,11 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Controller;
+namespace Ornicar\MessageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Bundle\Ornicar\MessageBundle\Model\Message;
-use Bundle\Ornicar\MessageBundle\Model\Composition;
+use Ornicar\MessageBundle\Model\Message;
+use Ornicar\MessageBundle\Model\Composition;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MessageController extends Controller

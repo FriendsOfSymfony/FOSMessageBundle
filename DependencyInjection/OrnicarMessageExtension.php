@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\DependencyInjection;
+namespace Ornicar\MessageBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;

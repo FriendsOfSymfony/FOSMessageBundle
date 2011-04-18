@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Document;
+namespace Ornicar\MessageBundle\Document;
 
-use Bundle\Ornicar\MessageBundle\Model\Message as AbstractMessage;
+use Ornicar\MessageBundle\Model\Message as AbstractMessage;
 
 abstract class Message extends AbstractMessage
 {

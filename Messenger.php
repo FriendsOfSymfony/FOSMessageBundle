@@ -1,9 +1,9 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle;
+namespace Ornicar\MessageBundle;
 
-use Bundle\Ornicar\MessageBundle\Model\Message;
-use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use Ornicar\MessageBundle\Model\Message;
+use Ornicar\MessageBundle\Model\MessageRepositoryInterface;
 use FOS\UserBundle\Model\User;
 
 class Messenger

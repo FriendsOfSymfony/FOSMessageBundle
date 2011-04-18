@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\Model;
 
 use FOS\UserBundle\Model\User;
 

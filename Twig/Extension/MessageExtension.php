@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Twig\Extension;
+namespace Ornicar\MessageBundle\Twig\Extension;
 
-use Bundle\Ornicar\MessageBundle\Messenger;
+use Ornicar\MessageBundle\Messenger;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class MessageExtension extends \Twig_Extension

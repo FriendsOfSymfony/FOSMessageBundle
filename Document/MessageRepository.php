@@ -1,9 +1,9 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Document;
+namespace Ornicar\MessageBundle\Document;
 
 use Doctrine\ODM\MongoDB\DocumentRepository;
-use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use Ornicar\MessageBundle\Model\MessageRepositoryInterface;
 use FOS\UserBundle\Model\User;
 use Zend\Paginator\Paginator;
 use ZendPaginatorAdapter\DoctrineMongoDBAdapter;

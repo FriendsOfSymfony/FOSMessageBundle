@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle;
+namespace Ornicar\MessageBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle as BaseBundle;
 

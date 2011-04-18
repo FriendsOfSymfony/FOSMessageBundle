@@ -1,8 +1,8 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\Model;
 
-use Bundle\Ornicar\MessageBundle\Model\MessageRepositoryInterface;
+use Ornicar\MessageBundle\Model\MessageRepositoryInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 
 class Factory

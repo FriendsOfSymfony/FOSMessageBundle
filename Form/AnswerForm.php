@@ -1,11 +1,11 @@
 <?php
 
-namespace Bundle\Ornicar\MessageBundle\Form;
+namespace Ornicar\MessageBundle\Form;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\HiddenField;
 use Symfony\Component\Form\TextareaField;
-use Bundle\Ornicar\MessageBundle\Model\Message;
+use Ornicar\MessageBundle\Model\Message;
 
 class AnswerForm extends Form
 {
