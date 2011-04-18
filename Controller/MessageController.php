@@ -68,7 +68,7 @@ class MessageController extends Controller
     {
         $message = $this->getVisibleMessage($id);
         $this->markAsRead($message);
-        if($message->getTo()->is($this->get('security.context')->getToken()->getUser())) {
+        if($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
             $form = $this->get('ornicar_message.form.answer');
             $form->setData($this->get('ornicar_message.model.factory')->createAnswer($message));
             $form->setOriginalMessage($message);
@@ -108,7 +108,7 @@ class MessageController extends Controller
     protected function markAsRead(Message $message)
     {
         if(!$message->getIsRead()) {
-            if($message->getTo()->is($this->get('security.context')->getToken()->getUser())) {
+            if($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
                 $this->get('ornicar_message.messenger')->markAsRead($message);
                 $this->get('ornicar_message.object_manager')->flush();
             }
