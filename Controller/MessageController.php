@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Ornicar\MessageBundle\Model\Message;
 use Ornicar\MessageBundle\Model\Composition;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MessageController extends Controller
 {
@@ -30,7 +29,7 @@ class MessageController extends Controller
             $this->get('ornicar_message.object_manager')->flush();
             $this->get('session')->setFlash('ornicar_message_message_create', 'success');
 
-            return new RedirectResponse($this->generateUrl('ornicar_message_message_sent'));
+            return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
 
         return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
@@ -87,7 +86,7 @@ class MessageController extends Controller
         $message = $this->getVisibleMessage($id);
         $this->markAsRead($message);
 
-        return new RedirectResponse($this->get('request')->headers->get('Referer'));
+        return $this->redirect($this->get('request')->headers->get('Referer'));
     }
 
     public function deleteAction($id)
@@ -102,7 +101,7 @@ class MessageController extends Controller
 
     protected function redirectToInbox()
     {
-        return new RedirectResponse($this->generateUrl('ornicar_message_message_list'));
+        return $this->redirect($this->generateUrl('ornicar_message_message_list'));
     }
 
     protected function markAsRead(Message $message)
