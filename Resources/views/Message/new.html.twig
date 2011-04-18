@@ -5,6 +5,9 @@
     {% include "OrnicarMessage::sidebar.html.twig" %}
     <div class="center form">
         <form action="{{ path("ornicar_message_message_create") }}" method="post">
+            {{ form_hidden(form) }}
+            {{ form_errors(form) }}
+
             <div class="field_to">
                 {{ form_label(form.to, 'To:') }}
                 {{ form_field(form.to) }}
