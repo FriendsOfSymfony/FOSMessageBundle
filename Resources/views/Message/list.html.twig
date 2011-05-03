@@ -3,7 +3,7 @@
 <div class="message_list">
     <div class="head">
         {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
-        <h1>{% trans "Inbox" %}</h1>
+        <h1>{{ "Inbox"|trans }}</h1>
     </div>
     {% include "OrnicarMessageBundle::sidebar.html.twig" %}
     <div class="center list">

@@ -2,6 +2,10 @@
 
 namespace Ornicar\MessageBundle\Controller;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
+use Symfony\Component\Form\Form;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Ornicar\MessageBundle\Model\Message;
@@ -11,28 +15,30 @@ class MessageController extends Controller
 {
     public function newAction()
     {
-        $form = $this->get('ornicar_message.form.composition');
+        $form = $this->get('ornicar_message.form.message');
         $form['to']->setData($this->get('request')->query->get('to'));
 
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function createAction()
     {
-        $form = $this->get('ornicar_message.form.composition');
-        $form->bind($this->get('request'), $this->get('ornicar_message.model.factory')->createComposition());
-
-        if ($form->isValid()) {
-            $message = $form->getData()->getMessage();
-            $message->setFrom($this->get('security.context')->getToken()->getUser());
-            $this->get('ornicar_message.messenger')->send($message);
-            $this->get('ornicar_message.object_manager')->flush();
+        $form = $this->get('ornicar_message.form.message');
+        $handler = $this->get('ornicar_message.form.message.handler');
+        $message = $this->get('ornicar_message.model.factory')->createComposition();
+        $message->setFrom($this->get('security.context')->getToken()->getUser());
+        
+        if ($handler->process($message)) {
             $this->get('session')->setFlash('ornicar_message_message_create', 'success');
-
+            $this->get('ornicar_message.object_manager')->flush();
             return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
-
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', compact('form'));
+        
+        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 
     public function listAction()
@@ -67,17 +73,18 @@ class MessageController extends Controller
     {
         $message = $this->getVisibleMessage($id);
         $this->markAsRead($message);
-        if($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
-            $form = $this->get('ornicar_message.form.answer');
-            $form->setData($this->get('ornicar_message.model.factory')->createAnswer($message));
-            $form->setOriginalMessage($message);
+        if ($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
+            $form = $this->get('ornicar_message.form.message');
+            $answer = $this->get('ornicar_message.model.factory')->createAnswer($message);
+            
+            $form->setData($answer);
         } else {
             $form = null;
         }
-
+        
         return $this->render('OrnicarMessageBundle:Message:show.html.twig', array(
             'message' => $message,
-            'form' => $form
+            'form' => $form->createView(),
         ));
     }
 
@@ -106,8 +113,8 @@ class MessageController extends Controller
 
     protected function markAsRead(Message $message)
     {
-        if(!$message->getIsRead()) {
-            if($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
+        if (!$message->getIsRead()) {
+            if ($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
                 $this->get('ornicar_message.messenger')->markAsRead($message);
                 $this->get('ornicar_message.object_manager')->flush();
             }
@@ -119,10 +126,10 @@ class MessageController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
         $message = $this->get('ornicar_message.repository.message')->find($id);
 
-        if(!$message) {
+        if (!$message) {
             throw new NotFoundHttpException('No such message');
         }
-        if(!$message->isVisibleBy($user)) {
+        if (!$message->isVisibleBy($user)) {
             throw new NotFoundHttpException('You shall not see this message');
         }
 

@@ -7,30 +7,30 @@
     {% include "OrnicarMessageBundle::sidebar.html.twig" %}
     <div class="center show">
         <span class="actions">
-            <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
+            <a class="delete" href="{{ path('ornicar_message_message_delete', {'id': message.id}) }}">{{ "Delete"|trans }}</a>
         </span>
         <span class="infos">
             {% if message.from == app.user %}
-                You said to <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.to }}</a>
+                You said to <a class="user" href="{{ path('fos_user_user_show', {'username': message.from.username}) }}">{{ message.to }}</a>
             {% else %}
-                <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a> said
+                <a class="user" href="{{ path('fos_user_user_show', {'username': message.from.username}) }}">{{ message.from }}</a> said
             {% endif %}
             said {{ message.createdAt|date }}:
         </span>
         <div class="body">{{ message.body }}</div>
         {% if form %}
             <div class="answer">
-                {% trans "Reply" %}
+                {{ "Reply"|trans }}
                 <form action="{{ path("ornicar_message_message_create") }}" method="post">
-                    {{ form_field(form.to) }}
-                    {{ form_field(form.subject) }}
+                    {{ form_widget(form.to) }}
+                    {{ form_widget(form.subject) }}
                     <div class="field_body">
-                        {{ form_field(form.body) }}
+                        {{ form_widget(form.body) }}
                         {{ form_errors(form.body) }}
                     </div>
                     <div class="actions">
-                        <input class="send button" type="submit" value="{% trans "Send" %}" />
-                        <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
+                        <input class="send button" type="submit" value="{{ "Send"|trans }}" />
+                        <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{{ "Cancel"|trans }}</a>
                     </div>
                 </form>
             </div>

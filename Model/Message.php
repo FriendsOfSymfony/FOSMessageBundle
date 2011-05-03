@@ -5,7 +5,7 @@ namespace Ornicar\MessageBundle\Model;
 use FOS\UserBundle\Model\User;
 use DateTime;
 
-class Message
+abstract class Message
 {
     /**
      * Unique id of the message
