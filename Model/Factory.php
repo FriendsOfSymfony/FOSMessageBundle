@@ -22,7 +22,7 @@ class Factory
     /**
      * Creates and returns a new message
      *
-     * @return Composition
+     * @return Message
      */
     public function createComposition()
     {
@@ -33,7 +33,7 @@ class Factory
     /**
      * Creates and return a new answer
      *
-     * @return Answer
+     * @return Message
      */
     public function createAnswer(Message $message)
     {

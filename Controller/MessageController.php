@@ -2,10 +2,6 @@
 
 namespace Ornicar\MessageBundle\Controller;
 
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-
-use Symfony\Component\Form\Form;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Ornicar\MessageBundle\Model\Message;
@@ -17,7 +13,7 @@ class MessageController extends Controller
     {
         $form = $this->get('ornicar_message.form.message');
         $form['to']->setData($this->get('request')->query->get('to'));
-
+        
         return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
             'form' => $form->createView(),
         ));
