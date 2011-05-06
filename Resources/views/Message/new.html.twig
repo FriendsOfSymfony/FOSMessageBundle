@@ -1,31 +1,4 @@
-{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% extends 'OrnicarMessageBundle::container.html.twig' %}
 {% block content %}
-<div class="message_new">
-    <h1>{{ "Compose message"|trans }}</h1>
-    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
-    <div class="center form">
-        <form action="{{ path("ornicar_message_message_create") }}" method="post">
-            {{ form_errors(form) }}
-
-            <div class="field_to">
-                {{ form_label(form.to, 'To:') }}
-                {{ form_widget(form.to) }}
-                {{ form_errors(form.to) }}
-            </div>
-            <div class="field_subject">
-                {{ form_label(form.subject, 'Subject:') }}
-                {{ form_widget(form.subject) }}
-                {{ form_errors(form.subject) }}
-            </div>
-            <div class="field_body">
-                {{ form_widget(form.body) }}
-                {{ form_errors(form.body) }}
-            </div>
-            <div class="actions">
-                <input class="send button" type="submit" value="{{ "Send"|trans }}" />
-                <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{{ "Cancel"|trans }}</a>
-            </div>
-        </form>
-    </div>
-</div>
+{% include 'OrnicarMessageBundle:Message:new_content.html.twig' %}
 {% endblock %}
