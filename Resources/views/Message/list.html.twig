@@ -1,31 +1,4 @@
-{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% extends 'OrnicarMessageBundle::container.html.twig' %}
 {% block content %}
-<div class="message_list">
-    <div class="head">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
-        <h1>{% trans "Inbox" %}</h1>
-    </div>
-    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
-    <div class="center list">
-        {% for message in messages %}
-            <div class="message {{ message.isRead ? "read" : "unread" }}">
-                <span class="infos">
-                    <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a>
-                    sent you a message {{ message.createdAt|date }}
-                </span>
-                <span class="actions">
-                    {% if not message.isRead %}
-                        <a class="mark_as_read" href="{{ path('ornicar_message_message_read', {"id": message.id}) }}">Mark as read</a>
-                    {% endif %}
-                </span>
-                <a class="subject" href="{{ path('ornicar_message_message_show', {"id": message.id}) }}">{{ message.subject }}</a>
-            </div>
-        {% else %}
-            <div class="no_messages">No messages yet</div>
-        {% endfor %}
-    </div>
-    <div class="foot">
-        {% include "OrnicarMessageBundle::pagination.html.twig" with {"pager": messages.pages, "url": pagerUrl} %}
-    </div>
-</div>
+{% include 'OrnicarMessageBundle:Message:list_content.html.twig' %}
 {% endblock %}

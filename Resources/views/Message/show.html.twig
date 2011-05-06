@@ -1,40 +1,4 @@
-{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% extends 'OrnicarMessageBundle::container.html.twig' %}
 {% block content %}
-<div class="message_show">
-    <div class="head">
-        <h1>{{ message.subject }}</h1>
-    </div>
-    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
-    <div class="center show">
-        <span class="actions">
-            <a class="delete" href="{{ path('ornicar_message_message_delete', {"id": message.id}) }}">{% trans "Delete" %}</a>
-        </span>
-        <span class="infos">
-            {% if message.from == app.user %}
-                You said to <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.to }}</a>
-            {% else %}
-                <a class="user" href="{{ path('fos_user_user_show', {"username": message.from.username}) }}">{{ message.from }}</a> said
-            {% endif %}
-            said {{ message.createdAt|date }}:
-        </span>
-        <div class="body">{{ message.body }}</div>
-        {% if form %}
-            <div class="answer">
-                {% trans "Reply" %}
-                <form action="{{ path("ornicar_message_message_create") }}" method="post">
-                    {{ form_field(form.to) }}
-                    {{ form_field(form.subject) }}
-                    <div class="field_body">
-                        {{ form_field(form.body) }}
-                        {{ form_errors(form.body) }}
-                    </div>
-                    <div class="actions">
-                        <input class="send button" type="submit" value="{% trans "Send" %}" />
-                        <a class="cancel" href="{{ path("ornicar_message_message_list") }}">{% trans "Cancel" %}</a>
-                    </div>
-                </form>
-            </div>
-        {% endif %}
-    </div>
-</div>
+{% include 'OrnicarMessageBundle:Message:show_content.html.twig' %}
 {% endblock %}

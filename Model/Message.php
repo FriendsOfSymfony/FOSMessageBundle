@@ -5,7 +5,7 @@ namespace Ornicar\MessageBundle\Model;
 use FOS\UserBundle\Model\User;
 use DateTime;
 
-class Message
+abstract class Message
 {
     /**
      * Unique id of the message
@@ -25,6 +25,7 @@ class Message
      * User who received the message
      *
      * @var User
+     * @assert:NotBlank(message="Please enter a valid recipient")
      */
     protected $to = null;
 
@@ -32,6 +33,8 @@ class Message
      * Text body of the message
      *
      * @var string
+     * @assert:NotBlank(message="Please enter a message")
+     * @assert:MinLength(limit=10, message="Too short")
      */
     protected $body = null;
 
@@ -39,6 +42,8 @@ class Message
      * Text subject of the message
      *
      * @var string
+     * @assert:NotBlank(message="Please enter a subject")
+     * @assert:MinLength(limit=5, message="Too short")
      */
     protected $subject = null;
 

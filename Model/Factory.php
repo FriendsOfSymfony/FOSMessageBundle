@@ -7,35 +7,52 @@ use FOS\UserBundle\Model\UserManagerInterface;
 
 class Factory
 {
-    protected $userManager;
+    
+    protected $messageClass;
     protected $messageRepository;
-
-    public function __construct(UserManagerInterface $userManager, MessageRepositoryInterface $messageRepository)
+    protected $userManager;
+    
+    public function __construct($messageClass, UserManagerInterface $userManager, MessageRepositoryInterface $messageRepository)
     {
-        $this->userManager= $userManager;
+        $this->messageClass = $messageClass;
+        $this->userManager = $userManager;
         $this->messageRepository = $messageRepository;
     }
 
     /**
-     * Creates and return a new composition
+     * Creates and returns a new message
      *
-     * @return Composition
-     **/
+     * @return Message
+     */
     public function createComposition()
     {
-        return new Composition($this->userManager, $this->messageRepository);
+        $class = $this->getMessageClass();
+        return new $class();
     }
 
     /**
      * Creates and return a new answer
      *
-     * @return Answer
-     **/
+     * @return Message
+     */
     public function createAnswer(Message $message)
     {
-        $answer = new Answer($this->userManager, $this->messageRepository);
-        $answer->setOriginalMessage($message);
-
+        $class = $this->getMessageClass();
+        
+        $answer = new $class();
+        $answer->setTo($message->getFrom());
+        $answer->setSubject(preg_replace('/^(Re:\s)*/', 'Re: ', $message->getSubject()));
+        
         return $answer;
+    }
+    
+    /**
+     * Get the message class
+     * 
+     * @return string
+     */
+    protected function getMessageClass()
+    {
+        return $this->messageClass;
     }
 }
