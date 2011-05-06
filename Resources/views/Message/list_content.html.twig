@@ -1,0 +1,38 @@
+{% block content %}
+<table>
+    <tr>
+        <th>{{ "From"|trans }}</th>
+        <th>{{ "Subject"|trans }}</th>
+        <th>{{ "Received"|trans }}</th>
+        <th>&nbsp</th>
+    </tr>
+    {% for message in messages %}
+    <tr>
+        <td>
+            <a href="{{ path('fos_user_user_show', {'username': message.from.username}) }}">
+                {{ message.from }}
+            </a>
+        </td>
+        <td>
+            <a href="{{ path('ornicar_message_message_show', {'id': message.id}) }}">
+                {{ message.subject }}
+            </a>
+        </td>
+        <td>
+            {{ message.createdAt|date("F d, Y") }}
+        </td>
+        <td>
+            {% if not message.isRead %}
+                <a href="{{ path('ornicar_message_message_read', {"id": message.id}) }}">
+                    {{ "Mark as read"|trans}}
+                </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="4">{{ "No messages to display"|trans }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

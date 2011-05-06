@@ -11,6 +11,7 @@
 
     <services>
         <service id="ornicar_message.model.factory" class="Ornicar\MessageBundle\Model\Factory">
+            <argument>%ornicar_message.model.message.class%</argument>
             <argument type="service" id="fos_user.user_manager" />
             <argument type="service" id="ornicar_message.repository.message" />
             <argument>%ornicar_message.model.composition.class%</argument>

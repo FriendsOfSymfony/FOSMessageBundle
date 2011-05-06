@@ -1,0 +1,14 @@
+{% extends "OrnicarMessageBundle::container.html.twig" %}
+{% block content %}
+<div>
+    <h1>{{ "Compose message"|trans }}</h1>
+    {% include "OrnicarMessageBundle::sidebar.html.twig" %}
+    <div>
+        <form action="{{ path("ornicar_message_message_create") }}" method="post">
+            {{ form_widget(form) }}
+            <input type="submit" value="{{ "Send"|trans }}" />
+            <a href="{{ path("ornicar_message_message_list") }}">{{ "Cancel"|trans }}</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
