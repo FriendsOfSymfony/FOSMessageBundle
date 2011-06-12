@@ -13,7 +13,7 @@ class MessageController extends Controller
     {
         $form = $this->get('ornicar_message.form.message');
         $form['to']->setData($this->get('request')->query->get('to'));
-        
+
         return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -25,13 +25,13 @@ class MessageController extends Controller
         $handler = $this->get('ornicar_message.form.message.handler');
         $message = $this->get('ornicar_message.model.factory')->createComposition();
         $message->setFrom($this->get('security.context')->getToken()->getUser());
-        
+
         if ($handler->process($message)) {
             $this->get('session')->setFlash('ornicar_message_message_create', 'success');
             $this->get('ornicar_message.object_manager')->flush();
             return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
         }
-        
+
         return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -72,15 +72,15 @@ class MessageController extends Controller
         if ($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
             $form = $this->get('ornicar_message.form.message');
             $answer = $this->get('ornicar_message.model.factory')->createAnswer($message);
-            
+
             $form->setData($answer);
         } else {
             $form = null;
         }
-        
+
         return $this->render('OrnicarMessageBundle:Message:show.html.twig', array(
             'message' => $message,
-            'form' => $form->createView(),
+            'form' => $form ? $form->createView() : null,
         ));
     }
 

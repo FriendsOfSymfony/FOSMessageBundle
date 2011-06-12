@@ -10,7 +10,7 @@
         <parameter key="ornicar_message.form.message.handler.class">Ornicar\MessageBundle\Form\MessageFormHandler</parameter>
     </parameters>
 
-    <services> 
+    <services>
         <service id="ornicar_message.form.message"
                  factory-method="create"
                  factory-service="form.factory"
@@ -21,14 +21,14 @@
                 <argument key="data_class">%ornicar_message.model.message.class%</argument>
             </argument>
         </service>
-        
+
         <service id="ornicar_message.form.message.handler" class="%ornicar_message.form.message.handler.class%" scope="request">
             <argument type="service" id="ornicar_message.form.message" />
             <argument type="service" id="request" />
             <argument type="service" id="ornicar_message.messenger" />
             <argument type="service" id="fos_user.user_manager" />
         </service>
-        
+
         <service id="ornicar_message.form.type.message" class="%ornicar_message.form.type.message.class%">
         </service>
     </services>
