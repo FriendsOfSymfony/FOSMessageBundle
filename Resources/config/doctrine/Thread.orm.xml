@@ -8,15 +8,7 @@
 
         <field name="subject" column="subject" type="string" />
 
-        <field name="body" column="body" type="string" />
-
-        <field name="isRead" column="is_read" type="boolean" />
-
-        <field name="createdAt" column="created_at" type="date" />
-
-        <!--<many-to-one field="thread" target-entity="Ornicar\MessageBundle\Entity\Thread">-->
-            <!--<join-column name="thread_id" referenced-column-name="id" />-->
-        <!--</many-to-one>-->
+        <field name="lastMessageAt" column="last_message_at" type="date" />
 
     </mapped-superclass>
 

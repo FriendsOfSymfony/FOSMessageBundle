@@ -3,10 +3,15 @@
 namespace Ornicar\MessageBundle\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use FOS\UserBundle\Model\User;
+use FOS\UserBundle\Model\UserInterface;
 use DateTime;
 
-abstract class Message
+/**
+ * Abstract message model
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
+abstract class Message implements MessageInterface
 {
     /**
      * Unique id of the message
@@ -18,42 +23,37 @@ abstract class Message
     /**
      * User who sent the message
      *
-     * @var User
+     * @var UserInterface
      */
-    protected $from = null;
+    protected $sender;
 
     /**
      * User who received the message
      *
-     * @var User
-     * @Assert\NotBlank(message="Please enter a valid recipient")
+     * @var UserInterface
      */
-    protected $to = null;
+    protected $recipient;
 
     /**
      * Text body of the message
      *
      * @var string
-     * @Assert\NotBlank(message="Please enter a message")
-     * @Assert\MinLength(limit=10, message="Too short")
      */
-    protected $body = null;
+    protected $body;
 
     /**
      * Text subject of the message
      *
      * @var string
-     * @Assert\NotBlank(message="Please enter a subject")
-     * @Assert\MinLength(limit=5, message="Too short")
      */
-    protected $subject = null;
+    protected $subject;
 
     /**
      * Date when the message was sent
      *
      * @var DateTime
      */
-    protected $createdAt = null;
+    protected $createdAt;
 
     /**
      * Whether or not the message has been read
@@ -62,13 +62,21 @@ abstract class Message
      */
     protected $isRead = false;
 
+    /**
+     * Thread the message belongs to
+     *
+     * @var ThreadInterface
+     */
+    protected $thread;
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
     }
 
     /**
-     * Gets the message id
+     * Gets the message unique id
      *
      * @return mixed
      **/
@@ -78,11 +86,30 @@ abstract class Message
     }
 
     /**
+     * @return ThreadInterface
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
+    /**
+     * @param  ThreadInterface
+     * @return null
+     */
+    public function setThread(ThreadInterface $thread)
+    {
+        $this->thread = $thread;
+    }
+
+    /**
+     * Tells if the message has been read
+     *
      * @return bool
      */
     public function getIsRead()
     {
-      return $this->isRead;
+        return $this->isRead;
     }
 
     /**
@@ -91,7 +118,7 @@ abstract class Message
      */
     public function setIsRead($isRead)
     {
-      $this->isRead = $isRead;
+        $this->isRead = $isRead;
     }
 
     /**
@@ -99,23 +126,15 @@ abstract class Message
      */
     public function getCreatedAt()
     {
-      return $this->createdAt;
+        return $this->createdAt;
     }
 
-    /**
-     * @param  DateTime
-     * @return null
-     */
-    public function setCreatedAt($createdAt)
-    {
-      $this->createdAt = $createdAt;
-    }
     /**
      * @return string
      */
     public function getSubject()
     {
-      return $this->subject;
+        return $this->subject;
     }
 
     /**
@@ -124,14 +143,15 @@ abstract class Message
      */
     public function setSubject($subject)
     {
-      $this->subject = $subject;
+        $this->subject = $subject;
     }
+
     /**
      * @return string
      */
     public function getBody()
     {
-      return $this->body;
+        return $this->body;
     }
 
     /**
@@ -140,45 +160,40 @@ abstract class Message
      */
     public function setBody($body)
     {
-      $this->body = $body;
+        $this->body = $body;
     }
 
     /**
-     * @return User
+     * @return UserInterface
      */
-    public function getFrom()
+    public function getSender()
     {
-      return $this->from;
+        return $this->sender;
     }
 
     /**
-     * @param  User
+     * @param  UserInterface
      * @return null
      */
-    public function setFrom(User $from)
+    public function setSender(UserInterface $sender)
     {
-      $this->from = $from;
+        $this->sender = $sender;
     }
 
     /**
-     * @return User
+     * @return UserInterface
      */
-    public function getTo()
+    public function getRecipient()
     {
-      return $this->to;
+        return $this->recipient;
     }
 
     /**
-     * @param  User
+     * @param  UserInterface
      * @return null
      */
-    public function setTo(User $to)
+    public function setRecipient(UserInterface $recipient)
     {
-      $this->to = $to;
-    }
-
-    public function isVisibleBy(User $user)
-    {
-        return $user->isUser($this->getTo()) || $user->isUser($this->getFrom());
+        $this->recipient = $recipient;
     }
 }
