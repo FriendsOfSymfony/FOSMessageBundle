@@ -2,6 +2,8 @@
 
 namespace Ornicar\MessageBundle\Model;
 
+use FOS\UserBundle\Model\UserInterface;
+
 /**
  * Message model
  *
@@ -44,17 +46,6 @@ interface MessageInterface
      * @return DateTime
      */
     function getCreatedAt();
-
-    /**
-     * @return string
-     */
-    function getSubject();
-
-    /**
-     * @param  string
-     * @return null
-     */
-    function setSubject($subject);
 
     /**
      * @return string

@@ -5,7 +5,6 @@ namespace Ornicar\MessageBundle\Document;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\MessageManager as BaseMessageManager;
-use FOS\UserBundle\Model\UserInterface;
 
 class MessageManager extends BaseMessageManager
 {

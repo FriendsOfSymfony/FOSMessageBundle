@@ -2,133 +2,77 @@
 
 namespace Ornicar\MessageBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Ornicar\MessageBundle\Model\Message;
 use Ornicar\MessageBundle\Model\Composition;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Ornicar\MessageBundle\Model\ThreadManagerInterface;
+use FOS\UserBundle\Model\UserInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class MessageController extends Controller
+class MessageController extends ContainerAware
 {
-    public function newAction()
+    /**
+     * Displays the authenticated user inbox
+     *
+     * @return Response
+     */
+    public function inboxAction()
     {
-        $form = $this->get('ornicar_message.form.message');
-        $form['to']->setData($this->get('request')->query->get('to'));
+        $user = $this->getAuthenticatedUser();
+        $threads = $this->getThreadManager()->findUserInboxThreads($user);
 
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array('threads' => $threads));
     }
 
-    public function createAction()
+    /**
+     * Displays a thread
+     *
+     * @return Response
+     */
+    public function threadAction($threadId)
     {
-        $form = $this->get('ornicar_message.form.message');
-        $handler = $this->get('ornicar_message.form.message.handler');
-        $message = $this->get('ornicar_message.model.factory')->createComposition();
-        $message->setFrom($this->get('security.context')->getToken()->getUser());
+        $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
 
-        if ($handler->process($message)) {
-            $this->get('session')->setFlash('ornicar_message_message_create', 'success');
-            $this->get('ornicar_message.object_manager')->flush();
-            return $this->redirect($this->generateUrl('ornicar_message_message_sent'));
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:thread.html.twig', array('thread' => $thread));
+    }
+
+    /**
+     * Deletes a thread
+     *
+     * @return Response
+     */
+    public function deleteAction($threadId)
+    {
+        $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
+        $this->container->get('ornicar_message.thread_manager')->deleteThread($thread);
+
+        return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
+    }
+
+    /**
+     * Gets the current authenticated user
+     *
+     * @return UserInterface
+     */
+    protected function getAuthenticatedUser()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!$user instanceof UserInterface) {
+            throw new AccessDeniedException('Must be logged in with FOS\UserBundle');
         }
 
-        return $this->render('OrnicarMessageBundle:Message:new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $user;
     }
 
-    public function listAction()
+    /**
+     * Gets the thread manager service
+     *
+     * @return ThreadManagerInterface
+     */
+    protected function getThreadManager()
     {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $messages = $this->get('ornicar_message.repository.message')->findRecentByUser($user, true);
-        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
-        $messages->setPageRange(5);
-
-        return $this->render('OrnicarMessageBundle:Message:list.html.twig', array(
-            'messages' => $messages,
-            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_list')
-        ));
-    }
-
-    public function sentAction()
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $messages = $this->get('ornicar_message.repository.message')->findRecentSentByUser($user, true);
-        $messages->setCurrentPageNumber($this->get('request')->query->get('page', 1));
-        $messages->setItemCountPerPage($this->container->getParameter('ornicar_message.paginator.messages_per_page'));
-        $messages->setPageRange(5);
-
-        return $this->render('OrnicarMessageBundle:Message:sent.html.twig', array(
-            'messages' => $messages,
-            'pagerUrl' => $this->get('router')->generate('ornicar_message_message_sent')
-        ));
-    }
-
-    public function showAction($id)
-    {
-        $message = $this->getVisibleMessage($id);
-        $this->markAsRead($message);
-        if ($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
-            $form = $this->get('ornicar_message.form.message');
-            $answer = $this->get('ornicar_message.model.factory')->createAnswer($message);
-
-            $form->setData($answer);
-        } else {
-            $form = null;
-        }
-
-        return $this->render('OrnicarMessageBundle:Message:show.html.twig', array(
-            'message' => $message,
-            'form' => $form ? $form->createView() : null,
-        ));
-    }
-
-    public function readAction($id)
-    {
-        $message = $this->getVisibleMessage($id);
-        $this->markAsRead($message);
-
-        return $this->redirect($this->get('request')->headers->get('Referer'));
-    }
-
-    public function deleteAction($id)
-    {
-        $message = $this->getVisibleMessage($id);
-
-        $this->get('ornicar_message.object_manager')->remove($message);
-        $this->get('ornicar_message.object_manager')->flush();
-
-        return $this->redirectToInbox();
-    }
-
-    protected function redirectToInbox()
-    {
-        return $this->redirect($this->generateUrl('ornicar_message_message_list'));
-    }
-
-    protected function markAsRead(Message $message)
-    {
-        if (!$message->getIsRead()) {
-            if ($message->getTo()->isUser($this->get('security.context')->getToken()->getUser())) {
-                $this->get('ornicar_message.messenger')->markAsRead($message);
-                $this->get('ornicar_message.object_manager')->flush();
-            }
-        }
-    }
-
-    protected function getVisibleMessage($id)
-    {
-        $user = $this->get('security.context')->getToken()->getUser();
-        $message = $this->get('ornicar_message.repository.message')->find($id);
-
-        if (!$message) {
-            throw new NotFoundHttpException('No such message');
-        }
-        if (!$message->isVisibleBy($user)) {
-            throw new NotFoundHttpException('You shall not see this message');
-        }
-
-        return $message;
+        return $this->container->get('ornicar_message.thread_manager');
     }
 }

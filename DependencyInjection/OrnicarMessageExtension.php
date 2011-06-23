@@ -27,5 +27,13 @@ class OrnicarMessageExtension extends Extension
 
         $container->setParameter('ornicar_message.message_class', $config['message_class']);
         $container->setParameter('ornicar_message.thread_class', $config['thread_class']);
+
+        $container->setAlias('ornicar_message.message_manager', $config['message_manager']);
+        $container->setAlias('ornicar_message.thread_manager', $config['thread_manager']);
+
+        $container->setAlias('ornicar_message.sender', $config['sender']);
+        $container->setAlias('ornicar_message.composer', $config['composer']);
+        $container->setAlias('ornicar_message.provider', $config['provider']);
+        $container->setAlias('ornicar_message.authorizer', $config['authorizer']);
     }
 }

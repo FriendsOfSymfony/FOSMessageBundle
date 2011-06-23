@@ -6,8 +6,6 @@
 
     <mapped-superclass name="Ornicar\MessageBundle\Entity\Message" table="messages">
 
-        <field name="subject" column="subject" type="string" />
-
         <field name="body" column="body" type="string" />
 
         <field name="isRead" column="is_read" type="boolean" />

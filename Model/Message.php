@@ -42,13 +42,6 @@ abstract class Message implements MessageInterface
     protected $body;
 
     /**
-     * Text subject of the message
-     *
-     * @var string
-     */
-    protected $subject;
-
-    /**
      * Date when the message was sent
      *
      * @var DateTime
@@ -68,7 +61,6 @@ abstract class Message implements MessageInterface
      * @var ThreadInterface
      */
     protected $thread;
-
 
     public function __construct()
     {
@@ -127,23 +119,6 @@ abstract class Message implements MessageInterface
     public function getCreatedAt()
     {
         return $this->createdAt;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
-
-    /**
-     * @param  string
-     * @return null
-     */
-    public function setSubject($subject)
-    {
-        $this->subject = $subject;
     }
 
     /**

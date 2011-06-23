@@ -13,12 +13,11 @@ namespace Ornicar\MessageBundle\Model;
 interface MessageManagerInterface
 {
     /**
-     * Creates an empty message instance, bound to a thread
+     * Creates an empty message instance
      *
-     * @param ThreadInterface $thread
-     * @return UserInterface
+     * @return MessageInterface
      */
-    function createUser(ThreadInterface $thread);
+    function createMessage();
 
     /**
      * Saves a message

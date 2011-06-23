@@ -8,19 +8,17 @@ namespace Ornicar\MessageBundle\Model;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-abstract class UserManager implements MessageManagerInterface
+abstract class MessageManager implements MessageManagerInterface
 {
     /**
-     * Creates an empty message instance, bound to a thread
+     * Creates an empty message instance
      *
-     * @param ThreadInterface $thread
      * @return MessageInterface
      */
-    public function createMessage(ThreadInterface $thread)
+    public function createMessage()
     {
         $class = $this->getClass();
         $message = new $class;
-        $message->setThread($thread);
 
         return $message;
     }

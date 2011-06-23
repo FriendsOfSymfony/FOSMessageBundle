@@ -5,6 +5,7 @@ namespace Ornicar\MessageBundle\Document;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ThreadManager as BaseThreadManager;
+use FOS\UserBundle\Model\UserInterface;
 
 /**
  * Default ODM ThreadManager.
@@ -42,6 +43,42 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
+     * Finds a thread by its ID
+     *
+     * @return ThreadInterface or null
+     */
+    public function findThreadById($id)
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
+     * Find threads for a user
+     * Order them by last message not written by this user
+     *
+     * @param UserInterface $user
+     * @return Builder a query builder suitable for pagination
+     */
+    public function getUserInboxThreadsQueryBuilder(UserInterface $user)
+    {
+        return $this->repository->createQueryBuilder()
+            ->field('participants.$id')->equals(new \MongoId($user->getId()))
+            ->sort(sprintf('datesOfLastMessageWrittenByOtherUser.%s', $user->getId()), 'desc');
+    }
+
+    /**
+     * Find threads for a user
+     * Order them by last message not written by this user
+     *
+     * @param UserInterface $user
+     * @return array of ThreadInterface
+     */
+    public function findUserInboxThreads(UserInterface $user)
+    {
+        return $this->getUserInboxThreadsQueryBuilder($user)->getQuery()->execute();
+    }
+
+    /**
      * Saves a thread
      *
      * @param ThreadInterface $thread
@@ -53,6 +90,17 @@ class ThreadManager extends BaseThreadManager
         if ($andFlush) {
             $this->dm->flush();
         }
+    }
+
+    /**
+     * Deletes a thread
+     *
+     * @param ThreadInterface $thread the thread to delete
+     */
+    public function deleteThread(ThreadInterface $thread)
+    {
+        $this->dm->remove($thread);
+        $this->dm->flush();
     }
 
     /**

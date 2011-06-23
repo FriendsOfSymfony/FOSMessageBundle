@@ -4,15 +4,19 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Document\Message" collection="ornicar_message_message">
+    <mapped-superclass name="Ornicar\MessageBundle\Document\Thread" collection="ornicar_message_thread">
 
         <field name="subject" fieldName="subject" type="string" />
 
-        <field name="lastMessageAt" fieldName="lastMessageAt" type="date" />
+        <!--<reference-many field="participants" target-document="Acme\UserBundle\Document\User" />-->
+
+        <!--<reference-many field="messages" target-document="Acme\MessageBundle\Document\Message" />-->
+
+        <field name="datesOfLastMessageWrittenByOtherUser" fieldName="datesOfLastMessageWrittenByOtherUser" type="hash" />
 
         <indexes>
             <index unique="false">
-                <key name="lastMessageAt" order="desc" />
+                <key name="datesOfLastMessageWrittenByOtherUser" order="desc" />
             </index>
         </indexes>
 

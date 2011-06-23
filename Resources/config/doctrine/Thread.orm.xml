@@ -8,8 +8,6 @@
 
         <field name="subject" column="subject" type="string" />
 
-        <field name="lastMessageAt" column="last_message_at" type="date" />
-
     </mapped-superclass>
 
 </doctrine-mapping>

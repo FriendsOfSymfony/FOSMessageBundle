@@ -26,6 +26,12 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('thread_class')->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('message_class')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('message_manager')->defaultValue('ornicar_message.message_manager.default')->cannotBeEmpty()->end()
+                ->scalarNode('thread_manager')->defaultValue('ornicar_message.thread_manager.default')->cannotBeEmpty()->end()
+                ->scalarNode('sender')->defaultValue('ornicar_message.sender.default')->cannotBeEmpty()->end()
+                ->scalarNode('composer')->defaultValue('ornicar_message.composer.default')->cannotBeEmpty()->end()
+                ->scalarNode('provider')->defaultValue('ornicar_message.provider.default')->cannotBeEmpty()->end()
+                ->scalarNode('authorizer')->defaultValue('ornicar_message.authorizer.default')->cannotBeEmpty()->end()
             ->end();
 
         $this->addFormSection($rootNode);
