@@ -29,6 +29,7 @@ class MessageController extends ContainerAware
     /**
      * Displays a thread
      *
+     * @param strind $threadId the thread id
      * @return Response
      */
     public function threadAction($threadId)
@@ -36,6 +37,23 @@ class MessageController extends ContainerAware
         $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
 
         return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:thread.html.twig', array('thread' => $thread));
+    }
+
+    /**
+     * Create a new message thread
+     *
+     * @return Response
+     */
+    public function newThreadAction()
+    {
+        $form = $this->container->get('ornicar_message.new_thread_form.factory')->create();
+        $formHandler = $this->container->get('ornicar_message.new_thread_form.handler');
+
+        if ($formHandler->process($form)) {
+            return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
+        }
+
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:newThread.html.twig');
     }
 
     /**

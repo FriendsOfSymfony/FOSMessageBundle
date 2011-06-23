@@ -32,24 +32,28 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('composer')->defaultValue('ornicar_message.composer.default')->cannotBeEmpty()->end()
                 ->scalarNode('provider')->defaultValue('ornicar_message.provider.default')->cannotBeEmpty()->end()
                 ->scalarNode('authorizer')->defaultValue('ornicar_message.authorizer.default')->cannotBeEmpty()->end()
-            ->end();
-
-        $this->addFormSection($rootNode);
-
-        return $treeBuilder;
-    }
-
-    private function addFormSection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('form')
+                ->arrayNode('new_thread_form')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->scalarNode('type')->defaultValue('ornicar_message.message_form_type')->end()
-                        ->scalarNode('handler')->defaultValue('ornicar_message.message_form_handler')->end()
+                        ->scalarNode('factory')->defaultValue('ornicar_message.new_thread_form.factory.default')->cannotBeEmpty()->end()
+                        ->scalarNode('type')->defaultValue('ornicar_message.new_thread_form.type.default')->cannotBeEmpty()->end()
+                        ->scalarNode('handler')->defaultValue('ornicar_message.new_thread_form.handler.default')->cannotBeEmpty()->end()
+                        ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
+                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\NewThreadModel')->end()
+                    ->end()
+                ->end()
+                ->arrayNode('reply_form')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('factory')->defaultValue('ornicar_message.reply_form.factory.default')->cannotBeEmpty()->end()
+                        ->scalarNode('type')->defaultValue('ornicar_message.reply_form.type.default')->cannotBeEmpty()->end()
+                        ->scalarNode('handler')->defaultValue('ornicar_message.reply_form.handler.default')->cannotBeEmpty()->end()
+                        ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
+                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\ReplyModel')->end()
                     ->end()
                 ->end()
             ->end();
+
+        return $treeBuilder;
     }
 }

@@ -4,7 +4,7 @@ namespace Ornicar\MessageBundle\Composer;
 
 use Ornicar\MessageBundle\Model\MessageInterface;
 use FOS\UserBundle\Model\UserInterface;
-use Ornicar\MessageBundle\Sender\MessageSenderInterface;
+use Ornicar\MessageBundle\Sender\SenderInterface;
 
 /**
  * Fluent interface class to compose messages
@@ -16,7 +16,7 @@ class MessageBuilder
     /**
      * Message manager
      *
-     * @var MessageSenderInterface
+     * @var SenderInterface
      */
     protected $messageSender;
 
@@ -41,19 +41,20 @@ class MessageBuilder
      */
     protected $subject;
 
-    public function __construct(MessageSenderInterface $messageSender)
+    public function __construct(SenderInterface $messageSender)
     {
         $this->messageSender = $messageSender;
     }
 
     /**
      * Sends the created message.
-     * See MessageSenderInterface
+     * See SenderInterface
      *
      * @return MessageInterface the message sent
      */
     public function send()
     {
+        // do we send a reply or a new thread?
         if ($this->inReplyToMessage) {
             $this->messageSender->sendReply($this->message, $this->inReplyToMessage);
         } else {

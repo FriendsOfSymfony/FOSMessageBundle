@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="ornicar_message.new_thread_form.type.default" class="Ornicar\MessageBundle\FormType\NewThreadMessageFormType" public="false">
+            <argument>%ornicar_message.new_thread_form.model%</argument>
+        </service>
+
+        <service id="ornicar_message.reply_form.type.default" class="Ornicar\MessageBundle\FormType\ReplyMessageFormType" public="false">
+            <argument>%ornicar_message.reply_form.model%</argument>
+        </service>
+
+        <service id="ornicar_message.new_thread_form.factory.default" class="Ornicar\MessageBundle\FormFactory\MessageFormFactory" public="false">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="ornicar_message.new_thread_form.type" />
+            <argument>%ornicar_message.new_thread_form.name%</argument>
+        </service>
+
+        <service id="ornicar_message.reply_form.factory.default" class="Ornicar\MessageBundle\FormFactory\MessageFormFactory" public="false">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="ornicar_message.reply_form.type" />
+            <argument>%ornicar_message.reply_form.name%</argument>
+        </service>
+
+        <service id="ornicar_message.new_thread_form.handler.default" class="Ornicar\MessageBundle\FormHandler\NewThreadMessageFormHandler" scope="request" public="false">
+            <argument type="service" id="request" />
+            <argument type="service" id="ornicar_message.sender" />
+        </service>
+
+        <service id="ornicar_message.reply_form.handler.default" class="Ornicar\MessageBundle\FormHandler\ReplyMessageFormHandler" scope="request" public="false">
+            <argument type="service" id="request" />
+            <argument type="service" id="ornicar_message.sender" />
+        </service>
+
+        <service id="ornicar_message.username_to_user_transformer" class="Ornicar\MessageBundle\DataTransformer\UsernameToUserTransformer" public="false">
+            <argument type="service" id="fos_user.user_manager" />
+        </service>
+
+        <service id="ornicar_message.username_form_type" class="Ornicar\MessageBundle\FormType\UsernameFormType">
+            <tag name="form.type" alias="ornicar_message.username" />
+            <argument type="service" id="ornicar_message.username_to_user_transformer" />
+        </service>
+
+    </services>
+
+</container>

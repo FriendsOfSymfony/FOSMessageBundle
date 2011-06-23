@@ -3,14 +3,14 @@
 namespace Ornicar\MessageBundle\Composer;
 
 use Ornicar\MessageBundle\Model\MessageManagerInterface;
-use Ornicar\MessageBundle\Sender\MessageSenderInterface;
+use Ornicar\MessageBundle\Sender\SenderInterface;
 
 /**
  * Factory for message builders
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class Composer
+class Composer implements ComposerInterface
 {
     /**
      * Message manager
@@ -22,22 +22,22 @@ class Composer
     /**
      * The message sender
      *
-     * @var MessageSenderInterface
+     * @var SenderInterface
      */
     protected $messageSender;
 
-    public function __construct(MessageManagerInterface $messageManager, MessageSenderInterface $messageSender)
+    public function __construct(MessageManagerInterface $messageManager, SenderInterface $messageSender)
     {
         $this->messageManager = $messageManager;
         $this->messageSender = $messageSender;
     }
 
     /**
-     * Starts composing a message, bound to a thread
+     * Starts composing a message
      *
      * @return MessageBuilder
      */
-    public function compose(ThreadInterface $thread = null)
+    public function compose()
     {
         $message = $this->messageManager->createMessage();
 

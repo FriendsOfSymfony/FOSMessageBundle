@@ -53,7 +53,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Find threads for a user
+     * Finds threads for a user
      * Order them by last message not written by this user
      *
      * @param UserInterface $user
