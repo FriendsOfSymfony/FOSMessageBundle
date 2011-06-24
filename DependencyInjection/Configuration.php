@@ -19,7 +19,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('fos_user');
+        $rootNode = $treeBuilder->root('ornicar_message');
 
         $rootNode
             ->children()

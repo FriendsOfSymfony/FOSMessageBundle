@@ -16,4 +16,6 @@
             <argument>%ornicar_message.thread_class%</argument>
         </service>
 
+    </services>
+
 </container>
