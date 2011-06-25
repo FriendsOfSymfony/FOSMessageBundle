@@ -53,22 +53,28 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds threads for a user
-     * Order them by last message not written by this user
+     * Finds threads for a user,
+     * containing at least one message not written by this user,
+     * ordered by last message not written by this user in reverse order.
+     * In one word: an inbox.
      *
      * @param UserInterface $user
      * @return Builder a query builder suitable for pagination
      */
     public function getUserInboxThreadsQueryBuilder(UserInterface $user)
     {
+        $datesOfLastMessageWrittenByOtherUserFieldName = sprintf('datesOfLastMessageWrittenByOtherUser.%s', $user->getId());
         return $this->repository->createQueryBuilder()
             ->field('participants.$id')->equals(new \MongoId($user->getId()))
-            ->sort(sprintf('datesOfLastMessageWrittenByOtherUser.%s', $user->getId()), 'desc');
+            ->field($datesOfLastMessageWrittenByOtherUserFieldName)->exists(true)
+            ->sort($datesOfLastMessageWrittenByOtherUserFieldName, 'desc');
     }
 
     /**
-     * Find threads for a user
-     * Order them by last message not written by this user
+     * Finds threads for a user,
+     * containing at least one message not written by this user,
+     * ordered by last message not written by this user in reverse order.
+     * In one word: an inbox.
      *
      * @param UserInterface $user
      * @return array of ThreadInterface
@@ -76,6 +82,38 @@ class ThreadManager extends BaseThreadManager
     public function findUserInboxThreads(UserInterface $user)
     {
         return $this->getUserInboxThreadsQueryBuilder($user)->getQuery()->execute();
+    }
+
+    /**
+     * Finds threads from a user,
+     * containing at least one message written by this user,
+     * ordered by last message written by this user in reverse order.
+     * In one word: an sentbox.
+     *
+     * @param UserInterface $user
+     * @return Builder a query builder suitable for pagination
+     */
+    public function getUserSentThreadsQueryBuilder(UserInterface $user)
+    {
+        $datesOfLastMessageWrittenByUserFieldName = sprintf('datesOfLastMessageWrittenByUser.%s', $user->getId());
+        return $this->repository->createQueryBuilder()
+            ->field('participants.$id')->equals(new \MongoId($user->getId()))
+            ->field($datesOfLastMessageWrittenByUserFieldName)->exists(true)
+            ->sort($datesOfLastMessageWrittenByUserFieldName, 'desc');
+    }
+
+    /**
+     * Finds threads from a user,
+     * containing at least one message written by this user,
+     * ordered by last message written by this user in reverse order.
+     * In one word: an sentbox.
+     *
+     * @param UserInterface $user
+     * @return array of ThreadInterface
+     */
+    public function findUserSentThreads(UserInterface $user)
+    {
+        return $this->getUserSentThreadsQueryBuilder($user)->getQuery()->execute();
     }
 
     /**

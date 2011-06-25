@@ -8,6 +8,10 @@
         <default key="_controller">OrnicarMessageBundle:Message:inbox</default>
     </route>
 
+    <route id="ornicar_message_sent" pattern="/sent">
+        <default key="_controller">OrnicarMessageBundle:Message:sent</default>
+    </route>
+
     <route id="ornicar_message_thread_new" pattern="/new">
         <default key="_controller">OrnicarMessageBundle:Message:newThread</default>
     </route>

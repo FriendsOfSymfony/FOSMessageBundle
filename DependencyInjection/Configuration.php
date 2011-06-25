@@ -39,7 +39,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('type')->defaultValue('ornicar_message.new_thread_form.type.default')->cannotBeEmpty()->end()
                         ->scalarNode('handler')->defaultValue('ornicar_message.new_thread_form.handler.default')->cannotBeEmpty()->end()
                         ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
-                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\NewThreadModel')->end()
+                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\NewThreadMessage')->end()
                     ->end()
                 ->end()
                 ->arrayNode('reply_form')
@@ -49,7 +49,7 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('type')->defaultValue('ornicar_message.reply_form.type.default')->cannotBeEmpty()->end()
                         ->scalarNode('handler')->defaultValue('ornicar_message.reply_form.handler.default')->cannotBeEmpty()->end()
                         ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
-                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\ReplyModel')->end()
+                        ->scalarNode('model')->defaultValue('Ornicar\MessageBundle\FormModel\ReplyMessage')->end()
                     ->end()
                 ->end()
             ->end();

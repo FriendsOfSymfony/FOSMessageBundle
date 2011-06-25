@@ -36,8 +36,12 @@ class Authorizer implements AuthorizerInterface
      *
      * @return UserInterface
      */
-    protected function getAuthenticatedUser()
+    public function getAuthenticatedUser()
     {
+        if (!$this->isAuthenticated()) {
+            return null;
+        }
+
         return $this->securityContext->getToken()->getUser();
     }
 
@@ -46,7 +50,7 @@ class Authorizer implements AuthorizerInterface
      *
      * @return boolean
      */
-    public function isAuthenticated()
+    protected function isAuthenticated()
     {
         return $this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED');
     }

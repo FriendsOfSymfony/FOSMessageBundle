@@ -5,6 +5,7 @@ namespace Ornicar\MessageBundle\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 /**
  * Transforms between a UserInterface and a username
@@ -52,8 +53,8 @@ class UsernameToUserTransformer implements DataTransformerInterface
         if (null === $value) {
             return null;
         }
-        if (is_string($value)) {
-            throw new UnexpectedTypeException($array, 'string');
+        if (!is_string($value)) {
+            throw new UnexpectedTypeException($value, 'string');
         }
 
         return $this->userManager->findUserByUsername($value);

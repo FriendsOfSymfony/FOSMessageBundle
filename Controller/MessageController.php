@@ -27,6 +27,19 @@ class MessageController extends ContainerAware
     }
 
     /**
+     * Displays the authenticated user sent mails
+     *
+     * @return Response
+     */
+    public function sentAction()
+    {
+        $user = $this->getAuthenticatedUser();
+        $threads = $this->getThreadManager()->findUserSentThreads($user);
+
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array('threads' => $threads));
+    }
+
+    /**
      * Displays a thread
      *
      * @param strind $threadId the thread id
@@ -53,7 +66,10 @@ class MessageController extends ContainerAware
             return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
         }
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:newThread.html.twig');
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:newThread.html.twig', array(
+            'form' => $form->createView(),
+            'data' => $form->getData()
+        ));
     }
 
     /**

@@ -22,8 +22,10 @@ interface ThreadManagerInterface
     function findThreadById($id);
 
     /**
-     * Find threads for a user
-     * Order them by last message not written by this user
+     * Finds threads for a user,
+     * containing at least one message not written by this user,
+     * ordered by last message not written by this user in reverse order.
+     * In one word: an inbox.
      *
      * @param UserInterface $user
      * @return Builder a query builder suitable for pagination
@@ -31,13 +33,37 @@ interface ThreadManagerInterface
     function getUserInboxThreadsQueryBuilder(UserInterface $user);
 
     /**
-     * Find threads for a user
-     * Order them by last message not written by this user
+     * Finds threads for a user,
+     * containing at least one message not written by this user,
+     * ordered by last message not written by this user in reverse order.
+     * In one word: an inbox.
      *
      * @param UserInterface $user
      * @return array of ThreadInterface
      */
     function findUserInboxThreads(UserInterface $user);
+
+    /**
+     * Finds threads from a user,
+     * containing at least one message written by this user,
+     * ordered by last message written by this user in reverse order.
+     * In one word: an sentbox.
+     *
+     * @param UserInterface $user
+     * @return Builder a query builder suitable for pagination
+     */
+    function getUserSentThreadsQueryBuilder(UserInterface $user);
+
+    /**
+     * Finds threads from a user,
+     * containing at least one message written by this user,
+     * ordered by last message written by this user in reverse order.
+     * In one word: an sentbox.
+     *
+     * @param UserInterface $user
+     * @return array of ThreadInterface
+     */
+    function findUserSentThreads(UserInterface $user);
 
     /**
      * Creates an empty comment thread instance

@@ -4,19 +4,22 @@ namespace Ornicar\MessageBundle\FormHandler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Ornicar\MessageBundle\Sender\SenderInterface;
+use Ornicar\MessageBundle\Composer\ComposerInterface;
 use Ornicar\MessageBundle\FormModel\AbstractMessage;
+use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
 
 abstract class AbstractMessageFormHandler
 {
     protected $form;
     protected $request;
-    protected $sender;
+    protected $composer;
+    protected $authorizer;
 
-    public function __construct(Request $request, SenderInterface $sender)
+    public function __construct(Request $request, ComposerInterface $composer, AuthorizerInterface $authorizer)
     {
         $this->request = $request;
-        $this->sender = $sender;
+        $this->composer = $composer;
+        $this->authorizer = $authorizer;
     }
 
     /**
@@ -27,15 +30,16 @@ abstract class AbstractMessageFormHandler
      */
     public function process(Form $form)
     {
-        if ('POST' === $this->request->getMethod()) {
+        if ('POST' !== $this->request->getMethod()) {
+            return false;
+        }
 
-            $form->bindRequest($this->request);
+        $form->bindRequest($this->request);
 
-            if ($form->isValid()) {
-                $this->composeAndSend($form->getData());
+        if ($form->isValid()) {
+            $this->composeAndSend($form->getData());
 
-                return true;
-            }
+            return true;
         }
 
         return false;

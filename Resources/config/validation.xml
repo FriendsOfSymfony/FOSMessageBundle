@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+
+    <class name="Ornicar\MessageBundle\FormModel\NewThreadMessage">
+
+        <property name="recipient">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a username</option>
+            </constraint>
+            <constraint name="Type">
+                <option name="value">FOS\UserBundle\Model\UserInterface</option>
+            </constraint>
+        </property>
+
+        <property name="subject">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a subject</option>
+            </constraint>
+            <constraint name="MinLength">
+                <option name="limit">2</option>
+                <option name="message">The subject is too short</option>
+            </constraint>
+            <constraint name="MaxLength">
+                <option name="limit">255</option>
+                <option name="message">The subject is too long</option>
+            </constraint>
+        </property>
+
+        <property name="body">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a body</option>
+            </constraint>
+            <constraint name="MinLength">
+                <option name="limit">2</option>
+                <option name="message">The body is too short</option>
+            </constraint>
+        </property>
+
+    </class>
+
+    <class name="Ornicar\MessageBundle\FormModel\ReplyMessage">
+
+        <property name="body">
+            <constraint name="NotBlank">
+                <option name="message">Please enter a body</option>
+            </constraint>
+            <constraint name="MinLength">
+                <option name="limit">2</option>
+                <option name="message">The body is too short</option>
+            </constraint>
+        </property>
+
+    </class>
+
+</constraint-mapping>

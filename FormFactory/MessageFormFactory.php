@@ -28,15 +28,23 @@ class MessageFormFactory
      */
     protected $formName;
 
-    public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName)
+    /**
+     * The FQCN of the message model
+     *
+     * @var string
+     */
+    protected $messageClass;
+
+    public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName, $messageClass)
     {
         $this->formFactory = $formFactory;
         $this->formType = $formType;
         $this->formName = $formName;
+        $this->messageClass = $messageClass;
     }
 
     public function create()
     {
-        return $this->formFactory->createNamed($this->formType, $this->formName);
+        return $this->formFactory->createNamed($this->formType, $this->formName, new $this->messageClass);
     }
 }

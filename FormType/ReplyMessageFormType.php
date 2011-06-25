@@ -10,6 +10,11 @@ use Symfony\Component\Form\AbstractType;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class ReplyMessageFormType extends AbstractMessageFormType
+class ReplyMessageFormType extends AbstractType
 {
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        $builder
+            ->add('body', 'textarea');
+    }
 }

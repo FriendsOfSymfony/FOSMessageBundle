@@ -12,9 +12,14 @@
 
         <!--<reference-many field="messages" target-document="Acme\MessageBundle\Document\Message" />-->
 
+        <field name="datesOfLastMessageWrittenByUser" fieldName="datesOfLastMessageWrittenByUser" type="hash" />
+
         <field name="datesOfLastMessageWrittenByOtherUser" fieldName="datesOfLastMessageWrittenByOtherUser" type="hash" />
 
         <indexes>
+            <index unique="false">
+                <key name="datesOfLastMessageWrittenByUser" order="desc" />
+            </index>
             <index unique="false">
                 <key name="datesOfLastMessageWrittenByOtherUser" order="desc" />
             </index>

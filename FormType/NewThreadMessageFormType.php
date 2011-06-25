@@ -10,14 +10,13 @@ use Symfony\Component\Form\AbstractType;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class NewThreadMessageFormType extends AbstractMessageFormType
+class NewThreadMessageFormType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $builder
             ->add('recipient', 'ornicar_message.username')
-            ->add('subject', 'text');
+            ->add('subject', 'text')
+            ->add('body', 'textarea');
     }
 }

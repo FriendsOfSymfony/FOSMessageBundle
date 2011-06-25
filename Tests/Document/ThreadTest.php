@@ -31,7 +31,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
-        $this->assertSame(array('u1' => null, 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
+        $this->assertSame(array('u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
 
         /**
          * Second message
@@ -41,6 +42,7 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
         $this->assertSame(array('u1' => $this->dates[1]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[1]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
 
         /**
          * Third message
@@ -50,6 +52,7 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
         $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
 
         /**
          * Fourth message
@@ -59,6 +62,7 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
         $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[3]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
+        $this->assertSame(array('u1' => $this->dates[3]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
 
     }
 
@@ -97,6 +101,11 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
 class TestThread extends Thread
 {
+    public function getDatesOfLastMessageWrittenByUser()
+    {
+        return $this->datesOfLastMessageWrittenByUser;
+    }
+
     public function getDatesOfLastMessageWrittenByOtherUser()
     {
         return $this->datesOfLastMessageWrittenByOtherUser;

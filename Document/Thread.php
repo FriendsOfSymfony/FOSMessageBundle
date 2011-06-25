@@ -27,13 +27,24 @@ abstract class Thread extends AbstractThread
     /**
      * Date the last messages were created at.
      * To each user id is associated the date
-     * of the last message he did not write
+     * of the last message he did not write.
      *
-     * This allows fast sorting of threads
+     * This allows fast sorting of threads in inbox
      *
-     * @var array of DateTime indexed by
+     * @var array of int timestamps indexed by user id
      */
     protected $datesOfLastMessageWrittenByOtherUser = array();
+
+    /**
+     * Date the last messages were created at.
+     * To each user id is associated the date
+     * of the last message he wrote.
+     *
+     * This allows fast sorting of threads in sentbox
+     *
+     * @var array of int timestamps indexed by user id
+     */
+    protected $datesOfLastMessageWrittenByUser = array();
 
     /**
      * Initializes the collections
@@ -93,16 +104,24 @@ abstract class Thread extends AbstractThread
         foreach (array($sender, $recipient) as $participant) {
             if (!$this->participants->contains($participant)) {
                 $this->participants->add($participant);
-                $this->datesOfLastMessageWrittenByOtherUser[$participant->getId()] = null;
             }
         }
 
         // Update the last message dates if needed
         $messageTs = $message->getCreatedAt()->getTimestamp();
-        foreach ($this->datesOfLastMessageWrittenByOtherUser as $userId => $timestamp) {
-            if ($userId != $sender->getId() && $messageTs > $timestamp) {
-                $this->datesOfLastMessageWrittenByOtherUser[$userId] = $messageTs;
+        $senderId = $sender->getId();
+        foreach ($this->participants as $participant) {
+            $participantId = $participant->getId();
+            if ($participantId != $senderId) {
+                if (!isset($this->datesOfLastMessageWrittenByOtherUser[$participantId]) || $this->datesOfLastMessageWrittenByOtherUser[$participantId] < $messageTs) {
+                    $this->datesOfLastMessageWrittenByOtherUser[$participantId] = $messageTs;
+                }
+            } elseif (!isset($this->datesOfLastMessageWrittenByUser[$participantId]) || $this->datesOfLastMessageWrittenByUser[$participantId] < $messageTs) {
+                $this->datesOfLastMessageWrittenByUser[$participantId] = $messageTs;
             }
         }
+        // having theses sorted by user does not harm, and it makes unit testing easier
+        ksort($this->datesOfLastMessageWrittenByUser);
+        ksort($this->datesOfLastMessageWrittenByOtherUser);
     }
 }
