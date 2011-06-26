@@ -4,6 +4,7 @@ namespace Ornicar\MessageBundle\Reader;
 
 use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
+use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
 
 class Reader implements ReaderInterface
 {
@@ -14,9 +15,17 @@ class Reader implements ReaderInterface
      */
     protected $authorizer;
 
-    public function __construct(AuthorizerInterface $authorizer)
+    /**
+     * The readable manager
+     *
+     * @var ReadableManagerInterface
+     */
+    protected $readableManager;
+
+    public function __construct(AuthorizerInterface $authorizer, ReadableManagerInterface $readableManager)
     {
         $this->authorizer = $authorizer;
+        $this->readableManager = $readableManager;
     }
 
     /**
@@ -26,7 +35,7 @@ class Reader implements ReaderInterface
      */
     public function markAsRead(ReadableInterface $readable)
     {
-        $readable->setIsReadByParticipant($this->getAuthenticatedUser(), true);
+        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedUser());
     }
 
     /**
@@ -36,7 +45,7 @@ class Reader implements ReaderInterface
      */
     public function markAsUnread(ReadableInterface $readable)
     {
-        $readable->setIsReadByParticipant($this->getAuthenticatedUser(), false);
+        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedUser());
     }
 
     /**

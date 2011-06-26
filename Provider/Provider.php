@@ -34,13 +34,13 @@ class Provider implements ProviderInterface
      *
      * @var ReaderInterface
      */
-    protected $reader;
+    protected $threadReader;
 
-    public function __construct(ThreadManagerInterface $threadManager, AuthorizerInterface $authorizer, ReaderInterface $reader)
+    public function __construct(ThreadManagerInterface $threadManager, AuthorizerInterface $authorizer, ReaderInterface $threadReader)
     {
         $this->authorizer = $authorizer;
         $this->threadManager = $threadManager;
-        $this->reader = $reader;
+        $this->threadReader = $threadReader;
     }
 
     /**
@@ -59,7 +59,7 @@ class Provider implements ProviderInterface
         if (!$this->authorizer->canSeeThread($thread)) {
             throw new AccessDeniedException('You are not allowed to see this thread');
         }
-        $this->reader->markAsRead($thread);
+        $this->threadReader->markAsRead($thread);
 
         return $thread;
     }
