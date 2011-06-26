@@ -25,6 +25,13 @@ abstract class Thread extends AbstractThread
     protected $participants;
 
     /**
+     * Tells, for each participant, if the message is deleted
+     *
+     * @var array of boolean indexed by user id
+     */
+    protected $isDeletedByParticipant = array();
+
+    /**
      * Date the last messages were created at.
      * To each user id is associated the date
      * of the last message he did not write.
@@ -112,6 +119,27 @@ abstract class Thread extends AbstractThread
     }
 
     /**
+     * Tells if this thread is deleted by this participant
+     *
+     * @return bool
+     */
+    public function isDeletedByParticipant(UserInterface $participant)
+    {
+        return $this->isDeletedByParticipant[$participant->getId()];
+    }
+
+    /**
+     * Sets whether or not this participant has deleted this thread
+     *
+     * @param UserInterface $participant
+     * @param boolean $isDeleted
+     */
+    public function setIsDeletedByParticipant(UserInterface $participant, $isDeleted)
+    {
+        $this->isDeletedByParticipant[$participant->getId()] = (boolean) $isDeleted;
+    }
+
+    /**
      * Performs denormalization tricks
      * based on a message belonging to this thread.
      * Updates participants and last message dates.
@@ -138,6 +166,9 @@ abstract class Thread extends AbstractThread
                 $message->setIsReadByParticipant($participant, false);
             } elseif (!isset($this->datesOfLastMessageWrittenByUser[$participantId]) || $this->datesOfLastMessageWrittenByUser[$participantId] < $messageTs) {
                 $this->datesOfLastMessageWrittenByUser[$participantId] = $messageTs;
+            }
+            if (!array_key_exists($participantId, $this->isDeletedByParticipant)) {
+                $this->isDeletedByParticipant[$participantId] = false;
             }
         }
         // having theses sorted by user does not harm, and it makes unit testing easier

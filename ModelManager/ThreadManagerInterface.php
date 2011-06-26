@@ -23,7 +23,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
     function findThreadById($id);
 
     /**
-     * Finds threads for a user,
+     * Finds not deleted threads for a user,
      * containing at least one message not written by this user,
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
@@ -34,7 +34,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
     function getUserInboxThreadsQueryBuilder(UserInterface $user);
 
     /**
-     * Finds threads for a user,
+     * Finds not deleted threads for a user,
      * containing at least one message not written by this user,
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.

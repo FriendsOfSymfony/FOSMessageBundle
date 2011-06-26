@@ -68,4 +68,19 @@ interface ThreadInterface extends ReadableInterface
      * @return null
      */
     function addParticipant(UserInterface $participant);
+
+    /**
+     * Tells if this thread is deleted by this participant
+     *
+     * @return bool
+     */
+    function isDeletedByParticipant(UserInterface $participant);
+
+    /**
+     * Sets whether or not this participant has deleted this thread
+     *
+     * @param UserInterface $participant
+     * @param boolean $isDeleted
+     */
+    function setIsDeletedByParticipant(UserInterface $participant, $isDeleted);
 }

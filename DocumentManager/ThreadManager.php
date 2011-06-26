@@ -66,7 +66,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds threads for a user,
+     * Finds not deleted threads for a user,
      * containing at least one message not written by this user,
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
@@ -76,15 +76,22 @@ class ThreadManager extends BaseThreadManager
      */
     public function getUserInboxThreadsQueryBuilder(UserInterface $user)
     {
+        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $user->getId());
         $datesOfLastMessageWrittenByOtherUserFieldName = sprintf('datesOfLastMessageWrittenByOtherUser.%s', $user->getId());
+
         return $this->repository->createQueryBuilder()
+            // the participant is in the thread participants
             ->field('participants.$id')->equals(new \MongoId($user->getId()))
+            // the thread is not deleted by this participant
+            ->field($isDeletedByParticipantFieldName)->equals(false)
+            // there is at least one message written by an other participant
             ->field($datesOfLastMessageWrittenByOtherUserFieldName)->exists(true)
+            // sort by date of last message written by an other participant
             ->sort($datesOfLastMessageWrittenByOtherUserFieldName, 'desc');
     }
 
     /**
-     * Finds threads for a user,
+     * Finds not deleted threads for a user,
      * containing at least one message not written by this user,
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.

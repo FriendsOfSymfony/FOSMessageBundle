@@ -14,7 +14,7 @@ interface ReadableInterface
     function isReadByParticipant(UserInterface $participant);
 
     /**
-     * Sets whether or not this participant has read this message
+     * Sets whether or not this participant has read this
      *
      * @param UserInterface $participant
      * @param boolean $isRead
