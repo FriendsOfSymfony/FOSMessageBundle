@@ -26,7 +26,7 @@ class Authorizer implements AuthorizerInterface
     }
 
     /**
-     * Tells if the current user is allowed
+     * Tells if the current participant is allowed
      * to see this thread
      *
      * @param ThreadInterface $thread
@@ -35,6 +35,18 @@ class Authorizer implements AuthorizerInterface
     public function canSeeThread(ThreadInterface $thread)
     {
         return $this->isAuthenticated() && $thread->isParticipant($this->getAuthenticatedParticipant());
+    }
+
+    /**
+     * Tells if the current participant is allowed
+     * to delete this thread
+     *
+     * @param ThreadInterface $thread
+     * @return boolean
+     */
+    public function canDeleteThread(ThreadInterface $thread)
+    {
+        return $this->canSeeThread($thread);
     }
 
     /**

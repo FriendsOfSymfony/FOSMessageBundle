@@ -43,6 +43,7 @@ class OrnicarMessageExtension extends Extension
         $container->setAlias('ornicar_message.authorizer', $config['authorizer']);
         $container->setAlias('ornicar_message.message_reader', $config['message_reader']);
         $container->setAlias('ornicar_message.thread_reader', $config['thread_reader']);
+        $container->setAlias('ornicar_message.deleter', $config['deleter']);
 
         $container->setAlias('ornicar_message.new_thread_form.type', $config['new_thread_form']['type']);
         $container->setAlias('ornicar_message.new_thread_form.factory', $config['new_thread_form']['factory']);

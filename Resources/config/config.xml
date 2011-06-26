@@ -36,6 +36,10 @@
             <argument type="service" id="ornicar_message.thread_manager" />
         </service>
 
+        <service id="ornicar_message.deleter.default" class="Ornicar\MessageBundle\Deleter\Deleter" public="false">
+            <argument type="service" id="ornicar_message.authorizer" />
+        </service>
+
         <service id="ornicar_message.twig_extension" class="Ornicar\MessageBundle\Twig\Extension\MessageExtension" public="false">
             <argument type="service" id="ornicar_message.authorizer" />
             <tag name="twig.extension" alias="ornicar_message" />
