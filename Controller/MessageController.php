@@ -21,7 +21,7 @@ class MessageController extends ContainerAware
     public function inboxAction()
     {
         $user = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findUserInboxThreads($user);
+        $threads = $this->getThreadManager()->findParticipantInboxThreads($user);
 
         return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array('threads' => $threads));
     }
@@ -34,7 +34,7 @@ class MessageController extends ContainerAware
     public function sentAction()
     {
         $user = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findUserSentThreads($user);
+        $threads = $this->getThreadManager()->findParticipantSentThreads($user);
 
         return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array('threads' => $threads));
     }

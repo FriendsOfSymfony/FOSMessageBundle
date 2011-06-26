@@ -31,7 +31,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    function getUserInboxThreadsQueryBuilder(ParticipantInterface $user);
+    function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $user);
 
     /**
      * Finds not deleted threads for a user,
@@ -42,7 +42,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    function findUserInboxThreads(ParticipantInterface $user);
+    function findParticipantInboxThreads(ParticipantInterface $user);
 
     /**
      * Finds threads from a user,
@@ -53,7 +53,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    function getUserSentThreadsQueryBuilder(ParticipantInterface $user);
+    function getParticipantSentThreadsQueryBuilder(ParticipantInterface $user);
 
     /**
      * Finds threads from a user,
@@ -64,7 +64,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    function findUserSentThreads(ParticipantInterface $user);
+    function findParticipantSentThreads(ParticipantInterface $user);
 
     /**
      * Creates an empty comment thread instance

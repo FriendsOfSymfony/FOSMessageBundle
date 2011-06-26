@@ -74,7 +74,7 @@ class ThreadManager extends BaseThreadManager
      * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    public function getUserInboxThreadsQueryBuilder(ParticipantInterface $user)
+    public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $user)
     {
         $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $user->getId());
         $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $user->getId());
@@ -99,9 +99,9 @@ class ThreadManager extends BaseThreadManager
      * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    public function findUserInboxThreads(ParticipantInterface $user)
+    public function findParticipantInboxThreads(ParticipantInterface $user)
     {
-        return $this->getUserInboxThreadsQueryBuilder($user)->getQuery()->execute();
+        return $this->getParticipantInboxThreadsQueryBuilder($user)->getQuery()->execute();
     }
 
     /**
@@ -113,7 +113,7 @@ class ThreadManager extends BaseThreadManager
      * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    public function getUserSentThreadsQueryBuilder(ParticipantInterface $user)
+    public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $user)
     {
         $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $user->getId());
         return $this->repository->createQueryBuilder()
@@ -131,9 +131,9 @@ class ThreadManager extends BaseThreadManager
      * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    public function findUserSentThreads(ParticipantInterface $user)
+    public function findParticipantSentThreads(ParticipantInterface $user)
     {
-        return $this->getUserSentThreadsQueryBuilder($user)->getQuery()->execute();
+        return $this->getParticipantSentThreadsQueryBuilder($user)->getQuery()->execute();
     }
 
     /**
