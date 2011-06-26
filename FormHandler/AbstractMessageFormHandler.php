@@ -56,8 +56,8 @@ abstract class AbstractMessageFormHandler
      *
      * @return ParticipantInterface
      */
-    public function getAuthenticatedUser()
+    public function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedUser();
+        return $this->authorizer->getAuthenticatedParticipant();
     }
 }

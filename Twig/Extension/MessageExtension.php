@@ -33,7 +33,7 @@ class MessageExtension extends \Twig_Extension
      */
     public function isRead(ReadableInterface $readable)
     {
-        return $readable->isReadByParticipant($this->getAuthenticatedUser());
+        return $readable->isReadByParticipant($this->getAuthenticatedParticipant());
     }
 
     /**
@@ -41,9 +41,9 @@ class MessageExtension extends \Twig_Extension
      *
      * @return ParticipantInterface
      */
-    protected function getAuthenticatedUser()
+    protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedUser();
+        return $this->authorizer->getAuthenticatedParticipant();
     }
 
     /**

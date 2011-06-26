@@ -6,6 +6,11 @@ use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
 
+/**
+ * Marks messages and threads as read or unread
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
 class Reader implements ReaderInterface
 {
     /**
@@ -35,7 +40,7 @@ class Reader implements ReaderInterface
      */
     public function markAsRead(ReadableInterface $readable)
     {
-        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedUser());
+        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
     }
 
     /**
@@ -45,7 +50,7 @@ class Reader implements ReaderInterface
      */
     public function markAsUnread(ReadableInterface $readable)
     {
-        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedUser());
+        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
     }
 
     /**
@@ -53,8 +58,8 @@ class Reader implements ReaderInterface
      *
      * @return ParticipantInterface
      */
-    protected function getAuthenticatedUser()
+    protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedUser();
+        return $this->authorizer->getAuthenticatedParticipant();
     }
 }

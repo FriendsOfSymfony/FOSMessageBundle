@@ -18,7 +18,7 @@ class ReplyMessageFormHandler extends AbstractMessageFormHandler
     {
         return $this->composer->compose()
             ->inReplyToThread($message->getThread())
-            ->setSender($this->getAuthenticatedUser())
+            ->setSender($this->getAuthenticatedParticipant())
             ->setBody($message->getBody())
             ->send();
     }

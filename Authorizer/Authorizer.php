@@ -5,6 +5,12 @@ namespace Ornicar\MessageBundle\Authorizer;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * Provides the authenticated participant,
+ * and manages permissions to manipulate threads and messages
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
 class Authorizer implements AuthorizerInterface
 {
     /**
@@ -28,7 +34,7 @@ class Authorizer implements AuthorizerInterface
      */
     public function canSeeThread(ThreadInterface $thread)
     {
-        return $this->isAuthenticated() && $thread->isParticipant($this->getAuthenticatedUser());
+        return $this->isAuthenticated() && $thread->isParticipant($this->getAuthenticatedParticipant());
     }
 
     /**
@@ -36,7 +42,7 @@ class Authorizer implements AuthorizerInterface
      *
      * @return ParticipantInterface
      */
-    public function getAuthenticatedUser()
+    public function getAuthenticatedParticipant()
     {
         if (!$this->isAuthenticated()) {
             return null;
