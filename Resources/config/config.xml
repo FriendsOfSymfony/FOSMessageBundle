@@ -23,6 +23,16 @@
         <service id="ornicar_message.provider.default" class="Ornicar\MessageBundle\Provider\Provider" public="false">
             <argument type="service" id="ornicar_message.thread_manager" />
             <argument type="service" id="ornicar_message.authorizer" />
+            <argument type="service" id="ornicar_message.reader" />
+        </service>
+
+        <service id="ornicar_message.reader.default" class="Ornicar\MessageBundle\Reader\Reader" public="false">
+            <argument type="service" id="ornicar_message.authorizer" />
+        </service>
+
+        <service id="ornicar_message.twig_extension" class="Ornicar\MessageBundle\Twig\Extension\MessageExtension" public="false">
+            <argument type="service" id="ornicar_message.authorizer" />
+            <tag name="twig.extension" alias="ornicar_message" />
         </service>
 
     </services>

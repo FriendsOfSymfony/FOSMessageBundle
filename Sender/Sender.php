@@ -6,6 +6,7 @@ use Ornicar\MessageBundle\Model\MessageManagerInterface;
 use Ornicar\MessageBundle\Model\ThreadManagerInterface;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\UserBundle\Model\UserInterface;
 
 class Sender implements SenderInterface
 {
@@ -33,15 +34,13 @@ class Sender implements SenderInterface
      * Sends a message, replying to an existing message
      *
      * @param MessageInterface $message the message to send
-     * @param MessageInterface $inReplyToMessage the message we answer to
+     * @param ThreadInterface $inReplyToThread the thread we answer to
      *
      * @return MessageInterface the message sent
      */
-    public function sendReply(MessageInterface $message, MessageInterface $inReplyToMessage)
+    public function sendReply(MessageInterface $message, ThreadInterface $inReplyToThread)
     {
-        $thread = $inReplyToMessage->getThread();
-
-        return $this->doSend($message, $inReplyToMessage->getThread());
+        return $this->doSend($message, $inReplyToThread);
     }
 
     /**
@@ -49,13 +48,15 @@ class Sender implements SenderInterface
      *
      * @param MessageInterface $message the message to send
      * @param string $subject the subject of the thread we create
+     * @param UserInterface $recipient the user we send the message to
      *
      * @return MessageInterface the message sent
      */
-    public function sendNewThread(MessageInterface $message, $subject)
+    public function sendNewThread(MessageInterface $message, $subject, UserInterface $recipient)
     {
         $thread = $this->threadManager->createThread();
         $thread->setSubject($subject);
+        $thread->addParticipant($recipient);
         $this->threadManager->updateThread($thread, false);
 
         return $this->doSend($message, $thread);

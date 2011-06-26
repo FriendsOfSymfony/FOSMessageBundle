@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\ModelManager;
 
 /**
- * Abstract Thread Manager implementation which can be used as base class ThreadManager your
+ * Abstract Thread Manager implementation which can be used as base class by your
  * concrete manager.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>

@@ -2,20 +2,16 @@
 
 namespace Ornicar\MessageBundle\Twig\Extension;
 
-use Ornicar\MessageBundle\Messenger;
-use Symfony\Component\Security\Core\SecurityContext;
+use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Model\ReadableInterface;
 
 class MessageExtension extends \Twig_Extension
 {
-    protected $messenger;
-    protected $securityContext;
+    protected $authorizer;
 
-    protected $cache = array();
-
-    public function __construct(Messenger $messenger, SecurityContext $securityContext)
+    public function __construct(AuthorizerInterface $authorizer)
     {
-        $this->messenger = $messenger;
-        $this->securityContext = $securityContext;
+        $this->authorizer = $authorizer;
     }
 
     /**
@@ -26,27 +22,28 @@ class MessageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'new_messages'  => new \Twig_Function_Method($this, 'countNewMessages')
+            'ornicar_message_is_read'  => new \Twig_Function_Method($this, 'isRead')
         );
     }
 
-    public function countNewMessages()
+    /**
+     * Tells if this readable (thread or messae) is read by the current user
+     *
+     * @return boolean
+     */
+    public function isRead(ReadableInterface $readable)
     {
-        if(array_key_exists('new_messages', $this->cache)) {
-            return $this->cache['new_messages'];
-        }
-        $token = $this->securityContext->getToken();
-        if(!$token) {
-            return 0;
-        }
-        $user = $token->getUser();
-        if(!$user) {
-            return 0;
-        }
+        return $readable->isReadByParticipant($this->getAuthenticatedUser());
+    }
 
-        $nb = $this->messenger->countUnreadByUser($user);
-
-        return $this->cache['new_messages'] = $nb;
+    /**
+     * Gets the current authenticated user
+     *
+     * @return UserInterface
+     */
+    protected function getAuthenticatedUser()
+    {
+        return $this->authorizer->getAuthenticatedUser();
     }
 
     /**

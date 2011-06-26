@@ -5,6 +5,7 @@ namespace Ornicar\MessageBundle\Composer;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use FOS\UserBundle\Model\UserInterface;
 use Ornicar\MessageBundle\Sender\SenderInterface;
+use Ornicar\MessageBundle\Model\ThreadInterface;
 
 /**
  * Fluent interface class to compose messages
@@ -30,9 +31,16 @@ class MessageBuilder
     /**
      * The message we are replying to, if any
      *
-     * @var MessageInterface
+     * @var ThreadInterface
      */
-    protected $inReplyToMessage;
+    protected $inReplyToThread;
+
+    /**
+     * The user we send the message to
+     *
+     * @var UserInterface
+     */
+    protected $recipient;
 
     /**
      * The thread subject if we are not replying to a message
@@ -55,10 +63,10 @@ class MessageBuilder
     public function send()
     {
         // do we send a reply or a new thread?
-        if ($this->inReplyToMessage) {
-            $this->messageSender->sendReply($this->message, $this->inReplyToMessage);
+        if ($this->inReplyToThread) {
+            $this->messageSender->sendReply($this->message, $this->inReplyToThread);
         } else {
-            $this->messageSender->sendNewThread($this->message, $this->subject);
+            $this->messageSender->sendNewThread($this->message, $this->subject, $this->recipient);
         }
 
         return $this->message;
@@ -88,12 +96,12 @@ class MessageBuilder
     /**
      * Sets the message we are replying to, if any
      *
-     * @param  MessageInterface
+     * @param  ThreadInterface
      * @return MessageBuilder (fluent interface)
      */
-    public function inReplyTo(MessageInterface $inReplyToMessage)
+    public function inReplyToThread(ThreadInterface $inReplyToThread)
     {
-        $this->inReplyToMessage = $inReplyToMessage;
+        $this->inReplyToThread = $inReplyToThread;
 
         return $this;
     }
@@ -139,7 +147,7 @@ class MessageBuilder
      */
     public function setRecipient(UserInterface $recipient)
     {
-        $this->message->setRecipient($recipient);
+        $this->recipient = $recipient;
 
         return $this;
     }

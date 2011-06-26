@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('composer')->defaultValue('ornicar_message.composer.default')->cannotBeEmpty()->end()
                 ->scalarNode('provider')->defaultValue('ornicar_message.provider.default')->cannotBeEmpty()->end()
                 ->scalarNode('authorizer')->defaultValue('ornicar_message.authorizer.default')->cannotBeEmpty()->end()
+                ->scalarNode('reader')->defaultValue('ornicar_message.reader.default')->cannotBeEmpty()->end()
                 ->arrayNode('new_thread_form')
                     ->addDefaultsIfNotSet()
                     ->children()

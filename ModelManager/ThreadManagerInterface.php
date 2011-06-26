@@ -1,8 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\ModelManager;
 
 use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ThreadInterface;
 
 /**
  * Interface to be implemented by comment thread managers. This adds an additional level
@@ -12,7 +13,7 @@ use FOS\UserBundle\Model\UserInterface;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-interface ThreadManagerInterface
+interface ThreadManagerInterface extends ReadableManagerInterface
 {
     /**
      * Finds a thread by its ID

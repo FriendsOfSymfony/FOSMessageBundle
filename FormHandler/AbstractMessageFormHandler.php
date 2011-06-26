@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Ornicar\MessageBundle\Composer\ComposerInterface;
 use Ornicar\MessageBundle\FormModel\AbstractMessage;
 use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use FOS\UserBundle\Model\UserInterface;
 
 abstract class AbstractMessageFormHandler
 {
@@ -26,7 +27,7 @@ abstract class AbstractMessageFormHandler
      * Processes the form with the request
      *
      * @param Form $form
-     * @return boolean true if the form is bound and valid, false otherwise
+     * @return Message|false the sent message if the form is bound and valid, false otherwise
      */
     public function process(Form $form)
     {
@@ -37,9 +38,7 @@ abstract class AbstractMessageFormHandler
         $form->bindRequest($this->request);
 
         if ($form->isValid()) {
-            $this->composeAndSend($form->getData());
-
-            return true;
+            return $this->composeAndSend($form->getData());
         }
 
         return false;
@@ -50,5 +49,15 @@ abstract class AbstractMessageFormHandler
      *
      * @param AbstractMessage $message
      */
-    abstract public function composeAndSend(AbstractMessage $message);
+    abstract protected function composeAndSend(AbstractMessage $message);
+
+    /**
+     * Gets the current authenticated user
+     *
+     * @return UserInterface
+     */
+    public function getAuthenticatedUser()
+    {
+        return $this->authorizer->getAuthenticatedUser();
+    }
 }

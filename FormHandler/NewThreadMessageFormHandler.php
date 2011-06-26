@@ -16,7 +16,7 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
      */
     public function composeAndSend(AbstractMessage $message)
     {
-        $this->composer->compose()
+        return $this->composer->compose()
             ->setSubject($message->getSubject())
             ->setRecipient($message->getRecipient())
             ->setSender($this->authorizer->getAuthenticatedUser())

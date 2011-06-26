@@ -6,12 +6,12 @@
 
     <services>
 
-        <service id="ornicar_message.message_manager.default" class="Ornicar\MessageBundle\Entity\MessageManager" public="false">
+        <service id="ornicar_message.message_manager.default" class="Ornicar\MessageBundle\EntityManager\MessageManager" public="false">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%ornicar_message.message_class%</argument>
         </service>
 
-        <service id="ornicar_message.thread_manager.default" class="Ornicar\MessageBundle\Entity\ThreadManager" public="false">
+        <service id="ornicar_message.thread_manager.default" class="Ornicar\MessageBundle\EntityManager\ThreadManager" public="false">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%ornicar_message.thread_class%</argument>
         </service>

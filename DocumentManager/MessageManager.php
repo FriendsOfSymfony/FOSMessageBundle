@@ -1,11 +1,18 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace Ornicar\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Model\MessageManager as BaseMessageManager;
+use Ornicar\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
+use Ornicar\MessageBundle\Model\ReadableInterface;
+use FOS\UserBundle\Model\UserInterface;
 
+/**
+ * Default MongoDB MessageManager.
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
 class MessageManager extends BaseMessageManager
 {
     /**
@@ -34,6 +41,32 @@ class MessageManager extends BaseMessageManager
         $this->dm         = $dm;
         $this->repository = $dm->getRepository($class);
         $this->class      = $dm->getClassMetadata($class)->name;
+    }
+
+    /**
+     * Marks the readable as read by this participant
+     * Must be applied directly to the storage,
+     * without modifying the readable state.
+     * We want to show the unread readables on the page,
+     * as well as marking the as read.
+     *
+     * @param ReadableInterface $readable
+     * @param UserInterface $user
+     */
+    public function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user)
+    {
+        throw new \Exception('Implement me :)');
+    }
+
+    /**
+     * Marks the readable as unread by this participant
+     *
+     * @param ReadableInterface $readable
+     * @param UserInterface $user
+     */
+    public function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user)
+    {
+        throw new \Exception('Implement me :)');
     }
 
     /**

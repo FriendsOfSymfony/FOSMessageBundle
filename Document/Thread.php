@@ -87,6 +87,31 @@ abstract class Thread extends AbstractThread
     }
 
     /**
+     * Adds a participant to the thread
+     * If it already exists, nothing is done.
+     *
+     * @param UserInterface $participant
+     * @return null
+     */
+    public function addParticipant(UserInterface $participant)
+    {
+        if (!$this->isParticipant($participant)) {
+            $this->participants->add($participant);
+        }
+    }
+
+    /**
+     * Tells if the user participates to the conversation
+     *
+     * @param UserInterface $user
+     * @return boolean
+     */
+    public function isParticipant(UserInterface $user)
+    {
+        return $this->participants->contains($user);
+    }
+
+    /**
      * Performs denormalization tricks
      * based on a message belonging to this thread.
      * Updates participants and last message dates.
@@ -98,14 +123,8 @@ abstract class Thread extends AbstractThread
     protected function denormalize(MessageInterface $message)
     {
         $sender = $message->getSender();
-        $recipient = $message->getRecipient();
-
-        // Make sure the participants are registered
-        foreach (array($sender, $recipient) as $participant) {
-            if (!$this->participants->contains($participant)) {
-                $this->participants->add($participant);
-            }
-        }
+        $this->addParticipant($sender);
+        $message->setIsReadByParticipant($sender, true);
 
         // Update the last message dates if needed
         $messageTs = $message->getCreatedAt()->getTimestamp();
@@ -116,6 +135,7 @@ abstract class Thread extends AbstractThread
                 if (!isset($this->datesOfLastMessageWrittenByOtherUser[$participantId]) || $this->datesOfLastMessageWrittenByOtherUser[$participantId] < $messageTs) {
                     $this->datesOfLastMessageWrittenByOtherUser[$participantId] = $messageTs;
                 }
+                $message->setIsReadByParticipant($participant, false);
             } elseif (!isset($this->datesOfLastMessageWrittenByUser[$participantId]) || $this->datesOfLastMessageWrittenByUser[$participantId] < $messageTs) {
                 $this->datesOfLastMessageWrittenByUser[$participantId] = $messageTs;
             }

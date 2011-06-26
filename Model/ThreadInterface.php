@@ -4,7 +4,7 @@ namespace Ornicar\MessageBundle\Model;
 
 use FOS\UserBundle\Model\UserInterface;
 
-interface ThreadInterface
+interface ThreadInterface extends ReadableInterface
 {
     /**
      * Gets the message unique id
@@ -53,9 +53,19 @@ interface ThreadInterface
     function getParticipants();
 
     /**
-     * Tells if all messages this user is the recipient of are read
+     * Tells if the user participates to the conversation
      *
-     * @return bool
+     * @param UserInterface $user
+     * @return boolean
      */
-    function isReadByUser(UserInterface $user);
+    function isParticipant(UserInterface $user);
+
+    /**
+     * Adds a participant to the thread
+     * If it already exists, nothing is done.
+     *
+     * @param UserInterface $participant
+     * @return null
+     */
+    function addParticipant(UserInterface $participant);
 }

@@ -9,7 +9,7 @@ use FOS\UserBundle\Model\UserInterface;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-interface MessageInterface
+interface MessageInterface extends ReadableInterface
 {
     /**
      * Gets the message unique id
@@ -28,19 +28,6 @@ interface MessageInterface
      * @return null
      */
     function setThread(ThreadInterface $thread);
-
-    /**
-     * Tells if the message is read
-     *
-     * @return bool
-     */
-    function getIsRead();
-
-    /**
-     * @param  bool
-     * @return null
-     */
-    function setIsRead($isRead);
 
     /**
      * @return DateTime
@@ -68,15 +55,4 @@ interface MessageInterface
      * @return null
      */
     function setSender(UserInterface $sender);
-
-    /**
-     * @return UserInterface
-     */
-    function getRecipient();
-
-    /**
-     * @param  UserInterface
-     * @return null
-     */
-    function setRecipient(UserInterface $recipient);
 }

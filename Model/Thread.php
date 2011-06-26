@@ -54,19 +54,32 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * Tells if all messages this user is the recipient of are read
+     * Tells if all messages of this participant are read
      *
      * @return bool
      */
-    public function isReadByUser(UserInterface $user)
+    public function isReadByParticipant(UserInterface $participant)
     {
         foreach ($this->getMessages() as $message) {
-            if ($user === $message->getRecipient() && !$message->getIsRead()) {
+            if (!$message->isReadByParticipant($participant)) {
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     * Sets whether or not this participant has read this message
+     *
+     * @param UserInterface $participant
+     * @param boolean $isRead
+     */
+    public function setIsReadByParticipant(UserInterface $participant, $isRead)
+    {
+        foreach ($this->getMessages() as $message) {
+            $message->setIsReadByParticipant($participant, $isRead);
+        }
     }
 
     /**

@@ -28,13 +28,6 @@ abstract class Message implements MessageInterface
     protected $sender;
 
     /**
-     * User who received the message
-     *
-     * @var UserInterface
-     */
-    protected $recipient;
-
-    /**
      * Text body of the message
      *
      * @var string
@@ -47,13 +40,6 @@ abstract class Message implements MessageInterface
      * @var DateTime
      */
     protected $createdAt;
-
-    /**
-     * Whether or not the message has been read
-     *
-     * @var bool
-     */
-    protected $isRead = false;
 
     /**
      * Thread the message belongs to
@@ -92,25 +78,6 @@ abstract class Message implements MessageInterface
     public function setThread(ThreadInterface $thread)
     {
         $this->thread = $thread;
-    }
-
-    /**
-     * Tells if the message has been read
-     *
-     * @return bool
-     */
-    public function getIsRead()
-    {
-        return $this->isRead;
-    }
-
-    /**
-     * @param  bool
-     * @return null
-     */
-    public function setIsRead($isRead)
-    {
-        $this->isRead = $isRead;
     }
 
     /**
@@ -153,22 +120,5 @@ abstract class Message implements MessageInterface
     public function setSender(UserInterface $sender)
     {
         $this->sender = $sender;
-    }
-
-    /**
-     * @return UserInterface
-     */
-    public function getRecipient()
-    {
-        return $this->recipient;
-    }
-
-    /**
-     * @param  UserInterface
-     * @return null
-     */
-    public function setRecipient(UserInterface $recipient)
-    {
-        $this->recipient = $recipient;
     }
 }

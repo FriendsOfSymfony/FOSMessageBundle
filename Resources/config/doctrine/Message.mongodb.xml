@@ -8,24 +8,26 @@
 
         <field name="body" fieldName="body" type="string" />
 
-        <field name="isRead" fieldName="isRead" type="boolean" />
-
         <field name="createdAt" fieldName="createdAt" type="date" />
+
+        <field name="isReadByParticipant" fieldName="isReadByParticipant" type="hash" />
+
+        <!--<reference-one field="sender" target-document="Acme\UserBundle\Document\User" />-->
 
         <!--<reference-one field="thread" target-document="Ornicar\MessageBundle\Document\Thread" />-->
 
         <indexes>
             <index unique="false">
-                <key name="sender.$id" order="asc" />
+                <key name="thread.$id" order="asc" />
             </index>
             <index unique="false">
-                <key name="recipient.$id" order="asc" />
+                <key name="sender.$id" order="asc" />
             </index>
             <index unique="false">
                 <key name="createdAt" order="desc" />
             </index>
             <index unique="false">
-                <key name="isRead" order="desc" />
+                <key name="isReadByParticipant" order="desc" />
             </index>
         </indexes>
 

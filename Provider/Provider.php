@@ -6,8 +6,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Ornicar\MessageBundle\Model\ThreadManagerInterface;
 use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Reader\ReaderInterface;
 
-class Provider
+/**
+ * Provides threads for the current authenticated user
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
+class Provider implements ProviderInterface
 {
     /**
      * The authorizer manager
@@ -23,15 +29,24 @@ class Provider
      */
     protected $threadManager;
 
-    public function __construct(ThreadManagerInterface $threadManager, AuthorizerInterface $authorizer)
+    /**
+     * The reader used to mark threads as read
+     *
+     * @var ReaderInterface
+     */
+    protected $reader;
+
+    public function __construct(ThreadManagerInterface $threadManager, AuthorizerInterface $authorizer, ReaderInterface $reader)
     {
         $this->authorizer = $authorizer;
         $this->threadManager = $threadManager;
+        $this->reader = $reader;
     }
 
     /**
      * Gets a thread by its ID
      * Performs authorization checks
+     * Marks the thread as read
      *
      * @return ThreadInterface
      */
@@ -44,6 +59,7 @@ class Provider
         if (!$this->authorizer->canSeeThread($thread)) {
             throw new AccessDeniedException('You are not allowed to see this thread');
         }
+        $this->reader->markAsRead($thread);
 
         return $thread;
     }

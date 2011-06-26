@@ -4,8 +4,14 @@ namespace Ornicar\MessageBundle\FormFactory;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
+use Ornicar\MessageBundle\FormModel\AbstractMessage;
 
-class MessageFormFactory
+/**
+ * Instanciates message forms
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
+abstract class AbstractMessageFormFactory
 {
     /**
      * The Symfony form factory
@@ -43,8 +49,15 @@ class MessageFormFactory
         $this->messageClass = $messageClass;
     }
 
-    public function create()
+    /**
+     * Creates a new instance of the form model
+     *
+     * @return AbstractMessage
+     */
+    protected function createModelInstance()
     {
-        return $this->formFactory->createNamed($this->formType, $this->formName, new $this->messageClass);
+        $class = $this->messageClass;
+
+        return new $class();
     }
 }

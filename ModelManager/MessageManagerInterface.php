@@ -1,6 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\ModelManager;
+
+use Ornicar\MessageBundle\Model\MessageInterface;
 
 /**
  * Interface to be implemented by message managers. This adds an additional level
@@ -10,7 +12,7 @@ namespace Ornicar\MessageBundle\Model;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-interface MessageManagerInterface
+interface MessageManagerInterface extends ReadableManagerInterface
 {
     /**
      * Creates an empty message instance
@@ -28,7 +30,7 @@ interface MessageManagerInterface
     function updateMessage(MessageInterface $message, $andFlush = true);
 
     /**
-     * Returns the message's fully qualified class name.
+     * Returns the message's fully qualified class MessageManagerInterface.
      *
      * @return string
      */

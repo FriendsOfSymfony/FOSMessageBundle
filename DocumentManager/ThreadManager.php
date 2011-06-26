@@ -1,14 +1,15 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace Ornicar\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Ornicar\MessageBundle\Model\ThreadInterface;
-use Ornicar\MessageBundle\Model\ThreadManager as BaseThreadManager;
+use Ornicar\MessageBundle\Model\ReadableInterface;
+use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use FOS\UserBundle\Model\UserInterface;
 
 /**
- * Default ODM ThreadManager.
+ * Default MongoDB ThreadManager.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
@@ -114,6 +115,32 @@ class ThreadManager extends BaseThreadManager
     public function findUserSentThreads(UserInterface $user)
     {
         return $this->getUserSentThreadsQueryBuilder($user)->getQuery()->execute();
+    }
+
+    /**
+     * Marks the readable as read by this participant
+     * Must be applied directly to the storage,
+     * without modifying the readable state.
+     * We want to show the unread readables on the page,
+     * as well as marking the as read.
+     *
+     * @param ReadableInterface $readable
+     * @param UserInterface $user
+     */
+    public function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user)
+    {
+        throw new \Exception('Implement me :)');
+    }
+
+    /**
+     * Marks the readable as unread by this participant
+     *
+     * @param ReadableInterface $readable
+     * @param UserInterface $user
+     */
+    public function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user)
+    {
+        throw new \Exception('Implement me :)');
     }
 
     /**

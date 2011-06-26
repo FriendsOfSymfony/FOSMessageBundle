@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace Ornicar\MessageBundle\ModelManager;
 
 /**
  * Abstract Message Manager implementation which can be used as base by

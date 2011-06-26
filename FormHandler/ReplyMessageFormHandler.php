@@ -16,9 +16,8 @@ class ReplyMessageFormHandler extends AbstractMessageFormHandler
      */
     public function composeAndSend(AbstractMessage $message)
     {
-        $this->sender->compose()
-            //->inReplyTo()
-            ->setRecipient($message->getRecipient())
+        return $this->composer->compose()
+            ->inReplyToThread($message->getThread())
             ->setSender($this->getAuthenticatedUser())
             ->setBody($message->getBody())
             ->send();
