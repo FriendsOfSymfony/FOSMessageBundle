@@ -80,7 +80,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, UserInterface $user, $isRead)
     {
-        $this->doMarkIsReadByParticipant($user, $isRead, function(Builder $queryBuilder) use ($thread) {
+        $this->markIsReadByCondition($user, $isRead, function(Builder $queryBuilder) use ($thread) {
             $queryBuilder->field('thread.$id')->equals(new \MongoId($thread->getId()));
         });
     }
@@ -94,7 +94,7 @@ class MessageManager extends BaseMessageManager
      */
     protected function markIsReadByParticipant(MessageInterface $message, UserInterface $user, $isRead)
     {
-        $this->doMarkIsReadByParticipant($user, $isRead, function(Builder $queryBuilder) use ($message) {
+        $this->markIsReadByCondition($user, $isRead, function(Builder $queryBuilder) use ($message) {
             $queryBuilder->field('id')->equals($message->getId());
         });
     }
@@ -107,7 +107,7 @@ class MessageManager extends BaseMessageManager
      * @param boolean $isRead
      * @param \Closure $condition
      */
-    protected function doMarkIsReadByParticipant(UserInterface $user, $isRead, \Closure $condition)
+    protected function markIsReadByCondition(UserInterface $user, $isRead, \Closure $condition)
     {
         $isReadByParticipantFieldName = sprintf('isReadByParticipant.%s', $user->getId());
         $queryBuilder = $this->repository->createQueryBuilder();
