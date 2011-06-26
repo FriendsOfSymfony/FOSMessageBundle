@@ -8,33 +8,32 @@ use Ornicar\MessageBundle\Model\Composition;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Ornicar\MessageBundle\Model\ThreadManagerInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class MessageController extends ContainerAware
 {
     /**
-     * Displays the authenticated user inbox
+     * Displays the authenticated participant inbox
      *
      * @return Response
      */
     public function inboxAction()
     {
-        $user = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findParticipantInboxThreads($user);
+        $participant = $this->getAuthenticatedParticipant();
+        $threads = $this->getThreadManager()->findParticipantInboxThreads($participant);
 
         return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array('threads' => $threads));
     }
 
     /**
-     * Displays the authenticated user sent mails
+     * Displays the authenticated participant sent mails
      *
      * @return Response
      */
     public function sentAction()
     {
-        $user = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findParticipantSentThreads($user);
+        $participant = $this->getAuthenticatedParticipant();
+        $threads = $this->getThreadManager()->findParticipantSentThreads($participant);
 
         return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array('threads' => $threads));
     }
@@ -99,18 +98,13 @@ class MessageController extends ContainerAware
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated participant
      *
      * @return ParticipantInterface
      */
     protected function getAuthenticatedParticipant()
     {
-        $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!$user instanceof ParticipantInterface) {
-            throw new AccessDeniedException('Must be logged in with a ParticipantInterface instance');
-        }
-
-        return $user;
+        return $this->container->get('ornicar_message.authorizer')->getAuthenticatedParticipant();
     }
 
     /**

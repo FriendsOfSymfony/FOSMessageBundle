@@ -4,6 +4,8 @@ namespace Ornicar\MessageBundle\Authorizer;
 
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Provides the authenticated participant,
@@ -59,8 +61,13 @@ class Authorizer implements AuthorizerInterface
         if (!$this->isAuthenticated()) {
             return null;
         }
+        $participant = $this->securityContext->getToken()->getUser();
 
-        return $this->securityContext->getToken()->getUser();
+        if (!$participant instanceof ParticipantInterface) {
+            throw new AccessDeniedException('Must be logged in with a ParticipantInterface instance');
+        }
+
+        return $participant;
     }
 
     /**
