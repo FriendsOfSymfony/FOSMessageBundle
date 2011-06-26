@@ -31,8 +31,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
-        $this->assertSame(array('u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
-        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
+        $this->assertSame(array('u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
         /**
          * Second message
@@ -41,8 +41,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
-        $this->assertSame(array('u1' => $this->dates[1]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
-        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[1]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
+        $this->assertSame(array('u1' => $this->dates[1]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[1]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
         /**
          * Third message
@@ -51,8 +51,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
-        $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
-        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
+        $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
+        $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
         /**
          * Fourth message
@@ -61,8 +61,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
-        $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[3]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherUser());
-        $this->assertSame(array('u1' => $this->dates[3]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByUser());
+        $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[3]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
+        $this->assertSame(array('u1' => $this->dates[3]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
     }
 
@@ -101,13 +101,13 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
 class TestThread extends Thread
 {
-    public function getDatesOfLastMessageWrittenByUser()
+    public function getDatesOfLastMessageWrittenByParticipant()
     {
-        return $this->datesOfLastMessageWrittenByUser;
+        return $this->datesOfLastMessageWrittenByParticipant;
     }
 
-    public function getDatesOfLastMessageWrittenByOtherUser()
+    public function getDatesOfLastMessageWrittenByOtherParticipant()
     {
-        return $this->datesOfLastMessageWrittenByOtherUser;
+        return $this->datesOfLastMessageWrittenByOtherParticipant;
     }
 }

@@ -40,7 +40,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of int timestamps indexed by user id
      */
-    protected $datesOfLastMessageWrittenByOtherUser = array();
+    protected $datesOfLastMessageWrittenByOtherParticipant = array();
 
     /**
      * Date the last messages were created at.
@@ -51,7 +51,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of int timestamps indexed by user id
      */
-    protected $datesOfLastMessageWrittenByUser = array();
+    protected $datesOfLastMessageWrittenByParticipant = array();
 
     /**
      * Initializes the collections
@@ -160,19 +160,19 @@ abstract class Thread extends AbstractThread
         foreach ($this->participants as $participant) {
             $participantId = $participant->getId();
             if ($participantId != $senderId) {
-                if (!isset($this->datesOfLastMessageWrittenByOtherUser[$participantId]) || $this->datesOfLastMessageWrittenByOtherUser[$participantId] < $messageTs) {
-                    $this->datesOfLastMessageWrittenByOtherUser[$participantId] = $messageTs;
+                if (!isset($this->datesOfLastMessageWrittenByOtherParticipant[$participantId]) || $this->datesOfLastMessageWrittenByOtherParticipant[$participantId] < $messageTs) {
+                    $this->datesOfLastMessageWrittenByOtherParticipant[$participantId] = $messageTs;
                 }
                 $message->setIsReadByParticipant($participant, false);
-            } elseif (!isset($this->datesOfLastMessageWrittenByUser[$participantId]) || $this->datesOfLastMessageWrittenByUser[$participantId] < $messageTs) {
-                $this->datesOfLastMessageWrittenByUser[$participantId] = $messageTs;
+            } elseif (!isset($this->datesOfLastMessageWrittenByParticipant[$participantId]) || $this->datesOfLastMessageWrittenByParticipant[$participantId] < $messageTs) {
+                $this->datesOfLastMessageWrittenByParticipant[$participantId] = $messageTs;
             }
             if (!array_key_exists($participantId, $this->isDeletedByParticipant)) {
                 $this->isDeletedByParticipant[$participantId] = false;
             }
         }
         // having theses sorted by user does not harm, and it makes unit testing easier
-        ksort($this->datesOfLastMessageWrittenByUser);
-        ksort($this->datesOfLastMessageWrittenByOtherUser);
+        ksort($this->datesOfLastMessageWrittenByParticipant);
+        ksort($this->datesOfLastMessageWrittenByOtherParticipant);
     }
 }

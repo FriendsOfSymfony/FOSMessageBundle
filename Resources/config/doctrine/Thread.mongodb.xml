@@ -14,19 +14,19 @@
 
         <field name="isDeletedByParticipant" fieldName="isDeletedByParticipant" type="hash" />
 
-        <field name="datesOfLastMessageWrittenByUser" fieldName="datesOfLastMessageWrittenByUser" type="hash" />
+        <field name="datesOfLastMessageWrittenByParticipant" fieldName="datesOfLastMessageWrittenByParticipant" type="hash" />
 
-        <field name="datesOfLastMessageWrittenByOtherUser" fieldName="datesOfLastMessageWrittenByOtherUser" type="hash" />
+        <field name="datesOfLastMessageWrittenByOtherParticipant" fieldName="datesOfLastMessageWrittenByOtherParticipant" type="hash" />
 
         <indexes>
             <index unique="false">
                 <key name="isDeletedByParticipant" order="asc" />
             </index>
             <index unique="false">
-                <key name="datesOfLastMessageWrittenByUser" order="desc" />
+                <key name="datesOfLastMessageWrittenByParticipant" order="desc" />
             </index>
             <index unique="false">
-                <key name="datesOfLastMessageWrittenByOtherUser" order="desc" />
+                <key name="datesOfLastMessageWrittenByOtherParticipant" order="desc" />
             </index>
         </indexes>
 

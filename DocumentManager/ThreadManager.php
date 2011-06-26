@@ -77,7 +77,7 @@ class ThreadManager extends BaseThreadManager
     public function getUserInboxThreadsQueryBuilder(UserInterface $user)
     {
         $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $user->getId());
-        $datesOfLastMessageWrittenByOtherUserFieldName = sprintf('datesOfLastMessageWrittenByOtherUser.%s', $user->getId());
+        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $user->getId());
 
         return $this->repository->createQueryBuilder()
             // the participant is in the thread participants
@@ -85,9 +85,9 @@ class ThreadManager extends BaseThreadManager
             // the thread is not deleted by this participant
             ->field($isDeletedByParticipantFieldName)->equals(false)
             // there is at least one message written by an other participant
-            ->field($datesOfLastMessageWrittenByOtherUserFieldName)->exists(true)
+            ->field($datesOfLastMessageWrittenByOtherParticipantFieldName)->exists(true)
             // sort by date of last message written by an other participant
-            ->sort($datesOfLastMessageWrittenByOtherUserFieldName, 'desc');
+            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc');
     }
 
     /**
@@ -115,11 +115,11 @@ class ThreadManager extends BaseThreadManager
      */
     public function getUserSentThreadsQueryBuilder(UserInterface $user)
     {
-        $datesOfLastMessageWrittenByUserFieldName = sprintf('datesOfLastMessageWrittenByUser.%s', $user->getId());
+        $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $user->getId());
         return $this->repository->createQueryBuilder()
             ->field('participants.$id')->equals(new \MongoId($user->getId()))
-            ->field($datesOfLastMessageWrittenByUserFieldName)->exists(true)
-            ->sort($datesOfLastMessageWrittenByUserFieldName, 'desc');
+            ->field($datesOfLastMessageWrittenByParticipantFieldName)->exists(true)
+            ->sort($datesOfLastMessageWrittenByParticipantFieldName, 'desc');
     }
 
     /**
