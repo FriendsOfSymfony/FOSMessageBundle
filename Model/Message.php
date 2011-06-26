@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 use DateTime;
 
 /**
@@ -23,7 +23,7 @@ abstract class Message implements MessageInterface
     /**
      * User who sent the message
      *
-     * @var UserInterface
+     * @var ParticipantInterface
      */
     protected $sender;
 
@@ -106,7 +106,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     public function getSender()
     {
@@ -114,10 +114,10 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @param  UserInterface
+     * @param  ParticipantInterface
      * @return null
      */
-    public function setSender(UserInterface $sender)
+    public function setSender(ParticipantInterface $sender)
     {
         $this->sender = $sender;
     }

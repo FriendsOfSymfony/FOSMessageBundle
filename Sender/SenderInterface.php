@@ -4,7 +4,7 @@ namespace Ornicar\MessageBundle\Sender;
 
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 interface SenderInterface
 {
@@ -23,9 +23,9 @@ interface SenderInterface
      *
      * @param MessageInterface $message the message to send
      * @param string $subject the subject of the thread we create
-     * @param UserInterface $recipient the user we send the message to
+     * @param ParticipantInterface $recipient the user we send the message to
      *
      * @return MessageInterface the message sent
      */
-    function sendNewThread(MessageInterface $message, $subject, UserInterface $recipient);
+    function sendNewThread(MessageInterface $message, $subject, ParticipantInterface $recipient);
 }

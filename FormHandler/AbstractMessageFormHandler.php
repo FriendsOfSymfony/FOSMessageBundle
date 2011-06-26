@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Ornicar\MessageBundle\Composer\ComposerInterface;
 use Ornicar\MessageBundle\FormModel\AbstractMessage;
 use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 abstract class AbstractMessageFormHandler
 {
@@ -54,7 +54,7 @@ abstract class AbstractMessageFormHandler
     /**
      * Gets the current authenticated user
      *
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     public function getAuthenticatedUser()
     {

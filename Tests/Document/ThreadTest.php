@@ -3,6 +3,7 @@
 namespace Ornicar\MessageBundle\Document;
 
 use DateTime;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,8 +22,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
     public function testDenormalize()
     {
         $thread = new TestThread();
-        $user1 = $this->createUserMock('u1');
-        $user2 = $this->createUserMock('u2');
+        $user1 = $this->createParticipantMock('u1');
+        $user2 = $this->createParticipantMock('u2');
 
         /**
          * First message
@@ -85,9 +86,9 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
         return $message;
     }
 
-    protected function createUserMock($id)
+    protected function createParticipantMock($id)
     {
-        $user = $this->getMockBuilder('Application\UserBundle\Document\User')
+        $user = $this->getMockBuilder('ParticipantInterface')
             ->disableOriginalConstructor(true)
             ->getMock();
 

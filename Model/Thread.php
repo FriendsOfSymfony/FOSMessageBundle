@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\Model;
 
 use DateTime;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract thread model
@@ -58,7 +58,7 @@ abstract class Thread implements ThreadInterface
      *
      * @return bool
      */
-    public function isReadByParticipant(UserInterface $participant)
+    public function isReadByParticipant(ParticipantInterface $participant)
     {
         foreach ($this->getMessages() as $message) {
             if (!$message->isReadByParticipant($participant)) {
@@ -72,10 +72,10 @@ abstract class Thread implements ThreadInterface
     /**
      * Sets whether or not this participant has read this message
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    public function setIsReadByParticipant(UserInterface $participant, $isRead)
+    public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
         foreach ($this->getMessages() as $message) {
             $message->setIsReadByParticipant($participant, $isRead);

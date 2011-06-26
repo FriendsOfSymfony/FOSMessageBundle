@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\ModelManager;
 
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 
 /**
@@ -28,10 +28,10 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    function getUserInboxThreadsQueryBuilder(UserInterface $user);
+    function getUserInboxThreadsQueryBuilder(ParticipantInterface $user);
 
     /**
      * Finds not deleted threads for a user,
@@ -39,10 +39,10 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    function findUserInboxThreads(UserInterface $user);
+    function findUserInboxThreads(ParticipantInterface $user);
 
     /**
      * Finds threads from a user,
@@ -50,10 +50,10 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message written by this user in reverse order.
      * In one word: an sentbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    function getUserSentThreadsQueryBuilder(UserInterface $user);
+    function getUserSentThreadsQueryBuilder(ParticipantInterface $user);
 
     /**
      * Finds threads from a user,
@@ -61,10 +61,10 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message written by this user in reverse order.
      * In one word: an sentbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    function findUserSentThreads(UserInterface $user);
+    function findUserSentThreads(ParticipantInterface $user);
 
     /**
      * Creates an empty comment thread instance

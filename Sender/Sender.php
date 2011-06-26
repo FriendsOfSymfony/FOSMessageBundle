@@ -6,7 +6,7 @@ use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 class Sender implements SenderInterface
 {
@@ -48,11 +48,11 @@ class Sender implements SenderInterface
      *
      * @param MessageInterface $message the message to send
      * @param string $subject the subject of the thread we create
-     * @param UserInterface $recipient the user we send the message to
+     * @param ParticipantInterface $recipient the user we send the message to
      *
      * @return MessageInterface the message sent
      */
-    public function sendNewThread(MessageInterface $message, $subject, UserInterface $recipient)
+    public function sendNewThread(MessageInterface $message, $subject, ParticipantInterface $recipient)
     {
         $thread = $this->threadManager->createThread();
         $thread->setSubject($subject);

@@ -7,7 +7,7 @@ class NewThreadMessage extends AbstractMessage
     /**
      * The user who receives the message
      *
-     * @var UserInterface
+     * @var ParticipantInterface
      */
     protected $recipient;
 
@@ -36,7 +36,7 @@ class NewThreadMessage extends AbstractMessage
     }
 
     /**
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     public function getRecipient()
     {
@@ -44,7 +44,7 @@ class NewThreadMessage extends AbstractMessage
     }
 
     /**
-     * @param  UserInterface
+     * @param  ParticipantInterface
      * @return null
      */
     public function setRecipient($recipient)

@@ -34,7 +34,7 @@ class Authorizer implements AuthorizerInterface
     /**
      * Gets the current authenticated user
      *
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     public function getAuthenticatedUser()
     {

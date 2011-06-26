@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\ModelManager;
 
 use Ornicar\MessageBundle\Model\ReadableInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Capable of updating the read state of objects directly in the storage,
@@ -21,15 +21,15 @@ interface ReadableManagerInterface
      * as well as marking the as read.
      *
      * @param ReadableInterface $readable
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      */
-    function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user);
+    function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
 
     /**
      * Marks the readable as unread by this participant
      *
      * @param ReadableInterface $readable
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      */
-    function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user);
+    function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
 }

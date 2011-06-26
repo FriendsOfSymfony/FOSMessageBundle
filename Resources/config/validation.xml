@@ -11,7 +11,7 @@
                 <option name="message">Please enter a username</option>
             </constraint>
             <constraint name="Type">
-                <option name="value">FOS\UserBundle\Model\UserInterface</option>
+                <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
             </constraint>
         </property>
 

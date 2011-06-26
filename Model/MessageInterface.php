@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\Model;
 
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Message model
@@ -46,13 +46,13 @@ interface MessageInterface extends ReadableInterface
     function setBody($body);
 
     /**
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     function getSender();
 
     /**
-     * @param  UserInterface
+     * @param  ParticipantInterface
      * @return null
      */
-    function setSender(UserInterface $sender);
+    function setSender(ParticipantInterface $sender);
 }

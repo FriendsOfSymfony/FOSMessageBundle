@@ -51,7 +51,7 @@ class Reader implements ReaderInterface
     /**
      * Gets the current authenticated user
      *
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     protected function getAuthenticatedUser()
     {

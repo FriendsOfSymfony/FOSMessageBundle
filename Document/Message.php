@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\Document;
 
 use Ornicar\MessageBundle\Model\Message as AbstractMessage;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 abstract class Message extends AbstractMessage
 {
@@ -19,7 +19,7 @@ abstract class Message extends AbstractMessage
      *
      * @return bool
      */
-    public function isReadByParticipant(UserInterface $participant)
+    public function isReadByParticipant(ParticipantInterface $participant)
     {
         return $this->isReadByParticipant[$participant->getId()];
     }
@@ -27,10 +27,10 @@ abstract class Message extends AbstractMessage
     /**
      * Sets whether or not this participant has read this message
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    public function setIsReadByParticipant(UserInterface $participant, $isRead)
+    public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
         $this->isReadByParticipant[$participant->getId()] = (boolean) $isRead;
     }

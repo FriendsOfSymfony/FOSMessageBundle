@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\Model;
 
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 interface ReadableInterface
 {
@@ -11,13 +11,13 @@ interface ReadableInterface
      *
      * @return bool
      */
-    function isReadByParticipant(UserInterface $participant);
+    function isReadByParticipant(ParticipantInterface $participant);
 
     /**
      * Sets whether or not this participant has read this
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    function setIsReadByParticipant(UserInterface $participant, $isRead);
+    function setIsReadByParticipant(ParticipantInterface $participant, $isRead);
 }

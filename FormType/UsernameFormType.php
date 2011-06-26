@@ -4,7 +4,6 @@ namespace Ornicar\MessageBundle\FormType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
-use FOS\UserBundle\Model\UserManagerInterface;
 use Ornicar\MessageBundle\DataTransformer\UsernameToUserTransformer;
 
 class UsernameFormType extends AbstractType

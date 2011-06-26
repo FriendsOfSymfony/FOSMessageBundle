@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\Composer;
 
 use Ornicar\MessageBundle\Model\MessageInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Ornicar\MessageBundle\Sender\SenderInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 
@@ -38,7 +38,7 @@ class MessageBuilder
     /**
      * The user we send the message to
      *
-     * @var UserInterface
+     * @var ParticipantInterface
      */
     protected $recipient;
 
@@ -131,10 +131,10 @@ class MessageBuilder
     }
 
     /**
-     * @param  UserInterface
+     * @param  ParticipantInterface
      * @return MessageBuilder (fluent interface)
      */
-    public function setSender(UserInterface $sender)
+    public function setSender(ParticipantInterface $sender)
     {
         $this->message->setSender($sender);
 
@@ -142,10 +142,10 @@ class MessageBuilder
     }
 
     /**
-     * @param  UserInterface
+     * @param  ParticipantInterface
      * @return MessageBuilder (fluent interface)
      */
-    public function setRecipient(UserInterface $recipient)
+    public function setRecipient(ParticipantInterface $recipient)
     {
         $this->recipient = $recipient;
 

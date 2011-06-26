@@ -6,7 +6,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Default MongoDB ThreadManager.
@@ -71,10 +71,10 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    public function getUserInboxThreadsQueryBuilder(UserInterface $user)
+    public function getUserInboxThreadsQueryBuilder(ParticipantInterface $user)
     {
         $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $user->getId());
         $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $user->getId());
@@ -96,10 +96,10 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message not written by this user in reverse order.
      * In one word: an inbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    public function findUserInboxThreads(UserInterface $user)
+    public function findUserInboxThreads(ParticipantInterface $user)
     {
         return $this->getUserInboxThreadsQueryBuilder($user)->getQuery()->execute();
     }
@@ -110,10 +110,10 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message written by this user in reverse order.
      * In one word: an sentbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return Builder a query builder suitable for pagination
      */
-    public function getUserSentThreadsQueryBuilder(UserInterface $user)
+    public function getUserSentThreadsQueryBuilder(ParticipantInterface $user)
     {
         $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $user->getId());
         return $this->repository->createQueryBuilder()
@@ -128,10 +128,10 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message written by this user in reverse order.
      * In one word: an sentbox.
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return array of ThreadInterface
      */
-    public function findUserSentThreads(UserInterface $user)
+    public function findUserSentThreads(ParticipantInterface $user)
     {
         return $this->getUserSentThreadsQueryBuilder($user)->getQuery()->execute();
     }
@@ -144,9 +144,9 @@ class ThreadManager extends BaseThreadManager
      * as well as marking the as read.
      *
      * @param ReadableInterface $readable
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user)
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
     {
         return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, true);
     }
@@ -155,9 +155,9 @@ class ThreadManager extends BaseThreadManager
      * Marks the readable as unread by this participant
      *
      * @param ReadableInterface $readable
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user)
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
     {
         return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, false);
     }

@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\Model;
 
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 interface ThreadInterface extends ReadableInterface
 {
@@ -48,39 +48,39 @@ interface ThreadInterface extends ReadableInterface
     /**
      * Gets the users participating in this conversation
      *
-     * @return array of UserInterface
+     * @return array of ParticipantInterface
      */
     function getParticipants();
 
     /**
      * Tells if the user participates to the conversation
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return boolean
      */
-    function isParticipant(UserInterface $user);
+    function isParticipant(ParticipantInterface $user);
 
     /**
      * Adds a participant to the thread
      * If it already exists, nothing is done.
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @return null
      */
-    function addParticipant(UserInterface $participant);
+    function addParticipant(ParticipantInterface $participant);
 
     /**
      * Tells if this thread is deleted by this participant
      *
      * @return bool
      */
-    function isDeletedByParticipant(UserInterface $participant);
+    function isDeletedByParticipant(ParticipantInterface $participant);
 
     /**
      * Sets whether or not this participant has deleted this thread
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @param boolean $isDeleted
      */
-    function setIsDeletedByParticipant(UserInterface $participant, $isDeleted);
+    function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted);
 }

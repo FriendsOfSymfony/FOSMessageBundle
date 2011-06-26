@@ -3,12 +3,12 @@
 namespace Ornicar\MessageBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 /**
- * Transforms between a UserInterface and a username
+ * Transforms between a ParticipantInterface and a username
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
@@ -25,9 +25,9 @@ class UsernameToUserTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms a UserInterface instance to a username string
+     * Transforms a ParticipantInterface instance to a username string
      *
-     * @param mixed $value a UserInterface instance
+     * @param mixed $value a ParticipantInterface instance
      * @return string the username
      */
     public function transform($value)
@@ -35,18 +35,18 @@ class UsernameToUserTransformer implements DataTransformerInterface
         if (null === $value) {
             return null;
         }
-        if (!$value instanceof UserInterface) {
-            throw new UnexpectedTypeException($array, 'UserInterface');
+        if (!$value instanceof ParticipantInterface) {
+            throw new UnexpectedTypeException($array, 'ParticipantInterface');
         }
 
         return $value->getUsername();
     }
 
     /**
-     * Transforms a username to a UserInterface instance
+     * Transforms a username to a ParticipantInterface instance
      *
      * @param string $username
-     * @return UserInterface the corresponding user instance
+     * @return ParticipantInterface the corresponding user instance
      */
     public function reverseTransform($value)
     {

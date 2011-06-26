@@ -7,7 +7,7 @@ use Ornicar\MessageBundle\Model\Message;
 use Ornicar\MessageBundle\Model\Composition;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Ornicar\MessageBundle\Model\ThreadManagerInterface;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -101,13 +101,13 @@ class MessageController extends ContainerAware
     /**
      * Gets the current authenticated user
      *
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     protected function getAuthenticatedUser()
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!$user instanceof UserInterface) {
-            throw new AccessDeniedException('Must be logged in with FOS\UserBundle');
+        if (!$user instanceof ParticipantInterface) {
+            throw new AccessDeniedException('Must be logged in with a ParticipantInterface instance');
         }
 
         return $user;

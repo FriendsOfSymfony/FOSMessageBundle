@@ -6,7 +6,7 @@ use Ornicar\MessageBundle\Model\Thread as AbstractThread;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 abstract class Thread extends AbstractThread
 {
@@ -20,7 +20,7 @@ abstract class Thread extends AbstractThread
     /**
      * Users participating in this conversation
      *
-     * @var Collection of UserInterface
+     * @var Collection of ParticipantInterface
      */
     protected $participants;
 
@@ -86,7 +86,7 @@ abstract class Thread extends AbstractThread
     /**
      * Gets the users participating in this conversation
      *
-     * @return array of UserInterface
+     * @return array of ParticipantInterface
      */
     public function getParticipants()
     {
@@ -97,10 +97,10 @@ abstract class Thread extends AbstractThread
      * Adds a participant to the thread
      * If it already exists, nothing is done.
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @return null
      */
-    public function addParticipant(UserInterface $participant)
+    public function addParticipant(ParticipantInterface $participant)
     {
         if (!$this->isParticipant($participant)) {
             $this->participants->add($participant);
@@ -110,10 +110,10 @@ abstract class Thread extends AbstractThread
     /**
      * Tells if the user participates to the conversation
      *
-     * @param UserInterface $user
+     * @param ParticipantInterface $user
      * @return boolean
      */
-    public function isParticipant(UserInterface $user)
+    public function isParticipant(ParticipantInterface $user)
     {
         return $this->participants->contains($user);
     }
@@ -123,7 +123,7 @@ abstract class Thread extends AbstractThread
      *
      * @return bool
      */
-    public function isDeletedByParticipant(UserInterface $participant)
+    public function isDeletedByParticipant(ParticipantInterface $participant)
     {
         return $this->isDeletedByParticipant[$participant->getId()];
     }
@@ -131,10 +131,10 @@ abstract class Thread extends AbstractThread
     /**
      * Sets whether or not this participant has deleted this thread
      *
-     * @param UserInterface $participant
+     * @param ParticipantInterface $participant
      * @param boolean $isDeleted
      */
-    public function setIsDeletedByParticipant(UserInterface $participant, $isDeleted)
+    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
         $this->isDeletedByParticipant[$participant->getId()] = (boolean) $isDeleted;
     }

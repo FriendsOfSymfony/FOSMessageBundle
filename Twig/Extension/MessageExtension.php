@@ -39,7 +39,7 @@ class MessageExtension extends \Twig_Extension
     /**
      * Gets the current authenticated user
      *
-     * @return UserInterface
+     * @return ParticipantInterface
      */
     protected function getAuthenticatedUser()
     {
