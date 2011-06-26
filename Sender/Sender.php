@@ -2,8 +2,8 @@
 
 namespace Ornicar\MessageBundle\Sender;
 
-use Ornicar\MessageBundle\Model\MessageManagerInterface;
-use Ornicar\MessageBundle\Model\ThreadManagerInterface;
+use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
+use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use FOS\UserBundle\Model\UserInterface;

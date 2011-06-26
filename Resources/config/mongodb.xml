@@ -14,6 +14,7 @@
         <service id="ornicar_message.thread_manager.default" class="Ornicar\MessageBundle\DocumentManager\ThreadManager" public="false">
             <argument type="service" id="doctrine.odm.mongodb.document_manager" />
             <argument>%ornicar_message.thread_class%</argument>
+            <argument type="service" id="ornicar_message.message_manager" />
         </service>
 
     </services>

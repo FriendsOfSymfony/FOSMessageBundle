@@ -26,21 +26,33 @@ class ThreadManager extends BaseThreadManager
     protected $repository;
 
     /**
+     * The model class
+     *
      * @var string
      */
     protected $class;
+
+    /**
+     * The message manager, required to mark
+     * the messages of a thread as read/unread
+     *
+     * @var MessageManager
+     */
+    protected $messageManager;
 
     /**
      * Constructor.
      *
      * @param DocumentManager         $dm
      * @param string                  $class
+     * @param MessageManager          $messageManager
      */
-    public function __construct(DocumentManager $dm, $class)
+    public function __construct(DocumentManager $dm, $class, MessageManager $messageManager)
     {
-        $this->dm         = $dm;
-        $this->repository = $dm->getRepository($class);
-        $this->class      = $dm->getClassMetadata($class)->name;
+        $this->dm             = $dm;
+        $this->repository     = $dm->getRepository($class);
+        $this->class          = $dm->getClassMetadata($class)->name;
+        $this->messageManager = $messageManager;
     }
 
     /**
@@ -129,7 +141,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user)
     {
-        throw new \Exception('Implement me :)');
+        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, true);
     }
 
     /**
@@ -140,7 +152,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user)
     {
-        throw new \Exception('Implement me :)');
+        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, false);
     }
 
     /**

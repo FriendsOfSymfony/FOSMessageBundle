@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\Composer;
 
-use Ornicar\MessageBundle\Model\MessageManagerInterface;
+use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
 use Ornicar\MessageBundle\Sender\SenderInterface;
 
 /**

@@ -4,7 +4,7 @@ namespace Ornicar\MessageBundle\Provider;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Ornicar\MessageBundle\Model\ThreadManagerInterface;
+use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
 use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
 use Ornicar\MessageBundle\Reader\ReaderInterface;
 
@@ -59,6 +59,9 @@ class Provider implements ProviderInterface
         if (!$this->authorizer->canSeeThread($thread)) {
             throw new AccessDeniedException('You are not allowed to see this thread');
         }
+        // Load the thread messages before marking them as read
+        // because we want to see the unread messages
+        $thread->getMessages();
         $this->threadReader->markAsRead($thread);
 
         return $thread;

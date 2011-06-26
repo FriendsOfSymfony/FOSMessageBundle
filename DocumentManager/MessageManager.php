@@ -7,6 +7,8 @@ use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use FOS\UserBundle\Model\UserInterface;
+use Ornicar\MessageBundle\Model\ThreadInterface;
+use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Default MongoDB MessageManager.
@@ -55,7 +57,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsReadByParticipant(ReadableInterface $readable, UserInterface $user)
     {
-        throw new \Exception('Implement me :)');
+        return $this->markIsReadByParticipant($readable, $user, true);
     }
 
     /**
@@ -66,7 +68,54 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, UserInterface $user)
     {
-        throw new \Exception('Implement me :)');
+        return $this->markIsReadByParticipant($readable, $user, false);
+    }
+
+    /**
+     * Marks all messages of this thread as read by this participant
+     *
+     * @param ThreadInterface $thread
+     * @param UserInterface $user
+     * @param boolean $isRead
+     */
+    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, UserInterface $user, $isRead)
+    {
+        $this->doMarkIsReadByParticipant($user, $isRead, function(Builder $queryBuilder) use ($thread) {
+            $queryBuilder->field('thread.$id')->equals(new \MongoId($thread->getId()));
+        });
+    }
+
+    /**
+     * Marks the message as read or unread by this participant
+     *
+     * @param MessageInterface $message
+     * @param UserInterface $user
+     * @param boolean $isRead
+     */
+    protected function markIsReadByParticipant(MessageInterface $message, UserInterface $user, $isRead)
+    {
+        $this->doMarkIsReadByParticipant($user, $isRead, function(Builder $queryBuilder) use ($message) {
+            $queryBuilder->field('id')->equals($message->getId());
+        });
+    }
+
+    /**
+     * Marks messages as read/unread
+     * by updating directly the storage
+     *
+     * @param UserInterface $user
+     * @param boolean $isRead
+     * @param \Closure $condition
+     */
+    protected function doMarkIsReadByParticipant(UserInterface $user, $isRead, \Closure $condition)
+    {
+        $isReadByParticipantFieldName = sprintf('isReadByParticipant.%s', $user->getId());
+        $queryBuilder = $this->repository->createQueryBuilder();
+        $condition($queryBuilder);
+        $queryBuilder->update()
+            ->field($isReadByParticipantFieldName)->set((boolean) $isRead)
+            ->getQuery(array('multiple' => true))
+            ->execute();
     }
 
     /**
