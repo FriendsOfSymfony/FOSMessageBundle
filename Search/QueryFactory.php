@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Gets the search term from the request and prepares it
  */
-class QueryFactory
+class QueryFactory implements QueryFactoryInterface
 {
     /**
      * @var Request
