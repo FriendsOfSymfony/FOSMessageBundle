@@ -45,6 +45,16 @@
             <tag name="twig.extension" alias="ornicar_message" />
         </service>
 
+        <service id="ornicar_message.search_query_factory.default" class="Ornicar\MessageBundle\Search\QueryFactory" scope="request" public="true">
+            <argument type="service" id="request" />
+            <argument /> <!-- query parameter containing the search terms -->
+        </service>
+
+        <service id="ornicar_message.search_finder.default" class="Ornicar\MessageBundle\Search\Finder" public="true">
+            <argument type="service" id="ornicar_message.authorizer" />
+            <argument type="service" id="ornicar_message.thread_manager" />
+        </service>
+
     </services>
 
 </container>

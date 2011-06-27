@@ -92,9 +92,25 @@ class MessageController extends ContainerAware
     public function deleteAction($threadId)
     {
         $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
-        $this->container->get('ornicar_message.thread_manager')->deleteThread($thread);
+        $this->container->get('ornicar_message.deleter')->delete($thread);
 
         return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
+    }
+
+    /**
+     * Searches for messages in the inbox and sentbox
+     *
+     * @return Response
+     */
+    public function searchAction()
+    {
+        $query = $this->container->get('ornicar_message.search_query_factory')->createFromRequest();
+        $threads = $this->container->get('ornicar_message.search_finder')->find($query);
+
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:search.html.twig', array(
+            'query' => $query,
+            'threads' => $threads
+        ));
     }
 
     /**

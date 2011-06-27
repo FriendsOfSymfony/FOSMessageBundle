@@ -7,6 +7,7 @@ use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
+use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Default MongoDB ThreadManager.
@@ -66,22 +67,22 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a user,
-     * containing at least one message not written by this user,
-     * ordered by last message not written by this user in reverse order.
+     * Finds not deleted threads for a participant,
+     * containing at least one message not written by this participant,
+     * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return Builder a query builder suitable for pagination
      */
-    public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $user)
+    public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $user->getId());
-        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $user->getId());
+        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
+        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
 
         return $this->repository->createQueryBuilder()
             // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($user->getId()))
+            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
             // the thread is not deleted by this participant
             ->field($isDeletedByParticipantFieldName)->equals(false)
             // there is at least one message written by an other participant
@@ -91,49 +92,99 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a user,
-     * containing at least one message not written by this user,
-     * ordered by last message not written by this user in reverse order.
+     * Finds not deleted threads for a participant,
+     * containing at least one message not written by this participant,
+     * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return array of ThreadInterface
      */
-    public function findParticipantInboxThreads(ParticipantInterface $user)
+    public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
-        return $this->getParticipantInboxThreadsQueryBuilder($user)->getQuery()->execute();
+        return $this->getParticipantInboxThreadsQueryBuilder($participant)->getQuery()->execute();
     }
 
     /**
-     * Finds threads from a user,
-     * containing at least one message written by this user,
-     * ordered by last message written by this user in reverse order.
+     * Finds not deleted threads from a participant,
+     * containing at least one message written by this participant,
+     * ordered by last message written by this participant in reverse order.
      * In one word: an sentbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return Builder a query builder suitable for pagination
      */
-    public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $user)
+    public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $user->getId());
+        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
+        $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $participant->getId());
+
         return $this->repository->createQueryBuilder()
-            ->field('participants.$id')->equals(new \MongoId($user->getId()))
+            // the participant is in the thread participants
+            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
+            // the thread is not deleted by this participant
+            ->field($isDeletedByParticipantFieldName)->equals(false)
+            // there is at least one message written by this participant
             ->field($datesOfLastMessageWrittenByParticipantFieldName)->exists(true)
+            // sort by date of last message written by this participant
             ->sort($datesOfLastMessageWrittenByParticipantFieldName, 'desc');
     }
 
     /**
-     * Finds threads from a user,
-     * containing at least one message written by this user,
-     * ordered by last message written by this user in reverse order.
+     * Finds not deleted threads from a participant,
+     * containing at least one message written by this participant,
+     * ordered by last message written by this participant in reverse order.
      * In one word: an sentbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return array of ThreadInterface
      */
-    public function findParticipantSentThreads(ParticipantInterface $user)
+    public function findParticipantSentThreads(ParticipantInterface $participant)
     {
-        return $this->getParticipantSentThreadsQueryBuilder($user)->getQuery()->execute();
+        return $this->getParticipantSentThreadsQueryBuilder($participant)->getQuery()->execute();
+    }
+
+    /**
+     * Finds not deleted threads for a participant,
+     * matching the given search term
+     * ordered by last message not written by this participant in reverse order.
+     *
+     * @param ParticipantInterface $participant
+     * @param string $search
+     * @return Builder a query builder suitable for pagination
+     */
+    public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
+    {
+        // remove all non-word chars
+        $search = preg_replace('/[^\w]/', ' ', trim($search));
+        // build a regex like (term1|term2)
+        $regex = sprintf('/(%s)/', implode('|', explode(' ', $search)));
+
+        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
+        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
+
+        return $this->repository->createQueryBuilder()
+            // the participant is in the thread participants
+            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
+            // the thread is not deleted by this participant
+            ->field($isDeletedByParticipantFieldName)->equals(false)
+            // sort by date of last message written by an other participant
+            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc')
+            ->field('keywords')->equals(new \MongoRegex($regex));
+    }
+
+    /**
+     * Finds not deleted threads for a participant,
+     * matching the given search term
+     * ordered by last message not written by this participant in reverse order.
+     *
+     * @param ParticipantInterface $participant
+     * @param string $search
+     * @return array of ThreadInterface
+     */
+    public function findParticipantThreadsBySearch(participantinterface $participant, $search)
+    {
+        return $this->getParticipantThreadsBySearchQueryBuilder($participant, $search)->getQuery()->execute();
     }
 
     /**
@@ -144,22 +195,22 @@ class ThreadManager extends BaseThreadManager
      * as well as marking the as read.
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, true);
+        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, true);
     }
 
     /**
      * Marks the readable as unread by this participant
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $user, false);
+        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, false);
     }
 
     /**

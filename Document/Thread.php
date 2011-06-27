@@ -54,6 +54,14 @@ abstract class Thread extends AbstractThread
     protected $datesOfLastMessageWrittenByParticipant = array();
 
     /**
+     * All text contained in the thread messages
+     * Used for the full text search
+     *
+     * @var string
+     */
+    protected $keywords = '';
+
+    /**
      * Initializes the collections
      */
     public function __construct()
@@ -174,5 +182,18 @@ abstract class Thread extends AbstractThread
         // having theses sorted by user does not harm, and it makes unit testing easier
         ksort($this->datesOfLastMessageWrittenByParticipant);
         ksort($this->datesOfLastMessageWrittenByOtherParticipant);
+
+        $this->denormalizeKeywords();
+    }
+
+    /**
+     * Adds all messages contents to the keywords property
+     */
+    public function denormalizeKeywords()
+    {
+        $this->keywords = $this->getSubject();
+        foreach ($this->getMessages() as $message) {
+            $this->keywords .= ' '.$message->getBody();
+        }
     }
 }

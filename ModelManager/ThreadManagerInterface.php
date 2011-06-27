@@ -23,48 +23,70 @@ interface ThreadManagerInterface extends ReadableManagerInterface
     function findThreadById($id);
 
     /**
-     * Finds not deleted threads for a user,
-     * containing at least one message not written by this user,
-     * ordered by last message not written by this user in reverse order.
+     * Finds not deleted threads for a participant,
+     * containing at least one message not written by this participant,
+     * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return Builder a query builder suitable for pagination
      */
-    function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $user);
+    function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant);
 
     /**
-     * Finds not deleted threads for a user,
-     * containing at least one message not written by this user,
-     * ordered by last message not written by this user in reverse order.
+     * Finds not deleted threads for a participant,
+     * containing at least one message not written by this participant,
+     * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return array of ThreadInterface
      */
-    function findParticipantInboxThreads(ParticipantInterface $user);
+    function findParticipantInboxThreads(ParticipantInterface $participant);
 
     /**
-     * Finds threads from a user,
-     * containing at least one message written by this user,
-     * ordered by last message written by this user in reverse order.
+     * Finds not deleted threads from a participant,
+     * containing at least one message written by this participant,
+     * ordered by last message written by this participant in reverse order.
      * In one word: an sentbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return Builder a query builder suitable for pagination
      */
-    function getParticipantSentThreadsQueryBuilder(ParticipantInterface $user);
+    function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant);
 
     /**
-     * Finds threads from a user,
-     * containing at least one message written by this user,
-     * ordered by last message written by this user in reverse order.
+     * Finds not deleted threads from a participant,
+     * containing at least one message written by this participant,
+     * ordered by last message written by this participant in reverse order.
      * In one word: an sentbox.
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return array of ThreadInterface
      */
-    function findParticipantSentThreads(ParticipantInterface $user);
+    function findParticipantSentThreads(ParticipantInterface $participant);
+
+    /**
+     * Finds not deleted threads for a participant,
+     * matching the given search term
+     * ordered by last message not written by this participant in reverse order.
+     *
+     * @param ParticipantInterface $participant
+     * @param string $search
+     * @return Builder a query builder suitable for pagination
+     */
+    function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search);
+
+    /**
+     * Finds not deleted threads for a participant,
+     * matching the given search term
+     * ordered by last message not written by this participant in reverse order.
+     *
+     * @param ParticipantInterface $participant
+     * @param string $search
+     * @return array of ThreadInterface
+     */
+    function findparticipantthreadsbysearch(participantinterface $participant, $search);
 
     /**
      * Creates an empty comment thread instance
@@ -74,17 +96,17 @@ interface ThreadManagerInterface extends ReadableManagerInterface
     function createThread();
 
     /**
-     * Deletes a thread
-     *
-     * @param ThreadInterface $thread the thread to delete
-     */
-    function deleteThread(ThreadInterface $thread);
-
-    /**
      * Saves a thread
      *
      * @param ThreadInterface $thread
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
     function updateThread(ThreadInterface $thread, $andFlush = true);
+
+    /**
+     * Deletes a thread
+     *
+     * @param ThreadInterface $thread the thread to delete
+     */
+    function deleteThread(ThreadInterface $thread);
 }

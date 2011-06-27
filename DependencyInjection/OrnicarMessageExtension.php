@@ -51,5 +51,10 @@ class OrnicarMessageExtension extends Extension
         $container->setAlias('ornicar_message.reply_form.type', $config['reply_form']['type']);
         $container->setAlias('ornicar_message.reply_form.factory', $config['reply_form']['factory']);
         $container->setAlias('ornicar_message.reply_form.handler', $config['reply_form']['handler']);
+
+        $container->setAlias('ornicar_message.search_query_factory', $config['search']['query_factory']);
+        $container->setAlias('ornicar_message.search_finder', $config['search']['finder']);
+        $container->getDefinition('ornicar_message.search_query_factory.default')
+            ->replaceArgument(1, $config['search']['query_parameter']);
     }
 }

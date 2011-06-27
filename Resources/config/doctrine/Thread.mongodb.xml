@@ -18,6 +18,8 @@
 
         <field name="datesOfLastMessageWrittenByOtherParticipant" fieldName="datesOfLastMessageWrittenByOtherParticipant" type="hash" />
 
+        <field name="keywords" fieldName="keywords" type="string" />
+
         <indexes>
             <index unique="false">
                 <key name="isDeletedByParticipant" order="asc" />
