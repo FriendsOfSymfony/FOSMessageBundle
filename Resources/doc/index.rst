@@ -196,8 +196,8 @@ Have a look to the default controller to learn how to use the messenging service
 
     Controller\MessageController.php
 
-Get messages
-------------
+Get user threads
+----------------
 
 Get the threads in the inbox of the authenticated user::
 
@@ -212,6 +212,41 @@ And the threads in the sentbox::
 To get a single thread, check it belongs to the authenticated user and mark it as read::
 
     $thread = $provider->getThread($threadId);
+
+Manipulate threads
+------------------
+
+See ``Ornicar\\MessageBundle\\Model\\ThreadInterface`` for the complete list of available methods::
+
+    // Print the thread subject
+    echo $thread->getSubject();
+
+    // Get the tread participants
+    $participants = $thread->getParticipants();
+
+    // Know if this participant has read this thread
+    if ($thread->isReadByParticipant($participant))
+
+    // Know if this participant has deleted this thread
+    if ($thread->isDeletedByParticipant($participant))
+
+
+Manipulate messages
+-------------------
+
+See ``Ornicar\\MessageBundle\\Model\\MessageInterface`` for the complete list of available methods::
+
+    // Print the message body
+    echo $message->getBody();
+
+    // Get the message sender participant
+    $sender = $message->getSender();
+
+    // Get the message thread
+    $thread = $message->getThread();
+
+    // Know if this participant has read this message
+    if ($message->isReadByParticipant($participant))
 
 Send a message
 --------------
