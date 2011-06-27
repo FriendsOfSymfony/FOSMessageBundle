@@ -1,3 +1,16 @@
-Adds private messages on top of FOS\UserBundle. Very similar to GitHub messenging.
+Provides messenging features for your Symfony2 application.
 
-I'll write documentation when someone asks me for it.
+The persistence is storage agnostic. Any backend can be implemented: Doctrine, Propel, and others.
+Actually the Doctrine MongoDB implementation is complete.
+
+MessageBundle supports threads.
+
+MessageBundle can be used with FOS\UserBundle, but it is not required.
+
+For documentation, see:
+
+    Resources/doc/index.rst
+
+License:
+    
+    Resources/meta/LICENSE
