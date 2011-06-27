@@ -1,30 +1,29 @@
 <?php
 
-namespace Ornicar\MessageBundle\Authorizer;
+namespace Ornicar\MessageBundle\Security;
 
 use Ornicar\MessageBundle\Model\ThreadInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
- * Provides the authenticated participant,
- * and manages permissions to manipulate threads and messages
+ * Manages permissions to manipulate threads and messages
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class Authorizer implements AuthorizerInterface
 {
     /**
-     * The security context
+     * The participant provider
      *
-     * @var SecurityContextInterface
+     * @var ParticipantProviderInterface
      */
-    protected $securityContext;
+    protected $participantProvider;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(ParticipantProviderInterface $participantProvider)
     {
-        $this->securityContext = $securityContext;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -36,7 +35,7 @@ class Authorizer implements AuthorizerInterface
      */
     public function canSeeThread(ThreadInterface $thread)
     {
-        return $this->isAuthenticated() && $thread->isParticipant($this->getAuthenticatedParticipant());
+        return $this->getAuthenticatedParticipant() && $thread->isParticipant($this->getAuthenticatedParticipant());
     }
 
     /**
@@ -68,27 +67,8 @@ class Authorizer implements AuthorizerInterface
      *
      * @return ParticipantInterface
      */
-    public function getAuthenticatedParticipant()
+    protected function getAuthenticatedParticipant()
     {
-        if (!$this->isAuthenticated()) {
-            return null;
-        }
-        $participant = $this->securityContext->getToken()->getUser();
-
-        if (!$participant instanceof ParticipantInterface) {
-            throw new AccessDeniedException('Must be logged in with a ParticipantInterface instance');
-        }
-
-        return $participant;
-    }
-
-    /**
-     * Tells if there is an authenticated user
-     *
-     * @return boolean
-     */
-    protected function isAuthenticated()
-    {
-        return $this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

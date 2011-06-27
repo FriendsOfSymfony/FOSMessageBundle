@@ -2,16 +2,16 @@
 
 namespace Ornicar\MessageBundle\Twig\Extension;
 
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 
 class MessageExtension extends \Twig_Extension
 {
-    protected $authorizer;
+    protected $participantProvider;
 
-    public function __construct(AuthorizerInterface $authorizer)
+    public function __construct(ParticipantProviderInterface $participantProvider)
     {
-        $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -43,7 +43,7 @@ class MessageExtension extends \Twig_Extension
      */
     protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 
     /**

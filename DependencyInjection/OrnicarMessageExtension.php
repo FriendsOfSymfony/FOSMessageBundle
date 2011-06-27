@@ -40,6 +40,7 @@ class OrnicarMessageExtension extends Extension
         $container->setAlias('ornicar_message.sender', $config['sender']);
         $container->setAlias('ornicar_message.composer', $config['composer']);
         $container->setAlias('ornicar_message.provider', $config['provider']);
+        $container->setAlias('ornicar_message.participant_provider', $config['participant_provider']);
         $container->setAlias('ornicar_message.authorizer', $config['authorizer']);
         $container->setAlias('ornicar_message.message_reader', $config['message_reader']);
         $container->setAlias('ornicar_message.thread_reader', $config['thread_reader']);

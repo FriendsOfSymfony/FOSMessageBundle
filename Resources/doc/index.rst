@@ -281,32 +281,33 @@ All configuration options are listed below::
     # app/config/config.yml
 
     ornicar_message
-        db_driver:          mongodb
-        thread_class:       Acme\MessageBundle\Document\Thread      
-        message_class:      Acme\MessageBundle\Document\Message    
-        message_manager:    ornicar_message.message_manager         # See ModelManager\MessageManagerInterface
-        thread_manager:     ornicar_message.thread_manager          # See ModelManager\ThreadManagerInterface
-        sender:             ornicar_message.sender                  # See Sender\SenderInterface
-        composer:           ornicar_message.composer                # See Composer\ComposerInterface
-        provider:           ornicar_message.provider                # See Provider\ProviderInterface
-        authorizer:         ornicar_message.authorizer              # See Authorizer\AuthorizerInterface
-        message_reader:     ornicar_message.message_reader          # See Reader\ReaderInterface
-        thread_reader:      ornicar_message.thread_reader           # See Reader\ReaderInterface
-        deleter:            ornicar_message.deleter                 # See Deleter\DeleterInterface
+        db_driver:              mongodb
+        thread_class:           Acme\MessageBundle\Document\Thread      
+        message_class:          Acme\MessageBundle\Document\Message    
+        message_manager:        ornicar_message.message_manager         # See ModelManager\MessageManagerInterface
+        thread_manager:         ornicar_message.thread_manager          # See ModelManager\ThreadManagerInterface
+        sender:                 ornicar_message.sender                  # See Sender\SenderInterface
+        composer:               ornicar_message.composer                # See Composer\ComposerInterface
+        provider:               ornicar_message.provider                # See Provider\ProviderInterface
+        participant_provider:   ornicar_message.participant_provider    # See Security\ParticipantProviderInterface
+        authorizer:             ornicar_message.authorizer              # See Security\AuthorizerInterface
+        message_reader:         ornicar_message.message_reader          # See Reader\ReaderInterface
+        thread_reader:          ornicar_message.thread_reader           # See Reader\ReaderInterface
+        deleter:                ornicar_message.deleter                 # See Deleter\DeleterInterface
         search:
-            finder:         ornicar_message.search_finder           # See Finder\FinderInterface
-            query_factory:  ornicar_message.search_query_factory    # See Finder\QueryFactoryInterface
-            query_parameter: 'q'                                    # Request query parameter containing the term
+            finder:             ornicar_message.search_finder           # See Finder\FinderInterface
+            query_factory:      ornicar_message.search_query_factory    # See Finder\QueryFactoryInterface
+            query_parameter:    'q'                                     # Request query parameter containing the term
         new_thread_form:
-            factory:        ornicar_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory
-            type:           ornicar_message.new_thread_form.type    # See FormType\NewThreadMessageFormType
-            handler:        ornicar_message.new_thread_form.handler # See FormHandler\NewThreadMessageFormHandler
-            name:           message
+            factory:            ornicar_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory
+            type:               ornicar_message.new_thread_form.type    # See FormType\NewThreadMessageFormType
+            handler:            ornicar_message.new_thread_form.handler # See FormHandler\NewThreadMessageFormHandler
+            name:               message
         reply_form:
-            factory:        ornicar_message.reply_form.factory      # See FormFactory\ReplyMessageFormFactory
-            type:           ornicar_message.reply_form.type         # See FormType\ReplyMessageFormType
-            handler:        ornicar_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
-            name:           message
+            factory:            ornicar_message.reply_form.factory      # See FormFactory\ReplyMessageFormFactory
+            type:               ornicar_message.reply_form.type         # See FormType\ReplyMessageFormType
+            handler:            ornicar_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
+            name:               message
 
 Implement a new persistence backend
 ===================================

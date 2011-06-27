@@ -5,8 +5,9 @@ namespace Ornicar\MessageBundle\Provider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\AuthorizerInterface;
 use Ornicar\MessageBundle\Reader\ReaderInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Provides threads for the current authenticated user
@@ -15,13 +16,6 @@ use Ornicar\MessageBundle\Reader\ReaderInterface;
  */
 class Provider implements ProviderInterface
 {
-    /**
-     * The authorizer manager
-     *
-     * @var authorizerInterface
-     */
-    protected $authorizer;
-
     /**
      * The thread manager
      *
@@ -36,11 +30,26 @@ class Provider implements ProviderInterface
      */
     protected $threadReader;
 
-    public function __construct(ThreadManagerInterface $threadManager, AuthorizerInterface $authorizer, ReaderInterface $threadReader)
+    /**
+     * The authorizer manager
+     *
+     * @var authorizerInterface
+     */
+    protected $authorizer;
+
+    /**
+     * The participant provider instance
+     *
+     * @var ParticipantProviderInterface
+     */
+    protected $participantProvider;
+
+    public function __construct(ThreadManagerInterface $threadManager, ReaderInterface $threadReader, AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
     {
-        $this->authorizer = $authorizer;
         $this->threadManager = $threadManager;
         $this->threadReader = $threadReader;
+        $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -98,6 +107,6 @@ class Provider implements ProviderInterface
      */
     protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

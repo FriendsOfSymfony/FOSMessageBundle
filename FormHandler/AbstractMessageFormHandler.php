@@ -6,7 +6,7 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Ornicar\MessageBundle\Composer\ComposerInterface;
 use Ornicar\MessageBundle\FormModel\AbstractMessage;
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 abstract class AbstractMessageFormHandler
@@ -14,13 +14,13 @@ abstract class AbstractMessageFormHandler
     protected $form;
     protected $request;
     protected $composer;
-    protected $authorizer;
+    protected $participantProvider;
 
-    public function __construct(Request $request, ComposerInterface $composer, AuthorizerInterface $authorizer)
+    public function __construct(Request $request, ComposerInterface $composer, ParticipantProviderInterface $participantProvider)
     {
         $this->request = $request;
         $this->composer = $composer;
-        $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -58,6 +58,6 @@ abstract class AbstractMessageFormHandler
      */
     public function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

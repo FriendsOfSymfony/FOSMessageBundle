@@ -3,7 +3,7 @@
 namespace Ornicar\MessageBundle\Search;
 
 use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Finds threads of a participant, matching a given query
@@ -13,11 +13,11 @@ use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
 class Finder implements FinderInterface
 {
     /**
-     * The authorizer instance
+     * The participant provider instance
      *
-     * @var AuthorizerInterface
+     * @var ParticipantProviderInterface
      */
-    protected $authorizer;
+    protected $participantProvider;
 
     /**
      * The thread manager
@@ -26,9 +26,9 @@ class Finder implements FinderInterface
      */
     protected $threadManager;
 
-    public function __construct(AuthorizerInterface $authorizer, ThreadManagerInterface $threadManager)
+    public function __construct(ParticipantProviderInterface $participantProvider, ThreadManagerInterface $threadManager)
     {
-        $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
         $this->threadManager = $threadManager;
     }
 
@@ -61,6 +61,6 @@ class Finder implements FinderInterface
      */
     protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

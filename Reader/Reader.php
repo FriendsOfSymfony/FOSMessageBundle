@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\Reader;
 
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
 
@@ -14,11 +14,11 @@ use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
 class Reader implements ReaderInterface
 {
     /**
-     * The authorizer instance
+     * The participantProvider instance
      *
-     * @var AuthorizerInterface
+     * @var ParticipantProviderInterface
      */
-    protected $authorizer;
+    protected $participantProvider;
 
     /**
      * The readable manager
@@ -27,9 +27,9 @@ class Reader implements ReaderInterface
      */
     protected $readableManager;
 
-    public function __construct(AuthorizerInterface $authorizer, ReadableManagerInterface $readableManager)
+    public function __construct(ParticipantProviderInterface $participantProvider, ReadableManagerInterface $readableManager)
     {
-        $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
         $this->readableManager = $readableManager;
     }
 
@@ -60,6 +60,6 @@ class Reader implements ReaderInterface
      */
     protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

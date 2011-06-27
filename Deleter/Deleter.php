@@ -2,9 +2,10 @@
 
 namespace Ornicar\MessageBundle\Deleter;
 
-use Ornicar\MessageBundle\Authorizer\AuthorizerInterface;
+use Ornicar\MessageBundle\Security\AuthorizerInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Marks threads as deleted
@@ -20,9 +21,17 @@ class Deleter implements ReaderInterface
      */
     protected $authorizer;
 
-    public function __construct(AuthorizerInterface $authorizer)
+    /**
+     * The participant provider instance
+     *
+     * @var ParticipantProviderInterface
+     */
+    protected $participantProvider;
+
+    public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
     {
         $this->authorizer = $authorizer;
+        $this->participantProvider = $participantProvider;
     }
 
     /**
@@ -58,6 +67,6 @@ class Deleter implements ReaderInterface
      */
     protected function getAuthenticatedParticipant()
     {
-        return $this->authorizer->getAuthenticatedParticipant();
+        return $this->participantProvider->getAuthenticatedParticipant();
     }
 }

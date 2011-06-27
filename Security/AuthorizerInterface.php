@@ -1,13 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\Authorizer;
+namespace Ornicar\MessageBundle\Security;
 
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
- * Provides the authenticated participant,
- * and manages permissions to manipulate threads and messages
+ * Manages permissions to manipulate threads and messages
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
