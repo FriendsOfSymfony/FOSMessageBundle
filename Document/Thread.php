@@ -235,13 +235,11 @@ abstract class Thread extends AbstractThread
     {
         foreach ($this->getParticipants() as $participant) {
             $participantId = $participant->getId();
-            $date = isset($dates[$participantId]) ? $dates[$participantId] : 0;
             foreach ($this->getMessages() as $message) {
                 if ($condition($participantId, $message->getSender()->getId())) {
-                    $date = max($date, $message->getTimestamp());
+                    $dates[$participantId] = max(isset($dates[$participantId]) ? $dates[$participantId] : 0, $message->getTimestamp());
                 }
             }
-            $dates[$participantId] = $date;
         }
 
         return $dates;

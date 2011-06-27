@@ -69,6 +69,8 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[3]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
         $this->assertSame(array('u1' => $this->dates[3]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
+        $this->assertEquals('test thread subject hi dude', $thread->getKeywords());
+        $this->assertSame(array('u1' => false, 'u2' => false), $thread->getIsDeletedByParticipant());
     }
 
     protected function createMessageMock($sender, $recipient, DateTime $date)
@@ -80,13 +82,13 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
             ->method('getSender')
             ->will($this->returnValue($sender));
         $message->expects($this->atLeastOnce())
-            ->method('getRecipient')
-            ->will($this->returnValue($recipient));
+            ->method('getTimestamp')
+            ->will($this->returnValue($date->getTimestamp()));
         $message->expects($this->atLeastOnce())
-            ->method('getCreatedAt')
-            ->will($this->returnValue($date));
-        $message->expects($this->once())
             ->method('ensureIsReadByParticipant');
+        $message->expects($this->atLeastOnce())
+            ->method('getBody')
+            ->will($this->returnValue('hi dude'));
 
         return $message;
     }
@@ -115,6 +117,16 @@ class TestThread extends Thread
     public function getDatesOfLastMessageWrittenByOtherParticipant()
     {
         return $this->datesOfLastMessageWrittenByOtherParticipant;
+    }
+
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    public function getIsDeletedByParticipant()
+    {
+        return $this->isDeletedByParticipant;
     }
 
     public function addMessage(MessageInterface $message)
