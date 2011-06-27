@@ -6,6 +6,8 @@
 
     <class name="Ornicar\MessageBundle\FormModel\NewThreadMessage">
 
+        <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
+
         <property name="recipient">
             <constraint name="NotBlank">
                 <option name="message">Please enter a username</option>

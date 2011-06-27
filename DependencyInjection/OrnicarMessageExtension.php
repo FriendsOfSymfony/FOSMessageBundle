@@ -25,6 +25,7 @@ class OrnicarMessageExtension extends Extension
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load('config.xml');
         $loader->load('form.xml');
+        $loader->load('validator.xml');
 
         $container->setParameter('ornicar_message.message_class', $config['message_class']);
         $container->setParameter('ornicar_message.thread_class', $config['thread_class']);
