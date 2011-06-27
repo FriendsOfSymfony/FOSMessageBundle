@@ -4,8 +4,10 @@ namespace Ornicar\MessageBundle\Document;
 
 use DateTime;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Ornicar\MessageBundle\Model\MessageInterface;
 
-class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
+class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
 {
     protected $dates;
 
@@ -29,6 +31,8 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
          * First message
          */
         $message = $this->createMessageMock($user1, $user2, $this->dates[0]);
+        $thread->setSubject('Test thread subject');
+        $thread->addParticipant($user2);
         $thread->addMessage($message);
 
         $this->assertSame(array($user1, $user2), $thread->getParticipants());
@@ -69,26 +73,27 @@ class ThreadDenormalizationTest extends \PHPUnit_Framework_TestCase
 
     protected function createMessageMock($sender, $recipient, DateTime $date)
     {
-        $message = $this->getMockBuilder('Ornicar\MessageBundle\Model\MessageInterface')
-            ->disableOriginalConstructor(true)
+        $message = $this->getMockBuilder('Ornicar\MessageBundle\Document\Message')
             ->getMock();
 
-        $message->expects($this->once())
+        $message->expects($this->atLeastOnce())
             ->method('getSender')
             ->will($this->returnValue($sender));
-        $message->expects($this->once())
+        $message->expects($this->atLeastOnce())
             ->method('getRecipient')
             ->will($this->returnValue($recipient));
-        $message->expects($this->once())
+        $message->expects($this->atLeastOnce())
             ->method('getCreatedAt')
             ->will($this->returnValue($date));
+        $message->expects($this->once())
+            ->method('ensureIsReadByParticipant');
 
         return $message;
     }
 
     protected function createParticipantMock($id)
     {
-        $user = $this->getMockBuilder('ParticipantInterface')
+        $user = $this->getMockBuilder('Ornicar\MessageBundle\Model\ParticipantInterface')
             ->disableOriginalConstructor(true)
             ->getMock();
 
@@ -110,5 +115,27 @@ class TestThread extends Thread
     public function getDatesOfLastMessageWrittenByOtherParticipant()
     {
         return $this->datesOfLastMessageWrittenByOtherParticipant;
+    }
+
+    public function addMessage(MessageInterface $message)
+    {
+        parent::addMessage($message);
+
+        $this->sortDenormalizedProperties();
+    }
+
+    /**
+     * Sort denormalized properties to ease testing
+     */
+    protected function sortDenormalizedProperties()
+    {
+        ksort($this->isDeletedByParticipant);
+        ksort($this->datesOfLastMessageWrittenByParticipant);
+        ksort($this->datesOfLastMessageWrittenByOtherParticipant);
+        $participants = $this->participants->toArray();
+        usort($participants, function(ParticipantInterface $p1, ParticipantInterface $p2) {
+            return $p1->getId() > $p2->getId();
+        });
+        $this->participants = new ArrayCollection($participants);
     }
 }

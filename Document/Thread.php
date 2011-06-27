@@ -88,7 +88,7 @@ abstract class Thread extends AbstractThread
     public function addMessage(MessageInterface $message)
     {
         $this->messages->add($message);
-        $this->denormalize($message);
+        $this->denormalize();
     }
 
     /**
@@ -148,52 +148,114 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Performs denormalization tricks
-     * based on a message belonging to this thread.
-     * Updates participants and last message dates.
+     * DENORMALIZATION
      *
-     * Take it easy, this code is tested in Tests\Document\ThreadTest ;)
-     *
-     * @param MessageInterface $message
+     * All following methods are relative to denormalization
      */
-    protected function denormalize(MessageInterface $message)
+
+    /**
+     * Performs denormalization tricks
+     */
+    protected function denormalize()
     {
-        $sender = $message->getSender();
-        $this->addParticipant($sender);
-        $message->setIsReadByParticipant($sender, true);
+        $this->doParticipants();
+        $this->doKeywords();
+        $this->doEnsureMessagesIsRead();
+        $this->doDatesOfLastMessageWrittenByParticipant();
+        $this->doDatesOfLastMessageWrittenByOtherParticipant();
+        $this->doEnsureIsDeletedByParticipant();
+    }
 
-        // Update the last message dates if needed
-        $messageTs = $message->getCreatedAt()->getTimestamp();
-        $senderId = $sender->getId();
-        foreach ($this->participants as $participant) {
-            $participantId = $participant->getId();
-            if ($participantId != $senderId) {
-                if (!isset($this->datesOfLastMessageWrittenByOtherParticipant[$participantId]) || $this->datesOfLastMessageWrittenByOtherParticipant[$participantId] < $messageTs) {
-                    $this->datesOfLastMessageWrittenByOtherParticipant[$participantId] = $messageTs;
-                }
-                $message->setIsReadByParticipant($participant, false);
-            } elseif (!isset($this->datesOfLastMessageWrittenByParticipant[$participantId]) || $this->datesOfLastMessageWrittenByParticipant[$participantId] < $messageTs) {
-                $this->datesOfLastMessageWrittenByParticipant[$participantId] = $messageTs;
-            }
-            if (!array_key_exists($participantId, $this->isDeletedByParticipant)) {
-                $this->isDeletedByParticipant[$participantId] = false;
-            }
+    /**
+     * Ensures that the thread participants are up to date
+     */
+    protected function doParticipants()
+    {
+        foreach ($this->getMessages() as $message) {
+            $this->addParticipant($message->getSender());
         }
-        // having theses sorted by user does not harm, and it makes unit testing easier
-        ksort($this->datesOfLastMessageWrittenByParticipant);
-        ksort($this->datesOfLastMessageWrittenByOtherParticipant);
-
-        $this->denormalizeKeywords();
     }
 
     /**
      * Adds all messages contents to the keywords property
      */
-    public function denormalizeKeywords()
+    protected function doKeywords()
     {
-        $this->keywords = $this->getSubject();
+        $keywords = $this->getSubject();
+
         foreach ($this->getMessages() as $message) {
-            $this->keywords .= ' '.$message->getBody();
+            $keywords .= ' '.$message->getBody();
+        }
+
+        // we only need each word once
+        $this->keywords = implode(' ', array_unique(str_word_count(strtolower($keywords), 1)));
+    }
+
+    /**
+     * Ensures that every message has a isRead flag for each participant
+     */
+    protected function doEnsureMessagesIsRead()
+    {
+        foreach ($this->getMessages() as $message) {
+            $message->setIsReadByParticipant($message->getSender(), true);
+            $message->ensureIsReadByParticipant($this->getParticipants());
+        }
+    }
+
+    /**
+     * Update the dates of last message written by participant
+     */
+    protected function doDatesOfLastMessageWrittenByParticipant()
+    {
+        $this->datesOfLastMessageWrittenByParticipant = $this->greaterMessageTimestampForCondition(
+            $this->datesOfLastMessageWrittenByParticipant,
+            function($participantId, $senderId) { return $participantId === $senderId; }
+        );
+    }
+
+    /**
+     * Update the dates of last message written by other participants
+     */
+    protected function doDatesOfLastMessageWrittenByOtherParticipant()
+    {
+        $this->datesOfLastMessageWrittenByOtherParticipant = $this->greaterMessageTimestampForCondition(
+            $this->datesOfLastMessageWrittenByOtherParticipant,
+            function($participantId, $senderId) { return $participantId !== $senderId; }
+        );
+    }
+
+    /**
+     * Gets dates of last message for each participant, depending on the condition
+     *
+     * @param array $dates
+     * @param \Closure $condition
+     * @return array
+     */
+    protected function greaterMessageTimestampForCondition(array $dates, \Closure $condition)
+    {
+        foreach ($this->getParticipants() as $participant) {
+            $participantId = $participant->getId();
+            $date = isset($dates[$participantId]) ? $dates[$participantId] : 0;
+            foreach ($this->getMessages() as $message) {
+                if ($condition($participantId, $message->getSender()->getId())) {
+                    $date = max($date, $message->getTimestamp());
+                }
+            }
+            $dates[$participantId] = $date;
+        }
+
+        return $dates;
+    }
+
+    /**
+     * Ensures that each participant has an isDeleted flag
+     */
+    protected function doEnsureIsDeletedByParticipant()
+    {
+        foreach ($this->getParticipants() as $participant) {
+            if (!isset($this->isDeletedByParticipant[$participant->getId()])) {
+                $this->isDeletedByParticipant[$participant->getId()] = false;
+            }
         }
     }
 }

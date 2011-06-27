@@ -17,7 +17,8 @@ abstract class Message extends AbstractMessage
     /**
      * Tells if this participant has read this message
      *
-     * @return bool
+     * @param ParticipantInterface $participant
+     * @return boolean
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -33,5 +34,29 @@ abstract class Message extends AbstractMessage
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
         $this->isReadByParticipant[$participant->getId()] = (boolean) $isRead;
+    }
+
+    /**
+     * Ensures that each participant has an isRead flag
+     *
+     * @param array $participants list of ParticipantInterface
+     */
+    public function ensureIsReadByParticipant(array $participants)
+    {
+        foreach ($participants as $participant) {
+            if (!isset($this->isReadByParticipant[$participant->getId()])) {
+                $this->isReadByParticipant[$participant->getId()] = false;
+            }
+        }
+    }
+
+    /**
+     * Gets the created at timestamp
+     *
+     * @return int
+     */
+    public function getTimestamp()
+    {
+        return $this->getCreatedAt()->getTimestamp();
     }
 }
