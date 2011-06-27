@@ -3,7 +3,7 @@ Provides messenging features for your Symfony2 application.
 The persistence is storage agnostic. Any backend can be implemented: Doctrine, Propel, and others.
 Actually the Doctrine MongoDB implementation only is complete.
 
-MessageBundle supports threads.
+MessageBundle supports threads, spam detection, soft deletion and messenging permissions.
 
 MessageBundle can be used with FOS\UserBundle, but it is not required.
 
@@ -77,16 +77,12 @@ For exemple, if your user class is ``Acme\UserBundle\Document\User``::
     use Ornicar\MessageBundle\Model\ParticipantInterface;
 
     /**
-    * @MongoDB\Document
-    */
+     * @MongoDB\Document
+     */
     class User implements ParticipantInterface
     {
         // your code here
-
-        public function getId()
-        {
-            return $this->id;
-        }
+    }
 
 If you need a bundle providing a base user, see http://github.com/FriendsOfSymfony/UserBundle
 
@@ -273,6 +269,27 @@ And to reply to this message::
 Note that when replying, we don't need to provide the subject nor the recipient.
 Because they are the attributes of the thread, which already exists.
 
+Spam detection
+==============
+
+Using Akismet
+-------------
+
+Install AkismetBundle (http://github.com/ornicar/AkismetBundle).
+
+Then, set the spam detector service accordingly::
+
+    # app/config/config.yml
+
+        ornicar_message:
+            spam_detector: ornicar_message.akismet_spam_detector
+
+Other strategy
+--------------
+
+You can use any spam dectetor service, including one of your own.
+The class must implement ``Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface``.
+
 Configuration
 =============
 
@@ -294,6 +311,7 @@ All configuration options are listed below::
         message_reader:         ornicar_message.message_reader          # See Reader\ReaderInterface
         thread_reader:          ornicar_message.thread_reader           # See Reader\ReaderInterface
         deleter:                ornicar_message.deleter                 # See Deleter\DeleterInterface
+        spam_detector:          ornicar_message.noop_spam_detector      # See SpamDetection\SpamDetectorInterface
         search:
             finder:             ornicar_message.search_finder           # See Finder\FinderInterface
             query_factory:      ornicar_message.search_query_factory    # See Finder\QueryFactoryInterface

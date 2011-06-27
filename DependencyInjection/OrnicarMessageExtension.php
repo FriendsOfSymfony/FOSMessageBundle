@@ -26,6 +26,7 @@ class OrnicarMessageExtension extends Extension
         $loader->load('config.xml');
         $loader->load('form.xml');
         $loader->load('validator.xml');
+        $loader->load('spam_detection.xml');
 
         $container->setParameter('ornicar_message.message_class', $config['message_class']);
         $container->setParameter('ornicar_message.thread_class', $config['thread_class']);
@@ -46,6 +47,7 @@ class OrnicarMessageExtension extends Extension
         $container->setAlias('ornicar_message.message_reader', $config['message_reader']);
         $container->setAlias('ornicar_message.thread_reader', $config['thread_reader']);
         $container->setAlias('ornicar_message.deleter', $config['deleter']);
+        $container->setAlias('ornicar_message.spam_detector', $config['spam_detector']);
 
         $container->setAlias('ornicar_message.new_thread_form.type', $config['new_thread_form']['type']);
         $container->setAlias('ornicar_message.new_thread_form.factory', $config['new_thread_form']['factory']);

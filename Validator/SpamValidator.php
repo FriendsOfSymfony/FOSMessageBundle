@@ -4,23 +4,23 @@ namespace Ornicar\MessageBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Ornicar\MessageBundle\Security\AuthorizerInterface;
+use Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface;
 
-class AuthorizationValidator extends ConstraintValidator
+class SpamValidator extends ConstraintValidator
 {
     /**
-     * @var AuthorizerInterface
+     * @var SpamDetectorInterface
      */
-    protected $authorizer;
+    protected $spamDetector;
 
     /**
      * Constructor
      *
-     * @param AuthorizerInterface $authorizer
+     * @param SpamDetectorInterface $spamDetector
      */
-    public function __construct(AuthorizerInterface $authorizer)
+    public function __construct(SpamDetectorInterface $spamDetector)
     {
-        $this->authorizer = $authorizer;
+        $this->spamDetector = $spamDetector;
     }
 
     /**
@@ -31,11 +31,7 @@ class AuthorizationValidator extends ConstraintValidator
      */
     public function isValid($value, Constraint $constraint)
     {
-        $recipient = $value->getRecipient();
-        if (!$recipient) {
-            return true;
-        }
-        if (!$this->authorizer->canMessageParticipant($recipient)) {
+        if ($this->spamDetector->isSpam($value)) {
             $this->setMessage($constraint->message);
             return false;
         }

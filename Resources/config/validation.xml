@@ -7,6 +7,7 @@
     <class name="Ornicar\MessageBundle\FormModel\NewThreadMessage">
 
         <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
+        <constraint name="Ornicar\MessageBundle\Validator\Spam" />
 
         <property name="recipient">
             <constraint name="NotBlank">
