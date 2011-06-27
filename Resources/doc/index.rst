@@ -70,7 +70,7 @@ The message senders and recipients are called *participants* of the thread.
 MessageBundle will only refer to them using the `ParticipantInterface`.
 This allows you to use any user class. Just make it implement this interface.
 
-For exemple, if your user class is `Acme\UserBundle\Document\User`::
+For exemple, if your user class is ``Acme\UserBundle\Document\User``::
 
     // src/Acme/UserBundle/Document/User.php
 
@@ -81,11 +81,12 @@ For exemple, if your user class is `Acme\UserBundle\Document\User`::
     */
     class User implements ParticipantInterface
     {
+        // your code here
+
         public function getId()
         {
             return $this->id;
         }
-    }
 
 If you need a bundle providing a base user, see http://github.com/FriendsOfSymfony/UserBundle
 
@@ -282,17 +283,17 @@ Implementation
 
 To provide a new backend implementation, you must implement these interfaces:
 
-- Model/ThreadInterface.php
-- Model/MessageInterface.php
-- ModelManager/ThreadManagerInterface.php
-- ModelManager/MessageManagerInterface.php
+- ``Model/ThreadInterface.php``
+- ``Model/MessageInterface.php``
+- ``ModelManager/ThreadManagerInterface.php``
+- ``ModelManager/MessageManagerInterface.php``
 
 MongoDB implementation examples:
 
-- Document/Thread.php
-- Document/Message.php
-- DocumentManager/ThreadManager.php
-- DocumentManager/MessageManager.php
+- ``Document/Thread.php``
+- ``Document/Message.php``
+- ``DocumentManager/ThreadManager.php``
+- ``DocumentManager/MessageManager.php``
 
 Note that the MongoDB manager classes only contain MongoDB specific logic,
 backend agnostic logic lives in the abstract managers.
@@ -305,5 +306,5 @@ You may also need to define mappings.
 
 MongoDB mapping examples:
 
-- src/Ornicar/MessageBundle/Resources/config/doctrine/thread.mongodb.xml
-- src/Ornicar/MessageBundle/Resources/config/doctrine/message.mongodb.xml
+- ``src/Ornicar/MessageBundle/Resources/config/doctrine/thread.mongodb.xml``
+- ``src/Ornicar/MessageBundle/Resources/config/doctrine/message.mongodb.xml``
