@@ -3,12 +3,9 @@
 namespace Ornicar\MessageBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Ornicar\MessageBundle\Model\Message;
-use Ornicar\MessageBundle\Model\Composition;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Ornicar\MessageBundle\Model\ThreadManagerInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Ornicar\MessageBundle\Provider\ProviderInterface;
 
 class MessageController extends ContainerAware
 {
@@ -19,10 +16,11 @@ class MessageController extends ContainerAware
      */
     public function inboxAction()
     {
-        $participant = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findParticipantInboxThreads($participant);
+        $threads = $this->getProvider()->getInboxThreads();
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array('threads' => $threads));
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array(
+            'threads' => $threads
+        ));
     }
 
     /**
@@ -32,10 +30,11 @@ class MessageController extends ContainerAware
      */
     public function sentAction()
     {
-        $participant = $this->getAuthenticatedParticipant();
-        $threads = $this->getThreadManager()->findParticipantSentThreads($participant);
+        $threads = $this->getProvider()->getSentThreads();
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array('threads' => $threads));
+        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array(
+            'threads' => $threads
+        ));
     }
 
     /**
@@ -46,7 +45,7 @@ class MessageController extends ContainerAware
      */
     public function threadAction($threadId)
     {
-        $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
+        $thread = $this->getProvider()->getThread($threadId);
         $form = $this->container->get('ornicar_message.reply_form.factory')->create($thread);
         $formHandler = $this->container->get('ornicar_message.reply_form.handler');
 
@@ -91,7 +90,7 @@ class MessageController extends ContainerAware
      */
     public function deleteAction($threadId)
     {
-        $thread = $this->container->get('ornicar_message.provider')->getThread($threadId);
+        $thread = $this->getProvider()->getThread($threadId);
         $this->container->get('ornicar_message.deleter')->delete($thread);
 
         return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
@@ -114,22 +113,12 @@ class MessageController extends ContainerAware
     }
 
     /**
-     * Gets the current authenticated participant
+     * Gets the provider service
      *
-     * @return ParticipantInterface
+     * @return ProviderInterface
      */
-    protected function getAuthenticatedParticipant()
+    protected function getProvider()
     {
-        return $this->container->get('ornicar_message.authorizer')->getAuthenticatedParticipant();
-    }
-
-    /**
-     * Gets the thread manager service
-     *
-     * @return ThreadManagerInterface
-     */
-    protected function getThreadManager()
-    {
-        return $this->container->get('ornicar_message.thread_manager');
+        return $this->container->get('ornicar_message.provider');
     }
 }

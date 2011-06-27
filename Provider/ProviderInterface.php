@@ -10,6 +10,20 @@ namespace Ornicar\MessageBundle\Provider;
 interface ProviderInterface
 {
     /**
+     * Gets the thread in the inbox of the current user
+     *
+     * @return array of ThreadInterface
+     */
+    function getInboxThreads();
+
+    /**
+     * Gets the thread in the sentbox of the current user
+     *
+     * @return array of ThreadInterface
+     */
+     function getSentThreads();
+
+    /**
      * Gets a thread by its ID
      * Performs authorization checks
      * Marks the thread as read

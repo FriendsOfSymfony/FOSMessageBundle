@@ -44,6 +44,30 @@ class Provider implements ProviderInterface
     }
 
     /**
+     * Gets the thread in the inbox of the current user
+     *
+     * @return array of ThreadInterface
+     */
+    public function getInboxThreads()
+    {
+        $participant = $this->getAuthenticatedParticipant();
+
+        return $this->threadManager->findParticipantInboxThreads($participant);
+    }
+
+    /**
+     * Gets the thread in the sentbox of the current user
+     *
+     * @return array of ThreadInterface
+     */
+    public function getSentThreads()
+    {
+        $participant = $this->getAuthenticatedParticipant();
+
+        return $this->threadManager->findParticipantSentThreads($participant);
+    }
+
+    /**
      * Gets a thread by its ID
      * Performs authorization checks
      * Marks the thread as read
@@ -65,5 +89,15 @@ class Provider implements ProviderInterface
         $this->threadReader->markAsRead($thread);
 
         return $thread;
+    }
+
+    /**
+     * Gets the current authenticated user
+     *
+     * @return ParticipantInterface
+     */
+    protected function getAuthenticatedParticipant()
+    {
+        return $this->authorizer->getAuthenticatedParticipant();
     }
 }
