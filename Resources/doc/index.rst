@@ -290,6 +290,51 @@ Other strategy
 You can use any spam dectetor service, including one of your own.
 The class must implement ``Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface``.
 
+Messenging permissions
+======================
+
+You can change the security logic by replacing the ``authorizer`` service::
+
+    # app/config/config.yml
+
+        ornicar_message:
+            authorizer: acme_message.authorizer
+
+Your class must implement ``Ornicar\MessageBundle\Security\AuthorizerInterface``::
+
+    interface AuthorizerInterface
+    {
+        /**
+        * Tells if the current user is allowed
+        * to see this thread
+        *
+        * @param ThreadInterface $thread
+        * @return boolean
+        */
+        function canSeeThread(ThreadInterface $thread);
+
+        /**
+        * Tells if the current participant is allowed
+        * to delete this thread
+        *
+        * @param ThreadInterface $thread
+        * @return boolean
+        */
+        function canDeleteThread(ThreadInterface $thread);
+
+        /**
+        * Tells if the current participant is allowed
+        * to send a message to this other participant
+        *
+        * $param ParticipantInterface $participant the one we want to send a message to
+        * @return boolean
+        */
+        function canMessageParticipant(ParticipantInterface $participant);
+    }
+
+You can tell whether the user can see or delete a thread, and if he can send a new message to another user.
+See the default implementation in ``Ornicar\MessageBundle\Security\Authorizer``.
+
 Configuration
 =============
 
