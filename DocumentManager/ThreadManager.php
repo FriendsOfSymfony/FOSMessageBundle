@@ -219,7 +219,7 @@ class ThreadManager extends BaseThreadManager
      * @param ThreadInterface $thread
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
-    public function updateThread(ThreadInterface $thread, $andFlush = true)
+    public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
         $this->dm->persist($thread);
         if ($andFlush) {

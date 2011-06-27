@@ -124,7 +124,7 @@ class MessageManager extends BaseMessageManager
      * @param MessageInterface $message
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
-    public function updateMessage(MessageInterface $message, $andFlush = true)
+    public function saveMessage(MessageInterface $message, $andFlush = true)
     {
         $this->dm->persist($message);
         if ($andFlush) {

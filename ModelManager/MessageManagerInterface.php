@@ -27,7 +27,7 @@ interface MessageManagerInterface extends ReadableManagerInterface
      * @param MessageInterface $message
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
-    function updateMessage(MessageInterface $message, $andFlush = true);
+    function saveMessage(MessageInterface $message, $andFlush = true);
 
     /**
      * Returns the message's fully qualified class MessageManagerInterface.

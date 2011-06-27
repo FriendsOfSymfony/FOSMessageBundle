@@ -101,7 +101,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param ThreadInterface $thread
      * @param Boolean $andFlush Whether to flush the changes (default true)
      */
-    function updateThread(ThreadInterface $thread, $andFlush = true);
+    function saveThread(ThreadInterface $thread, $andFlush = true);
 
     /**
      * Deletes a thread

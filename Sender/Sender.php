@@ -57,7 +57,7 @@ class Sender implements SenderInterface
         $thread = $this->threadManager->createThread();
         $thread->setSubject($subject);
         $thread->addParticipant($recipient);
-        $this->threadManager->updateThread($thread, false);
+        $this->threadManager->saveThread($thread, false);
 
         return $this->doSend($message, $thread);
     }
@@ -74,7 +74,7 @@ class Sender implements SenderInterface
     {
         $message->setThread($thread);
         $thread->addMessage($message);
-        $this->messageManager->updateMessage($message);
+        $this->messageManager->saveMessage($message);
 
         return $message;
     }
