@@ -12,7 +12,7 @@ use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-class Deleter implements ReaderInterface
+class Deleter implements DeleterInterface
 {
     /**
      * The authorizer instance
