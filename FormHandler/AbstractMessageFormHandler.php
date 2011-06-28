@@ -9,17 +9,23 @@ use Ornicar\MessageBundle\FormModel\AbstractMessage;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
+/**
+ * Handles messages forms, from binding request to sending the message
+ *
+ * @author Thibault Duplessis <thibault.duplessis@gmail.com>
+ */
 abstract class AbstractMessageFormHandler
 {
-    protected $form;
     protected $request;
     protected $composer;
+    protected $sender;
     protected $participantProvider;
 
-    public function __construct(Request $request, ComposerInterface $composer, ParticipantProviderInterface $participantProvider)
+    public function __construct(Request $request, ComposerInterface $composer, SenderInterface $sender, ParticipantProviderInterface $participantProvider)
     {
         $this->request = $request;
         $this->composer = $composer;
+        $this->sender = $sender;
         $this->participantProvider = $participantProvider;
     }
 
@@ -45,14 +51,6 @@ abstract class AbstractMessageFormHandler
     }
 
     /**
-     * Composes a message from the form data
-     *
-     * @param AbstractMessage $message
-     * @return MessageBuilder $messageBuilder
-     */
-    abstract protected function composeMessage(AbstractMessage $message);
-
-    /**
      * Processes the valid form, sends the message
      *
      * @param Form
@@ -60,15 +58,27 @@ abstract class AbstractMessageFormHandler
      */
     public function processValidForm(Form $form)
     {
-        return $this->composeMessage($form->getData())->send();
+		$message = $this->composeMessage($form->getData());
+
+		$this->sender->send($message);
+
+		return $message;
     }
+
+    /**
+     * Composes a message from the form data
+     *
+     * @param AbstractMessage $message
+     * @return MessageInterface the composed message ready to be sent
+     */
+    abstract protected function composeMessage(AbstractMessage $message);
 
     /**
      * Gets the current authenticated user
      *
      * @return ParticipantInterface
      */
-    public function getAuthenticatedParticipant()
+    protected function getAuthenticatedParticipant()
     {
         return $this->participantProvider->getAuthenticatedParticipant();
     }

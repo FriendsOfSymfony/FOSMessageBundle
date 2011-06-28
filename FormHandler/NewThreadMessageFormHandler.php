@@ -2,9 +2,6 @@
 
 namespace Ornicar\MessageBundle\FormHandler;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
-use Ornicar\MessageBundle\Sender\SenderInterface;
 use Ornicar\MessageBundle\FormModel\AbstractMessage;
 
 class NewThreadMessageFormHandler extends AbstractMessageFormHandler
@@ -13,11 +10,11 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
      * Composes a message from the form data
      *
      * @param AbstractMessage $message
-     * @return MessageBuilder $messageBuilder
+     * @return MessageInterface the composed message ready to be sent
      */
     public function composeMessage(AbstractMessage $message)
     {
-        return $this->composer->compose()
+        return $this->composer->newThread()
             ->setSubject($message->getSubject())
             ->setRecipient($message->getRecipient())
             ->setSender($this->getAuthenticatedParticipant())
