@@ -4,6 +4,10 @@ namespace Ornicar\MessageBundle\Composer;
 
 use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
 use Ornicar\MessageBundle\Sender\SenderInterface;
+use Ornicar\MessageBundle\Model\ThreadInterface;
+use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
+use Ornicar\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
+use Ornicar\MessageBundle\MessageBuilder\ReplyMessageBuilder;
 
 /**
  * Factory for message builders

@@ -253,7 +253,7 @@ Create a new message thread::
 
     $message = $composer->newThread()
         ->setSender($jack)
-        ->setRecipient($clyde)
+        ->addRecipient($clyde)
         ->setSubject('Hi there')
         ->setBody('This is a test message')
         ->getMessage();

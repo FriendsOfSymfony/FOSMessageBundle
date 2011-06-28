@@ -32,7 +32,7 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
      */
     public function addRecipient(ParticipantInterface $recipient)
     {
-        $this->thread->addRecipient($recipient);
+        $this->thread->addParticipant($recipient);
 
         return $this;
     }

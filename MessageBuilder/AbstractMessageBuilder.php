@@ -72,6 +72,7 @@ abstract class AbstractMessageBuilder
     public function setSender(ParticipantInterface $sender)
     {
         $this->message->setSender($sender);
+        $this->thread->addParticipant($sender);
 
         return $this;
     }
