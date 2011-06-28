@@ -4,14 +4,19 @@ namespace Ornicar\MessageBundle\Twig\Extension;
 
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
+use Ornicar\MessageBundle\Provider\ProviderInterface;
 
 class MessageExtension extends \Twig_Extension
 {
     protected $participantProvider;
+    protected $provider;
 
-    public function __construct(ParticipantProviderInterface $participantProvider)
+    protected $nbUnreadMessagesCache;
+
+    public function __construct(ParticipantProviderInterface $participantProvider, ProviderInterface $provider)
     {
         $this->participantProvider = $participantProvider;
+        $this->provider = $provider;
     }
 
     /**
@@ -22,7 +27,8 @@ class MessageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'ornicar_message_is_read'  => new \Twig_Function_Method($this, 'isRead')
+            'ornicar_message_is_read'  => new \Twig_Function_Method($this, 'isRead'),
+            'ornicar_message_nb_unread' => new \Twig_Function_Method($this, 'getNbUnread')
         );
     }
 
@@ -34,6 +40,20 @@ class MessageExtension extends \Twig_Extension
     public function isRead(ReadableInterface $readable)
     {
         return $readable->isReadByParticipant($this->getAuthenticatedParticipant());
+    }
+
+    /**
+     * Gets the number of unread messages for the current user
+     *
+     * @return int
+     */
+    public function getNbUnread()
+    {
+        if (null === $this->nbUnreadMessagesCache) {
+            $this->nbUnreadMessagesCache = $this->provider->getNbUnreadMessages();
+        }
+
+        return $this->nbUnreadMessagesCache;
     }
 
     /**

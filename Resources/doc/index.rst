@@ -269,6 +269,22 @@ And to reply to this message::
 Note that when replying, we don't need to provide the subject nor the recipient.
 Because they are the attributes of the thread, which already exists.
 
+Templating
+==========
+
+MessageBundle provides a few twig functions::
+
+    {# template.html.twig #}
+
+    {# Know if a message is read by the authenticated participant #}
+    {% if not ornicar_message_is_read(message) %} This message is new! {% endif %}
+
+    {# Know if a thread is read by the authenticated participant. Yes, it's the same function. #}
+    {% if not ornicar_message_is_read(thread) %} This thread is new! {% endif %}
+
+    {# Get the number of new threads for the authenticated participant #}
+    You have {{ ornicar_message_nb_unread() }} new messages
+
 Spam detection
 ==============
 

@@ -26,6 +26,7 @@
 
         <service id="ornicar_message.provider.default" class="Ornicar\MessageBundle\Provider\Provider" public="false">
             <argument type="service" id="ornicar_message.thread_manager" />
+            <argument type="service" id="ornicar_message.message_manager" />
             <argument type="service" id="ornicar_message.thread_reader" />
             <argument type="service" id="ornicar_message.authorizer" />
             <argument type="service" id="ornicar_message.participant_provider" />
@@ -48,6 +49,7 @@
 
         <service id="ornicar_message.twig_extension" class="Ornicar\MessageBundle\Twig\Extension\MessageExtension" public="false">
             <argument type="service" id="ornicar_message.participant_provider" />
+            <argument type="service" id="ornicar_message.provider" />
             <tag name="twig.extension" alias="ornicar_message" />
         </service>
 
