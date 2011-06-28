@@ -8,6 +8,7 @@ use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
 use Ornicar\MessageBundle\Security\AuthorizerInterface;
 use Ornicar\MessageBundle\Reader\ReaderInterface;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
+use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
 
 /**
  * Provides threads for the current authenticated user
@@ -22,6 +23,13 @@ class Provider implements ProviderInterface
      * @var ThreadManagerInterface
      */
     protected $threadManager;
+
+    /**
+     * The message manager
+     *
+     * @var MessageManagerInterface
+     */
+    protected $messageManager;
 
     /**
      * The reader used to mark threads as read
@@ -44,9 +52,10 @@ class Provider implements ProviderInterface
      */
     protected $participantProvider;
 
-    public function __construct(ThreadManagerInterface $threadManager, ReaderInterface $threadReader, AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
+    public function __construct(ThreadManagerInterface $threadManager, MessageManagerInterface $messageManager, ReaderInterface $threadReader, AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
     {
         $this->threadManager = $threadManager;
+        $this->messageManager = $messageManager;
         $this->threadReader = $threadReader;
         $this->authorizer = $authorizer;
         $this->participantProvider = $participantProvider;
@@ -98,6 +107,16 @@ class Provider implements ProviderInterface
         $this->threadReader->markAsRead($thread);
 
         return $thread;
+    }
+
+    /**
+     * Tells how many unread messages the authenticated participant has
+     *
+     * @return int the number of unread messages
+     */
+    public function getNbUnreadMessages()
+    {
+        return $this->messageManager->getNbUnreadMessageByParticipant($this->getAuthenticatedParticipant());
     }
 
     /**

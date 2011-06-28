@@ -46,6 +46,22 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
+     * Tells how many unread messages this participant has
+     *
+     * @param ParticipantInterface $participant
+     * @return int the number of unread messages
+     */
+    public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
+    {
+        $isReadByParticipantFieldName = sprintf('isReadByParticipant.%s', $participant->getId());
+
+        return $this->repository->createQueryBuilder()
+            ->field($isReadByParticipantFieldName)->equals(false)
+            ->getQuery()
+            ->count();
+    }
+
+    /**
      * Marks the readable as read by this participant
      * Must be applied directly to the storage,
      * without modifying the readable state.

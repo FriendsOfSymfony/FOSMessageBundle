@@ -145,6 +145,10 @@ abstract class Thread extends AbstractThread
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
         $this->isDeletedByParticipant[$participant->getId()] = (boolean) $isDeleted;
+        // also mark all thread messages as read
+        foreach ($this->getMessages() as $message) {
+            $message->setIsReadByParticipant($participant, true);
+        }
     }
 
     /**

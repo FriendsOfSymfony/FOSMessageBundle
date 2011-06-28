@@ -105,6 +105,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
 
     /**
      * Deletes a thread
+     * This is not participant deletion but real deletion
      *
      * @param ThreadInterface $thread the thread to delete
      */

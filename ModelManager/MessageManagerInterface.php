@@ -3,6 +3,7 @@
 namespace Ornicar\MessageBundle\ModelManager;
 
 use Ornicar\MessageBundle\Model\MessageInterface;
+use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Interface to be implemented by message managers. This adds an additional level
@@ -14,6 +15,14 @@ use Ornicar\MessageBundle\Model\MessageInterface;
  */
 interface MessageManagerInterface extends ReadableManagerInterface
 {
+    /**
+     * Tells how many unread messages this participant has
+     *
+     * @param ParticipantInterface $participant
+     * @return int the number of unread messages
+     */
+    function getNbUnreadMessageByParticipant(ParticipantInterface $participant);
+
     /**
      * Creates an empty message instance
      *
