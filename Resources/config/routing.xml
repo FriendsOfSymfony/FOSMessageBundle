@@ -26,7 +26,7 @@
 
     <route id="ornicar_message_thread_delete" pattern="/inbox/{threadId}/delete">
         <default key="_controller">OrnicarMessageBundle:Message:delete</default>
-        <requirement key="_method">POST</requirement>
+        <requirement key="_method">POST|DELETE</requirement>
     </route>
 
 </routes>
