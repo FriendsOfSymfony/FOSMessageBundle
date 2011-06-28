@@ -38,18 +38,30 @@ abstract class AbstractMessageFormHandler
         $form->bindRequest($this->request);
 
         if ($form->isValid()) {
-            return $this->composeAndSend($form->getData());
+            return $this->processValidForm($form);
         }
 
         return false;
     }
 
     /**
-     * Sends the message
+     * Composes a message from the form data
      *
      * @param AbstractMessage $message
+     * @return MessageBuilder $messageBuilder
      */
-    abstract protected function composeAndSend(AbstractMessage $message);
+    abstract protected function composeMessage(AbstractMessage $message);
+
+    /**
+     * Processes the valid form, sends the message
+     *
+     * @param Form
+     * @return MessageInterface the sent message
+     */
+    public function processValidForm(Form $form)
+    {
+        return $this->composeMessage($form->getData())->send();
+    }
 
     /**
      * Gets the current authenticated user

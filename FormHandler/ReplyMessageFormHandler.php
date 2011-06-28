@@ -10,16 +10,16 @@ use Ornicar\MessageBundle\FormModel\AbstractMessage;
 class ReplyMessageFormHandler extends AbstractMessageFormHandler
 {
     /**
-     * Sends the message
+     * Composes a message from the form data
      *
      * @param AbstractMessage $message
+     * @return MessageBuilder $messageBuilder
      */
-    public function composeAndSend(AbstractMessage $message)
+    public function composeMessage(AbstractMessage $message)
     {
         return $this->composer->compose()
             ->inReplyToThread($message->getThread())
             ->setSender($this->getAuthenticatedParticipant())
-            ->setBody($message->getBody())
-            ->send();
+            ->setBody($message->getBody());
     }
 }
