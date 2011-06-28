@@ -19,7 +19,7 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
         return $this->composer->compose()
             ->setSubject($message->getSubject())
             ->setRecipient($message->getRecipient())
-            ->setSender($this->authorizer->getAuthenticatedParticipant())
+            ->setSender($this->getAuthenticatedParticipant())
             ->setBody($message->getBody())
             ->send();
     }
