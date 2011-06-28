@@ -20,30 +20,40 @@ class Composer implements ComposerInterface
     protected $messageManager;
 
     /**
-     * The message sender
+     * Thread manager
      *
-     * @var SenderInterface
+     * @var ThreadManagerInterface
      */
-    protected $messageSender;
+    protected $threadManager;
 
-    public function __construct(MessageManagerInterface $messageManager, SenderInterface $messageSender)
+    public function __construct(MessageManagerInterface $messageManager, ThreadManagerInterface $threadManager)
     {
         $this->messageManager = $messageManager;
-        $this->messageSender = $messageSender;
+        $this->threadManager = $threadManager;
     }
 
     /**
-     * Starts composing a message
+     * Starts composing a message, starting a new thread
      *
-     * @return MessageBuilder
+     * @return NewThreadMessageBuilder
      */
-    public function compose()
+    public function newThread()
+    {
+        $thread = $this->threadManager->createThread();
+        $message = $this->messageManager->createMessage();
+
+        return new NewThreadMessageBuilder($message, $thread);
+    }
+
+    /**
+     * Starts composing a message in a reply to a thread
+     *
+     * @return ReplyMessageBuilder
+     */
+    public function reply(ThreadInterface $thread)
     {
         $message = $this->messageManager->createMessage();
 
-        $builder = new MessageBuilder($this->messageSender);
-        $builder->setMessage($message);
-
-        return $builder;
+        return new ReplyMessageBuilder($message, $thread);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Ornicar\MessageBundle\Composer;
 
+use Ornicar\MessageBundle\Model\ThreadInterface;
+
 /**
  * Factory for message builders
  *
@@ -10,9 +12,16 @@ namespace Ornicar\MessageBundle\Composer;
 interface ComposerInterface
 {
     /**
-     * Starts composing a message
+     * Starts composing a message, starting a new thread
      *
-     * @return MessageBuilder
+     * @return MessageBuilderInterface
      */
-    function compose();
+    function newThread();
+
+    /**
+     * Starts composing a message in a reply to a thread
+     *
+     * @return MessageBuilderInterface
+     */
+    function reply(ThreadInterface $thread);
 }

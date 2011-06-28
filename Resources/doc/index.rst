@@ -244,30 +244,38 @@ See ``Ornicar\\MessageBundle\\Model\\MessageInterface`` for the complete list of
     // Know if this participant has read this message
     if ($message->isReadByParticipant($participant))
 
-Send a message
+Compose a message
 --------------
 
 Create a new message thread::
 
     $composer = $container->get('ornicar_message.composer');
 
-    $message = $composer->compose()
+    $message = $composer->newThread()
         ->setSender($jack)
         ->setRecipient($clyde)
         ->setSubject('Hi there')
         ->setBody('This is a test message')
-        ->send();
+        ->getMessage();
 
-And to reply to this message::
+And to reply to this thread::
 
-    $composer->compose()
-        ->inReplyToThread($message->getThread())
+    $message = $composer->reply($thread)
         ->setSender($clyde)
         ->setBody('This is the answer to the test message')
-        ->send();
+        ->getMessage();
 
 Note that when replying, we don't need to provide the subject nor the recipient.
 Because they are the attributes of the thread, which already exists.
+
+Send a message
+--------------
+
+Nothing's easier than sending the message you've just composed::
+
+    $sender = $container->get('ornicar_message.sender');
+
+    $sender->send($message);
 
 Templating
 ==========
