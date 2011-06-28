@@ -91,7 +91,7 @@ class MessageController extends ContainerAware
     public function deleteAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('ornicar_message.deleter')->delete($thread);
+        $this->container->get('ornicar_message.deleter')->markAsDeleted($thread);
 
         return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
     }
