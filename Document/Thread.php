@@ -88,7 +88,6 @@ abstract class Thread extends AbstractThread
     public function addMessage(MessageInterface $message)
     {
         $this->messages->add($message);
-        $this->denormalize();
     }
 
     /**
@@ -160,7 +159,7 @@ abstract class Thread extends AbstractThread
     /**
      * Performs denormalization tricks
      */
-    protected function denormalize()
+    public function denormalize()
     {
         $this->doParticipants();
         $this->doKeywords();
