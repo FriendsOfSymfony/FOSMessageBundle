@@ -83,4 +83,11 @@ interface ThreadInterface extends ReadableInterface
      * @param boolean $isDeleted
      */
     function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted);
+
+    /**
+     * Get the participants this participant is talking with.
+     *
+     * @return array of ParticipantInterface
+     */
+    function getOtherParticipants(ParticipantInterface $participant);
 }

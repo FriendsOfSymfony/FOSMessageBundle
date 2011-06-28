@@ -96,4 +96,19 @@ abstract class Thread implements ThreadInterface
 
         return end($messages);
     }
+
+    /**
+     * Get the participants this participant is talking with.
+     *
+     * @return array of ParticipantInterface
+     */
+    public function getOtherParticipants(ParticipantInterface $participant)
+    {
+        $otherParticipants = $this->getParticipants();
+
+        unset($otherParticipants[array_search($participant, $otherParticipants)]);
+
+        // we want to reset the array indexes
+        return array_values($otherParticipants);
+    }
 }
