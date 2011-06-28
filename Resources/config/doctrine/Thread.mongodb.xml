@@ -12,6 +12,8 @@
 
         <!--<reference-many field="messages" target-document="Acme\MessageBundle\Document\Message" />-->
 
+        <field name="isSpam" fieldName="isSpam" type="boolean" />
+
         <field name="isDeletedByParticipant" fieldName="isDeletedByParticipant" type="hash" />
 
         <field name="datesOfLastMessageWrittenByParticipant" fieldName="datesOfLastMessageWrittenByParticipant" type="hash" />
@@ -20,7 +22,15 @@
 
         <field name="keywords" fieldName="keywords" type="string" />
 
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="denormalize" />
+            <lifecycle-callback type="preUpdate" method="denormalize" />
+        </lifecycle-callbacks>
+
         <indexes>
+            <index unique="false">
+                <key name="isSpam" order="asc" />
+            </index>
             <index unique="false">
                 <key name="isDeletedByParticipant" order="asc" />
             </index>

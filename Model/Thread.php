@@ -27,6 +27,13 @@ abstract class Thread implements ThreadInterface
     protected $subject;
 
     /**
+     * Tells if the thread is spam or flood
+     *
+     * @var boolean
+     */
+    protected $isSpam = false;
+
+    /**
      * Gets the message unique id
      *
      * @return mixed
@@ -51,6 +58,23 @@ abstract class Thread implements ThreadInterface
     public function setSubject($subject)
     {
         $this->subject = $subject;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getIsSpam()
+    {
+        return $this->isSpam;
+    }
+
+    /**
+     * @param  boolean
+     * @return null
+     */
+    public function setIsSpam($isSpam)
+    {
+        $this->isSpam = (boolean) $isSpam;
     }
 
     /**

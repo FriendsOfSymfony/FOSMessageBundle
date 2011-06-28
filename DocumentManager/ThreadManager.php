@@ -67,7 +67,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a participant,
+     * Finds not deleted, non-spam threads for a participant,
      * containing at least one message not written by this participant,
      * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
@@ -83,6 +83,8 @@ class ThreadManager extends BaseThreadManager
         return $this->repository->createQueryBuilder()
             // the participant is in the thread participants
             ->field('participants.$id')->equals(new \MongoId($participant->getId()))
+            // the thread does not contain spam or flood
+            ->field('isSpam')->equals(false)
             // the thread is not deleted by this participant
             ->field($isDeletedByParticipantFieldName)->equals(false)
             // there is at least one message written by an other participant
@@ -92,7 +94,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a participant,
+     * Finds not deleted, non-spam threads for a participant,
      * containing at least one message not written by this participant,
      * ordered by last message not written by this participant in reverse order.
      * In one word: an inbox.
