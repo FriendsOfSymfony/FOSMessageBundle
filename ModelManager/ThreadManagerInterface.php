@@ -86,7 +86,15 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * @param string $search
      * @return array of ThreadInterface
      */
-    function findparticipantthreadsbysearch(participantinterface $participant, $search);
+    function findParticipantThreadsBySearch(ParticipantInterface $participant, $search);
+
+    /**
+     * Gets threads created by a participant
+     *
+     * @param ParticipantInterface $participant
+     * @return array of ThreadInterface
+     */
+    function findThreadsCreatedBy(ParticipantInterface $participant);
 
     /**
      * Creates an empty comment thread instance

@@ -190,6 +190,20 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
+     * Gets threads created by a participant
+     *
+     * @param ParticipantInterface $participant
+     * @return array of ThreadInterface
+     */
+    public function findThreadsCreatedBy(ParticipantInterface $participant)
+    {
+        return $this->repository->createQueryBuilder()
+            ->field('createdBy.$id')->equals(new \MongoId($participant->getId()))
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Marks the readable as read by this participant
      * Must be applied directly to the storage,
      * without modifying the readable state.

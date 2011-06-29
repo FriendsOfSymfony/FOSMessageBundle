@@ -46,6 +46,38 @@ interface ThreadInterface extends ReadableInterface
     function getLastMessage();
 
     /**
+     * Gets the participant that created the thread
+     * Generally the sender of the first message
+     *
+     * @return ParticipantInterface
+     */
+    function getCreatedBy();
+
+    /**
+     * Sets the participant that created the thread
+     * Generally the sender of the first message
+     *
+     * @parm ParticipantInterface
+     */
+    function setCreatedBy(ParticipantInterface $participant);
+
+    /**
+     * Gets the date this thread was created at
+     * Generally the date of the first message
+     *
+     * @return \DateTime
+     */
+    function getCreatedAt();
+
+    /**
+     * Sets the date this thread was created at
+     * Generally the date of the first message
+     *
+     * @param  \DateTime
+     */
+    function setCreatedAt(\DateTime $createdAt);
+
+    /**
      * Gets the users participating in this conversation
      *
      * @return array of ParticipantInterface
@@ -55,10 +87,10 @@ interface ThreadInterface extends ReadableInterface
     /**
      * Tells if the user participates to the conversation
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return boolean
      */
-    function isParticipant(ParticipantInterface $user);
+    function isParticipant(ParticipantInterface $participant);
 
     /**
      * Adds a participant to the thread

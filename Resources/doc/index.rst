@@ -120,6 +120,11 @@ Thread class::
          * @MongoDB\ReferenceMany(targetDocument="Acme\UserBundle\Document\User")
          */
          protected $participants;
+
+        /**
+         * @MongoDB\ReferenceOne(targetDocument="Acme\UserBundle\Document\User")
+         */
+         protected $createdBy;
     }
 
 Message class::

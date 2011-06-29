@@ -12,6 +12,10 @@
 
         <!--<reference-many field="messages" target-document="Acme\MessageBundle\Document\Message" />-->
 
+        <!--<reference-one field="createdBy" target-document="Acme\UserBundle\Document\User" />-->
+
+        <field name="createdAt" fieldName="createdAt" type="date" />
+
         <field name="isSpam" fieldName="isSpam" type="boolean" />
 
         <field name="isDeletedByParticipant" fieldName="isDeletedByParticipant" type="hash" />
@@ -28,6 +32,9 @@
         </lifecycle-callbacks>
 
         <indexes>
+            <index unique="false">
+                <key name="createdAt" order="desc" />
+            </index>
             <index unique="false">
                 <key name="isSpam" order="asc" />
             </index>

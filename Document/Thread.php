@@ -25,6 +25,20 @@ abstract class Thread extends AbstractThread
     protected $participants;
 
     /**
+     * Participant that created the thread
+     *
+     * @var ParticipantInterface
+     */
+    protected $createdBy;
+
+    /**
+     * Date this thread was created at
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+
+    /**
      * Tells, for each participant, if the message is deleted
      *
      * @var array of boolean indexed by user id
@@ -91,6 +105,45 @@ abstract class Thread extends AbstractThread
     }
 
     /**
+     * Gets the participant that created the thread
+     * Generally the sender of the first message
+     *
+     * @return ParticipantInterface
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Sets the participant that created the thread
+     * Generally the sender of the first message
+     *
+     * @parm ParticipantInterface
+     */
+    public function setCreatedBy(ParticipantInterface $participant)
+    {
+        $this->createdBy = $participant;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param  \DateTime
+     * @return null
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
      * Gets the users participating in this conversation
      *
      * @return array of ParticipantInterface
@@ -117,12 +170,12 @@ abstract class Thread extends AbstractThread
     /**
      * Tells if the user participates to the conversation
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @return boolean
      */
-    public function isParticipant(ParticipantInterface $user)
+    public function isParticipant(ParticipantInterface $participant)
     {
-        return $this->participants->contains($user);
+        return $this->participants->contains($participant);
     }
 
     /**
@@ -162,6 +215,7 @@ abstract class Thread extends AbstractThread
     public function denormalize()
     {
         $this->doParticipants();
+        $this->doCreatedByAndAt();
         $this->doKeywords();
         $this->doEnsureMessagesIsRead();
         $this->doDatesOfLastMessageWrittenByParticipant();
@@ -177,6 +231,23 @@ abstract class Thread extends AbstractThread
         foreach ($this->getMessages() as $message) {
             $this->addParticipant($message->getSender());
         }
+    }
+
+    /**
+     * Ensures that the createdBy & createdAt properties are set
+     */
+    protected function doCreatedByAndAt()
+    {
+        if (isset($this->createdBy)) {
+            return;
+        }
+        $messages = $this->getMessages();
+        if (empty($messages)) {
+            return;
+        }
+        $firstMessage = reset($messages);
+        $thread->setCreatedBy($firstMessage->getSender());
+        $thread->setCreatedAt($firstMessage->getCreatedAt());
     }
 
     /**
