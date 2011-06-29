@@ -16,6 +16,11 @@
             <tag name="validator.constraint_validator" alias="ornicar_message.validator.spam" />
         </service>
 
+        <service id="ornicar_message.validator.self_subject" class="Ornicar\MessageBundle\Validator\SelfSubjectValidator">
+            <argument type="service" id="ornicar_message.participant_provider" />
+            <tag name="validator.constraint_validator" alias="ornicar_message.validator.self_subject" />
+        </service>
+
     </services>
 
 </container>
