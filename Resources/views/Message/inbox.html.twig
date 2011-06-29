@@ -1,0 +1,11 @@
+{% extends 'OrnicarMessageBundle::layout.html.twig' %}
+
+{% block content %}
+
+<h2>Inbox</h2>
+
+<a href="{{ url('ornicar_message_thread_new' )}}">Send a new message</a>
+
+{% include 'OrnicarMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
+
+{% endblock %}
