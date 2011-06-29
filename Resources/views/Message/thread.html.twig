@@ -1,0 +1,27 @@
+{% extends 'OrnicarMessageBundle::layout.html.twig' %}
+
+{% block content %}
+
+<h2>{{ thread.subject }}</h2>
+
+{% for message in thread.messages %}
+    <div class="messenger_thread_message">
+        <div class="messenger_thread_message_info">
+            By: {{ message.sender }}, on {{ message.createdAt|date }}
+        </div>
+
+        <div class="messenger_thread_message_body">
+            {{ message.body }}
+        </div>
+    </div>
+{% endfor %}
+
+<h3>Reply</h3>
+
+<form action="{{ url('ornicar_message_thread_view', {'threadId': thread.id) }}" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+
+{% endblock %}
