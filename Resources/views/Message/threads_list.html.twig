@@ -1,0 +1,50 @@
+<table>
+
+    <thead>
+        <tr>
+            <th>Subject</th>
+            <th>Messages</th>
+            <th>Last message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+    {% if threads %}
+        {% for thread in threads %}
+            <tr>
+                <td>
+                    {{ thread.subject }}
+                    {% if not ornicar_message_is_read(thread) %}
+                        (New)
+                    {% endif %}
+                </td>
+                <td>{{ thread.messages.count }}</td>
+                <td>
+                    {% if thread.lastMessage %}
+                        On {{ thread.lastMessage.createdAt|date }}
+                        <br />
+                        By {{ thread.lastMessage.sender }}
+                    {% else %}
+                        ----
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url('ornicar_message_thread_delete', {'threadId': thread.id}) }}">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <tr>
+            <td colspan="4">
+                There no thread to show.
+            </td>
+        </tr>
+    {% endif %}
+
+    </tbody>
+
+</table>

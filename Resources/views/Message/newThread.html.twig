@@ -1,0 +1,13 @@
+{% extends 'OrnicarMessageBundle::layout.html.twig' %}
+
+{% block content %}
+
+<h2>Send a new message</h2>
+
+<form action="{{ url('ornicar_message_thread_new') }}" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" />
+</form>
+
+{% endblock %}
