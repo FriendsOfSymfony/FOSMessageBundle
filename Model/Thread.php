@@ -107,6 +107,21 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
+     * Gets the first message of the thread
+     *
+     * @return MessageInterface the first message
+     */
+    public function getFirstMessage()
+    {
+        $messages = $this->getMessages();
+        if(empty($messages)) {
+            return null;
+        }
+
+        return reset($messages);
+    }
+
+    /**
      * Gets the last message of the thread
      *
      * @return MessageInterface the last message

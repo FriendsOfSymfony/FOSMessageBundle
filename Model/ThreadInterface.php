@@ -39,6 +39,13 @@ interface ThreadInterface extends ReadableInterface
     function addMessage(MessageInterface $message);
 
     /**
+     * Gets the first message of the thread
+     *
+     * @return MessageInterface the first message
+     */
+    function getFirstMessage();
+
+    /**
      * Gets the last message of the thread
      *
      * @return MessageInterface the last message

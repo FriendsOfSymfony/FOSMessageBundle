@@ -119,7 +119,7 @@ abstract class Thread extends AbstractThread
      * Sets the participant that created the thread
      * Generally the sender of the first message
      *
-     * @parm ParticipantInterface
+     * @param ParticipantInterface
      */
     public function setCreatedBy(ParticipantInterface $participant)
     {
@@ -241,13 +241,11 @@ abstract class Thread extends AbstractThread
         if (isset($this->createdBy)) {
             return;
         }
-        $messages = $this->getMessages();
-        if (empty($messages)) {
+        if (!$message = $this->getFirstMessage()) {
             return;
         }
-        $firstMessage = reset($messages);
-        $thread->setCreatedBy($firstMessage->getSender());
-        $thread->setCreatedAt($firstMessage->getCreatedAt());
+        $this->setCreatedBy($message->getSender());
+        $this->setCreatedAt($message->getCreatedAt());
     }
 
     /**
