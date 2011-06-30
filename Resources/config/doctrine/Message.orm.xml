@@ -10,7 +10,7 @@
 
         <field name="createdAt" column="created_at" type="date" />
 
-        <!-- <one-to-one field="sender" target-entity="MyProject\UserBundle\Entity\User" /> -->
+        <!-- <many-to-one field="sender" target-entity="MyProject\UserBundle\Entity\User" /> -->
 
         <!-- <many-to-one field="thread" target-entity="MyProject\MessageBundle\Entity\Thread">
             <join-columns>

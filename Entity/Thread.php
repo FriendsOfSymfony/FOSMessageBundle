@@ -25,11 +25,11 @@ abstract class Thread extends BaseThread
     protected $participants;
 
     /**
-     * Thread data map
+     * Thread data metadata
      *
-     * @var Collection of ThreadMap
+     * @var Collection of ThreadMetadata
      */
-    protected $map;
+    protected $metadata;
 
     /**
      * All text contained in the thread messages
@@ -59,7 +59,7 @@ abstract class Thread extends BaseThread
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->participants = new ArrayCollection();
+        $this->metadata = new ArrayCollection();
     }
 
     /**
@@ -80,7 +80,6 @@ abstract class Thread extends BaseThread
     public function addMessage(MessageInterface $message)
     {
         $this->messages->add($message);
-        $this->denormalize();
     }
 
     /**
@@ -129,7 +128,25 @@ abstract class Thread extends BaseThread
      */
     public function getParticipants()
     {
-        return $this->participants->toArray();
+        return $this->getParticipantsCollection()->toArray();
+    }
+
+    /**
+     * Gets the users participating in this conversation
+     *
+     * @return ArrayCollection
+     */
+    protected function getParticipantsCollection()
+    {
+        if ($this->participants == null) {
+            $this->participants = new ArrayCollection();
+
+            foreach ($this->metadata as $data) {
+                $this->participants->add($data->getParticipant());
+            }
+        }
+
+        return $this->participants;
     }
 
     /**
@@ -142,7 +159,7 @@ abstract class Thread extends BaseThread
     public function addParticipant(ParticipantInterface $participant)
     {
         if (!$this->isParticipant($participant)) {
-            $this->participants->add($participant);
+            $this->getParticipantsCollection()->add($participant);
         }
     }
 
@@ -154,7 +171,7 @@ abstract class Thread extends BaseThread
      */
     public function isParticipant(ParticipantInterface $participant)
     {
-        return $this->participants->contains($participant);
+        return $this->getParticipantsCollection()->contains($participant);
     }
 
     /**
@@ -178,17 +195,20 @@ abstract class Thread extends BaseThread
         throw new \Exception('not yet implemented');
     }
 
-    /**
-     * DENORMALIZATION
-     *
-     * All following methods are relative to denormalization
-     */
 
-    /**
-     * Performs denormalization tricks
-     */
-    protected function denormalize()
+    public function hasMetadataForParticipant($participant)
     {
-        throw new \Exception('not yet implemented');
+        return isset($this->metadata[$participant->getId()]);
+    }
+
+    public function getMetadataForParticipant($participant)
+    {
+        return $this->metadata[$participant->getId()];
+    }
+
+    public function replaceMetadata(ThreadMetadata $metadata)
+    {
+        $metadata->setThread($this);
+        $this->metadata[$metadata->getParticipant()->getId()] = $metadata;
     }
 }

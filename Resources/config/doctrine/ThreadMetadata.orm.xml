@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Entity\ThreadMap" table="ornicar_message_thread_map">
+    <mapped-superclass name="Ornicar\MessageBundle\Entity\ThreadMetadata" table="ornicar_message_thread_metadata">
 
         <field name="threadDeleted" column="thread_deleted" type="boolean" />
 

@@ -79,7 +79,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->innerJoin('t.map', 'm')
+            ->innerJoin('t.metadata', 'm')
             ->innerJoin('m.participant', 'p')
 
             // the participant is in the thread participants
@@ -128,7 +128,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->innerJoin('t.map', 'm')
+            ->innerJoin('t.metadata', 'm')
             ->innerJoin('m.participant', 'p')
 
             // the participant is in the thread participants
@@ -246,6 +246,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
+        $this->denormalize($thread);
         $this->em->persist($thread);
         if ($andFlush) {
             $this->em->flush();
@@ -271,6 +272,71 @@ class ThreadManager extends BaseThreadManager
     public function getClass()
     {
         return $this->class;
+    }
+
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     */
+    protected function denormalize(ThreadInterface $thread)
+    {
+        $this->doMetadata($thread);
+        $this->doCreatedByAndAt($thread);
+    }
+
+    /**
+     * Ensures that the thread metadata are up to date
+     */
+    protected function doMetadata(ThreadInterface $thread)
+    {
+        // Participants
+        foreach ($thread->getParticipants() as $participant) {
+            if (!$thread->hasMetadataForParticipant($participant)) {
+                $metadata = $this->createThreadMetadata();
+                $metadata->setParticipant($participant);
+
+                $thread->replaceMetadata($metadata);
+            }
+        }
+
+        // Messages
+        foreach ($thread->getMessages() as $message) {
+            if ($thread->hasMetadataForParticipant($participant)) {
+                $metadata = $thread->getMetadataForParticipant($participant);
+            } else {
+                $metadata = $this->createThreadMetadata();
+                $metadata->setParticipant($message->getSender());
+            }
+
+            $metadata->setLastParticipantMessageDate($message->getCreatedAt());
+            $thread->replaceMetadata($metadata);
+        }
+    }
+
+    /**
+     * Ensures that the createdBy & createdAt properties are set
+     */
+    protected function doCreatedByAndAt(ThreadInterface $thread)
+    {
+        if (isset($thread->createdBy)
+        or !($message = $thread->getFirstMessage())) {
+            return;
+        }
+
+        $thread->setCreatedBy($message->getSender());
+        $thread->setCreatedAt($message->getCreatedAt());
+    }
+
+    protected function createThreadMetadata()
+    {
+        $class = $this->getClass().'Metadata';
+        return new $class();
     }
 
 }
