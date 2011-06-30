@@ -15,12 +15,17 @@
         {% for thread in threads %}
             <tr>
                 <td>
-                    {{ thread.subject }}
+                    <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}">
+                        {{ thread.subject }}
+                    </a>
+
                     {% if not ornicar_message_is_read(thread) %}
                         (New)
                     {% endif %}
                 </td>
-                <td>{{ thread.messages.count }}</td>
+                <td>
+                    {{ thread.messages|length }}
+                </td>
                 <td>
                     {% if thread.lastMessage %}
                         On {{ thread.lastMessage.createdAt|date }}

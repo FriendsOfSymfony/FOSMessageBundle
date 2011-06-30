@@ -4,7 +4,7 @@
 
 <h2>Search</h2>
 
-<p>{{ threads.count }} threads found with</p>
+<p>{{ threads|length }} threads found with</p>
 
 {% include 'OrnicarMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 
