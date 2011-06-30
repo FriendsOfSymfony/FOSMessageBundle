@@ -25,6 +25,13 @@ abstract class Thread extends BaseThread
     protected $participants;
 
     /**
+     * Thread data map
+     *
+     * @var Collection of ThreadMap
+     */
+    protected $map;
+
+    /**
      * All text contained in the thread messages
      * Used for the full text search
      *

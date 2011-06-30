@@ -10,9 +10,14 @@
 
         <field name="createdAt" column="created_at" type="date" />
 
-        <!--<many-to-one field="thread" target-entity="Ornicar\MessageBundle\Entity\Thread">-->
-            <!--<join-column name="thread_id" referenced-column-name="id" />-->
-        <!--</many-to-one>-->
+        <!-- <one-to-one field="sender" target-entity="MyProject\UserBundle\Entity\User" /> -->
+
+        <!-- <many-to-one field="thread" target-entity="MyProject\MessageBundle\Entity\Thread">
+            <join-columns>
+                <join-column name="thread_id" referenced-column-name="id" />
+            </join-columns>
+        </many-to-one> -->
+
 
     </mapped-superclass>
 

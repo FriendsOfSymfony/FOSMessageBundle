@@ -78,7 +78,26 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        throw new \Exception('not yet implemented');
+        return $this->repository->createQueryBuilder('t')
+            ->innerJoin('t.map', 'm')
+            ->innerJoin('m.participant', 'p')
+
+            // the participant is in the thread participants
+            ->andWhere('p.id = :user_id')
+            ->setParameter('user_id', $participant->getId())
+
+            // the thread does not contain spam or flood
+            ->andWhere('t.isSpam = 0')
+
+            // the thread is not deleted by this participant
+            ->andWhere('m.threadDeleted = 0')
+
+            // there is at least one message written by an other participant
+            // TODO (need 2nd join to map table?)
+
+            // sort by date of last message written by an other participant
+            // TODO (need 2nd join to map table?)
+        ;
     }
 
     /**
@@ -108,7 +127,26 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        throw new \Exception('not yet implemented');
+        return $this->repository->createQueryBuilder('t')
+            ->innerJoin('t.map', 'm')
+            ->innerJoin('m.participant', 'p')
+
+            // the participant is in the thread participants
+            ->andWhere('p.id = :user_id')
+            ->setParameter('user_id', $participant->getId())
+
+            // the thread does not contain spam or flood
+            ->andWhere('t.isSpam = 0')
+
+            // the thread is not deleted by this participant
+            ->andWhere('m.threadDeleted = 0')
+
+            // there is at least one message written by this participant
+            ->andWhere('m.lastParticipantMessageDate IS NOT NULL')
+
+            // sort by date of last message written by this participant
+            ->orderBy('m.lastParticipantMessageDate', 'DESC')
+        ;
     }
 
     /**

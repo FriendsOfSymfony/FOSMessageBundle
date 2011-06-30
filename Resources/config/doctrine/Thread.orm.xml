@@ -8,6 +8,16 @@
 
         <field name="subject" column="subject" type="string" />
 
+        <field name="createdAt" fieldName="createdAt" type="date" />
+
+        <field name="isSpam" fieldName="isSpam" type="boolean" />
+
+        <!--
+        <one-to-many field="messages" target-entity="MyProject\MessageBundle\Entity\Message" mapped-by="thread" />
+
+        <one-to-many field="map" target-entity="MyProject\MessageBundle\Entity\ThreadMap" mapped-by="thread" />
+        -->
+
     </mapped-superclass>
 
 </doctrine-mapping>
