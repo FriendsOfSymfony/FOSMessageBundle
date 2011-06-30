@@ -4,11 +4,9 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Entity\Message" table="messages">
+    <mapped-superclass name="Ornicar\MessageBundle\Entity\Message" table="ornicar_message_message">
 
         <field name="body" column="body" type="string" />
-
-        <field name="isRead" column="is_read" type="boolean" />
 
         <field name="createdAt" column="created_at" type="date" />
 
