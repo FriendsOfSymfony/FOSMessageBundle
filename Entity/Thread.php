@@ -181,7 +181,7 @@ abstract class Thread extends BaseThread
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
         if ($meta = $this->getMetadataForParticipant($participant)) {
-            return $meta->getThreadDeleted();
+            return $meta->getIsDeleted();
         }
 
         return false;
@@ -196,7 +196,7 @@ abstract class Thread extends BaseThread
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
         if ($meta = $this->getMetadataForParticipant($participant)) {
-            $meta->setThreadDeleted($isDeleted);
+            $meta->setIsDeleted($isDeleted);
 
             // also mark all thread messages as read
             foreach ($this->getMessages() as $message) {

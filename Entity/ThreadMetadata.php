@@ -13,7 +13,7 @@ abstract class ThreadMetadata
     protected $participant;
     protected $thread;
 
-    protected $threadDeleted = 0;
+    protected $isDeleted = 0;
 
     protected $lastParticipantMessageDate;
 
@@ -60,6 +60,24 @@ abstract class ThreadMetadata
     {
         $this->participant = $participant;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getIsDeleted()
+    {
+        return $this->isDeleted;
+    }
+
+    /**
+     * @param  boolean
+     * @return null
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        $this->isDeleted = (boolean)$isDeleted;
+    }
+
 
     /**
      * @return DateTime

@@ -90,7 +90,7 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('t.isSpam = 0')
 
             // the thread is not deleted by this participant
-            ->andWhere('tm.threadDeleted = 0')
+            ->andWhere('tm.isDeleted = 0')
 
             // there is at least one message written by an other participant
             // TODO (need 2nd join to map table?)
@@ -139,7 +139,7 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('t.isSpam = 0')
 
             // the thread is not deleted by this participant
-            ->andWhere('tm.threadDeleted = 0')
+            ->andWhere('tm.isDeleted = 0')
 
             // there is at least one message written by this participant
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')

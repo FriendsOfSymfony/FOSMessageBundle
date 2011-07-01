@@ -6,7 +6,7 @@
 
     <mapped-superclass name="Ornicar\MessageBundle\Entity\ThreadMetadata" table="ornicar_message_thread_metadata">
 
-        <field name="threadDeleted" column="thread_deleted" type="boolean" />
+        <field name="isDeleted" column="is_deleted" type="boolean" />
 
         <field name="lastParticipantMessageDate" column="last_participant_message_date" type="datetime" nullable="true" />
 
