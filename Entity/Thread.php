@@ -4,7 +4,6 @@ namespace Ornicar\MessageBundle\Entity;
 
 use Ornicar\MessageBundle\Model\Thread as BaseThread;
 use Ornicar\MessageBundle\Model\MessageInterface;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
@@ -25,7 +24,7 @@ abstract class Thread extends BaseThread
     protected $participants;
 
     /**
-     * Thread data metadata
+     * Thread metadata
      *
      * @var Collection of ThreadMetadata
      */
@@ -181,7 +180,11 @@ abstract class Thread extends BaseThread
      */
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
-        throw new \Exception('not yet implemented');
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            return $meta->getThreadDeleted();
+        }
+
+        return false;
     }
 
     /**
@@ -192,23 +195,35 @@ abstract class Thread extends BaseThread
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
-        throw new \Exception('not yet implemented');
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            $meta->setThreadDeleted($isDeleted);
+
+            // also mark all thread messages as read
+            foreach ($this->getMessages() as $message) {
+                $message->setIsReadByParticipant($participant, true);
+            }
+        }
     }
 
-
-    public function hasMetadataForParticipant($participant)
+    public function getAllMetadata()
     {
-        return isset($this->metadata[$participant->getId()]);
+        return $this->metadata;
     }
 
     public function getMetadataForParticipant($participant)
     {
-        return $this->metadata[$participant->getId()];
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
     }
 
-    public function replaceMetadata(ThreadMetadata $metadata)
+    public function addMetadata(ThreadMetadata $meta)
     {
-        $metadata->setThread($this);
-        $this->metadata[$metadata->getParticipant()->getId()] = $metadata;
+        $meta->setThread($this);
+        $this->metadata->add($meta);
     }
 }

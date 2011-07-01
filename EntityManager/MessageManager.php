@@ -69,7 +69,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
     {
-        throw new \Exception('not yet implemented');
+        $this->markIsReadByThreadAndParticipant($readable, $user, true);
     }
 
     /**
@@ -80,7 +80,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
     {
-        throw new \Exception('not yet implemented');
+        $this->markIsReadByThreadAndParticipant($readable, $user, false);
     }
 
     /**
@@ -92,7 +92,9 @@ class MessageManager extends BaseMessageManager
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $user, $isRead)
     {
-        throw new \Exception('not yet implemented');
+        foreach ($thread->getMessages() as $message) {
+            $this->markIsReadByParticipant($message, $user, $isRead);
+        }
     }
 
     /**
@@ -104,7 +106,27 @@ class MessageManager extends BaseMessageManager
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $user, $isRead)
     {
-        throw new \Exception('not yet implemented');
+        if (!$message->getMetadataForParticipant($user)) {
+            if (!$message->getThread()->getMetadataForParticipant($user)) {
+                var_dump('no thread metadata');
+            }
+
+            var_dump('no message metadata');
+            return;
+        }
+
+
+        $meta = $message->getMetadataForParticipant($user);
+        if (!$meta) {
+            $meta = $this->createMessageMetadata();
+            $meta->setParticipant($user);
+            $message->addMetadata($meta);
+        }
+
+        $meta->setIsRead($isRead);
+
+        $this->em->persist($meta);
+        $this->em->flush();
     }
 
     /**
@@ -115,6 +137,7 @@ class MessageManager extends BaseMessageManager
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
+        $this->denormalize($message);
         $this->em->persist($message);
         if ($andFlush) {
             $this->em->flush();
@@ -129,5 +152,42 @@ class MessageManager extends BaseMessageManager
     public function getClass()
     {
         return $this->class;
+    }
+
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     */
+    protected function denormalize(MessageInterface $message)
+    {
+        $this->doMetadata($message);
+    }
+
+    /**
+     * Ensures that the message metadata are up to date
+     */
+    protected function doMetadata(MessageInterface $message)
+    {
+        foreach ($message->getThread()->getAllMetadata() as $threadMeta) {
+            $meta = $message->getMetadataForParticipant($threadMeta->getParticipant());
+            if (!$meta) {
+                $meta = $this->createMessageMetadata();
+                $meta->setParticipant($threadMeta->getParticipant());
+
+                $message->addMetadata($meta);
+            }
+        }
+    }
+
+    protected function createMessageMetadata()
+    {
+        $class = $this->getClass().'Metadata';
+        return new $class();
     }
 }

@@ -79,8 +79,8 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->innerJoin('t.metadata', 'm')
-            ->innerJoin('m.participant', 'p')
+            ->innerJoin('t.metadata', 'tm')
+            ->innerJoin('tm.participant', 'p')
 
             // the participant is in the thread participants
             ->andWhere('p.id = :user_id')
@@ -90,7 +90,7 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('t.isSpam = 0')
 
             // the thread is not deleted by this participant
-            ->andWhere('m.threadDeleted = 0')
+            ->andWhere('tm.threadDeleted = 0')
 
             // there is at least one message written by an other participant
             // TODO (need 2nd join to map table?)
@@ -128,8 +128,8 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->innerJoin('t.metadata', 'm')
-            ->innerJoin('m.participant', 'p')
+            ->innerJoin('t.metadata', 'tm')
+            ->innerJoin('tm.participant', 'p')
 
             // the participant is in the thread participants
             ->andWhere('p.id = :user_id')
@@ -139,13 +139,13 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('t.isSpam = 0')
 
             // the thread is not deleted by this participant
-            ->andWhere('m.threadDeleted = 0')
+            ->andWhere('tm.threadDeleted = 0')
 
             // there is at least one message written by this participant
-            ->andWhere('m.lastParticipantMessageDate IS NOT NULL')
+            ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
 
             // sort by date of last message written by this participant
-            ->orderBy('m.lastParticipantMessageDate', 'DESC')
+            ->orderBy('tm.lastParticipantMessageDate', 'DESC')
         ;
     }
 
@@ -297,25 +297,25 @@ class ThreadManager extends BaseThreadManager
     {
         // Participants
         foreach ($thread->getParticipants() as $participant) {
-            if (!$thread->hasMetadataForParticipant($participant)) {
-                $metadata = $this->createThreadMetadata();
-                $metadata->setParticipant($participant);
+            $meta = $thread->getMetadataForParticipant($participant);
+            if (!$meta) {
+                $meta = $this->createThreadMetadata();
+                $meta->setParticipant($participant);
 
-                $thread->replaceMetadata($metadata);
+                $thread->addMetadata($meta);
             }
         }
 
         // Messages
         foreach ($thread->getMessages() as $message) {
-            if ($thread->hasMetadataForParticipant($message->getSender())) {
-                $metadata = $thread->getMetadataForParticipant($message->getSender());
-            } else {
-                $metadata = $this->createThreadMetadata();
-                $metadata->setParticipant($message->getSender());
+            $meta = $thread->getMetadataForParticipant($message->getSender());
+            if (!$meta) {
+                $meta = $this->createThreadMetadata();
+                $meta->setParticipant($message->getSender());
+                $thread->addMetadata($meta);
             }
 
-            $metadata->setLastParticipantMessageDate($message->getCreatedAt());
-            $thread->replaceMetadata($metadata);
+            $meta->setLastParticipantMessageDate($message->getCreatedAt());
         }
     }
 

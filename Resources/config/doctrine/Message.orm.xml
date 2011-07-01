@@ -8,7 +8,7 @@
 
         <field name="body" column="body" type="string" />
 
-        <field name="createdAt" column="created_at" type="date" />
+        <field name="createdAt" column="created_at" type="datetime" />
 
         <!-- <many-to-one field="sender" target-entity="MyProject\UserBundle\Entity\User" /> -->
 
@@ -18,6 +18,11 @@
             </join-columns>
         </many-to-one> -->
 
+        <!-- <one-to-many field="metadata" target-entity="MyProject\MessageBundle\Entity\MessageMetadata" mapped-by="message">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many> -->
 
     </mapped-superclass>
 

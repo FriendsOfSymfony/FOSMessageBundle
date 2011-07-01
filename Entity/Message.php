@@ -4,9 +4,27 @@ namespace Ornicar\MessageBundle\Entity;
 
 use Ornicar\MessageBundle\Model\Message as BaseMessage;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 abstract class Message extends BaseMessage
 {
+    /**
+     * Message metadata
+     *
+     * @var Collection of MessageMetadata
+     */
+    protected $metadata;
+
+
+    /**
+     * Initializes the collections
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->metadata = new ArrayCollection();
+    }
+
     /**
      * Tells if this participant has read this message
      *
@@ -15,7 +33,11 @@ abstract class Message extends BaseMessage
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
-        throw new \Exception('not yet implemented');
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            return $meta->getIsRead();
+        }
+
+        return false;
     }
 
     /**
@@ -26,17 +48,12 @@ abstract class Message extends BaseMessage
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
-        throw new \Exception('not yet implemented');
-    }
+        $meta = $this->getMetadataForParticipant($participant);
+        if (!$meta) {
+            throw new \Exception(sprintf('No metadata setted for participant with id "%s"', $participant->getId()));
+        }
 
-    /**
-     * Ensures that each participant has an isRead flag
-     *
-     * @param array $participants list of ParticipantInterface
-     */
-    public function ensureIsReadByParticipant(array $participants)
-    {
-        throw new \Exception('not yet implemented');
+        $meta->setIsRead($isRead);
     }
 
     /**
@@ -48,4 +65,28 @@ abstract class Message extends BaseMessage
     {
         return $this->getCreatedAt()->getTimestamp();
     }
+
+
+    public function getAllMetadata()
+    {
+        return $this->metadata;
+    }
+
+    public function getMetadataForParticipant($participant)
+    {
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
+    }
+
+    public function addMetadata(MessageMetadata $meta)
+    {
+        $meta->setMessage($this);
+        $this->metadata->add($meta);
+    }
+
 }

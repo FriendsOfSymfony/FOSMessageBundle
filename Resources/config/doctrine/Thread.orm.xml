@@ -15,7 +15,7 @@
         <!--
         <one-to-many field="messages" target-entity="MyProject\MessageBundle\Entity\Message" mapped-by="thread" />
 
-        <one-to-many field="metadata" target-entity="MyProject\MessageBundle\Entity\ThreadMetadata" mapped-by="thread" index-by="participant">
+        <one-to-many field="metadata" target-entity="MyProject\MessageBundle\Entity\ThreadMetadata" mapped-by="thread">
             <cascade>
                 <cascade-all />
             </cascade>
