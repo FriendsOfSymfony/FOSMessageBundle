@@ -10,6 +10,7 @@
 
         <field name="lastParticipantMessageDate" column="last_participant_message_date" type="datetime" nullable="true" />
 
+        <field name="lastMessageDate" column="last_message_date" type="datetime" nullable="true" />
 
         <!--
         <many-to-one field="thread" target-entity="MyProject\MessageBundle\Entity\Thread" />

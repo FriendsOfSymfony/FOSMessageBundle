@@ -93,10 +93,10 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('tm.isDeleted = 0')
 
             // there is at least one message written by an other participant
-            // TODO (need 2nd join to map table?)
+            ->andWhere('tm.lastMessageDate IS NOT NULL')
 
             // sort by date of last message written by an other participant
-            // TODO (need 2nd join to map table?)
+            ->orderBy('tm.lastMessageDate', 'DESC')
         ;
     }
 
@@ -288,6 +288,7 @@ class ThreadManager extends BaseThreadManager
     {
         $this->doMetadata($thread);
         $this->doCreatedByAndAt($thread);
+        $this->doDatesOfLastMessageWrittenByOtherParticipant($thread);
     }
 
     /**
@@ -331,6 +332,27 @@ class ThreadManager extends BaseThreadManager
 
         $thread->setCreatedBy($message->getSender());
         $thread->setCreatedAt($message->getCreatedAt());
+    }
+
+    /**
+     * Update the dates of last message written by other participants
+     */
+    protected function doDatesOfLastMessageWrittenByOtherParticipant(ThreadInterface $thread)
+    {
+        foreach ($thread->getAllMetadata() as $meta) {
+            $participantId = $meta->getParticipant()->getId();
+            $timestamp = 0;
+
+            foreach ($thread->getMessages() as $message) {
+                if ($participantId != $message->getSender()->getId()) {
+                    $timestamp = max($timestamp, $message->getTimestamp());
+                }
+            }
+
+            $date = new \DateTime();
+            $date->setTimestamp($timestamp);
+            $meta->setLastMessageDate($date);
+        }
     }
 
     protected function createThreadMetadata()

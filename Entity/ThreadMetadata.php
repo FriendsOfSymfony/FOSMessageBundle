@@ -16,6 +16,7 @@ abstract class ThreadMetadata
     protected $isDeleted = 0;
 
     protected $lastParticipantMessageDate;
+    protected $lastMessageDate;
 
     /**
      * Gets the thread map id
@@ -78,7 +79,6 @@ abstract class ThreadMetadata
         $this->isDeleted = (boolean)$isDeleted;
     }
 
-
     /**
      * @return DateTime
      */
@@ -96,4 +96,20 @@ abstract class ThreadMetadata
         $this->lastParticipantMessageDate = $date;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getLastMessageDate()
+    {
+        return $this->lastMessageDate;
+    }
+
+    /**
+     * @param  DateTime
+     * @return null
+     */
+    public function setLastMessageDate(\DateTime $date)
+    {
+        $this->lastMessageDate = $date;
+    }
 }
