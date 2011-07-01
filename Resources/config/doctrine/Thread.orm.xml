@@ -8,11 +8,13 @@
 
         <field name="subject" column="subject" type="string" />
 
-        <field name="createdAt" fieldName="createdAt" type="date" />
+        <field name="createdAt" fieldName="createdAt" type="datetime" />
 
         <field name="isSpam" fieldName="isSpam" type="boolean" />
 
         <!--
+        <many-to-one field="createdBy" target-entity="MyProject\UserBundle\Entity\User" />
+
         <one-to-many field="messages" target-entity="MyProject\MessageBundle\Entity\Message" mapped-by="thread" />
 
         <one-to-many field="metadata" target-entity="MyProject\MessageBundle\Entity\ThreadMetadata" mapped-by="thread">
