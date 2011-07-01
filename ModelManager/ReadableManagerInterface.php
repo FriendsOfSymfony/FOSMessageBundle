@@ -18,7 +18,7 @@ interface ReadableManagerInterface
      * Must be applied directly to the storage,
      * without modifying the readable state.
      * We want to show the unread readables on the page,
-     * as well as marking the as read.
+     * as well as marking them as read.
      *
      * @param ReadableInterface $readable
      * @param ParticipantInterface $user
