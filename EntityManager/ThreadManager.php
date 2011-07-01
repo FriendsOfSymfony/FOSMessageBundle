@@ -307,8 +307,8 @@ class ThreadManager extends BaseThreadManager
 
         // Messages
         foreach ($thread->getMessages() as $message) {
-            if ($thread->hasMetadataForParticipant($participant)) {
-                $metadata = $thread->getMetadataForParticipant($participant);
+            if ($thread->hasMetadataForParticipant($message->getSender())) {
+                $metadata = $thread->getMetadataForParticipant($message->getSender());
             } else {
                 $metadata = $this->createThreadMetadata();
                 $metadata->setParticipant($message->getSender());
