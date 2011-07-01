@@ -3,6 +3,8 @@
     <thead>
         <tr>
             <th>Subject</th>
+            <th>Starter</th>
+            <th>StartDate</th>
             <th>Messages</th>
             <th>Last message</th>
             <th>Actions</th>
@@ -24,10 +26,19 @@
                     {% endif %}
                 </td>
                 <td>
+                    {{ thread.createdBy }}
+                </td>
+                <td>
+                    {{ thread.createdAt|date }}
+                </td>
+                <td>
                     {{ thread.messages|length }}
                 </td>
                 <td>
                     {% if thread.lastMessage %}
+                        <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="Go to last message">
+                            →
+                        </a>
                         On {{ thread.lastMessage.createdAt|date }}
                         <br />
                         By {{ thread.lastMessage.sender }}

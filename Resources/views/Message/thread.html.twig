@@ -10,7 +10,7 @@
             By: {{ message.sender }}, on {{ message.createdAt|date }}
         </div>
 
-        <div class="messenger_thread_message_body">
+        <div class="messenger_thread_message_body" id="message_{{ message.id }}">
             {{ message.body }}
         </div>
     </div>
