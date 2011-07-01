@@ -56,16 +56,6 @@ abstract class Message extends BaseMessage
         $meta->setIsRead($isRead);
     }
 
-    /**
-     * Gets the created at timestamp
-     *
-     * @return int
-     */
-    public function getTimestamp()
-    {
-        return $this->getCreatedAt()->getTimestamp();
-    }
-
 
     public function getAllMetadata()
     {
