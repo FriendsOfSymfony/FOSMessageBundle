@@ -10,7 +10,7 @@
             By: {{ message.sender }}, on {{ message.createdAt|date }}
         </div>
 
-        <div class="messenger_thread_message_body">
+        <div class="messenger_thread_message_body" id="message_{{ message.id }}">
             {{ message.body }}
         </div>
     </div>
@@ -18,7 +18,7 @@
 
 <h3>Reply</h3>
 
-<form action="{{ url('ornicar_message_thread_view', {'threadId': thread.id) }}" method="post">
+<form action="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}" method="post">
     {{ form_widget(form) }}
 
     <input type="submit" />
