@@ -36,9 +36,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="{{ url('ornicar_message_thread_delete', {'threadId': thread.id}) }}">
-                        Delete
-                    </a>
+                    <form action="{{ url('ornicar_message_thread_delete', {'threadId': thread.id}) }}" method="post">
+                        <input type="submit" value="Delete" />
+                    </form>
                 </td>
             </tr>
         {% endfor %}
