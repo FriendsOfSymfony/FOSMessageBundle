@@ -13,7 +13,7 @@
         <field name="lastMessageDate" column="last_message_date" type="datetime" nullable="true" />
 
         <!--
-        <many-to-one field="thread" target-entity="MyProject\MessageBundle\Entity\Thread" />
+        <many-to-one field="thread" target-entity="MyProject\MessageBundle\Entity\Thread" inversed-by="metadata" />
 
         <many-to-one field="participant" target-entity="MyProject\UserBundle\Entity\User" />
         -->

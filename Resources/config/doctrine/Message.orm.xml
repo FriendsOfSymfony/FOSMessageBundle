@@ -6,7 +6,7 @@
 
     <mapped-superclass name="Ornicar\MessageBundle\Entity\Message" table="ornicar_message_message">
 
-        <field name="body" column="body" type="string" />
+        <field name="body" column="body" type="text" />
 
         <field name="createdAt" column="created_at" type="datetime" />
 
