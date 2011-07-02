@@ -121,16 +121,6 @@ class MessageManager extends BaseMessageManager
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $user, $isRead)
     {
-        if (!$message->getMetadataForParticipant($user)) {
-            if (!$message->getThread()->getMetadataForParticipant($user)) {
-                var_dump('no thread metadata');
-            }
-
-            var_dump('no message metadata');
-            return;
-        }
-
-
         $meta = $message->getMetadataForParticipant($user);
         if (!$meta) {
             $meta = $this->createMessageMetadata();
