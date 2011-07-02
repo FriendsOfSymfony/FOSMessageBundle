@@ -122,16 +122,19 @@ class MessageManager extends BaseMessageManager
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $user, $isRead)
     {
         $meta = $message->getMetadataForParticipant($user);
-        if (!$meta) {
-            $meta = $this->createMessageMetadata();
-            $meta->setParticipant($user);
-            $message->addMetadata($meta);
+        if (!$meta || $meta->getIsRead() == $isRead) {
+            return;
         }
 
-        $meta->setIsRead($isRead);
+        $this->em->createQueryBuilder()
+            ->update($this->getMessageMetadataClass(), 'm')
+            ->set('m.isRead', true)
 
-        $this->em->persist($meta);
-        $this->em->flush();
+            ->where('m.id = :id')
+            ->setParameter('id', $meta->getId())
+
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -190,9 +193,14 @@ class MessageManager extends BaseMessageManager
         }
     }
 
+    protected function getMessageMetadataClass()
+    {
+        return $this->getClass().'Metadata';
+    }
+
     protected function createMessageMetadata()
     {
-        $class = $this->getClass().'Metadata';
+        $class = $this->getMessageMetadataClass();
         return new $class();
     }
 }
