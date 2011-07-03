@@ -59,11 +59,11 @@ abstract class AbstractMessageFormHandler
      */
     public function processValidForm(Form $form)
     {
-		$message = $this->composeMessage($form->getData());
+        $message = $this->composeMessage($form->getData());
 
-		$this->sender->send($message);
+        $this->sender->send($message);
 
-		return $message;
+        return $message;
     }
 
     /**
