@@ -36,7 +36,7 @@ class UsernameToUserTransformer implements DataTransformerInterface
             return null;
         }
         if (!$value instanceof ParticipantInterface) {
-            throw new UnexpectedTypeException($array, 'ParticipantInterface');
+            throw new UnexpectedTypeException($value, 'ParticipantInterface');
         }
 
         return $value->getUsername();
