@@ -34,7 +34,7 @@ abstract class Thread implements ThreadInterface
     protected $isSpam = false;
 
     /**
-     * Gets the message unique id
+     * Gets the thread unique id
      *
      * @return mixed
      **/

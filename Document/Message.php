@@ -49,14 +49,4 @@ abstract class Message extends AbstractMessage
             }
         }
     }
-
-    /**
-     * Gets the created at timestamp
-     *
-     * @return int
-     */
-    public function getTimestamp()
-    {
-        return $this->getCreatedAt()->getTimestamp();
-    }
 }

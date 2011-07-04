@@ -121,4 +121,14 @@ abstract class Message implements MessageInterface
     {
         $this->sender = $sender;
     }
+
+    /**
+     * Gets the created at timestamp
+     *
+     * @return int
+     */
+    public function getTimestamp()
+    {
+        return $this->getCreatedAt()->getTimestamp();
+    }
 }
