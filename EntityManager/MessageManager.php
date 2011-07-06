@@ -61,7 +61,8 @@ class MessageManager extends BaseMessageManager
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
         $builder = $this->repository->createQueryBuilder('m');
-        $total = $builder
+
+        return (int)$builder
             ->select($builder->expr()->count('mm.id'))
 
             ->innerJoin('m.metadata', 'mm')
@@ -73,9 +74,7 @@ class MessageManager extends BaseMessageManager
             ->andWhere('mm.isRead = 0')
 
             ->getQuery()
-            ->getSingleResult();
-
-        return (int)current($total);
+            ->getSingleScalarResult();
     }
 
     /**
