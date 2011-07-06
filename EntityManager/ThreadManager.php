@@ -35,6 +35,13 @@ class ThreadManager extends BaseThreadManager
     protected $class;
 
     /**
+     * The model class
+     *
+     * @var string
+     */
+    protected $metaClass;
+
+    /**
      * The message manager, required to mark
      * the messages of a thread as read/unread
      *
@@ -49,11 +56,12 @@ class ThreadManager extends BaseThreadManager
      * @param string            $class
      * @param MessageManager    $messageManager
      */
-    public function __construct(EntityManager $em, $class, MessageManager $messageManager)
+    public function __construct(EntityManager $em, $class, $metaClass, MessageManager $messageManager)
     {
         $this->em             = $em;
         $this->repository     = $em->getRepository($class);
         $this->class          = $em->getClassMetadata($class)->name;
+        $this->metaClass      = $em->getClassMetadata($metaClass)->name;
         $this->messageManager = $messageManager;
     }
 
@@ -357,8 +365,6 @@ class ThreadManager extends BaseThreadManager
 
     protected function createThreadMetadata()
     {
-        $class = $this->getClass().'Metadata';
-        return new $class();
+        return new $this->metaClass();
     }
-
 }
