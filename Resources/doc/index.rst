@@ -177,7 +177,6 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
 namespace Acme\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use Ornicar\MessageBundle\Entity\Message as BaseMessage;
 
@@ -216,7 +215,6 @@ class Message extends BaseMessage
 namespace Acme\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use Ornicar\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
 
@@ -249,7 +247,6 @@ class MessageMetadata extends BaseMessageMetadata
 namespace Acme\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use Ornicar\MessageBundle\Entity\Thread as BaseThread;
 
@@ -294,7 +291,6 @@ class Thread extends BaseThread
 namespace Acme\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 use Ornicar\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
 
