@@ -216,7 +216,14 @@ class ThreadManager extends BaseThreadManager
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {
-        throw new \Exception('not yet implemented');
+        return $this->repository->createQueryBuilder('t')
+            ->innerJoin('t.createdBy', 'p')
+
+            ->where('p.id = :participant_id')
+            ->setParameter('participant_id', $participant->getId())
+
+            ->getQuery()
+            ->execute();
     }
 
 
