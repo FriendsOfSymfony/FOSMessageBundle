@@ -16,7 +16,7 @@ use Ornicar\MessageBundle\Model\ParticipantInterface;
 interface MessageManagerInterface extends ReadableManagerInterface
 {
     /**
-     * Tells how many unread messages this participant has
+     * Tells how many unread, non-spam, messages this participant has
      *
      * @param ParticipantInterface $participant
      * @return int the number of unread messages

@@ -217,6 +217,7 @@ abstract class Thread extends AbstractThread
         $this->doParticipants();
         $this->doCreatedByAndAt();
         $this->doKeywords();
+        $this->doSpam();
         $this->doEnsureMessagesIsRead();
         $this->doDatesOfLastMessageWrittenByParticipant();
         $this->doDatesOfLastMessageWrittenByOtherParticipant();
@@ -261,6 +262,16 @@ abstract class Thread extends AbstractThread
 
         // we only need each word once
         $this->keywords = implode(' ', array_unique(str_word_count(strtolower($keywords), 1)));
+    }
+
+    /**
+     * Denormalizes the value of isSpam to messages
+     */
+    protected function doSpam()
+    {
+        foreach ($this->getMessages() as $message) {
+            $message->setIsSpam($this->getIsSpam());
+        }
     }
 
     /**

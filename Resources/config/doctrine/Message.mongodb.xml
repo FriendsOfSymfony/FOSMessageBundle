@@ -12,6 +12,8 @@
 
         <field name="isReadByParticipant" fieldName="isReadByParticipant" type="hash" />
 
+        <field name="isSpam" fieldName="isSpam" type="boolean" />
+
         <!--<reference-one field="sender" target-document="Acme\UserBundle\Document\User" />-->
 
         <!--<reference-one field="thread" target-document="Ornicar\MessageBundle\Document\Thread" />-->
@@ -28,6 +30,9 @@
             </index>
             <index unique="false">
                 <key name="isReadByParticipant" order="desc" />
+            </index>
+            <index unique="false">
+                <key name="isSpam" order="asc" />
             </index>
         </indexes>
 
