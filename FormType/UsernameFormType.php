@@ -32,6 +32,6 @@ class UsernameFormType extends AbstractType
 
     public function getName()
     {
-        return 'ornicar_message.username';
+        return 'ornicar_message_username';
     }
 }
