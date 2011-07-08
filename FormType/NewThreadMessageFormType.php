@@ -19,4 +19,9 @@ class NewThreadMessageFormType extends AbstractType
             ->add('subject', 'text')
             ->add('body', 'textarea');
     }
+    
+    public function getName()
+    {
+        return 'ornicar_message_new_thread';
+    }
 }
