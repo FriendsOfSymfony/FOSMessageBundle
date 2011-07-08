@@ -15,6 +15,14 @@ abstract class Message extends AbstractMessage
     protected $isReadByParticipant = array();
 
     /**
+     * Tells if the message is spam or flood
+     * This denormalizes Thread.isSpam
+     *
+     * @var boolean
+     */
+    protected $isSpam = false;
+
+    /**
      * Tells if this participant has read this message
      *
      * @param ParticipantInterface $participant
@@ -48,5 +56,14 @@ abstract class Message extends AbstractMessage
                 $this->isReadByParticipant[$participant->getId()] = false;
             }
         }
+    }
+
+    /**
+     * @param  boolean
+     * @return null
+     */
+    public function setIsSpam($isSpam)
+    {
+        $this->isSpam = (boolean) $isSpam;
     }
 }
