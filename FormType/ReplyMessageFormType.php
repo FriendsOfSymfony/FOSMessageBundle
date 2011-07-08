@@ -17,4 +17,9 @@ class ReplyMessageFormType extends AbstractType
         $builder
             ->add('body', 'textarea');
     }
+
+    public function getName()
+    {
+        return 'ornicar_message_reply_message';
+    }
 }
