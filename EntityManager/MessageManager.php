@@ -34,16 +34,22 @@ class MessageManager extends BaseMessageManager
     protected $class;
 
     /**
+     * @var string
+     */
+    protected $metaClass;
+
+    /**
      * Constructor.
      *
      * @param EntityManager     $em
      * @param string            $class
      */
-    public function __construct(EntityManager $em, $class)
+    public function __construct(EntityManager $em, $class, $metaClass)
     {
         $this->em         = $em;
         $this->repository = $em->getRepository($class);
         $this->class      = $em->getClassMetadata($class)->name;
+        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
     }
 
     /**
@@ -55,7 +61,8 @@ class MessageManager extends BaseMessageManager
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
         $builder = $this->repository->createQueryBuilder('m');
-        $total = $builder
+
+        return (int)$builder
             ->select($builder->expr()->count('mm.id'))
 
             ->innerJoin('m.metadata', 'mm')
@@ -67,9 +74,7 @@ class MessageManager extends BaseMessageManager
             ->andWhere('mm.isRead = 0')
 
             ->getQuery()
-            ->getSingleResult();
-
-        return (int)current($total);
+            ->getSingleScalarResult();
     }
 
     /**
@@ -127,7 +132,7 @@ class MessageManager extends BaseMessageManager
         }
 
         $this->em->createQueryBuilder()
-            ->update($this->getMessageMetadataClass(), 'm')
+            ->update($this->metaClass, 'm')
             ->set('m.isRead', true)
 
             ->where('m.id = :id')
@@ -193,14 +198,8 @@ class MessageManager extends BaseMessageManager
         }
     }
 
-    protected function getMessageMetadataClass()
-    {
-        return $this->getClass().'Metadata';
-    }
-
     protected function createMessageMetadata()
     {
-        $class = $this->getMessageMetadataClass();
-        return new $class();
+        return new $this->metaClass();
     }
 }
