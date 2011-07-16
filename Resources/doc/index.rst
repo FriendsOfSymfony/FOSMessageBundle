@@ -521,6 +521,15 @@ Your class must implement ``Ornicar\MessageBundle\Security\AuthorizerInterface``
 You can tell whether the user can see or delete a thread, and if he can send a new message to another user.
 See the default implementation in ``Ornicar\MessageBundle\Security\Authorizer``.
 
+
+Listening to events
+===================
+
+This bundles dispatches event when notable actions are performed.
+
+See ``Ornicar\MessageBundle\Event\OrnicarMessageEvents`` for a documented
+list of the available events.
+
 Configuration
 =============
 

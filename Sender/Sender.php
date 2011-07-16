@@ -5,6 +5,9 @@ namespace Ornicar\MessageBundle\Sender;
 use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
 use Ornicar\MessageBundle\Model\MessageInterface;
+use Ornicar\MessageBundle\Event\MessageEvent;
+use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Sends messages
@@ -27,10 +30,18 @@ class Sender implements SenderInterface
      */
     protected $threadManager;
 
-    public function __construct(MessageManagerInterface $messageManager, ThreadManagerInterface $threadManager)
+    /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    public function __construct(MessageManagerInterface $messageManager, ThreadManagerInterface $threadManager, EventDispatcherInterface $dispatcher)
     {
         $this->messageManager = $messageManager;
         $this->threadManager = $threadManager;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -42,5 +53,7 @@ class Sender implements SenderInterface
     {
         $this->threadManager->saveThread($message->getThread(), false);
         $this->messageManager->saveMessage($message);
+
+        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_SEND, new MessageEvent($message));
     }
 }

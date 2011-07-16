@@ -4,8 +4,11 @@ namespace Ornicar\MessageBundle\Deleter;
 
 use Ornicar\MessageBundle\Security\AuthorizerInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
+use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
+use Ornicar\MessageBundle\Event\ThreadEvent;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Marks threads as deleted
@@ -28,10 +31,18 @@ class Deleter implements DeleterInterface
      */
     protected $participantProvider;
 
-    public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
+    /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider, EventDispatcherInterface $dispatcher)
     {
         $this->authorizer = $authorizer;
         $this->participantProvider = $participantProvider;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -45,6 +56,8 @@ class Deleter implements DeleterInterface
             throw new AccessDeniedException('You are not allowed to delete this thread');
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), true);
+
+        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_DELETE, new ThreadEvent($thread));
     }
 
     /**
@@ -58,6 +71,8 @@ class Deleter implements DeleterInterface
             throw new AccessDeniedException('You are not allowed to delete this thread');
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), false);
+
+        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNDELETE, new ThreadEvent($thread));
     }
 
     /**

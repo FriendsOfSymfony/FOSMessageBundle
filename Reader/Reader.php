@@ -5,6 +5,9 @@ namespace Ornicar\MessageBundle\Reader;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
+use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
+use Ornicar\MessageBundle\Event\ReadableEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Marks messages and threads as read or unread
@@ -27,10 +30,18 @@ class Reader implements ReaderInterface
      */
     protected $readableManager;
 
-    public function __construct(ParticipantProviderInterface $participantProvider, ReadableManagerInterface $readableManager)
+    /**
+     * The event dispatcher
+     *
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    public function __construct(ParticipantProviderInterface $participantProvider, ReadableManagerInterface $readableManager, EventDispatcherInterface $dispatcher)
     {
         $this->participantProvider = $participantProvider;
         $this->readableManager = $readableManager;
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -41,6 +52,8 @@ class Reader implements ReaderInterface
     public function markAsRead(ReadableInterface $readable)
     {
         $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
+
+        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_READ, new ReadableEvent($readable));
     }
 
     /**
@@ -51,6 +64,8 @@ class Reader implements ReaderInterface
     public function markAsUnread(ReadableInterface $readable)
     {
         $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
+
+        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNREAD, new ReadableEvent($readable));
     }
 
     /**
