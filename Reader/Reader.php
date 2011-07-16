@@ -51,7 +51,11 @@ class Reader implements ReaderInterface
      */
     public function markAsRead(ReadableInterface $readable)
     {
-        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
+        $participant = $this->getAuthenticatedParticipant();
+        if ($readable->isReadByParticipant($participant)) {
+            return;
+        }
+        $this->readableManager->markAsReadByParticipant($readable, $participant);
 
         $this->dispatcher->dispatch(OrnicarMessageEvents::POST_READ, new ReadableEvent($readable));
     }
@@ -63,7 +67,11 @@ class Reader implements ReaderInterface
      */
     public function markAsUnread(ReadableInterface $readable)
     {
-        $this->readableManager->markAsReadByParticipant($readable, $this->getAuthenticatedParticipant());
+        $participant = $this->getAuthenticatedParticipant();
+        if (!$readable->isReadByParticipant($participant)) {
+            return;
+        }
+        $this->readableManager->markAsReadByParticipant($readable, $participant);
 
         $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNREAD, new ReadableEvent($readable));
     }
