@@ -48,6 +48,7 @@ class OrnicarMessageExtension extends Extension
         $container->setAlias('ornicar_message.thread_reader', $config['thread_reader']);
         $container->setAlias('ornicar_message.deleter', $config['deleter']);
         $container->setAlias('ornicar_message.spam_detector', $config['spam_detector']);
+        $container->setAlias('ornicar_message.twig_extension', $config['twig_extension']);
 
         $container->setAlias('ornicar_message.new_thread_form.type', $config['new_thread_form']['type']);
         $container->setAlias('ornicar_message.new_thread_form.factory', $config['new_thread_form']['factory']);

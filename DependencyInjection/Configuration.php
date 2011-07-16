@@ -37,6 +37,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('thread_reader')->defaultValue('ornicar_message.thread_reader.default')->cannotBeEmpty()->end()
                 ->scalarNode('deleter')->defaultValue('ornicar_message.deleter.default')->cannotBeEmpty()->end()
                 ->scalarNode('spam_detector')->defaultValue('ornicar_message.noop_spam_detector')->cannotBeEmpty()->end()
+                ->scalarNode('twig_extension')->defaultValue('ornicar_message.twig_extension.default')->cannotBeEmpty()->end()
                 ->arrayNode('search')
                     ->addDefaultsIfNotSet()
                     ->children()

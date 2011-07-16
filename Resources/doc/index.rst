@@ -552,6 +552,7 @@ All configuration options are listed below::
         thread_reader:          ornicar_message.thread_reader           # See Reader\ReaderInterface
         deleter:                ornicar_message.deleter                 # See Deleter\DeleterInterface
         spam_detector:          ornicar_message.noop_spam_detector      # See SpamDetection\SpamDetectorInterface
+        twig_extension:         ornicar_message.twig_extension          # See Twig\Extension\MessageExtension
         search:
             finder:             ornicar_message.search_finder           # See Finder\FinderInterface
             query_factory:      ornicar_message.search_query_factory    # See Finder\QueryFactoryInterface
