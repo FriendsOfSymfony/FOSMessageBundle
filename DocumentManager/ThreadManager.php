@@ -237,6 +237,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
+        $thread->denormalize();
         $this->dm->persist($thread);
         if ($andFlush) {
             $this->dm->flush();
