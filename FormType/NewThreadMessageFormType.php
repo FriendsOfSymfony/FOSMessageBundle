@@ -15,11 +15,11 @@ class NewThreadMessageFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('recipient', 'ornicar_message.username')
+            ->add('recipient', 'fos_user_username')
             ->add('subject', 'text')
             ->add('body', 'textarea');
     }
-    
+
     public function getName()
     {
         return 'ornicar_message_new_thread';
