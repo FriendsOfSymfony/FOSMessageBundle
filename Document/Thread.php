@@ -261,7 +261,7 @@ abstract class Thread extends AbstractThread
         }
 
         // we only need each word once
-        $this->keywords = implode(' ', array_unique(str_word_count(strtolower($keywords), 1)));
+        $this->keywords = implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1)));
     }
 
     /**
