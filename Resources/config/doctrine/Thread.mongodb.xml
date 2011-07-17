@@ -27,19 +27,19 @@
         <field name="keywords" fieldName="keywords" type="string" />
 
         <indexes>
-            <index unique="false">
+            <index>
                 <key name="createdAt" order="desc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="isSpam" order="asc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="isDeletedByParticipant" order="asc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="datesOfLastMessageWrittenByParticipant" order="desc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="datesOfLastMessageWrittenByOtherParticipant" order="desc" />
             </index>
         </indexes>

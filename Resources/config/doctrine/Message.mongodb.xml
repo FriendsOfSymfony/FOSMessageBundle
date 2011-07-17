@@ -19,19 +19,19 @@
         <!--<reference-one field="thread" target-document="Ornicar\MessageBundle\Document\Thread" />-->
 
         <indexes>
-            <index unique="false">
+            <index>
                 <key name="thread.$id" order="asc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="sender.$id" order="asc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="createdAt" order="desc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="isReadByParticipant" order="desc" />
             </index>
-            <index unique="false">
+            <index>
                 <key name="isSpam" order="asc" />
             </index>
         </indexes>
