@@ -145,7 +145,7 @@ class MessageManager extends BaseMessageManager
     {
         $this->dm->persist($message);
         if ($andFlush) {
-            $this->dm->flush();
+            $this->dm->flush(array('safe' => true));
         }
     }
 

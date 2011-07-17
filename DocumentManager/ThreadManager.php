@@ -240,7 +240,7 @@ class ThreadManager extends BaseThreadManager
         $thread->denormalize();
         $this->dm->persist($thread);
         if ($andFlush) {
-            $this->dm->flush();
+            $this->dm->flush(array('safe' => true));
         }
     }
 
