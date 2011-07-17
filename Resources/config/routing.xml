@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="ornicar_message_inbox" pattern="/inbox">
+    <route id="ornicar_message_inbox" pattern="/">
         <default key="_controller">OrnicarMessageBundle:Message:inbox</default>
     </route>
 
@@ -20,11 +20,11 @@
         <default key="_controller">OrnicarMessageBundle:Message:newThread</default>
     </route>
 
-    <route id="ornicar_message_thread_view" pattern="/inbox/{threadId}">
+    <route id="ornicar_message_thread_view" pattern="/{threadId}">
         <default key="_controller">OrnicarMessageBundle:Message:thread</default>
     </route>
 
-    <route id="ornicar_message_thread_delete" pattern="/inbox/{threadId}/delete">
+    <route id="ornicar_message_thread_delete" pattern="/{threadId}/delete">
         <default key="_controller">OrnicarMessageBundle:Message:delete</default>
         <requirement key="_method">POST|DELETE</requirement>
     </route>
