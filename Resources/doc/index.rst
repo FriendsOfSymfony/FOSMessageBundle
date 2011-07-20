@@ -339,13 +339,13 @@ In YAML::
     # app/config/routing.yml
 
     ornicar_message:
-        resource: "@OrnicarMessageBundle/Resources/config/routing.yml"
+        resource: "@OrnicarMessageBundle/Resources/config/routing.xml"
 
 Or if you prefer XML::
 
     # app/config/routing.xml
 
-    <import resource="@OrnicarMessageBundle/Resources/config/routing.yml"/>
+    <import resource="@OrnicarMessageBundle/Resources/config/routing.xml"/>
 
 Basic Usage
 ===========
