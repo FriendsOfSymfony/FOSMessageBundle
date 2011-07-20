@@ -1,3 +1,5 @@
+Documentation: https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/index.rst
+
 Provides messenging features for your Symfony2 application.
 
 The persistence is storage agnostic. Any backend can be implemented: Doctrine, Propel, and others.
@@ -9,7 +11,7 @@ MessageBundle can be used with FOS\UserBundle, but it is not required.
 
 For documentation, see:
 
-    Resources/doc/index.rst (https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/index.rst)
+    Resources/doc/index.rst
 
 License:
     
