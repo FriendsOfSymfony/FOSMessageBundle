@@ -9,7 +9,7 @@ MessageBundle can be used with FOS\UserBundle, but it is not required.
 
 For documentation, see:
 
-    Resources/doc/index.rst
+    Resources/doc/index.rst (https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/index.rst)
 
 License:
     
