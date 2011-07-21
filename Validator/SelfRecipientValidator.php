@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
-class SelfSubjectValidator extends ConstraintValidator
+class SelfRecipientValidator extends ConstraintValidator
 {
     /**
      * @var ParticipantProviderInterface
