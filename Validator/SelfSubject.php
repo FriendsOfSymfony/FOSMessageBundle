@@ -18,6 +18,6 @@ class SelfSubject extends Constraint
      */
     public function getTargets()
     {
-        return self::CLASS_CONSTRAINT;
+        return self::PROPERTY_CONSTRAINT;
     }
 }

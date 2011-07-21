@@ -6,11 +6,11 @@
 
     <class name="Ornicar\MessageBundle\FormModel\NewThreadMessage">
 
-        <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
         <constraint name="Ornicar\MessageBundle\Validator\Spam" />
-        <constraint name="Ornicar\MessageBundle\Validator\SelfSubject" />
 
         <property name="recipient">
+            <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
+            <constraint name="Ornicar\MessageBundle\Validator\SelfSubject" />
             <constraint name="NotBlank">
                 <option name="message">Please enter a username</option>
             </constraint>
