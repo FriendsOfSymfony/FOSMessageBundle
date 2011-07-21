@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
 
-class SelfSubjectValidator extends ConstraintValidator
+class SelfRecipientValidator extends ConstraintValidator
 {
     /**
      * @var ParticipantProviderInterface
@@ -26,15 +26,11 @@ class SelfSubjectValidator extends ConstraintValidator
     /**
      * Indicates whether the constraint is valid
      *
-     * @param object     $value
+     * @param object     $recipient
      * @param Constraint $constraint
      */
-    public function isValid($value, Constraint $constraint)
+    public function isValid($recipient, Constraint $constraint)
     {
-        $recipient = $value->getRecipient();
-        if (!$recipient) {
-            return true;
-        }
         if ($recipient === $this->participantProvider->getAuthenticatedParticipant()) {
             $this->setMessage($constraint->message);
             return false;
