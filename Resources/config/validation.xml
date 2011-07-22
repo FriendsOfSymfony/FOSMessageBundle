@@ -47,6 +47,8 @@
 
     <class name="Ornicar\MessageBundle\FormModel\ReplyMessage">
 
+        <constraint name="Ornicar\MessageBundle\Validator\ReplyAuthorization" />
+
         <property name="body">
             <constraint name="NotBlank">
                 <option name="message">Please enter a body</option>

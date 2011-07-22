@@ -11,6 +11,12 @@
             <tag name="validator.constraint_validator" alias="ornicar_message.validator.authorization" />
         </service>
 
+        <service id="ornicar_message.validator.reply_authorization" class="Ornicar\MessageBundle\Validator\ReplyAuthorizationValidator">
+            <argument type="service" id="ornicar_message.authorizer" />
+            <argument type="service" id="ornicar_message.participant_provider" />
+            <tag name="validator.constraint_validator" alias="ornicar_message.validator.reply_authorization" />
+        </service>
+
         <service id="ornicar_message.validator.spam" class="Ornicar\MessageBundle\Validator\SpamValidator" scope="request">
             <argument type="service" id="ornicar_message.spam_detector" />
             <tag name="validator.constraint_validator" alias="ornicar_message.validator.spam" />
