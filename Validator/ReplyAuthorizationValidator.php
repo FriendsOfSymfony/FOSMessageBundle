@@ -35,16 +35,17 @@ class ReplyAuthorizationValidator extends ConstraintValidator
     public function isValid($value, Constraint $constraint)
     {
         $sender = $this->participantProvider->getAuthenticatedParticipant();
-        $recipient = $value->getThread()->getOtherParticipant($sender);
-        if (!$recipient) {
+        $recipients = $value->getThread()->getOtherParticipants($sender);
+        if (!$recipients) {
             return true;
         }
-        if (!$this->authorizer->canMessageParticipant($recipient)) {
-            $this->setMessage($constraint->message);
-            return false;
+        foreach ($recipients as $recipient) {
+            if (!$this->authorizer->canMessageParticipant($recipient)) {
+                $this->setMessage($constraint->message);
+                return false;
+            }
         }
 
         return true;
     }
 }
-
