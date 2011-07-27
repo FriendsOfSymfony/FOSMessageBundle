@@ -45,7 +45,7 @@ class Sender implements SenderInterface
     }
 
     /**
-     * Sends the message by persisting it to the message manager
+     * Sends the message by persisting it to the message manager and undeletes the thread for all participants
      *
      * @param MessageInterface $message
      */
@@ -53,6 +53,7 @@ class Sender implements SenderInterface
     {
         $this->threadManager->saveThread($message->getThread(), false);
         $this->messageManager->saveMessage($message);
+        $message->getThread()->setIsDeleted(false);
 
         $this->dispatcher->dispatch(OrnicarMessageEvents::POST_SEND, new MessageEvent($message));
     }
