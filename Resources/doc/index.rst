@@ -272,6 +272,19 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
         * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\Message", mappedBy="thread")
         */
         protected $messages;
+
+       /**
+        * @ORM\Column(name="is_deleted", type="boolean")
+        */
+        protected $is_deleted = 0;
+    
+        public function getIsDeleted() {
+            return $this->is_deleted;
+        }
+    
+        public function setIsDeleted($is_deleted) {
+            $this->is_deleted = $is_deleted;
+        }
         
         /**
         * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\ThreadMetadata", mappedBy="thread", cascade={"all"})
