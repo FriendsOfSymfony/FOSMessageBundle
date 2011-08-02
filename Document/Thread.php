@@ -206,18 +206,6 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Sets the thread as deleted or not deleted for all participants
-     *
-     * @param boolean $isDeleted
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        foreach($this->getParticipants() as $participant) {
-            $this->setIsDeletedByParticipant($participant, $isDeleted);
-        }
-    }
-
-    /**
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization

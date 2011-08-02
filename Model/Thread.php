@@ -107,6 +107,18 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
+     * Sets the thread as deleted or not deleted for all participants
+     *
+     * @param boolean $isDeleted
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        foreach($this->getParticipants() as $participant) {
+            $this->setIsDeletedByParticipant($participant, $isDeleted);
+        }
+    }
+
+    /**
      * Gets the first message of the thread
      *
      * @return MessageInterface the first message
