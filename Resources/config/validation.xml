@@ -12,7 +12,7 @@
             <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
             <constraint name="Ornicar\MessageBundle\Validator\SelfRecipient" />
             <constraint name="NotBlank">
-                <option name="message">Please enter a username</option>
+                <option name="message">No user with that username</option>
             </constraint>
             <constraint name="Type">
                 <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
