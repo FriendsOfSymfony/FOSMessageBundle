@@ -7,7 +7,7 @@
 {% for message in thread.messages %}
     <div class="messenger_thread_message">
         <div class="messenger_thread_message_info">
-            By: {{ message.sender }}, on {{ message.createdAt|date }}
+            {% trans with {'%sender%': message.sender, '%date%': message.createdAt|date} from 'OrnicarMessageBundle' %}ornicar_message_by{% endtrans %}
         </div>
 
         <div class="messenger_thread_message_body" id="message_{{ message.id }}">
@@ -16,7 +16,7 @@
     </div>
 {% endfor %}
 
-<h3>Reply</h3>
+<h3>{% trans from 'OrnicarMessageBundle' %}ornicar_message_reply{% endtrans %}</h3>
 
 <form action="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}" method="post">
     {{ form_widget(form) }}

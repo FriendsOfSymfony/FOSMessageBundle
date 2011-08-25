@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2>Search</h2>
+<h2>{% trans from 'OrnicarMessageBundle' %}ornicar_message_search{% endtrans %}</h2>
 
-<p>{{ threads|length }} threads found with</p>
+<p>{{ threads|length }} {% trans from 'OrnicarMessageBundle' %}ornicar_message_threads_found{% endtrans %}</p>
 
 {% include 'OrnicarMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 

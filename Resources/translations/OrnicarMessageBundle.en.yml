@@ -1,0 +1,21 @@
+ornicar_message_messenger:      Messenger
+ornicar_message_inbox:          Inbox
+ornicar_message_sent:           Sent
+ornicar_message_send_new:       Send a new message
+ornicar_message_search:         Search
+ornicar_message_threads_found:  threads found with
+
+ornicar_message_message_info:   By %sender%, on %date%
+ornicar_message_reply:          Reply
+
+ornicar_message_subject:        Subject
+ornicar_message_starter:        Starter
+ornicar_message_startdate:      StartDate
+ornicar_message_messages:       Messages
+ornicar_message_last_message:   Last message
+ornicar_message_actions:        Actions
+ornicar_message_new:            New
+ornicar_message_goto_last:      Go to last message
+ornicar_message_on:             On
+ornicar_message_by:             By
+ornicar_message_no_thread:      There no thread to show
