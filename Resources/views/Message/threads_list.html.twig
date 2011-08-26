@@ -2,12 +2,12 @@
 
     <thead>
         <tr>
-            <th>Subject</th>
-            <th>Starter</th>
-            <th>StartDate</th>
-            <th>Messages</th>
-            <th>Last message</th>
-            <th>Actions</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}subject{% endtrans %}</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}starter{% endtrans %}</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}startdate{% endtrans %}</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}messages{% endtrans %}</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}last_message{% endtrans %}</th>
+            <th>{% trans from 'OrnicarMessageBundle' %}actions{% endtrans %}</th>
         </tr>
     </thead>
 
@@ -22,7 +22,7 @@
                     </a>
 
                     {% if not ornicar_message_is_read(thread) %}
-                        (New)
+                        ({% trans from 'OrnicarMessageBundle' %}new{% endtrans %})
                     {% endif %}
                 </td>
                 <td>
@@ -36,12 +36,12 @@
                 </td>
                 <td>
                     {% if thread.lastMessage %}
-                        <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="Go to last message">
+                        <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'OrnicarMessageBundle' %}goto_last{% endtrans %}">
                             →
                         </a>
-                        On {{ thread.lastMessage.createdAt|date }}
+                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'OrnicarMessageBundle' %}on{% endtrans %}                        
                         <br />
-                        By {{ thread.lastMessage.sender }}
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'OrnicarMessageBundle' %}by{% endtrans %}
                     {% else %}
                         ----
                     {% endif %}
@@ -56,7 +56,7 @@
     {% else %}
         <tr>
             <td colspan="4">
-                There no thread to show.
+                {% trans from 'OrnicarMessageBundle' %}no_thread{% endtrans %}.
             </td>
         </tr>
     {% endif %}

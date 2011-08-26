@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h2>Inbox</h2>
+<h2>{% trans from 'OrnicarMessageBundle' %}inbox{% endtrans %}</h2>
 
-<a href="{{ url('ornicar_message_thread_new' )}}">Send a new message</a>
+<a href="{{ url('ornicar_message_thread_new' )}}">{% trans from 'OrnicarMessageBundle' %}send_new{% endtrans %}</a>
 
 {% include 'OrnicarMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 
