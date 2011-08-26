@@ -1,21 +1,21 @@
-ornicar_message_messenger:      Мессенджер
-ornicar_message_inbox:          Входящие
-ornicar_message_sent:           Отправленные
-ornicar_message_send_new:       Отправить новое сообщение
-ornicar_message_search:         Поиск
-ornicar_message_threads_found:  найденные цепочки сообщений
+messenger:      Мессенджер
+inbox:          Входящие
+sent:           Отправленные
+send_new:       Отправить новое сообщение
+search:         Поиск
+threads_found:  найдена %num% цепочка сообщений | найдено %num% цепочки сообщений | найдено %num% цепочек сообщений
 
-ornicar_message_message_info:   От %sender%, %date%
-ornicar_message_reply:          Ответить
+message_info:   От %sender%, %date%
+reply:          Ответить
 
-ornicar_message_subject:        Тема
-ornicar_message_starter:        Инициатор
-ornicar_message_startdate:      Дата начала
-ornicar_message_messages:       Сообщения
-ornicar_message_last_message:   Последнее сообщение
-ornicar_message_actions:        Действия
-ornicar_message_new:            Новое
-ornicar_message_goto_last:      К последнему сообщению
-ornicar_message_on:             Дата
-ornicar_message_by:             От
-ornicar_message_no_thread:      Нет сообщений для отображения
+subject:        Тема
+starter:        Инициатор
+startdate:      Дата начала
+messages:       Сообщения
+last_message:   Последнее сообщение
+actions:        Действия
+new:            Новое
+goto_last:      К последнему сообщению
+on:             Дата %date%
+by:             От %sender%
+no_thread:      Нет сообщений для отображения
