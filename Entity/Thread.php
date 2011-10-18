@@ -198,9 +198,11 @@ abstract class Thread extends BaseThread
         if ($meta = $this->getMetadataForParticipant($participant)) {
             $meta->setIsDeleted($isDeleted);
 
-            // also mark all thread messages as read
-            foreach ($this->getMessages() as $message) {
-                $message->setIsReadByParticipant($participant, true);
+            if ($isDeleted) {
+                // also mark all thread messages as read
+                foreach ($this->getMessages() as $message) {
+                    $message->setIsReadByParticipant($participant, true);
+                }
             }
         }
     }
