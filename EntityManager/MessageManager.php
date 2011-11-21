@@ -133,7 +133,7 @@ class MessageManager extends BaseMessageManager
 
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
-            ->set('m.isRead', true)
+            ->set('m.isRead', (int) $isRead)
 
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
