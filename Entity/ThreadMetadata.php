@@ -2,21 +2,14 @@
 
 namespace Ornicar\MessageBundle\Entity;
 
-use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
+use Ornicar\MessageBundle\Model\ThreadMetadata as BaseThreadMetadata;
 
-
-abstract class ThreadMetadata
+abstract class ThreadMetadata extends BaseThreadMetadata
 {
     protected $id;
 
-    protected $participant;
     protected $thread;
-
-    protected $isDeleted = 0;
-
-    protected $lastParticipantMessageDate;
-    protected $lastMessageDate;
 
     /**
      * Gets the thread map id
@@ -43,73 +36,5 @@ abstract class ThreadMetadata
     public function setThread(ThreadInterface $thread)
     {
         $this->thread = $thread;
-    }
-
-    /**
-     * @return ParticipantInterface
-     */
-    public function getParticipant()
-    {
-        return $this->participant;
-    }
-
-    /**
-     * @param  ParticipantInterface
-     * @return null
-     */
-    public function setParticipant(ParticipantInterface $participant)
-    {
-        $this->participant = $participant;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsDeleted()
-    {
-        return $this->isDeleted;
-    }
-
-    /**
-     * @param  boolean
-     * @return null
-     */
-    public function setIsDeleted($isDeleted)
-    {
-        $this->isDeleted = (boolean)$isDeleted;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getLastParticipantMessageDate()
-    {
-        return $this->lastParticipantMessageDate;
-    }
-
-    /**
-     * @param  DateTime
-     * @return null
-     */
-    public function setLastParticipantMessageDate(\DateTime $date)
-    {
-        $this->lastParticipantMessageDate = $date;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getLastMessageDate()
-    {
-        return $this->lastMessageDate;
-    }
-
-    /**
-     * @param  DateTime
-     * @return null
-     */
-    public function setLastMessageDate(\DateTime $date)
-    {
-        $this->lastMessageDate = $date;
     }
 }
