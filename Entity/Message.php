@@ -15,7 +15,6 @@ abstract class Message extends BaseMessage
      */
     protected $metadata;
 
-
     /**
      * Initializes the collections
      */
@@ -56,7 +55,6 @@ abstract class Message extends BaseMessage
         $meta->setIsRead($isRead);
     }
 
-
     public function getAllMetadata()
     {
         return $this->metadata;
@@ -78,5 +76,4 @@ abstract class Message extends BaseMessage
         $meta->setMessage($this);
         $this->metadata->add($meta);
     }
-
 }

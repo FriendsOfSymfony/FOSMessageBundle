@@ -10,7 +10,6 @@ use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Doctrine\ORM\Query\Builder;
 
-
 /**
  * Default ORM MessageManager.
  *
@@ -43,6 +42,7 @@ class MessageManager extends BaseMessageManager
      *
      * @param EntityManager     $em
      * @param string            $class
+     * @param string            $metaClass
      */
     public function __construct(EntityManager $em, $class, $metaClass)
     {
@@ -166,7 +166,6 @@ class MessageManager extends BaseMessageManager
     {
         return $this->class;
     }
-
 
     /**
      * DENORMALIZATION
