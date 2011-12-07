@@ -44,12 +44,12 @@ abstract class Message extends BaseMessage
      *
      * @param ParticipantInterface $participant
      * @param boolean $isRead
+     * @throws InvalidArgumentException if no metadata exists for the participant
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
-        $meta = $this->getMetadataForParticipant($participant);
-        if (!$meta) {
-            throw new \Exception(sprintf('No metadata setted for participant with id "%s"', $participant->getId()));
+        if (!$meta = $this->getMetadataForParticipant($participant)) {
+            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
         }
 
         $meta->setIsRead($isRead);
