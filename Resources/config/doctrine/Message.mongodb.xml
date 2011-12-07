@@ -10,9 +10,9 @@
 
         <field name="createdAt" fieldName="createdAt" type="date" />
 
-        <field name="isReadByParticipant" fieldName="isReadByParticipant" type="hash" />
-
         <field name="isSpam" fieldName="isSpam" type="boolean" />
+
+        <!--<embed-many target-document="Ornicar\MessageBundle\Document\MessageMetadata" field="metadata" />-->
 
         <!--<reference-one field="sender" target-document="Acme\UserBundle\Document\User" />-->
 
@@ -29,7 +29,7 @@
                 <key name="createdAt" order="desc" />
             </index>
             <index>
-                <key name="isReadByParticipant" order="desc" />
+                <key name="metadata.participant.$id" order="asc" />
             </index>
             <index>
                 <key name="isSpam" order="asc" />

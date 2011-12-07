@@ -4,11 +4,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+
+        <parameter key="ornicar_message.message_meta_class">%ornicar_message.message_class%Metadata</parameter>
+
+    </parameters>
+
     <services>
 
         <service id="ornicar_message.message_manager.default" class="Ornicar\MessageBundle\DocumentManager\MessageManager" public="false">
             <argument type="service" id="doctrine.odm.mongodb.document_manager" />
             <argument>%ornicar_message.message_class%</argument>
+            <argument>%ornicar_message.message_meta_class%</argument>
         </service>
 
         <service id="ornicar_message.thread_manager.default" class="Ornicar\MessageBundle\DocumentManager\ThreadManager" public="false">

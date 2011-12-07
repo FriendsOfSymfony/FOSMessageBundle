@@ -33,16 +33,23 @@ class MessageManager extends BaseMessageManager
     protected $class;
 
     /**
+     * @var string
+     */
+    protected $metaClass;
+
+    /**
      * Constructor.
      *
      * @param DocumentManager         $dm
      * @param string                  $class
+     * @param string                  $metaClass
      */
-    public function __construct(DocumentManager $dm, $class)
+    public function __construct(DocumentManager $dm, $class, $metaClass)
     {
         $this->dm         = $dm;
         $this->repository = $dm->getRepository($class);
         $this->class      = $dm->getClassMetadata($class)->name;
+        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
     }
 
     /**
@@ -53,10 +60,13 @@ class MessageManager extends BaseMessageManager
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
-        $isReadByParticipantFieldName = sprintf('isReadByParticipant.%s', $participant->getId());
+        $queryBuilder = $this->repository->createQueryBuilder();
 
-        return $this->repository->createQueryBuilder()
-            ->field($isReadByParticipantFieldName)->equals(false)
+        return $queryBuilder
+            ->field('metadata')->elemMatch($queryBuilder->expr()
+                ->field('participant.$id')->equals(new \MongoId($participant->getId()))
+                ->field('isRead')->equals(false)
+            )
             ->field('isSpam')->equals(false)
             ->getQuery()
             ->count();
@@ -126,11 +136,11 @@ class MessageManager extends BaseMessageManager
      */
     protected function markIsReadByCondition(ParticipantInterface $user, $isRead, \Closure $condition)
     {
-        $isReadByParticipantFieldName = sprintf('isReadByParticipant.%s', $user->getId());
         $queryBuilder = $this->repository->createQueryBuilder();
         $condition($queryBuilder);
         $queryBuilder->update()
-            ->field($isReadByParticipantFieldName)->set((boolean) $isRead)
+            ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()))
+            ->field('metadata.$.isRead')->set((boolean) $isRead)
             ->getQuery(array('multiple' => true))
             ->execute();
     }
