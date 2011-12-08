@@ -18,6 +18,13 @@ abstract class Thread extends AbstractThread
     protected $messages;
 
     /**
+     * Thread metadata
+     *
+     * @var Collection of ThreadMetadata
+     */
+    protected $metadata;
+
+    /**
      * Users participating in this conversation
      *
      * @var Collection of ParticipantInterface
@@ -37,13 +44,6 @@ abstract class Thread extends AbstractThread
      * @var \DateTime
      */
     protected $createdAt;
-
-    /**
-     * Tells, for each participant, if the message is deleted
-     *
-     * @var array of boolean indexed by user id
-     */
-    protected $isDeletedByParticipant = array();
 
     /**
      * Date the last messages were created at.
@@ -81,6 +81,7 @@ abstract class Thread extends AbstractThread
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->metadata = new ArrayCollection();
         $this->participants = new ArrayCollection();
     }
 
@@ -185,7 +186,11 @@ abstract class Thread extends AbstractThread
      */
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
-        return $this->isDeletedByParticipant[$participant->getId()];
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            return $meta->getIsDeleted();
+        }
+
+        return false;
     }
 
     /**
@@ -193,16 +198,37 @@ abstract class Thread extends AbstractThread
      *
      * @param ParticipantInterface $participant
      * @param boolean $isDeleted
+     * @throws InvalidArgumentException if no metadata exists for the participant
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
-        $this->isDeletedByParticipant[$participant->getId()] = (boolean) $isDeleted;
-        if($isDeleted) {
+        if (!$meta = $this->getMetadataForParticipant($participant)) {
+            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+        }
+
+        $meta->setIsDeleted($isDeleted);
+
+        if ($isDeleted) {
             // also mark all thread messages as read
             foreach ($this->getMessages() as $message) {
                 $message->setIsReadByParticipant($participant, true);
             }
         }
+    }
+
+    /**
+     * @param ParticipantInterface $participant
+     * @return ThreadMetadata
+     */
+    protected function getMetadataForParticipant(ParticipantInterface $participant)
+    {
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -220,10 +246,8 @@ abstract class Thread extends AbstractThread
         $this->doCreatedByAndAt();
         $this->doKeywords();
         $this->doSpam();
-        $this->doEnsureMessagesIsRead();
-        $this->doDatesOfLastMessageWrittenByParticipant();
-        $this->doDatesOfLastMessageWrittenByOtherParticipant();
-        $this->doEnsureIsDeletedByParticipant();
+        $this->doEnsureMessageMetadataExistsAndSenderIsRead();
+        $this->doEnsureThreadMetadataExistsAndUpdateLastMessageDates();
     }
 
     /**
@@ -277,67 +301,42 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Ensures that every message has a isRead flag for each participant
+     * Ensures that every message has metadata for each thread participant and
+     * that each sender has read their own message
      */
-    protected function doEnsureMessagesIsRead()
+    protected function doEnsureMessageMetadataExistsAndSenderIsRead()
     {
         foreach ($this->getMessages() as $message) {
+            $message->ensureMetadataExistsForParticipants($this->getParticipants());
             $message->setIsReadByParticipant($message->getSender(), true);
-            $message->ensureIsReadByParticipant($this->getParticipants());
         }
     }
 
     /**
-     * Update the dates of last message written by participant
-     */
-    protected function doDatesOfLastMessageWrittenByParticipant()
-    {
-        $this->datesOfLastMessageWrittenByParticipant = $this->greaterMessageTimestampForCondition(
-            $this->datesOfLastMessageWrittenByParticipant,
-            function($participantId, $senderId) { return $participantId === $senderId; }
-        );
-    }
-
-    /**
-     * Update the dates of last message written by other participants
-     */
-    protected function doDatesOfLastMessageWrittenByOtherParticipant()
-    {
-        $this->datesOfLastMessageWrittenByOtherParticipant = $this->greaterMessageTimestampForCondition(
-            $this->datesOfLastMessageWrittenByOtherParticipant,
-            function($participantId, $senderId) { return $participantId !== $senderId; }
-        );
-    }
-
-    /**
-     * Gets dates of last message for each participant, depending on the condition
+     * Ensures that metadata exists for each thread participant and that the
+     * last message dates are current
      *
-     * @param array $dates
-     * @param \Closure $condition
-     * @return array
+     * @param array $participants list of ParticipantInterface
      */
-    protected function greaterMessageTimestampForCondition(array $dates, \Closure $condition)
+    public function doEnsureThreadMetadataExistsAndUpdateLastMessageDates()
     {
-        foreach ($this->getParticipants() as $participant) {
-            $participantId = $participant->getId();
-            foreach ($this->getMessages() as $message) {
-                if ($condition($participantId, $message->getSender()->getId())) {
-                    $dates[$participantId] = max(isset($dates[$participantId]) ? $dates[$participantId] : 0, $message->getTimestamp());
-                }
+        foreach ($this->participants as $participant) {
+            if (!$meta = $this->getMetadataForParticipant($participant)) {
+                $meta = new ThreadMetadata();
+                $meta->setParticipant($participant);
+                $this->metadata->add($meta);
             }
-        }
 
-        return $dates;
-    }
-
-    /**
-     * Ensures that each participant has an isDeleted flag
-     */
-    protected function doEnsureIsDeletedByParticipant()
-    {
-        foreach ($this->getParticipants() as $participant) {
-            if (!isset($this->isDeletedByParticipant[$participant->getId()])) {
-                $this->isDeletedByParticipant[$participant->getId()] = false;
+            foreach ($this->messages as $message) {
+                if ($participant->getId() !== $message->getSender()->getId()) {
+                    if (null === $meta->getLastMessageDate() || $meta->getLastMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastMessageDate($message->getCreatedAt());
+                    }
+                } else {
+                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate() < $message->getTimestamp()) {
+                        $meta->setLastParticipantMessageDate($message->getCreatedAt());
+                    }
+                }
             }
         }
     }
