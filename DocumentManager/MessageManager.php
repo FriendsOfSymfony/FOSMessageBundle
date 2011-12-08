@@ -49,7 +49,7 @@ class MessageManager extends BaseMessageManager
         $this->dm         = $dm;
         $this->repository = $dm->getRepository($class);
         $this->class      = $dm->getClassMetadata($class)->name;
-        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
+        $this->metaClass  = $dm->getClassMetadata($metaClass)->name;
     }
 
     /**
