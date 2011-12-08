@@ -63,32 +63,18 @@ abstract class Message extends AbstractMessage
     }
 
     /**
-     * Ensures that each participant is considered to have read this message
+     * Ensures that metadata exists for the given participants
      *
      * @param array $participants list of ParticipantInterface
      */
-    public function ensureIsReadByParticipant(array $participants)
+    public function ensureMetadataExistsForParticipants(array $participants)
     {
-        $participantsById = array();
-
         foreach ($participants as $participant) {
-            $participantsById[$participant->getId()] = $participant;
-        }
-
-        // Set metadata.isRead for all existing participants in this message
-        foreach ($this->metadata as $meta) {
-            if (isset($participantsById[$meta->getParticipant()->getId()])) {
-                $meta->setIsRead(true);
-                unset($participantsById[$meta->getParticipant()->getId()]);
+            if (!$meta = $this->getMetadataForParticipant($participant)) {
+                $meta = new MessageMetadata();
+                $meta->setParticipant($participant);
+                $this->metadata->add($meta);
             }
-        }
-
-        // Set metadata.isRead for all unrecognized participants in this message 
-        foreach ($participantsById as $participant) {
-            $meta = new MessageMetadata();
-            $meta->setParticipant($participant);
-            $meta->setIsRead(true);
-            $this->metadata->add($meta);
         }
     }
 
