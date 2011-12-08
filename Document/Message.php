@@ -101,7 +101,11 @@ abstract class Message extends AbstractMessage
         $this->isSpam = (boolean) $isSpam;
     }
 
-    protected function getMetadataForParticipant($participant)
+    /**
+     * @param ParticipantInterface $participant
+     * @return MessageMetadata
+     */
+    protected function getMetadataForParticipant(ParticipantInterface $participant)
     {
         foreach ($this->metadata as $meta) {
             if ($meta->getParticipant()->getId() == $participant->getId()) {
