@@ -46,13 +46,15 @@ class ThreadManager extends BaseThreadManager
      *
      * @param DocumentManager         $dm
      * @param string                  $class
+     * @param string                  $metaClass
      * @param MessageManager          $messageManager
      */
-    public function __construct(DocumentManager $dm, $class, MessageManager $messageManager)
+    public function __construct(DocumentManager $dm, $class, $metaClass, MessageManager $messageManager)
     {
         $this->dm             = $dm;
         $this->repository     = $dm->getRepository($class);
         $this->class          = $dm->getClassMetadata($class)->name;
+        $this->metaClass      = $dm->getClassMetadata($metaClass)->name;
         $this->messageManager = $messageManager;
     }
 
@@ -77,20 +79,19 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
+        $queryBuilder = $this->repository->createQueryBuilder();
 
-        return $this->repository->createQueryBuilder()
+        // TODO: sort by date of last message written by an other participant
+        return $queryBuilder
             // the participant is in the thread participants
             ->field('participants.$id')->equals(new \MongoId($participant->getId()))
             // the thread does not contain spam or flood
             ->field('isSpam')->equals(false)
-            // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // there is at least one message written by an other participant
-            ->field($datesOfLastMessageWrittenByOtherParticipantFieldName)->exists(true)
-            // sort by date of last message written by an other participant
-            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc');
+            // the participant hasn't deleted the thread, and another user wrote a message
+            ->field('metadata')->elemMatch($this
+                ->getNotDeletedByParticipantExpression($queryBuilder, $participant)
+                ->field('lastMessageDate')->notEqual(null)
+            );
     }
 
     /**
@@ -118,18 +119,17 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $participant->getId());
+        $queryBuilder = $this->repository->createQueryBuilder();
 
-        return $this->repository->createQueryBuilder()
+        // TODO: sort by date of last message written by this participant
+        return $queryBuilder
             // the participant is in the thread participants
             ->field('participants.$id')->equals(new \MongoId($participant->getId()))
-            // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // there is at least one message written by this participant
-            ->field($datesOfLastMessageWrittenByParticipantFieldName)->exists(true)
-            // sort by date of last message written by this participant
-            ->sort($datesOfLastMessageWrittenByParticipantFieldName, 'desc');
+            // the participant hasn't deleted the thread, and has written a message
+            ->field('metadata')->elemMatch($this
+                ->getNotDeletedByParticipantExpression($queryBuilder, $participant)
+                ->field('lastParticipantMessageDate')->notEqual(null)
+            );
     }
 
     /**
@@ -162,16 +162,14 @@ class ThreadManager extends BaseThreadManager
         // build a regex like (term1|term2)
         $regex = sprintf('/(%s)/', implode('|', explode(' ', $search)));
 
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
+        $queryBuilder = $this->repository->createQueryBuilder();
 
-        return $this->repository->createQueryBuilder()
+        // TODO: sort by date of last message written by an other participant
+        return $queryBuilder
             // the participant is in the thread participants
             ->field('participants.$id')->equals(new \MongoId($participant->getId()))
             // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // sort by date of last message written by an other participant
-            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc')
+            ->field('metadata')->elemMatch($this->getNotDeletedByParticipantExpression($queryBuilder, $participant))
             ->field('keywords')->equals(new \MongoRegex($regex));
     }
 
@@ -264,5 +262,25 @@ class ThreadManager extends BaseThreadManager
     public function getClass()
     {
         return $this->class;
+    }
+
+    protected function createThreadMetadata()
+    {
+        return new $this->metaClass();
+    }
+
+    /**
+     * Creates an expression to match ThreadMetadata where the participant has
+     * not deleted the thread.
+     *
+     * @param Builder $queryBuilder
+     * @param ParticipantInterface $participant
+     * @return Doctrine\ODM\MongoDB\Query\Expr
+     */
+    protected function getNotDeletedByParticipantExpression(Builder $queryBuilder, ParticipantInterface $participant)
+    {
+        return $$queryBuilder->expr()
+            ->field('participant.$id')->equals(new \MongoId($participant->getId()))
+            ->field('isDeleted')->equals(false);
     }
 }

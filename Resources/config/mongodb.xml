@@ -7,6 +7,7 @@
     <parameters>
 
         <parameter key="ornicar_message.message_meta_class">%ornicar_message.message_class%Metadata</parameter>
+        <parameter key="ornicar_message.thread_meta_class">%ornicar_message.thread_class%Metadata</parameter>
 
     </parameters>
 
@@ -21,6 +22,7 @@
         <service id="ornicar_message.thread_manager.default" class="Ornicar\MessageBundle\DocumentManager\ThreadManager" public="false">
             <argument type="service" id="doctrine.odm.mongodb.document_manager" />
             <argument>%ornicar_message.thread_class%</argument>
+            <argument>%ornicar_message.thread_meta_class%</argument>
             <argument type="service" id="ornicar_message.message_manager" />
         </service>
 
