@@ -2,6 +2,7 @@
 
 namespace Ornicar\MessageBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Ornicar\MessageBundle\Model\Message as AbstractMessage;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
