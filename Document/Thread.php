@@ -123,6 +123,14 @@ abstract class Thread extends AbstractThread
     }
 
     /**
+     * @param string
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+    }
+
+    /**
      * Gets the users participating in this conversation
      *
      * @return array of ParticipantInterface

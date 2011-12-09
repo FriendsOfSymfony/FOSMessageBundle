@@ -356,7 +356,7 @@ class ThreadManager extends BaseThreadManager
         }
 
         // we only need each word once
-        $thread->keywords = implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1)));
+        $thread->setKeywords(implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1))));
     }
 
     /**
