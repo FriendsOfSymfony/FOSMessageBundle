@@ -46,28 +46,6 @@ abstract class Thread extends AbstractThread
     protected $createdAt;
 
     /**
-     * Date the last messages were created at.
-     * To each user id is associated the date
-     * of the last message he did not write.
-     *
-     * This allows fast sorting of threads in inbox
-     *
-     * @var array of int timestamps indexed by user id
-     */
-    protected $datesOfLastMessageWrittenByOtherParticipant = array();
-
-    /**
-     * Date the last messages were created at.
-     * To each user id is associated the date
-     * of the last message he wrote.
-     *
-     * This allows fast sorting of threads in sentbox
-     *
-     * @var array of int timestamps indexed by user id
-     */
-    protected $datesOfLastMessageWrittenByParticipant = array();
-
-    /**
      * All text contained in the thread messages
      * Used for the full text search
      *
