@@ -406,7 +406,7 @@ class ThreadManager extends BaseThreadManager
                         $meta->setLastMessageDate($message->getCreatedAt());
                     }
                 } else {
-                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate() < $message->getTimestamp()) {
+                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate()->getTimestamp() < $message->getTimestamp()) {
                         $meta->setLastParticipantMessageDate($message->getCreatedAt());
                     }
                 }
