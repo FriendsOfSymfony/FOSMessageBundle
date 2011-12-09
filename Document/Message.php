@@ -76,7 +76,7 @@ abstract class Message extends AbstractMessage
      * @param ParticipantInterface $participant
      * @return MessageMetadata
      */
-    protected function getMetadataForParticipant(ParticipantInterface $participant)
+    public function getMetadataForParticipant(ParticipantInterface $participant)
     {
         foreach ($this->metadata as $meta) {
             if ($meta->getParticipant()->getId() == $participant->getId()) {

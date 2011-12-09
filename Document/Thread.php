@@ -198,7 +198,7 @@ abstract class Thread extends AbstractThread
      * @param ParticipantInterface $participant
      * @return ThreadMetadata
      */
-    protected function getMetadataForParticipant(ParticipantInterface $participant)
+    public function getMetadataForParticipant(ParticipantInterface $participant)
     {
         foreach ($this->metadata as $meta) {
             if ($meta->getParticipant()->getId() == $participant->getId()) {
