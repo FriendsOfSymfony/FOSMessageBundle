@@ -3,6 +3,7 @@
 namespace Ornicar\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Ornicar\MessageBundle\Document\Message;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
 use Ornicar\MessageBundle\Model\ReadableInterface;
@@ -153,6 +154,11 @@ class MessageManager extends BaseMessageManager
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
+        /* Note: ThreadManager::doEnsureMessageMetadataExistsAndSenderIsRead()
+         * will ensure that message senders have read their own messages, so
+         * there is no pre-save processing to do here.
+         */
+
         $this->dm->persist($message);
         if ($andFlush) {
             $this->dm->flush(array('safe' => true));
@@ -167,5 +173,38 @@ class MessageManager extends BaseMessageManager
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Creates a new MessageMetadata instance
+     *
+     * @return MessageMetadata
+     */
+    protected function createMessageMetadata()
+    {
+        return new $this->metaClass();
+    }
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Ensures that metadata exists for the given participants
+     *
+     * @param Message $message
+     * @param array $participants list of ParticipantInterface
+     */
+    public function doEnsureMessageMetadataExistsForParticipants(Message $message, array $participants)
+    {
+        foreach ($participants as $participant) {
+            if (!$meta = $message->getMetadataForParticipant($participant)) {
+                $meta = $this->createMessageMetadata();
+                $meta->setParticipant($participant);
+                $message->addMetadata($meta);
+            }
+        }
     }
 }

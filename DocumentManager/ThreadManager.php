@@ -3,6 +3,7 @@
 namespace Ornicar\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Ornicar\MessageBundle\Document\Thread;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
@@ -235,7 +236,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
-        $thread->denormalize();
+        $this->denormalize($thread);
         $this->dm->persist($thread);
         if ($andFlush) {
             $this->dm->flush(array('safe' => true));
@@ -264,6 +265,11 @@ class ThreadManager extends BaseThreadManager
         return $this->class;
     }
 
+    /**
+     * Creates a new ThreadMetadata instance
+     *
+     * @return ThreadMetadata
+     */
     protected function createThreadMetadata()
     {
         return new $this->metaClass();
@@ -282,5 +288,129 @@ class ThreadManager extends BaseThreadManager
         return $$queryBuilder->expr()
             ->field('participant.$id')->equals(new \MongoId($participant->getId()))
             ->field('isDeleted')->equals(false);
+    }
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     *
+     * @param Thread $thread
+     */
+    protected function denormalize(Thread $thread)
+    {
+        $this->doParticipants($thread);
+        $this->doCreatedByAndAt($thread);
+        $this->doKeywords($thread);
+        $this->doSpam($thread);
+        $this->doEnsureMessageMetadataExistsAndSenderIsRead($thread);
+        $this->doEnsureThreadMetadataExistsAndUpdateLastMessageDates($thread);
+    }
+
+    /**
+     * Ensures that the thread participants are up to date
+     *
+     * @param Thread $thread
+     */
+    protected function doParticipants(Thread $thread)
+    {
+        foreach ($thread->getMessages() as $message) {
+            $thread->addParticipant($message->getSender());
+        }
+    }
+
+    /**
+     * Ensures that the createdBy & createdAt properties are set
+     *
+     * @param Thread $thread
+     */
+    protected function doCreatedByAndAt(Thread $thread)
+    {
+        if (null !== $thread->getCreatedBy()) {
+            return;
+        }
+
+        if (!$message = $thread->getFirstMessage()) {
+            return;
+        }
+
+        $thread->setCreatedBy($message->getSender());
+        $thread->setCreatedAt($message->getCreatedAt());
+    }
+
+    /**
+     * Adds all messages contents to the keywords property
+     *
+     * @param Thread $thread
+     */
+    protected function doKeywords(Thread $thread)
+    {
+        $keywords = $thread->getSubject();
+
+        foreach ($thread->getMessages() as $message) {
+            $keywords .= ' '.$message->getBody();
+        }
+
+        // we only need each word once
+        $thread->keywords = implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1)));
+    }
+
+    /**
+     * Denormalizes the value of isSpam to messages
+     *
+     * @param Thread $thread
+     */
+    protected function doSpam(Thread $thread)
+    {
+        foreach ($thread->getMessages() as $message) {
+            $message->setIsSpam($thread->getIsSpam());
+        }
+    }
+
+    /**
+     * Ensures that every message has metadata for each thread participant and
+     * that each sender has read their own message
+     *
+     * @param Thread $thread
+     */
+    protected function doEnsureMessageMetadataExistsAndSenderIsRead(Thread $thread)
+    {
+        foreach ($thread->getMessages() as $message) {
+            $this->messageManager->doEnsureMessageMetadataExistsForParticipants($message, $thread->getParticipants());
+            $message->setIsReadByParticipant($message->getSender(), true);
+        }
+    }
+
+    /**
+     * Ensures that metadata exists for each thread participant and that the
+     * last message dates are current
+     *
+     * @param Thread $thread
+     */
+    public function doEnsureThreadMetadataExistsAndUpdateLastMessageDates(Thread $thread)
+    {
+        foreach ($thread->getParticipants() as $participant) {
+            if (!$meta = $thread->getMetadataForParticipant($participant)) {
+                $meta = $this->createThreadMetadata();
+                $meta->setParticipant($participant);
+                $thread->addMetadata($meta);
+            }
+
+            foreach ($thread->getMessages() as $message) {
+                if ($participant->getId() !== $message->getSender()->getId()) {
+                    if (null === $meta->getLastMessageDate() || $meta->getLastMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastMessageDate($message->getCreatedAt());
+                    }
+                } else {
+                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate() < $message->getTimestamp()) {
+                        $meta->setLastParticipantMessageDate($message->getCreatedAt());
+                    }
+                }
+            }
+        }
     }
 }

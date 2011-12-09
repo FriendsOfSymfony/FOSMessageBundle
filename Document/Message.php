@@ -64,22 +64,6 @@ abstract class Message extends AbstractMessage
     }
 
     /**
-     * Ensures that metadata exists for the given participants
-     *
-     * @param array $participants list of ParticipantInterface
-     */
-    public function ensureMetadataExistsForParticipants(array $participants)
-    {
-        foreach ($participants as $participant) {
-            if (!$meta = $this->getMetadataForParticipant($participant)) {
-                $meta = new MessageMetadata();
-                $meta->setParticipant($participant);
-                $this->metadata->add($meta);
-            }
-        }
-    }
-
-    /**
      * @param  boolean
      * @return null
      */
@@ -101,5 +85,13 @@ abstract class Message extends AbstractMessage
         }
 
         return null;
+    }
+
+    /**
+     * @param MessageMetadata $meta
+     */
+    public function addMetadata(MessageMetadata $meta)
+    {
+        $this->metadata->add($meta);
     }
 }
