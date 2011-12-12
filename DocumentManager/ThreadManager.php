@@ -303,72 +303,9 @@ class ThreadManager extends BaseThreadManager
      */
     protected function denormalize(Thread $thread)
     {
-        $this->doParticipants($thread);
-        $this->doCreatedByAndAt($thread);
-        $this->doKeywords($thread);
-        $this->doSpam($thread);
+        $thread->denormalize();
         $this->doEnsureMessageMetadataExistsAndSenderIsRead($thread);
         $this->doEnsureThreadMetadataExistsAndUpdateLastMessageDates($thread);
-    }
-
-    /**
-     * Ensures that the thread participants are up to date
-     *
-     * @param Thread $thread
-     */
-    protected function doParticipants(Thread $thread)
-    {
-        foreach ($thread->getMessages() as $message) {
-            $thread->addParticipant($message->getSender());
-        }
-    }
-
-    /**
-     * Ensures that the createdBy & createdAt properties are set
-     *
-     * @param Thread $thread
-     */
-    protected function doCreatedByAndAt(Thread $thread)
-    {
-        if (null !== $thread->getCreatedBy()) {
-            return;
-        }
-
-        if (!$message = $thread->getFirstMessage()) {
-            return;
-        }
-
-        $thread->setCreatedBy($message->getSender());
-        $thread->setCreatedAt($message->getCreatedAt());
-    }
-
-    /**
-     * Adds all messages contents to the keywords property
-     *
-     * @param Thread $thread
-     */
-    protected function doKeywords(Thread $thread)
-    {
-        $keywords = $thread->getSubject();
-
-        foreach ($thread->getMessages() as $message) {
-            $keywords .= ' '.$message->getBody();
-        }
-
-        // we only need each word once
-        $thread->setKeywords(implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1))));
-    }
-
-    /**
-     * Denormalizes the value of isSpam to messages
-     *
-     * @param Thread $thread
-     */
-    protected function doSpam(Thread $thread)
-    {
-        foreach ($thread->getMessages() as $message) {
-            $message->setIsSpam($thread->getIsSpam());
-        }
     }
 
     /**

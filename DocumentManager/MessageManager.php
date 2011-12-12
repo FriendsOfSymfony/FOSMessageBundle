@@ -157,7 +157,11 @@ class MessageManager extends BaseMessageManager
         /* Note: ThreadManager::doEnsureMessageMetadataExistsAndSenderIsRead()
          * will ensure that message senders have read their own messages, so
          * there is no pre-save processing to do here.
+         *
+         * We can call $message->denormalize() directly in case there is custom
+         * processing to be done in the application class.
          */
+        $message->denormalize();
 
         $this->dm->persist($message);
         if ($andFlush) {

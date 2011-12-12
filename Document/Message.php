@@ -94,4 +94,17 @@ abstract class Message extends AbstractMessage
     {
         $this->metadata->add($meta);
     }
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     */
+    public function denormalize()
+    {
+    }
 }

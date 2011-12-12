@@ -123,14 +123,6 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * @param string
-     */
-    public function setKeywords($keywords)
-    {
-        $this->keywords = $keywords;
-    }
-
-    /**
      * Gets the users participating in this conversation
      *
      * @return array of ParticipantInterface
@@ -223,5 +215,74 @@ abstract class Thread extends AbstractThread
     public function addMetadata(ThreadMetadata $meta)
     {
         $this->metadata->add($meta);
+    }
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     */
+    public function denormalize()
+    {
+        $this->doParticipants();
+        $this->doCreatedByAndAt();
+        $this->doKeywords();
+        $this->doSpam();
+    }
+
+    /**
+     * Ensures that the thread participants are up to date
+     */
+    protected function doParticipants()
+    {
+        foreach ($this->getMessages() as $message) {
+            $this->addParticipant($message->getSender());
+        }
+    }
+
+    /**
+     * Ensures that the createdBy & createdAt properties are set
+     */
+    protected function doCreatedByAndAt()
+    {
+        if (null !== $this->getCreatedBy()) {
+            return;
+        }
+
+        if (!$message = $this->getFirstMessage()) {
+            return;
+        }
+
+        $this->setCreatedBy($message->getSender());
+        $this->setCreatedAt($message->getCreatedAt());
+    }
+
+    /**
+     * Adds all messages contents to the keywords property
+     */
+    protected function doKeywords()
+    {
+        $keywords = $this->getSubject();
+
+        foreach ($this->getMessages() as $message) {
+            $keywords .= ' '.$message->getBody();
+        }
+
+        // we only need each word once
+        $this->keywords = implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1)));
+    }
+
+    /**
+     * Denormalizes the value of isSpam to messages
+     */
+    protected function doSpam()
+    {
+        foreach ($this->getMessages() as $message) {
+            $message->setIsSpam($this->getIsSpam());
+        }
     }
 }
