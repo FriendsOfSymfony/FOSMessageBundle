@@ -303,9 +303,9 @@ class ThreadManager extends BaseThreadManager
      */
     protected function denormalize(Thread $thread)
     {
-        $thread->denormalize();
         $this->doEnsureMessageMetadataExistsAndSenderIsRead($thread);
         $this->doEnsureThreadMetadataExistsAndUpdateLastMessageDates($thread);
+        $thread->denormalize();
     }
 
     /**
