@@ -285,7 +285,7 @@ class ThreadManager extends BaseThreadManager
      */
     protected function getNotDeletedByParticipantExpression(Builder $queryBuilder, ParticipantInterface $participant)
     {
-        return $$queryBuilder->expr()
+        return $queryBuilder->expr()
             ->field('participant.$id')->equals(new \MongoId($participant->getId()))
             ->field('isDeleted')->equals(false);
     }
