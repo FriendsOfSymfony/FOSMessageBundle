@@ -20,19 +20,20 @@
 
         <indexes>
             <index>
-                <key name="thread.$id" order="asc" />
+                <key name="createdAt" order="desc" />
             </index>
             <index>
                 <key name="sender.$id" order="asc" />
             </index>
+            <!-- MessageManager::markIsReadByThreadAndParticipant() -->
             <index>
-                <key name="createdAt" order="desc" />
-            </index>
-            <index>
+                <key name="thread.$id" order="asc" />
                 <key name="metadata.participant.$id" order="asc" />
             </index>
+            <!-- MessageManager::getNbUnreadMessageByParticipant() -->
             <index>
-                <key name="isSpam" order="asc" />
+                <key name="metadata.participant.$id" order="asc" />
+                <key name="metadata.isRead" order="asc" />
             </index>
         </indexes>
 

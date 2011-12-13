@@ -26,11 +26,14 @@
             <index>
                 <key name="createdAt" order="desc" />
             </index>
+            <!--  ThreadManager::findThreadsCreatedBy() -->
             <index>
-                <key name="isSpam" order="asc" />
+                <key name="createdBy.$id" order="asc" />
             </index>
+            <!-- ThreadManager::getNotDeletedByParticipantExpression() -->
             <index>
                 <key name="metadata.participant.$id" order="asc" />
+                <key name="metadata.isDeleted" order="asc" />
             </index>
         </indexes>
 
