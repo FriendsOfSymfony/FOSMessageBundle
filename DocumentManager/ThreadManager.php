@@ -84,15 +84,13 @@ class ThreadManager extends BaseThreadManager
 
         // TODO: sort by date of last message written by an other participant
         return $queryBuilder
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
-            // the thread does not contain spam or flood
-            ->field('isSpam')->equals(false)
             // the participant hasn't deleted the thread, and another user wrote a message
             ->field('metadata')->elemMatch($this
                 ->getNotDeletedByParticipantExpression($queryBuilder, $participant)
                 ->field('lastMessageDate')->notEqual(null)
-            );
+            )
+            // the thread does not contain spam or flood
+            ->field('isSpam')->equals(false);
     }
 
     /**
@@ -124,8 +122,6 @@ class ThreadManager extends BaseThreadManager
 
         // TODO: sort by date of last message written by this participant
         return $queryBuilder
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
             // the participant hasn't deleted the thread, and has written a message
             ->field('metadata')->elemMatch($this
                 ->getNotDeletedByParticipantExpression($queryBuilder, $participant)
@@ -167,10 +163,9 @@ class ThreadManager extends BaseThreadManager
 
         // TODO: sort by date of last message written by an other participant
         return $queryBuilder
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
             // the thread is not deleted by this participant
             ->field('metadata')->elemMatch($this->getNotDeletedByParticipantExpression($queryBuilder, $participant))
+            // TODO: this search is not anchored and uses no indexes
             ->field('keywords')->equals(new \MongoRegex($regex));
     }
 
