@@ -123,7 +123,7 @@ class MessageManager extends BaseMessageManager
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
         $this->markIsReadByCondition($participant, $isRead, function(Builder $queryBuilder) use ($message) {
-            $queryBuilder->field('id')->equals($message->getId());
+            $queryBuilder->field('_id')->equals(new \MongoId($message->getId()));
         });
     }
 
