@@ -85,35 +85,35 @@ class MessageManager extends BaseMessageManager
      * as well as marking the as read.
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $user, true);
+        $this->markIsReadByThreadAndParticipant($readable, $participant, true);
     }
 
     /**
      * Marks the readable as unread by this participant
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $user, false);
+        $this->markIsReadByThreadAndParticipant($readable, $participant, false);
     }
 
     /**
      * Marks all messages of this thread as read by this participant
      *
      * @param ThreadInterface $thread
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $user, $isRead)
+    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
         foreach ($thread->getMessages() as $message) {
-            $this->markIsReadByParticipant($message, $user, $isRead);
+            $this->markIsReadByParticipant($message, $participant, $isRead);
         }
     }
 
@@ -121,12 +121,12 @@ class MessageManager extends BaseMessageManager
      * Marks the message as read or unread by this participant
      *
      * @param MessageInterface $message
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $user, $isRead)
+    protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
-        $meta = $message->getMetadataForParticipant($user);
+        $meta = $message->getMetadataForParticipant($participant);
         if (!$meta || $meta->getIsRead() == $isRead) {
             return;
         }

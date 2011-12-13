@@ -81,34 +81,34 @@ class MessageManager extends BaseMessageManager
      * as well as marking the as read.
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->markIsReadByParticipant($readable, $user, true);
+        return $this->markIsReadByParticipant($readable, $participant, true);
     }
 
     /**
      * Marks the readable as unread by this participant
      *
      * @param ReadableInterface $readable
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user)
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->markIsReadByParticipant($readable, $user, false);
+        return $this->markIsReadByParticipant($readable, $participant, false);
     }
 
     /**
      * Marks all messages of this thread as read by this participant
      *
      * @param ThreadInterface $thread
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $user, $isRead)
+    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
-        $this->markIsReadByCondition($user, $isRead, function(Builder $queryBuilder) use ($thread) {
+        $this->markIsReadByCondition($participant, $isRead, function(Builder $queryBuilder) use ($thread) {
             $queryBuilder->field('thread.$id')->equals(new \MongoId($thread->getId()));
         });
     }
@@ -117,12 +117,12 @@ class MessageManager extends BaseMessageManager
      * Marks the message as read or unread by this participant
      *
      * @param MessageInterface $message
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $user, $isRead)
+    protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
-        $this->markIsReadByCondition($user, $isRead, function(Builder $queryBuilder) use ($message) {
+        $this->markIsReadByCondition($participant, $isRead, function(Builder $queryBuilder) use ($message) {
             $queryBuilder->field('id')->equals($message->getId());
         });
     }
@@ -131,11 +131,11 @@ class MessageManager extends BaseMessageManager
      * Marks messages as read/unread
      * by updating directly the storage
      *
-     * @param ParticipantInterface $user
+     * @param ParticipantInterface $participant
      * @param boolean $isRead
      * @param \Closure $condition
      */
-    protected function markIsReadByCondition(ParticipantInterface $user, $isRead, \Closure $condition)
+    protected function markIsReadByCondition(ParticipantInterface $participant, $isRead, \Closure $condition)
     {
         $queryBuilder = $this->repository->createQueryBuilder();
         $condition($queryBuilder);
