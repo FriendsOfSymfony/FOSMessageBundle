@@ -106,5 +106,14 @@ abstract class Message extends AbstractMessage
      */
     public function denormalize()
     {
+        $this->doSenderIsRead();
+    }
+
+    /**
+     * Ensures that the sender is considered to have read this message
+     */
+    public function doSenderIsRead()
+    {
+        $this->setIsReadByParticipant($this->getSender(), true);
     }
 }

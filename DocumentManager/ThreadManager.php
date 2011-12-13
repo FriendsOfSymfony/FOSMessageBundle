@@ -303,22 +303,22 @@ class ThreadManager extends BaseThreadManager
      */
     protected function denormalize(Thread $thread)
     {
-        $this->doEnsureMessageMetadataExistsAndSenderIsRead($thread);
-        $this->doEnsureThreadMetadataExistsAndUpdateLastMessageDates($thread);
+        $this->doParticipants($thread);
+        $this->doEnsureThreadMetadataExists($thread);
         $thread->denormalize();
+
+        foreach ($thread->getMessages() as $message) {
+            $this->messageManager->denormalize($message);
+        }
     }
 
     /**
-     * Ensures that every message has metadata for each thread participant and
-     * that each sender has read their own message
-     *
-     * @param Thread $thread
+     * Ensures that the thread participants are up to date
      */
-    protected function doEnsureMessageMetadataExistsAndSenderIsRead(Thread $thread)
+    protected function doParticipants(Thread $thread)
     {
         foreach ($thread->getMessages() as $message) {
-            $this->messageManager->doEnsureMessageMetadataExistsForParticipants($message, $thread->getParticipants());
-            $message->setIsReadByParticipant($message->getSender(), true);
+            $thread->addParticipant($message->getSender());
         }
     }
 
@@ -328,25 +328,13 @@ class ThreadManager extends BaseThreadManager
      *
      * @param Thread $thread
      */
-    public function doEnsureThreadMetadataExistsAndUpdateLastMessageDates(Thread $thread)
+    protected function doEnsureThreadMetadataExists(Thread $thread)
     {
         foreach ($thread->getParticipants() as $participant) {
             if (!$meta = $thread->getMetadataForParticipant($participant)) {
                 $meta = $this->createThreadMetadata();
                 $meta->setParticipant($participant);
                 $thread->addMetadata($meta);
-            }
-
-            foreach ($thread->getMessages() as $message) {
-                if ($participant->getId() !== $message->getSender()->getId()) {
-                    if (null === $meta->getLastMessageDate() || $meta->getLastMessageDate()->getTimestamp() < $message->getTimestamp()) {
-                        $meta->setLastMessageDate($message->getCreatedAt());
-                    }
-                } else {
-                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate()->getTimestamp() < $message->getTimestamp()) {
-                        $meta->setLastParticipantMessageDate($message->getCreatedAt());
-                    }
-                }
             }
         }
     }

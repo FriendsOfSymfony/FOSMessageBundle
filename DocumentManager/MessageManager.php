@@ -154,15 +154,7 @@ class MessageManager extends BaseMessageManager
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
-        /* Note: ThreadManager::doEnsureMessageMetadataExistsAndSenderIsRead()
-         * will ensure that message senders have read their own messages, so
-         * there is no pre-save processing to do here.
-         *
-         * We can call $message->denormalize() directly in case there is custom
-         * processing to be done in the application class.
-         */
         $message->denormalize();
-
         $this->dm->persist($message);
         if ($andFlush) {
             $this->dm->flush(array('safe' => true));
@@ -196,14 +188,28 @@ class MessageManager extends BaseMessageManager
      */
 
     /**
-     * Ensures that metadata exists for the given participants
+     * Performs denormalization tricks
      *
      * @param Message $message
-     * @param array $participants list of ParticipantInterface
      */
-    public function doEnsureMessageMetadataExistsForParticipants(Message $message, array $participants)
+    public function denormalize(Message $message)
     {
-        foreach ($participants as $participant) {
+        $this->doEnsureMessageMetadataExists($message);
+        $message->denormalize();
+    }
+
+    /**
+     * Ensures that the message has metadata for each thread participant
+     *
+     * @param Message $message
+     */
+    protected function doEnsureMessageMetadataExists(Message $message)
+    {
+        if (!$thread = $message->getThread()) {
+            throw new \InvalidArgumentException(sprintf('No thread is referenced in message with id "%s"', $message->getId()));
+        }
+
+        foreach ($thread->getParticipants() as $participant) {
             if (!$meta = $message->getMetadataForParticipant($participant)) {
                 $meta = $this->createMessageMetadata();
                 $meta->setParticipant($participant);

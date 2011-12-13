@@ -228,20 +228,10 @@ abstract class Thread extends AbstractThread
      */
     public function denormalize()
     {
-        $this->doParticipants();
         $this->doCreatedByAndAt();
         $this->doKeywords();
         $this->doSpam();
-    }
-
-    /**
-     * Ensures that the thread participants are up to date
-     */
-    protected function doParticipants()
-    {
-        foreach ($this->getMessages() as $message) {
-            $this->addParticipant($message->getSender());
-        }
+        $this->doMetadataLastMessageDates();
     }
 
     /**
@@ -283,6 +273,28 @@ abstract class Thread extends AbstractThread
     {
         foreach ($this->getMessages() as $message) {
             $message->setIsSpam($this->getIsSpam());
+        }
+    }
+
+    /**
+     * Ensures that metadata last message dates are up to date
+     *
+     * Precondition: metadata exists for all thread participants
+     */
+    protected function doMetadataLastMessageDates()
+    {
+        foreach ($this->metadata as $meta) {
+            foreach ($this->getMessages() as $message) {
+                if ($meta->getParticipant()->getId() !== $message->getSender()->getId()) {
+                    if (null === $meta->getLastMessageDate() || $meta->getLastMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastMessageDate($message->getCreatedAt());
+                    }
+                } else {
+                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastParticipantMessageDate($message->getCreatedAt());
+                    }
+                }
+            }
         }
     }
 }
