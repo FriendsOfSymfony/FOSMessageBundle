@@ -18,6 +18,8 @@
 
         <field name="createdAt" fieldName="createdAt" type="date" />
 
+        <field name="lastMessageDate" fieldName="lastMessageDate" type="date" />
+
         <field name="isSpam" fieldName="isSpam" type="boolean" />
 
         <field name="keywords" fieldName="keywords" type="string" />
@@ -25,6 +27,9 @@
         <indexes>
             <index>
                 <key name="createdAt" order="desc" />
+            </index>
+            <index>
+                <key name="lastMessageDate" order="desc" />
             </index>
             <!--  ThreadManager::findThreadsCreatedBy() -->
             <index>

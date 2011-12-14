@@ -82,7 +82,6 @@ class ThreadManager extends BaseThreadManager
     {
         $queryBuilder = $this->repository->createQueryBuilder();
 
-        // TODO: sort by date of last message written by an other participant
         return $queryBuilder
             // the participant hasn't deleted the thread, and another user wrote a message
             ->field('metadata')->elemMatch($this
@@ -90,7 +89,12 @@ class ThreadManager extends BaseThreadManager
                 ->field('lastMessageDate')->notEqual(null)
             )
             // the thread does not contain spam or flood
-            ->field('isSpam')->equals(false);
+            ->field('isSpam')->equals(false)
+            /* TODO: Sort by date of the last message written by another
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**
@@ -120,13 +124,17 @@ class ThreadManager extends BaseThreadManager
     {
         $queryBuilder = $this->repository->createQueryBuilder();
 
-        // TODO: sort by date of last message written by this participant
         return $queryBuilder
             // the participant hasn't deleted the thread, and has written a message
             ->field('metadata')->elemMatch($this
                 ->getNotDeletedByParticipantExpression($queryBuilder, $participant)
                 ->field('lastParticipantMessageDate')->notEqual(null)
-            );
+            )
+            /* TODO: Sort by date of the last message written by this
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**
@@ -161,12 +169,16 @@ class ThreadManager extends BaseThreadManager
 
         $queryBuilder = $this->repository->createQueryBuilder();
 
-        // TODO: sort by date of last message written by an other participant
         return $queryBuilder
             // the thread is not deleted by this participant
             ->field('metadata')->elemMatch($this->getNotDeletedByParticipantExpression($queryBuilder, $participant))
             // TODO: this search is not anchored and uses no indexes
-            ->field('keywords')->equals(new \MongoRegex($regex));
+            ->field('keywords')->equals(new \MongoRegex($regex))
+            /* TODO: Sort by date of the last message written by another
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**

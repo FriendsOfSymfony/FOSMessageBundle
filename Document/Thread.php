@@ -46,6 +46,16 @@ abstract class Thread extends AbstractThread
     protected $createdAt;
 
     /**
+     * Date that the last message in this thread was created at
+     *
+     * This denormalization field is used for sorting threads in the inbox and
+     * sent list.
+     *
+     * @var \DateTime
+     */
+    protected $lastMessageDate;
+
+    /**
      * All text contained in the thread messages
      * Used for the full text search
      *
@@ -229,6 +239,7 @@ abstract class Thread extends AbstractThread
     public function denormalize()
     {
         $this->doCreatedByAndAt();
+        $this->doLastMessageDate();
         $this->doKeywords();
         $this->doSpam();
         $this->doMetadataLastMessageDates();
@@ -249,6 +260,18 @@ abstract class Thread extends AbstractThread
 
         $this->setCreatedBy($message->getSender());
         $this->setCreatedAt($message->getCreatedAt());
+    }
+
+    /**
+     * Ensures that the lastMessageDate property is up to date
+     */
+    protected function doLastMessageDate()
+    {
+        if (!$message = $this->getLastMessage()) {
+            return;
+        }
+
+        $this->lastMessageDate = $message->getCreatedAt();
     }
 
     /**
