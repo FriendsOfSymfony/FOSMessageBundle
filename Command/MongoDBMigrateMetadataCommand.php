@@ -109,7 +109,7 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
             $output->write(sprintf("Processed: <info>%d</info> / Complete: <info>%d%%</info>\r", $numProcessed, round(100 * ($numProcessed / $numTotal))));
         };
 
-        declare(ticks=100) {
+        declare(ticks=2500) {
             foreach ($cursor as $message) {
                 $this->messageCollection->update(
                     array('_id' => $message['_id']),
@@ -152,7 +152,7 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
             $output->write(sprintf("Processed: <info>%d</info> / Complete: <info>%d%%</info>\r", $numProcessed, round(100 * ($numProcessed / $numTotal))));
         };
 
-        declare(ticks=100) {
+        declare(ticks=2500) {
             foreach ($cursor as $thread) {
                 $this->threadCollection->update(
                     array('_id' => $thread['_id']),
