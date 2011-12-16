@@ -71,7 +71,7 @@ class Reader implements ReaderInterface
         if (!$readable->isReadByParticipant($participant)) {
             return;
         }
-        $this->readableManager->markAsReadByParticipant($readable, $participant);
+        $this->readableManager->markAsUnreadByParticipant($readable, $participant);
 
         $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNREAD, new ReadableEvent($readable));
     }
