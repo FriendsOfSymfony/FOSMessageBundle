@@ -10,12 +10,14 @@ MessageBundle can be used with FOS\UserBundle, but it is not required.
 Installation
 ============
 
-Add MessageBundle to your src/ dir
+Add MessageBundle to your deps file
 -------------------------------------
 
 ::
 
-    $ git submodule add git://github.com/Ornicar/MessageBundle.git vendor/bundles/Ornicar/MessageBundle
+    [MessageBundle]
+        git=https://github.com/ornicar/OrnicarMessageBundle.git
+        target=/bundles/Ornicar/MessageBundle
 
 Add the Ornicar namespace to your autoloader
 ----------------------------------------
@@ -327,6 +329,12 @@ Configure your application::
         db_driver: orm
         thread_class: Acme\MessageBundle\Entity\Thread
         message_class: Acme\MessageBundle\Entity\Message
+
+You need to add this line under the fos_user line :
+
+    fos_user:
+        ...
+        use_username_form_type: true
 
 
 Register routing
