@@ -62,9 +62,10 @@ class MessageManager extends BaseMessageManager
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
         $queryBuilder = $this->repository->createQueryBuilder();
+        $metaQueryBuilder = $this->dm->createQueryBuilder($this->metaClass);
 
         return $queryBuilder
-            ->field('metadata')->elemMatch($queryBuilder->expr()
+            ->field('metadata')->elemMatch($metaQueryBuilder->expr()
                 ->field('participant.$id')->equals(new \MongoId($participant->getId()))
                 ->field('isRead')->equals(false)
             )
