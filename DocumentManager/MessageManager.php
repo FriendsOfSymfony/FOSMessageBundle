@@ -41,9 +41,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Constructor.
      *
-     * @param DocumentManager         $dm
-     * @param string                  $class
-     * @param string                  $metaClass
+     * @param DocumentManager $dm
+     * @param string          $class
+     * @param string          $metaClass
      */
     public function __construct(DocumentManager $dm, $class, $metaClass)
     {

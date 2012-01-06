@@ -28,15 +28,17 @@ class ThreadManager extends BaseThreadManager
     protected $repository;
 
     /**
-     * The model class
-     *
      * @var string
      */
     protected $class;
 
     /**
-     * The message manager, required to mark
-     * the messages of a thread as read/unread
+     * @var string
+     */
+    protected $metaClass;
+
+    /**
+     * The message manager, required to mark thread messages as read/unread.
      *
      * @var MessageManager
      */
@@ -45,10 +47,10 @@ class ThreadManager extends BaseThreadManager
     /**
      * Constructor.
      *
-     * @param DocumentManager         $dm
-     * @param string                  $class
-     * @param string                  $metaClass
-     * @param MessageManager          $messageManager
+     * @param DocumentManager $dm
+     * @param string          $class
+     * @param string          $metaClass
+     * @param MessageManager  $messageManager
      */
     public function __construct(DocumentManager $dm, $class, $metaClass, MessageManager $messageManager)
     {
