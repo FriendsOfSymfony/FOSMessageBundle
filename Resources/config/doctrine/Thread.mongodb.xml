@@ -8,6 +8,8 @@
 
         <field name="subject" fieldName="subject" type="string" />
 
+        <!--<embed-many target-document="Ornicar\MessageBundle\Document\ThreadMetadata" field="metadata" />-->
+
         <!--<reference-many field="participants" target-document="Acme\UserBundle\Document\User" />-->
 
         <!--<reference-many field="messages" target-document="Acme\MessageBundle\Document\Message" />-->
@@ -16,31 +18,43 @@
 
         <field name="createdAt" fieldName="createdAt" type="date" />
 
+        <field name="lastMessageDate" fieldName="lastMessageDate" type="date" />
+
         <field name="isSpam" fieldName="isSpam" type="boolean" />
 
-        <field name="isDeletedByParticipant" fieldName="isDeletedByParticipant" type="hash" />
-
-        <field name="datesOfLastMessageWrittenByParticipant" fieldName="datesOfLastMessageWrittenByParticipant" type="hash" />
-
-        <field name="datesOfLastMessageWrittenByOtherParticipant" fieldName="datesOfLastMessageWrittenByOtherParticipant" type="hash" />
-
         <field name="keywords" fieldName="keywords" type="string" />
+
+        <field name="activeParticipants" fieldName="activeParticipants" type="collection" />
+
+        <field name="activeRecipients" fieldName="activeRecipients" type="collection" />
+
+        <field name="activeSenders" fieldName="activeSenders" type="collection" />
 
         <indexes>
             <index>
                 <key name="createdAt" order="desc" />
             </index>
             <index>
-                <key name="isSpam" order="asc" />
+                <key name="lastMessageDate" order="desc" />
             </index>
+            <!-- ThreadManager::getParticipantThreadsBySearchQueryBuilder() -->
             <index>
-                <key name="isDeletedByParticipant" order="asc" />
+                <key name="activeParticipants" order="asc" />
+                <key name="lastMessageDate" order="desc" />
             </index>
+            <!-- ThreadManager::getParticipantInboxThreadsQueryBuilder() -->
             <index>
-                <key name="datesOfLastMessageWrittenByParticipant" order="desc" />
+                <key name="activeRecipients" order="asc" />
+                <key name="lastMessageDate" order="desc" />
             </index>
+            <!-- ThreadManager::getParticipantSentThreadsQueryBuilder() -->
             <index>
-                <key name="datesOfLastMessageWrittenByOtherParticipant" order="desc" />
+                <key name="activeSenders" order="asc" />
+                <key name="lastMessageDate" order="desc" />
+            </index>
+            <!--  ThreadManager::findThreadsCreatedBy() -->
+            <index>
+                <key name="createdBy.$id" order="asc" />
             </index>
         </indexes>
 

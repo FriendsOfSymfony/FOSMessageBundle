@@ -9,7 +9,6 @@ use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Doctrine\ORM\Query\Builder;
 
-
 /**
  * Default ORM ThreadManager.
  *
@@ -54,6 +53,7 @@ class ThreadManager extends BaseThreadManager
      *
      * @param EntityManager     $em
      * @param string            $class
+     * @param string            $metaClass
      * @param MessageManager    $messageManager
      */
     public function __construct(EntityManager $em, $class, $metaClass, MessageManager $messageManager)
@@ -226,7 +226,6 @@ class ThreadManager extends BaseThreadManager
             ->execute();
     }
 
-
     /**
      * Marks the readable as read by this participant
      * Must be applied directly to the storage,
@@ -288,7 +287,6 @@ class ThreadManager extends BaseThreadManager
     {
         return $this->class;
     }
-
 
     /**
      * DENORMALIZATION

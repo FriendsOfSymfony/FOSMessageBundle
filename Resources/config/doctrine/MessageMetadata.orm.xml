@@ -8,11 +8,9 @@
 
         <field name="isRead" column="is_read" type="boolean" />
 
-        <!--
-        <many-to-one field="message" target-entity="MyProject\MessageBundle\Entity\Message" inversed-by="metadata" />
+        <!--<many-to-one field="message" target-entity="MyProject\MessageBundle\Entity\Message" inversed-by="metadata" />-->
 
-        <many-to-one field="participant" target-entity="MyProject\UserBundle\Entity\User" />
-        -->
+        <!--<many-to-one field="participant" target-entity="MyProject\UserBundle\Entity\User" />-->
 
     </mapped-superclass>
 
