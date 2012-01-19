@@ -83,13 +83,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder()
-            // the participant hasn't deleted the thread, and another user wrote a message
-            ->field('metadata')->elemMatch($this
-                ->getNotDeletedByParticipantExpression($participant)
-                ->field('lastMessageDate')->notEqual(null)
-            )
-            // the thread does not contain spam or flood
-            ->field('isSpam')->equals(false)
+            ->field('activeRecipients')->equals($participant->getId())
             /* TODO: Sort by date of the last message written by another
              * participant, as is done for ORM. This is not possible with the
              * current schema; compromise by sorting by last message date.
@@ -123,11 +117,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder()
-            // the participant hasn't deleted the thread, and has written a message
-            ->field('metadata')->elemMatch($this
-                ->getNotDeletedByParticipantExpression($participant)
-                ->field('lastParticipantMessageDate')->notEqual(null)
-            )
+            ->field('activeSenders')->equals($participant->getId())
             /* TODO: Sort by date of the last message written by this
              * participant, as is done for ORM. This is not possible with the
              * current schema; compromise by sorting by last message date.
@@ -166,11 +156,10 @@ class ThreadManager extends BaseThreadManager
         $regex = sprintf('/(%s)/', implode('|', explode(' ', $search)));
 
         return $this->repository->createQueryBuilder()
-            // the thread is not deleted by this participant
-            ->field('metadata')->elemMatch($this->getNotDeletedByParticipantExpression($participant))
-            // TODO: this search is not anchored and uses no indexes
+            ->field('activeParticipants')->equals($participant->getId())
+            // Note: This query is not anchored, so "keywords" need not be indexed
             ->field('keywords')->equals(new \MongoRegex($regex))
-            /* TODO: Sort by date of the last message written by another
+            /* TODO: Sort by date of the last message written by this
              * participant, as is done for ORM. This is not possible with the
              * current schema; compromise by sorting by last message date.
              */
@@ -276,20 +265,6 @@ class ThreadManager extends BaseThreadManager
     protected function createThreadMetadata()
     {
         return new $this->metaClass();
-    }
-
-    /**
-     * Creates an expression to match ThreadMetadata where the participant has
-     * not deleted the thread.
-     *
-     * @param ParticipantInterface $participant
-     * @return Doctrine\ODM\MongoDB\Query\Expr
-     */
-    protected function getNotDeletedByParticipantExpression(ParticipantInterface $participant)
-    {
-        return $this->dm->createQueryBuilder($this->metaClass)->expr()
-            ->field('participant.$id')->equals(new \MongoId($participant->getId()))
-            ->field('isDeleted')->equals(false);
     }
 
     /**

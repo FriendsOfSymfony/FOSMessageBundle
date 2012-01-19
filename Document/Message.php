@@ -24,6 +24,14 @@ abstract class Message extends AbstractMessage
     protected $isSpam = false;
 
     /**
+     * The unreadForParticipants array will contain a participant's ID if the
+     * message is not read by the participant and the message is not spam.
+     *
+     * @var array of participant ID's
+     */
+    protected $unreadForParticipants = array();
+
+    /**
      * Initializes the collections
      */
     public function __construct()
@@ -107,6 +115,7 @@ abstract class Message extends AbstractMessage
     public function denormalize()
     {
         $this->doSenderIsRead();
+        $this->doEnsureUnreadForParticipantsArray();
     }
 
     /**
@@ -115,5 +124,23 @@ abstract class Message extends AbstractMessage
     public function doSenderIsRead()
     {
         $this->setIsReadByParticipant($this->getSender(), true);
+    }
+
+    /**
+     * Ensures that the unreadForParticipants array is updated.
+     */
+    protected function doEnsureUnreadForParticipantsArray()
+    {
+        $this->unreadForParticipants = array();
+
+        if ($this->isSpam) {
+            return;
+        }
+
+        foreach ($this->metadata as $metadata) {
+            if (!$metadata->getIsRead()) {
+                $this->unreadForParticipants[] = $metadata->getParticipant()->getId();
+            }
+        }
     }
 }

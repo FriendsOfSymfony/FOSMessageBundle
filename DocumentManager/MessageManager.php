@@ -61,15 +61,8 @@ class MessageManager extends BaseMessageManager
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
-        $queryBuilder = $this->repository->createQueryBuilder();
-        $metaQueryBuilder = $this->dm->createQueryBuilder($this->metaClass);
-
-        return $queryBuilder
-            ->field('metadata')->elemMatch($metaQueryBuilder->expr()
-                ->field('participant.$id')->equals(new \MongoId($participant->getId()))
-                ->field('isRead')->equals(false)
-            )
-            ->field('isSpam')->equals(false)
+        return $this->repository->createQueryBuilder()
+            ->field('unreadForParticipants')->equals($participant->getId())
             ->getQuery()
             ->count();
     }
@@ -141,10 +134,36 @@ class MessageManager extends BaseMessageManager
         $queryBuilder = $this->repository->createQueryBuilder();
         $condition($queryBuilder);
         $queryBuilder->update()
-            ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()))
+            ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()));
+
+        /* If marking the message as read for a participant, we can should pull
+         * their ID out of the unreadForParticipants array. The same is not
+         * true for the inverse. We should only add a participant ID to this
+         * array if the message is not considered spam.
+         */
+        if ($isRead) {
+            $queryBuilder->field('unreadForParticipants')->pull($participant->getId());
+        }
+
+        $queryBuilder
             ->field('metadata.$.isRead')->set((boolean) $isRead)
             ->getQuery(array('multiple' => true))
             ->execute();
+
+        /* If marking the message as unread for a participant, add their ID to
+         * the unreadForParticipants array if the message is not spam. This must
+         * be done in a separate query, since the criteria is more selective.
+         */
+        if (!$isRead) {
+            $queryBuilder = $this->repository->createQueryBuilder();
+            $condition($queryBuilder);
+            $queryBuilder->update()
+                ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()))
+                ->field('isSpam')->equals(false)
+                ->field('unreadForParticipants')->addToSet($participant->getId())
+                ->getQuery(array('multiple' => true))
+                ->execute();
+        }
     }
 
     /**

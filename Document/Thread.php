@@ -64,6 +64,32 @@ abstract class Thread extends AbstractThread
     protected $keywords = '';
 
     /**
+     * The activeParticipants array is a union of the activeRecipients and
+     * activeSenders arrays.
+     *
+     * @var array of participant ID's
+     */
+    protected $activeParticipants = array();
+
+    /**
+     * The activeRecipients array will contain a participant's ID if the thread
+     * is not deleted for the participant, the thread is not spam and at least
+     * one message in the thread is not created by the participant.
+     *
+     * @var array of participant ID's
+     */
+    protected $activeRecipients = array();
+
+    /**
+     * The activeSenders array will contain a participant's ID if the thread is
+     * not deleted for the participant and at least one message in the thread
+     * is created by the participant.
+     *
+     * @var array of participant ID's
+     */
+    protected $activeSenders = array();
+
+    /**
      * Initializes the collections
      */
     public function __construct()
@@ -243,6 +269,7 @@ abstract class Thread extends AbstractThread
         $this->doKeywords();
         $this->doSpam();
         $this->doMetadataLastMessageDates();
+        $this->doEnsureActiveParticipantArrays();
     }
 
     /**
@@ -317,6 +344,48 @@ abstract class Thread extends AbstractThread
                         $meta->setLastParticipantMessageDate($message->getCreatedAt());
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Ensures that active participant, recipient and sender arrays are updated.
+     */
+    protected function doEnsureActiveParticipantArrays()
+    {
+        $this->activeParticipants = array();
+        $this->activeRecipients = array();
+        $this->activeSenders = array();
+
+        foreach ($this->getParticipants() as $participant) {
+            if ($this->isDeletedByParticipant($participant)) {
+                continue;
+            }
+
+            $participantIsActiveRecipient = $participantIsActiveSender = false;
+
+            foreach ($this->getMessages() as $message) {
+                if ($message->getSender()->getId() == $participant->getId()) {
+                    $participantIsActiveSender = true;
+                } elseif (!$this->getIsSpam()) {
+                    $participantIsActiveRecipient = true;
+                }
+
+                if ($participantIsActiveRecipient && $participantIsActiveSender) {
+                    break;
+                }
+            }
+
+            if ($participantIsActiveSender) {
+                $this->activeSenders[] = $participant->getId();
+            }
+
+            if ($participantIsActiveRecipient) {
+                $this->activeRecipients[] = $participant->getId();
+            }
+
+            if ($participantIsActiveSender || $participantIsActiveRecipient) {
+                $this->activeParticipants[] = $participant->getId();
             }
         }
     }

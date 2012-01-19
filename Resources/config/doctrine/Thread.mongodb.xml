@@ -24,6 +24,12 @@
 
         <field name="keywords" fieldName="keywords" type="string" />
 
+        <field name="activeParticipants" fieldName="activeParticipants" type="collection" />
+
+        <field name="activeRecipients" fieldName="activeRecipients" type="collection" />
+
+        <field name="activeSenders" fieldName="activeSenders" type="collection" />
+
         <indexes>
             <index>
                 <key name="createdAt" order="desc" />
@@ -31,14 +37,24 @@
             <index>
                 <key name="lastMessageDate" order="desc" />
             </index>
+            <!-- ThreadManager::getParticipantThreadsBySearchQueryBuilder() -->
+            <index>
+                <key name="activeParticipants" order="asc" />
+                <key name="lastMessageDate" order="desc" />
+            </index>
+            <!-- ThreadManager::getParticipantInboxThreadsQueryBuilder() -->
+            <index>
+                <key name="activeRecipients" order="asc" />
+                <key name="lastMessageDate" order="desc" />
+            </index>
+            <!-- ThreadManager::getParticipantSentThreadsQueryBuilder() -->
+            <index>
+                <key name="activeSenders" order="asc" />
+                <key name="lastMessageDate" order="desc" />
+            </index>
             <!--  ThreadManager::findThreadsCreatedBy() -->
             <index>
                 <key name="createdBy.$id" order="asc" />
-            </index>
-            <!-- ThreadManager::getNotDeletedByParticipantExpression() -->
-            <index>
-                <key name="metadata.participant.$id" order="asc" />
-                <key name="metadata.isDeleted" order="asc" />
             </index>
         </indexes>
 

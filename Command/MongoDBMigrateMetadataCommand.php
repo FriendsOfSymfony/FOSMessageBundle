@@ -43,10 +43,40 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     {
         $this
             ->setName('ornicar:message:mongodb:migrate:metadata')
-            ->setDescription('Migrates document hash fields to embedded metadata')
+            ->setDescription('Migrates document hash fields to embedded metadata and active/unread arrays')
+            ->setHelp('woofoo')
             ->addArgument('participantClass', InputArgument::REQUIRED, 'Participant class')
             ->addOption('safe', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->addOption('fsync', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
+            ->setHelp(<<<'EOT'
+The <info>ornicar:message:mongodb:migrate:metadata</info> command migrates old document hash
+fields to a new schema optimized for MongoDB queries. This command requires the
+participant class to be provided as its first and only parameter:
+
+  <info>php app/console ornicar:message:mongodb:migrate:metadata "Acme\Document\User"</info>
+
+The following hash fields will become obsolete after migration:
+
+  <info>*</info> message.isReadByParticipant
+  <info>*</info> thread.datesOfLastMessageWrittenByOtherParticipant
+  <info>*</info> thread.datesOfLastMessageWrittenByParticipant
+  <info>*</info> thread.isDeletedByParticipant
+ 
+The following new fields will be created:
+
+  <info>*</info> message.metadata <comment>(array of embedded metadata documents)</comment>
+  <info>*</info> message.unreadForParticipants <comment>(array of participant ID's)</comment>
+  <info>*</info> thread.activeParticipants <comment>(array of participant ID's)</comment>
+  <info>*</info> thread.activeRecipients <comment>(array of participant ID's)</comment>
+  <info>*</info> thread.activeSenders <comment>(array of participant ID's)</comment>
+  <info>*</info> thread.lastMessageDate <comment>(timestamp of the most recent message)</comment>
+  <info>*</info> thread.metadata <comment>(array of embedded metadata documents)</comment>
+
+<info>Note:</info> This migration script will not unset any obsolete fields, which will
+preserve backwards compatibility. You may manually remove those fields from
+message and thread documents at your own discretion.
+EOT
+            )
         ;
     }
 
@@ -95,8 +125,12 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     {
         $cursor = $this->messageCollection->find(
             array('metadata' => array('$exists' => false)),
-            array('isReadByParticipant' => 1)
+            array(
+                'isReadByParticipant' => 1,
+                'isSpam' => 1,
+            )
         );
+        $cursor->snapshot();
 
         $numProcessed = 0;
 
@@ -111,9 +145,15 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
 
         declare(ticks=2500) {
             foreach ($cursor as $message) {
+                $this->createMessageMetadata($message);
+                $this->createMessageUnreadForParticipants($message);
+
                 $this->messageCollection->update(
                     array('_id' => $message['_id']),
-                    array('$set' => array('metadata' => $this->createMessageMetadata($message))),
+                    array('$set' => array(
+                        'metadata' => $message['metadata'],
+                        'unreadForParticipants' => $message['unreadForParticipants'],
+                    )),
                     $this->updateOptions
                 );
                 ++$numProcessed;
@@ -137,7 +177,9 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
                 'datesOfLastMessageWrittenByOtherParticipant' => 1,
                 'datesOfLastMessageWrittenByParticipant' => 1,
                 'isDeletedByParticipant' => 1,
+                'isSpam' => 1,
                 'messages' => 1,
+                'participants' => 1,
             )
         );
 
@@ -154,11 +196,18 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
 
         declare(ticks=2500) {
             foreach ($cursor as $thread) {
+                $this->createThreadMetadata($thread);
+                $this->createThreadLastMessageDate($thread);
+                $this->createThreadActiveParticipantArrays($thread);
+
                 $this->threadCollection->update(
                     array('_id' => $thread['_id']),
                     array('$set' => array(
-                        'metadata' => $this->createThreadMetadata($thread),
-                        'lastMessageDate' => $this->getLastMessageDate($thread['messages']),
+                        'activeParticipants' => $thread['activeParticipants'],
+                        'activeRecipients' => $thread['activeRecipients'],
+                        'activeSenders' => $thread['activeSenders'],
+                        'lastMessageDate' => $thread['lastMessageDate'],
+                        'metadata' => $thread['metadata'],
                     )),
                     $this->updateOptions
                 );
@@ -171,15 +220,14 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     }
 
     /**
-     * Create message metadata array
+     * Sets the metadata array on the message.
      *
      * By default, Mongo will not include "$db" when creating the participant
      * reference. We'll add that manually to be consistent with Doctrine.
      *
-     * @param array $message
-     * @return array
+     * @param array &$message
      */
-    private function createMessageMetadata(array $message)
+    private function createMessageMetadata(array &$message)
     {
         $metadata = array();
 
@@ -190,19 +238,39 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
             );
         }
 
-        return $metadata;
+        $message['metadata'] = $metadata;
     }
 
     /**
-     * Create thread metadata array
+     * Sets the unreadForParticipants array on the message.
+     *
+     * @see Ornicar\MessageBundle\Document\Message::doEnsureUnreadForParticipantsArray()
+     * @param array &$message
+     */
+    private function createMessageUnreadForParticipants(array &$message)
+    {
+        $unreadForParticipants = array();
+
+        if (!$message['isSpam']) {
+            foreach ($message['metadata'] as $metadata) {
+                if (!$metadata['isRead']) {
+                    $unreadForParticipants[] = (string) $metadata['participant']['$id'];
+                }
+            }
+        }
+
+        $message['unreadForParticipants'] = $unreadForParticipants;
+    }
+
+    /**
+     * Sets the metadata array on the thread.
      *
      * By default, Mongo will not include "$db" when creating the participant
      * reference. We'll add that manually to be consistent with Doctrine.
      *
-     * @param array $thread
-     * @return array
+     * @param array &$thread
      */
-    private function createThreadMetadata(array $thread)
+    private function createThreadMetadata(array &$thread)
     {
         $metadata = array();
 
@@ -229,29 +297,87 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
             $metadata[] = $meta;
         }
 
-        return $metadata;
+        $thread['metadata'] = $metadata;
     }
 
     /**
-     * Get the last message date for the given list of message references
+     * Sets the lastMessageDate timestamp on the thread.
      *
-     * @param array $messageRefs
-     * @return \MongoDate
+     * @param array &$thread
      */
-    private function getLastMessageDate(array $messageRefs)
+    private function createThreadLastMessageDate(array &$thread)
     {
-        $lastMessageRef = end($messageRefs);
+        $lastMessageRef = end($thread['messages']);
 
-        if (false === $lastMessageRef) {
-            return null;
+        if (false !== $lastMessageRef) {
+            $lastMessage = $this->messageCollection->findOne(
+                array('_id' => $lastMessageRef['$id']),
+                array('createdAt' => 1)
+            );
         }
 
-        $lastMessage = $this->messageCollection->findOne(
-            array('_id' => $lastMessageRef['$id']),
-            array('createdAt' => 1)
-        );
+        $thread['lastMessageDate'] = isset($lastMessage['createdAt']) ? $lastMessage['createdAt'] : null;
+    }
 
-        return isset($lastMessage['createdAt']) ? $lastMessage['createdAt'] : null;
+    /**
+     * Sets the active participant arrays on the thread.
+     *
+     * @see Ornicar\MessageBundle\Document\Thread::doEnsureActiveParticipantArrays()
+     * @param array $thread
+     */
+    private function createThreadActiveParticipantArrays(array &$thread)
+    {
+        $activeParticipants = array();
+        $activeRecipients = array();
+        $activeSenders = array();
+
+        foreach ($thread['participants'] as $participantRef) {
+            foreach ($thread['metadata'] as $metadata) {
+                if ($participantRef['$id'] == $metadata['participant']['$id'] && $metadata['isDeleted']) {
+                    continue 2;
+                }
+            }
+
+            $participantIsActiveRecipient = $participantIsActiveSender = false;
+
+            foreach ($thread['messages'] as $messageRef) {
+                $message = $this->threadCollection->getDBRef($messageRef);
+
+                if (null === $message) {
+                    throw new \UnexpectedValueException(sprintf('Message "%s" not found for thread "%s"', $messageRef['$id'], $thread['_id']));
+                }
+
+                if (!isset($message['sender']['$id'])) {
+                    throw new \UnexpectedValueException(sprintf('Sender reference not found for message "%s"', $messageRef['$id']));
+                }
+
+                if ($participantRef['$id'] == $message['sender']['$id']) {
+                    $participantIsActiveSender = true;
+                } elseif (!$thread['isSpam']) {
+                    $participantIsActiveRecipient = true;
+                }
+
+                if ($participantIsActiveRecipient && $participantIsActiveSender) {
+                    break;
+                }
+            }
+
+            if ($participantIsActiveSender) {
+                $activeSenders[] = (string) $participantRef['$id'];
+            }
+
+            if ($participantIsActiveRecipient) {
+                $activeRecipients[] = (string) $participantRef['$id'];
+            }
+
+            if ($participantIsActiveSender || $participantIsActiveRecipient) {
+                $activeParticipants[] = (string) $participantRef['$id'];
+            }
+        }
+
+        $thread['activeParticipants'] = $activeParticipants;
+        $thread['activeRecipients'] = $activeRecipients;
+        $thread['activeSenders'] = $activeSenders;
     }
 
     /**
