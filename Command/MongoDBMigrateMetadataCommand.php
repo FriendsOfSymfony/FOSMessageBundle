@@ -37,6 +37,18 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     private $printStatusCallback;
 
     /**
+     * @see Symfony\Component\Console\Command\Command::isEnabled()
+     */
+    public function isEnabled()
+    {
+        if (!$this->getContainer()->has('doctrine.odm.mongodb')) {
+            return false;
+        }
+
+        return parent::isEnabled();
+    }
+
+    /**
      * @see Symfony\Component\Console\Command\Command::configure()
      */
     protected function configure()
