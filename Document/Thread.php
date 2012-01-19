@@ -201,7 +201,7 @@ abstract class Thread extends AbstractThread
             $participantIsActiveRecipient = $participantIsActiveSender = false;
 
             foreach ($this->getMessages() as $message) {
-                if ($message->getSender()->getId() == $participant->getId()) {
+                if ($message->getSender()->getId() === $participant->getId()) {
                     $participantIsActiveSender = true;
                 } elseif (!$this->getIsSpam()) {
                     $participantIsActiveRecipient = true;

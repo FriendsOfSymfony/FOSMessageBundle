@@ -85,8 +85,6 @@ EOT
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
-        parent::initialize($input, $output);
-
         $registry = $this->getContainer()->get('doctrine.odm.mongodb');
 
         $this->messageCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('ornicar_message.message_class'));
@@ -386,7 +384,7 @@ EOT
      * @param ManagerRegistry $registry
      * @param string          $class
      * @return \MongoCollection
-	 * @throws \RuntimeException if the class has no DocumentManager
+     * @throws \RuntimeException if the class has no DocumentManager
      */
     private function getMongoCollectionForClass(ManagerRegistry $registry, $class)
     {

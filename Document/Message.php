@@ -49,7 +49,7 @@ abstract class Message extends BaseMessage
     /**
      * Ensures that the sender is considered to have read this message
      */
-    public function doSenderIsRead()
+    protected function doSenderIsRead()
     {
         $this->setIsReadByParticipant($this->getSender(), true);
     }
