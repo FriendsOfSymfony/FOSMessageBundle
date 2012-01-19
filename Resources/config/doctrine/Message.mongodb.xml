@@ -10,9 +10,11 @@
 
         <field name="createdAt" fieldName="createdAt" type="date" />
 
-        <field name="isReadByParticipant" fieldName="isReadByParticipant" type="hash" />
-
         <field name="isSpam" fieldName="isSpam" type="boolean" />
+
+        <field name="unreadForParticipants" fieldName="unreadForParticipants" type="collection" />
+
+        <!--<embed-many target-document="Ornicar\MessageBundle\Document\MessageMetadata" field="metadata" />-->
 
         <!--<reference-one field="sender" target-document="Acme\UserBundle\Document\User" />-->
 
@@ -20,19 +22,19 @@
 
         <indexes>
             <index>
-                <key name="thread.$id" order="asc" />
+                <key name="createdAt" order="desc" />
             </index>
             <index>
                 <key name="sender.$id" order="asc" />
             </index>
+            <!-- MessageManager::getNbUnreadMessageByParticipant() -->
             <index>
-                <key name="createdAt" order="desc" />
+                <key name="unreadForParticipants" order="asc" />
             </index>
+            <!-- MessageManager::markIsReadByThreadAndParticipant() -->
             <index>
-                <key name="isReadByParticipant" order="desc" />
-            </index>
-            <index>
-                <key name="isSpam" order="asc" />
+                <key name="thread.$id" order="asc" />
+                <key name="metadata.participant.$id" order="asc" />
             </index>
         </indexes>
 

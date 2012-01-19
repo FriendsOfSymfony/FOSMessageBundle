@@ -11,61 +11,14 @@ use Ornicar\MessageBundle\Model\ParticipantInterface;
 abstract class Thread extends AbstractThread
 {
     /**
-     * Messages contained in this thread
+     * Date that the last message in this thread was created at
      *
-     * @var Collection of MessageInterface
+     * This denormalization field is used for sorting threads in the inbox and
+     * sent list.
+     *
+     * @var DateTime
      */
-    protected $messages;
-
-    /**
-     * Users participating in this conversation
-     *
-     * @var Collection of ParticipantInterface
-     */
-    protected $participants;
-
-    /**
-     * Participant that created the thread
-     *
-     * @var ParticipantInterface
-     */
-    protected $createdBy;
-
-    /**
-     * Date this thread was created at
-     *
-     * @var \DateTime
-     */
-    protected $createdAt;
-
-    /**
-     * Tells, for each participant, if the message is deleted
-     *
-     * @var array of boolean indexed by user id
-     */
-    protected $isDeletedByParticipant = array();
-
-    /**
-     * Date the last messages were created at.
-     * To each user id is associated the date
-     * of the last message he did not write.
-     *
-     * This allows fast sorting of threads in inbox
-     *
-     * @var array of int timestamps indexed by user id
-     */
-    protected $datesOfLastMessageWrittenByOtherParticipant = array();
-
-    /**
-     * Date the last messages were created at.
-     * To each user id is associated the date
-     * of the last message he wrote.
-     *
-     * This allows fast sorting of threads in sentbox
-     *
-     * @var array of int timestamps indexed by user id
-     */
-    protected $datesOfLastMessageWrittenByParticipant = array();
+    protected $lastMessageDate;
 
     /**
      * All text contained in the thread messages
@@ -76,72 +29,30 @@ abstract class Thread extends AbstractThread
     protected $keywords = '';
 
     /**
-     * Initializes the collections
-     */
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-        $this->participants = new ArrayCollection();
-    }
-
-    /**
-     * Gets the messages contained in the thread
+     * The activeParticipants array is a union of the activeRecipients and
+     * activeSenders arrays.
      *
-     * @return array of MessageInterface
+     * @var array of participant ID's
      */
-    public function getMessages()
-    {
-        return $this->messages->toArray();
-    }
+    protected $activeParticipants = array();
 
     /**
-     * Adds a new message to the thread
+     * The activeRecipients array will contain a participant's ID if the thread
+     * is not deleted for the participant, the thread is not spam and at least
+     * one message in the thread is not created by the participant.
      *
-     * @param MessageInterface $message
+     * @var array of participant ID's
      */
-    public function addMessage(MessageInterface $message)
-    {
-        $this->messages->add($message);
-    }
+    protected $activeRecipients = array();
 
     /**
-     * Gets the participant that created the thread
-     * Generally the sender of the first message
+     * The activeSenders array will contain a participant's ID if the thread is
+     * not deleted for the participant and at least one message in the thread
+     * is created by the participant.
      *
-     * @return ParticipantInterface
+     * @var array of participant ID's
      */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Sets the participant that created the thread
-     * Generally the sender of the first message
-     *
-     * @param ParticipantInterface
-     */
-    public function setCreatedBy(ParticipantInterface $participant)
-    {
-        $this->createdBy = $participant;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param  \DateTime
-     * @return null
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
+    protected $activeSenders = array();
 
     /**
      * Gets the users participating in this conversation
@@ -179,33 +90,6 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Tells if this thread is deleted by this participant
-     *
-     * @return bool
-     */
-    public function isDeletedByParticipant(ParticipantInterface $participant)
-    {
-        return $this->isDeletedByParticipant[$participant->getId()];
-    }
-
-    /**
-     * Sets whether or not this participant has deleted this thread
-     *
-     * @param ParticipantInterface $participant
-     * @param boolean $isDeleted
-     */
-    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
-    {
-        $this->isDeletedByParticipant[$participant->getId()] = (boolean) $isDeleted;
-        if($isDeleted) {
-            // also mark all thread messages as read
-            foreach ($this->getMessages() as $message) {
-                $message->setIsReadByParticipant($participant, true);
-            }
-        }
-    }
-
-    /**
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization
@@ -216,24 +100,12 @@ abstract class Thread extends AbstractThread
      */
     public function denormalize()
     {
-        $this->doParticipants();
         $this->doCreatedByAndAt();
+        $this->doLastMessageDate();
         $this->doKeywords();
         $this->doSpam();
-        $this->doEnsureMessagesIsRead();
-        $this->doDatesOfLastMessageWrittenByParticipant();
-        $this->doDatesOfLastMessageWrittenByOtherParticipant();
-        $this->doEnsureIsDeletedByParticipant();
-    }
-
-    /**
-     * Ensures that the thread participants are up to date
-     */
-    protected function doParticipants()
-    {
-        foreach ($this->getMessages() as $message) {
-            $this->addParticipant($message->getSender());
-        }
+        $this->doMetadataLastMessageDates();
+        $this->doEnsureActiveParticipantArrays();
     }
 
     /**
@@ -241,14 +113,28 @@ abstract class Thread extends AbstractThread
      */
     protected function doCreatedByAndAt()
     {
-        if (isset($this->createdBy)) {
+        if (null !== $this->getCreatedBy()) {
             return;
         }
+
         if (!$message = $this->getFirstMessage()) {
             return;
         }
+
         $this->setCreatedBy($message->getSender());
         $this->setCreatedAt($message->getCreatedAt());
+    }
+
+    /**
+     * Ensures that the lastMessageDate property is up to date
+     */
+    protected function doLastMessageDate()
+    {
+        if (!$message = $this->getLastMessage()) {
+            return;
+        }
+
+        $this->lastMessageDate = $message->getCreatedAt();
     }
 
     /**
@@ -277,67 +163,65 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Ensures that every message has a isRead flag for each participant
-     */
-    protected function doEnsureMessagesIsRead()
-    {
-        foreach ($this->getMessages() as $message) {
-            $message->setIsReadByParticipant($message->getSender(), true);
-            $message->ensureIsReadByParticipant($this->getParticipants());
-        }
-    }
-
-    /**
-     * Update the dates of last message written by participant
-     */
-    protected function doDatesOfLastMessageWrittenByParticipant()
-    {
-        $this->datesOfLastMessageWrittenByParticipant = $this->greaterMessageTimestampForCondition(
-            $this->datesOfLastMessageWrittenByParticipant,
-            function($participantId, $senderId) { return $participantId === $senderId; }
-        );
-    }
-
-    /**
-     * Update the dates of last message written by other participants
-     */
-    protected function doDatesOfLastMessageWrittenByOtherParticipant()
-    {
-        $this->datesOfLastMessageWrittenByOtherParticipant = $this->greaterMessageTimestampForCondition(
-            $this->datesOfLastMessageWrittenByOtherParticipant,
-            function($participantId, $senderId) { return $participantId !== $senderId; }
-        );
-    }
-
-    /**
-     * Gets dates of last message for each participant, depending on the condition
+     * Ensures that metadata last message dates are up to date
      *
-     * @param array $dates
-     * @param \Closure $condition
-     * @return array
+     * Precondition: metadata exists for all thread participants
      */
-    protected function greaterMessageTimestampForCondition(array $dates, \Closure $condition)
+    protected function doMetadataLastMessageDates()
     {
-        foreach ($this->getParticipants() as $participant) {
-            $participantId = $participant->getId();
+        foreach ($this->metadata as $meta) {
             foreach ($this->getMessages() as $message) {
-                if ($condition($participantId, $message->getSender()->getId())) {
-                    $dates[$participantId] = max(isset($dates[$participantId]) ? $dates[$participantId] : 0, $message->getTimestamp());
+                if ($meta->getParticipant()->getId() !== $message->getSender()->getId()) {
+                    if (null === $meta->getLastMessageDate() || $meta->getLastMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastMessageDate($message->getCreatedAt());
+                    }
+                } else {
+                    if (null === $meta->getLastParticipantMessageDate() || $meta->getLastParticipantMessageDate()->getTimestamp() < $message->getTimestamp()) {
+                        $meta->setLastParticipantMessageDate($message->getCreatedAt());
+                    }
                 }
             }
         }
-
-        return $dates;
     }
 
     /**
-     * Ensures that each participant has an isDeleted flag
+     * Ensures that active participant, recipient and sender arrays are updated.
      */
-    protected function doEnsureIsDeletedByParticipant()
+    protected function doEnsureActiveParticipantArrays()
     {
+        $this->activeParticipants = array();
+        $this->activeRecipients = array();
+        $this->activeSenders = array();
+
         foreach ($this->getParticipants() as $participant) {
-            if (!isset($this->isDeletedByParticipant[$participant->getId()])) {
-                $this->isDeletedByParticipant[$participant->getId()] = false;
+            if ($this->isDeletedByParticipant($participant)) {
+                continue;
+            }
+
+            $participantIsActiveRecipient = $participantIsActiveSender = false;
+
+            foreach ($this->getMessages() as $message) {
+                if ($message->getSender()->getId() === $participant->getId()) {
+                    $participantIsActiveSender = true;
+                } elseif (!$this->getIsSpam()) {
+                    $participantIsActiveRecipient = true;
+                }
+
+                if ($participantIsActiveRecipient && $participantIsActiveSender) {
+                    break;
+                }
+            }
+
+            if ($participantIsActiveSender) {
+                $this->activeSenders[] = $participant->getId();
+            }
+
+            if ($participantIsActiveRecipient) {
+                $this->activeRecipients[] = $participant->getId();
+            }
+
+            if ($participantIsActiveSender || $participantIsActiveRecipient) {
+                $this->activeParticipants[] = $participant->getId();
             }
         }
     }

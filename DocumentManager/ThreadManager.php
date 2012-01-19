@@ -3,6 +3,7 @@
 namespace Ornicar\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Ornicar\MessageBundle\Document\Thread;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 use Ornicar\MessageBundle\Model\ReadableInterface;
 use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
@@ -27,15 +28,17 @@ class ThreadManager extends BaseThreadManager
     protected $repository;
 
     /**
-     * The model class
-     *
      * @var string
      */
     protected $class;
 
     /**
-     * The message manager, required to mark
-     * the messages of a thread as read/unread
+     * @var string
+     */
+    protected $metaClass;
+
+    /**
+     * The message manager, required to mark thread messages as read/unread.
      *
      * @var MessageManager
      */
@@ -44,15 +47,17 @@ class ThreadManager extends BaseThreadManager
     /**
      * Constructor.
      *
-     * @param DocumentManager         $dm
-     * @param string                  $class
-     * @param MessageManager          $messageManager
+     * @param DocumentManager $dm
+     * @param string          $class
+     * @param string          $metaClass
+     * @param MessageManager  $messageManager
      */
-    public function __construct(DocumentManager $dm, $class, MessageManager $messageManager)
+    public function __construct(DocumentManager $dm, $class, $metaClass, MessageManager $messageManager)
     {
         $this->dm             = $dm;
         $this->repository     = $dm->getRepository($class);
         $this->class          = $dm->getClassMetadata($class)->name;
+        $this->metaClass      = $dm->getClassMetadata($metaClass)->name;
         $this->messageManager = $messageManager;
     }
 
@@ -77,20 +82,13 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
-
         return $this->repository->createQueryBuilder()
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
-            // the thread does not contain spam or flood
-            ->field('isSpam')->equals(false)
-            // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // there is at least one message written by an other participant
-            ->field($datesOfLastMessageWrittenByOtherParticipantFieldName)->exists(true)
-            // sort by date of last message written by an other participant
-            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc');
+            ->field('activeRecipients')->equals($participant->getId())
+            /* TODO: Sort by date of the last message written by another
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**
@@ -118,18 +116,13 @@ class ThreadManager extends BaseThreadManager
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByParticipantFieldName = sprintf('datesOfLastMessageWrittenByParticipant.%s', $participant->getId());
-
         return $this->repository->createQueryBuilder()
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
-            // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // there is at least one message written by this participant
-            ->field($datesOfLastMessageWrittenByParticipantFieldName)->exists(true)
-            // sort by date of last message written by this participant
-            ->sort($datesOfLastMessageWrittenByParticipantFieldName, 'desc');
+            ->field('activeSenders')->equals($participant->getId())
+            /* TODO: Sort by date of the last message written by this
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**
@@ -162,17 +155,15 @@ class ThreadManager extends BaseThreadManager
         // build a regex like (term1|term2)
         $regex = sprintf('/(%s)/', implode('|', explode(' ', $search)));
 
-        $isDeletedByParticipantFieldName = sprintf('isDeletedByParticipant.%s', $participant->getId());
-        $datesOfLastMessageWrittenByOtherParticipantFieldName = sprintf('datesOfLastMessageWrittenByOtherParticipant.%s', $participant->getId());
-
         return $this->repository->createQueryBuilder()
-            // the participant is in the thread participants
-            ->field('participants.$id')->equals(new \MongoId($participant->getId()))
-            // the thread is not deleted by this participant
-            ->field($isDeletedByParticipantFieldName)->equals(false)
-            // sort by date of last message written by an other participant
-            ->sort($datesOfLastMessageWrittenByOtherParticipantFieldName, 'desc')
-            ->field('keywords')->equals(new \MongoRegex($regex));
+            ->field('activeParticipants')->equals($participant->getId())
+            // Note: This query is not anchored, so "keywords" need not be indexed
+            ->field('keywords')->equals(new \MongoRegex($regex))
+            /* TODO: Sort by date of the last message written by this
+             * participant, as is done for ORM. This is not possible with the
+             * current schema; compromise by sorting by last message date.
+             */
+            ->sort('lastMessageDate', 'desc');
     }
 
     /**
@@ -237,7 +228,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
-        $thread->denormalize();
+        $this->denormalize($thread);
         $this->dm->persist($thread);
         if ($andFlush) {
             $this->dm->flush(array('safe' => true));
@@ -260,9 +251,68 @@ class ThreadManager extends BaseThreadManager
      * Returns the fully qualified comment thread class name
      *
      * @return string
-     **/
+     */
     public function getClass()
     {
         return $this->class;
+    }
+
+    /**
+     * Creates a new ThreadMetadata instance
+     *
+     * @return ThreadMetadata
+     */
+    protected function createThreadMetadata()
+    {
+        return new $this->metaClass();
+    }
+
+    /**
+     * DENORMALIZATION
+     *
+     * All following methods are relative to denormalization
+     */
+
+    /**
+     * Performs denormalization tricks
+     *
+     * @param Thread $thread
+     */
+    protected function denormalize(Thread $thread)
+    {
+        $this->doParticipants($thread);
+        $this->doEnsureThreadMetadataExists($thread);
+        $thread->denormalize();
+
+        foreach ($thread->getMessages() as $message) {
+            $this->messageManager->denormalize($message);
+        }
+    }
+
+    /**
+     * Ensures that the thread participants are up to date
+     */
+    protected function doParticipants(Thread $thread)
+    {
+        foreach ($thread->getMessages() as $message) {
+            $thread->addParticipant($message->getSender());
+        }
+    }
+
+    /**
+     * Ensures that metadata exists for each thread participant and that the
+     * last message dates are current
+     *
+     * @param Thread $thread
+     */
+    protected function doEnsureThreadMetadataExists(Thread $thread)
+    {
+        foreach ($thread->getParticipants() as $participant) {
+            if (!$meta = $thread->getMetadataForParticipant($participant)) {
+                $meta = $this->createThreadMetadata();
+                $meta->setParticipant($participant);
+                $thread->addMetadata($meta);
+            }
+        }
     }
 }
