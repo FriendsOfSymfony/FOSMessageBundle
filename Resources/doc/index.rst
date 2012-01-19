@@ -1,11 +1,14 @@
 Provides messenging features for your Symfony2 application.
 
-The persistence is storage agnostic. Any backend can be implemented: Doctrine, Propel, and others.
-Actually the Doctrine MongoDB implementation only is complete.
+The persistence is storage agnostic. Any backend may be implemented: Doctrine, Propel, etc.
+Presently, only the MongoDB implementation is complete.
 
 MessageBundle supports threads, spam detection, soft deletion and messenging permissions.
 
-MessageBundle can be used with FOS\UserBundle, but it is not required.
+MessageBundle requires FOSUserBundle by default, as `NewThreadMessageFormType`
+depends on the `fos_user_username` field type for entering a new message
+recipient. This dependency is optional if you implement a custom form type for
+new messages and specify your class in the `new_thread_form.type` config option.
 
 Installation
 ============
@@ -86,11 +89,14 @@ For exemple, if your user class is ``Acme\UserBundle\Document\User``::
 
 If you need a bundle providing a base user, see http://github.com/FriendsOfSymfony/UserBundle
 
+Creating concrete model classes
+-------------------------------
+
 MongoDB
 ~~~~~~~
 
-The MongoDB implementation does not provide concrete models.
-You must create a Thread class and a Message class in your application.
+The MongoDB implementation does not provide concrete models. You must create
+Thread and Message classes in your application.
 
 Thread class::
 
@@ -109,22 +115,27 @@ Thread class::
         /**
          * @MongoDB\Id
          */
-         protected $id;
+        protected $id;
 
         /**
          * @MongoDB\ReferenceMany(targetDocument="Acme\MessageBundle\Document\Message")
          */
-         protected $messages;
+        protected $messages;
+
+        /**
+         * @MongoDB\EmbedMany(targetDocument="Acme\MessageBundle\Document\ThreadMetadata")
+         */
+        protected $metadata;
 
         /**
          * @MongoDB\ReferenceMany(targetDocument="Acme\UserBundle\Document\User")
          */
-         protected $participants;
+        protected $participants;
 
         /**
          * @MongoDB\ReferenceOne(targetDocument="Acme\UserBundle\Document\User")
          */
-         protected $createdBy;
+        protected $createdBy;
     }
 
 Message class::
@@ -144,17 +155,22 @@ Message class::
         /**
          * @MongoDB\Id
          */
-         protected $id;
+        protected $id;
+
+        /**
+         * @MongoDB\EmbedMany(targetDocument="Acme\MessageBundle\Document\MessageMetadata")
+         */
+        protected $metadata;
 
         /**
          * @MongoDB\ReferenceOne(targetDocument="Acme\MessageBundle\Document\Thread")
          */
-         protected $thread;
+        protected $thread;
 
         /**
          * @MongoDB\ReferenceOne(targetDocument="Acme\UserBundle\Document\User")
          */
-         protected $sender;
+        protected $sender;
     }
 
 Configure your application::
@@ -169,8 +185,10 @@ Configure your application::
 ORM
 ~~~
 
-The ORM implementation does not provide concrete models.
-You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in your application::
+The ORM implementation does not provide concrete models. You must create Message
+MessageMetadata, Thread and ThreadMetadata classes in your application::
+
+Message class::
 
     // src/Acme/MessageBundle/Entity/Message.php
 
@@ -181,34 +199,36 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
     use Ornicar\MessageBundle\Entity\Message as BaseMessage;
 
     /**
-    * @ORM\Entity
-    */
+     * @ORM\Entity
+     */
     class Message extends BaseMessage
     {
         /**
-        * @ORM\Id
-        * @ORM\Column(type="integer")
-        * @ORM\generatedValue(strategy="AUTO")
-        */
+         * @ORM\Id
+         * @ORM\Column(type="integer")
+         * @ORM\generatedValue(strategy="AUTO")
+         */
         protected $id;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread")
-        * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread")
+         * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
+         */
         protected $thread;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
-        * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+         * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+         */
         protected $sender;
-        
+
         /**
-        * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\MessageMetadata", mappedBy="message", cascade={"all"})
-        */
+         * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\MessageMetadata", mappedBy="message", cascade={"all"})
+         */
         protected $metadata;
     }
+
+MessageMetadata class::
 
     // src/Acme/MessageBundle/Entity/MessageMetadata.php
 
@@ -219,28 +239,30 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
     use Ornicar\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
 
     /**
-    * @ORM\Entity
-    * @ORM\Table(name="message_message_metadata")
-    */
+     * @ORM\Entity
+     * @ORM\Table(name="message_message_metadata")
+     */
     class MessageMetadata extends BaseMessageMetadata
     {
         /**
-        * @ORM\Id
-        * @ORM\Column(type="integer")
-        * @ORM\generatedValue(strategy="AUTO")
-        */
+         * @ORM\Id
+         * @ORM\Column(type="integer")
+         * @ORM\generatedValue(strategy="AUTO")
+         */
         protected $id;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Message", inversedBy="metadata")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Message", inversedBy="metadata")
+         */
         protected $message;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+         */
         protected $participant;
     }
+
+Thread class::
 
     // src/Acme/MessageBundle/Entity/Thread.php
 
@@ -251,40 +273,42 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
     use Ornicar\MessageBundle\Entity\Thread as BaseThread;
 
     /**
-    * @ORM\Entity
-    * @ORM\Table(name="message_thread")
-    */
+     * @ORM\Entity
+     * @ORM\Table(name="message_thread")
+     */
     class Thread extends BaseThread
     {
         /**
-        * @ORM\Id
-        * @ORM\Column(type="integer")
-        * @ORM\generatedValue(strategy="AUTO")
-        */
+         * @ORM\Id
+         * @ORM\Column(type="integer")
+         * @ORM\generatedValue(strategy="AUTO")
+         */
         protected $id;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+         */
         protected $createdBy;
-        
+
         /**
-        * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\Message", mappedBy="thread")
-        */
+         * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\Message", mappedBy="thread")
+         */
         protected $messages;
-        
+
         /**
-        * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\ThreadMetadata", mappedBy="thread", cascade={"all"})
-        */
+         * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\ThreadMetadata", mappedBy="thread", cascade={"all"})
+         */
         protected $metadata;
-        
+
         public function __construct()
         {
             parent::__construct();
-            
+
             $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
-        }   
+        }
     }
+
+ThreadMetadata class::
 
     // src/Acme/MessageBundle/Entity/ThreadMetadata.php
 
@@ -295,28 +319,28 @@ You must create a Message, MessageMetadata, Thread and ThreadMetadata classes in
     use Ornicar\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
 
     /**
-    * @ORM\Entity
-    * @ORM\Table(name="message_thread_metadata")
-    */
+     * @ORM\Entity
+     * @ORM\Table(name="message_thread_metadata")
+     */
     class ThreadMetadata extends BaseThreadMetadata
     {
         /**
-        * @ORM\Id
-        * @ORM\Column(type="integer")
-        * @ORM\generatedValue(strategy="AUTO")
-        */
+         * @ORM\Id
+         * @ORM\Column(type="integer")
+         * @ORM\generatedValue(strategy="AUTO")
+         */
         protected $id;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread", inversedBy="metadata")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread", inversedBy="metadata")
+         */
         protected $thread;
-        
+
         /**
-        * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
-        */
+         * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+         */
         protected $participant;
-        
+
     }
 
 Configure your application::
@@ -332,7 +356,7 @@ Configure your application::
 Register routing
 ----------------
 
-You will probably want to include the builtin routes.
+You will probably want to include the built-in routes.
 
 In YAML::
 
@@ -473,8 +497,8 @@ Then, set the spam detector service accordingly::
 Other strategy
 --------------
 
-You can use any spam dectetor service, including one of your own.
-The class must implement ``Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface``.
+You can use any spam dectetor service, including one of your own, provided the
+class implements ``Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface``.
 
 Messenging permissions
 ======================
@@ -539,8 +563,8 @@ All configuration options are listed below::
 
     ornicar_message
         db_driver:              mongodb
-        thread_class:           Acme\MessageBundle\Document\Thread      
-        message_class:          Acme\MessageBundle\Document\Message    
+        thread_class:           Acme\MessageBundle\Document\Thread
+        message_class:          Acme\MessageBundle\Document\Message
         message_manager:        ornicar_message.message_manager         # See ModelManager\MessageManagerInterface
         thread_manager:         ornicar_message.thread_manager          # See ModelManager\ThreadManagerInterface
         sender:                 ornicar_message.sender                  # See Sender\SenderInterface
@@ -590,8 +614,8 @@ MongoDB implementation examples:
 - ``DocumentManager/ThreadManager.php``
 - ``DocumentManager/MessageManager.php``
 
-Note that the MongoDB manager classes only contain MongoDB specific logic,
-backend agnostic logic lives in the abstract managers.
+Note that the MongoDB manager classes only contain MongoDB-specific logic.
+Backend-agnostic logic lives within the abstract managers.
 
 
 Mapping
