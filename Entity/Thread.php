@@ -2,9 +2,10 @@
 
 namespace Ornicar\MessageBundle\Entity;
 
-use Ornicar\MessageBundle\Model\Thread as BaseThread;
-use Ornicar\MessageBundle\Model\MessageInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Ornicar\MessageBundle\Model\MessageInterface;
+use Ornicar\MessageBundle\Model\Thread as BaseThread;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 abstract class Thread extends BaseThread
@@ -48,77 +49,9 @@ abstract class Thread extends BaseThread
     /**
      * Date this thread was created at
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $createdAt;
-
-    /**
-     * Initializes the collections
-     */
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-        $this->metadata = new ArrayCollection();
-    }
-
-    /**
-     * Gets the messages contained in the thread
-     *
-     * @return array of MessageInterface
-     */
-    public function getMessages()
-    {
-        return $this->messages->toArray();
-    }
-
-    /**
-     * Adds a new message to the thread
-     *
-     * @param MessageInterface $message
-     */
-    public function addMessage(MessageInterface $message)
-    {
-        $this->messages->add($message);
-    }
-
-    /**
-     * Gets the participant that created the thread
-     * Generally the sender of the first message
-     *
-     * @return ParticipantInterface
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Sets the participant that created the thread
-     * Generally the sender of the first message
-     *
-     * @param ParticipantInterface
-     */
-    public function setCreatedBy(ParticipantInterface $participant)
-    {
-        $this->createdBy = $participant;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param  \DateTime
-     * @return null
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
 
     /**
      * Gets the users participating in this conversation
@@ -132,6 +65,9 @@ abstract class Thread extends BaseThread
 
     /**
      * Gets the users participating in this conversation
+     *
+     * Since the ORM schema does not map the participants collection field, it
+     * must be created on demand. 
      *
      * @return ArrayCollection
      */
@@ -174,58 +110,21 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Tells if this thread is deleted by this participant
+     * Get the collection of ThreadMetadata.
      *
-     * @return bool
+     * @return Collection
      */
-    public function isDeletedByParticipant(ParticipantInterface $participant)
-    {
-        if ($meta = $this->getMetadataForParticipant($participant)) {
-            return $meta->getIsDeleted();
-        }
-
-        return false;
-    }
-
-    /**
-     * Sets whether or not this participant has deleted this thread
-     *
-     * @param ParticipantInterface $participant
-     * @param boolean $isDeleted
-     */
-    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
-    {
-        if ($meta = $this->getMetadataForParticipant($participant)) {
-            $meta->setIsDeleted($isDeleted);
-
-            if ($isDeleted) {
-                // also mark all thread messages as read
-                foreach ($this->getMessages() as $message) {
-                    $message->setIsReadByParticipant($participant, true);
-                }
-            }
-        }
-    }
-
     public function getAllMetadata()
     {
         return $this->metadata;
     }
 
-    public function getMetadataForParticipant($participant)
-    {
-        foreach ($this->metadata as $meta) {
-            if ($meta->getParticipant()->getId() == $participant->getId()) {
-                return $meta;
-            }
-        }
-
-        return null;
-    }
-
+    /**
+     * @see Ornicar\MessageBundle\Model\Thread::addMetadata()
+     */
     public function addMetadata(ThreadMetadata $meta)
     {
         $meta->setThread($this);
-        $this->metadata->add($meta);
+        parent::addMetadata($meta);
     }
 }

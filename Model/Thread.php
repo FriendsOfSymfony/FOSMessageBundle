@@ -2,7 +2,8 @@
 
 namespace Ornicar\MessageBundle\Model;
 
-use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
 /**
@@ -34,17 +35,92 @@ abstract class Thread implements ThreadInterface
     protected $isSpam = false;
 
     /**
-     * Gets the thread unique id
+     * Messages contained in this thread
      *
-     * @return mixed
-     **/
+     * @var Collection of MessageInterface
+     */
+    protected $messages;
+
+    /**
+     * Thread metadata
+     *
+     * @var Collection of ThreadMetadata
+     */
+    protected $metadata;
+
+    /**
+     * Users participating in this conversation
+     *
+     * @var Collection of ParticipantInterface
+     */
+    protected $participants;
+
+    /**
+     * Date this thread was created at
+     *
+     * @var DateTime
+     */
+    protected $createdAt;
+
+    /**
+     * Participant that created the thread
+     *
+     * @var ParticipantInterface
+     */
+    protected $createdBy;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+        $this->metadata = new ArrayCollection();
+        $this->participants = new ArrayCollection();
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getId()
+     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return string
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getCreatedAt()
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::setCreatedAt()
+     */
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getCreatedBy()
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::setCreatedBy()
+     */
+    public function setCreatedBy(ParticipantInterface $participant)
+    {
+        $this->createdBy = $participant;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getSubject()
      */
     public function getSubject()
     {
@@ -52,8 +128,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @param  string
-     * @return null
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::setSubject()
      */
     public function setSubject($subject)
     {
@@ -78,9 +153,84 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * Tells if all messages of this participant are read
-     *
-     * @return bool
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::addMessage()
+     */
+    public function addMessage(MessageInterface $message)
+    {
+        $this->messages->add($message);
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getMessages()
+     */
+    public function getMessages()
+    {
+        return $this->messages->toArray();
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getFirstMessage()
+     */
+    public function getFirstMessage()
+    {
+        $messages = $this->getMessages();
+
+        return empty($messages) ? null : reset($messages);
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getLastMessage()
+     */
+    public function getLastMessage()
+    {
+        $messages = $this->getMessages();
+
+        return empty($messages) ? null : end($messages);
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::isDeletedByParticipant()
+     */
+    public function isDeletedByParticipant(ParticipantInterface $participant)
+    {
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            return $meta->getIsDeleted();
+        }
+
+        return false;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::setIsDeletedByParticipant()
+     */
+    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
+    {
+        if (!$meta = $this->getMetadataForParticipant($participant)) {
+            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+        }
+
+        $meta->setIsDeleted($isDeleted);
+
+        if ($isDeleted) {
+            // also mark all thread messages as read
+            foreach ($this->getMessages() as $message) {
+                $message->setIsReadByParticipant($participant, true);
+            }
+        }
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::setIsDeleted()
+     */
+    public function setIsDeleted($isDeleted)
+    {
+        foreach($this->getParticipants() as $participant) {
+            $this->setIsDeletedByParticipant($participant, $isDeleted);
+        }
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ReadableInterface::isReadByParticipant()
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -94,10 +244,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * Sets whether or not this participant has read this message
-     *
-     * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @see Ornicar\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
@@ -107,51 +254,34 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * Sets the thread as deleted or not deleted for all participants
+     * Adds ThreadMetadata to the metadata collection.
      *
-     * @param boolean $isDeleted
+     * @param ThreadMetadata $meta
      */
-    public function setIsDeleted($isDeleted)
+    public function addMetadata(ThreadMetadata $meta)
     {
-        foreach($this->getParticipants() as $participant) {
-            $this->setIsDeletedByParticipant($participant, $isDeleted);
-        }
+        $this->metadata->add($meta);
     }
 
     /**
-     * Gets the first message of the thread
+     * Gets the ThreadMetadata for a participant.
      *
-     * @return MessageInterface the first message
+     * @param ParticipantInterface $participant
+     * @return ThreadMetadata
      */
-    public function getFirstMessage()
+    public function getMetadataForParticipant(ParticipantInterface $participant)
     {
-        $messages = $this->getMessages();
-        if(empty($messages)) {
-            return null;
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
         }
 
-        return reset($messages);
+        return null;
     }
 
     /**
-     * Gets the last message of the thread
-     *
-     * @return MessageInterface the last message
-     */
-    public function getLastMessage()
-    {
-        $messages = $this->getMessages();
-        if(empty($messages)) {
-            return null;
-        }
-
-        return end($messages);
-    }
-
-    /**
-     * Get the participants this participant is talking with.
-     *
-     * @return array of ParticipantInterface
+     * @see Ornicar\MessageBundle\Model\ThreadInterface::getOtherParticipants()
      */
     public function getOtherParticipants(ParticipantInterface $participant)
     {

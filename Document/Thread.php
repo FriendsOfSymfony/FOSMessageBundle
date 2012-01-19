@@ -11,47 +11,12 @@ use Ornicar\MessageBundle\Model\ParticipantInterface;
 abstract class Thread extends AbstractThread
 {
     /**
-     * Messages contained in this thread
-     *
-     * @var Collection of MessageInterface
-     */
-    protected $messages;
-
-    /**
-     * Thread metadata
-     *
-     * @var Collection of ThreadMetadata
-     */
-    protected $metadata;
-
-    /**
-     * Users participating in this conversation
-     *
-     * @var Collection of ParticipantInterface
-     */
-    protected $participants;
-
-    /**
-     * Participant that created the thread
-     *
-     * @var ParticipantInterface
-     */
-    protected $createdBy;
-
-    /**
-     * Date this thread was created at
-     *
-     * @var \DateTime
-     */
-    protected $createdAt;
-
-    /**
      * Date that the last message in this thread was created at
      *
      * This denormalization field is used for sorting threads in the inbox and
      * sent list.
      *
-     * @var \DateTime
+     * @var DateTime
      */
     protected $lastMessageDate;
 
@@ -90,75 +55,6 @@ abstract class Thread extends AbstractThread
     protected $activeSenders = array();
 
     /**
-     * Initializes the collections
-     */
-    public function __construct()
-    {
-        $this->messages = new ArrayCollection();
-        $this->metadata = new ArrayCollection();
-        $this->participants = new ArrayCollection();
-    }
-
-    /**
-     * Gets the messages contained in the thread
-     *
-     * @return array of MessageInterface
-     */
-    public function getMessages()
-    {
-        return $this->messages->toArray();
-    }
-
-    /**
-     * Adds a new message to the thread
-     *
-     * @param MessageInterface $message
-     */
-    public function addMessage(MessageInterface $message)
-    {
-        $this->messages->add($message);
-    }
-
-    /**
-     * Gets the participant that created the thread
-     * Generally the sender of the first message
-     *
-     * @return ParticipantInterface
-     */
-    public function getCreatedBy()
-    {
-        return $this->createdBy;
-    }
-
-    /**
-     * Sets the participant that created the thread
-     * Generally the sender of the first message
-     *
-     * @param ParticipantInterface
-     */
-    public function setCreatedBy(ParticipantInterface $participant)
-    {
-        $this->createdBy = $participant;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param  \DateTime
-     * @return null
-     */
-    public function setCreatedAt(\DateTime $createdAt)
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
      * Gets the users participating in this conversation
      *
      * @return array of ParticipantInterface
@@ -191,66 +87,6 @@ abstract class Thread extends AbstractThread
     public function isParticipant(ParticipantInterface $participant)
     {
         return $this->participants->contains($participant);
-    }
-
-    /**
-     * Tells if this thread is deleted by this participant
-     *
-     * @return bool
-     */
-    public function isDeletedByParticipant(ParticipantInterface $participant)
-    {
-        if ($meta = $this->getMetadataForParticipant($participant)) {
-            return $meta->getIsDeleted();
-        }
-
-        return false;
-    }
-
-    /**
-     * Sets whether or not this participant has deleted this thread
-     *
-     * @param ParticipantInterface $participant
-     * @param boolean $isDeleted
-     * @throws InvalidArgumentException if no metadata exists for the participant
-     */
-    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
-    {
-        if (!$meta = $this->getMetadataForParticipant($participant)) {
-            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
-        }
-
-        $meta->setIsDeleted($isDeleted);
-
-        if ($isDeleted) {
-            // also mark all thread messages as read
-            foreach ($this->getMessages() as $message) {
-                $message->setIsReadByParticipant($participant, true);
-            }
-        }
-    }
-
-    /**
-     * @param ParticipantInterface $participant
-     * @return ThreadMetadata
-     */
-    public function getMetadataForParticipant(ParticipantInterface $participant)
-    {
-        foreach ($this->metadata as $meta) {
-            if ($meta->getParticipant()->getId() == $participant->getId()) {
-                return $meta;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param ThreadMetadata $meta
-     */
-    public function addMetadata(ThreadMetadata $meta)
-    {
-        $this->metadata->add($meta);
     }
 
     /**

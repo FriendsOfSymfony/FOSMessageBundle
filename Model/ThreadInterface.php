@@ -64,7 +64,7 @@ interface ThreadInterface extends ReadableInterface
      * Sets the participant that created the thread
      * Generally the sender of the first message
      *
-     * @parm ParticipantInterface
+     * @param ParticipantInterface
      */
     function setCreatedBy(ParticipantInterface $participant);
 
@@ -72,7 +72,7 @@ interface ThreadInterface extends ReadableInterface
      * Gets the date this thread was created at
      * Generally the date of the first message
      *
-     * @return \DateTime
+     * @return DateTime
      */
     function getCreatedAt();
 
@@ -80,7 +80,7 @@ interface ThreadInterface extends ReadableInterface
      * Sets the date this thread was created at
      * Generally the date of the first message
      *
-     * @param  \DateTime
+     * @param DateTime
      */
     function setCreatedAt(\DateTime $createdAt);
 

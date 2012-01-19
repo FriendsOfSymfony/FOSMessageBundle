@@ -2,9 +2,9 @@
 
 namespace Ornicar\MessageBundle\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
-use DateTime;
 
 /**
  * Abstract message model
@@ -48,23 +48,32 @@ abstract class Message implements MessageInterface
      */
     protected $thread;
 
+    /**
+     * Collection of MessageMetadata
+     *
+     * @var Collection of MessageMetadata
+     */
+    protected $metadata;
+
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
-        $this->createdAt = new DateTime();
+        $this->createdAt = new \DateTime();
+        $this->metadata = new ArrayCollection();
     }
 
     /**
-     * Gets the message unique id
-     *
-     * @return mixed
-     **/
+     * @see Ornicar\MessageBundle\Model\MessageInterface::getId()
+     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return ThreadInterface
+     * @see Ornicar\MessageBundle\Model\MessageInterface::getThread()
      */
     public function getThread()
     {
@@ -72,8 +81,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @param  ThreadInterface
-     * @return null
+     * @see Ornicar\MessageBundle\Model\MessageInterface::setThread()
      */
     public function setThread(ThreadInterface $thread)
     {
@@ -81,7 +89,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @return DateTime
+     * @see Ornicar\MessageBundle\Model\MessageInterface::getCreatedAt()
      */
     public function getCreatedAt()
     {
@@ -89,7 +97,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @return string
+     * @see Ornicar\MessageBundle\Model\MessageInterface::getBody()
      */
     public function getBody()
     {
@@ -97,8 +105,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @param  string
-     * @return null
+     * @see Ornicar\MessageBundle\Model\MessageInterface::setBody()
      */
     public function setBody($body)
     {
@@ -106,7 +113,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @return ParticipantInterface
+     * @see Ornicar\MessageBundle\Model\MessageInterface::getSender()
      */
     public function getSender()
     {
@@ -114,8 +121,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @param  ParticipantInterface
-     * @return null
+     * @see Ornicar\MessageBundle\Model\MessageInterface::setSender()
      */
     public function setSender(ParticipantInterface $sender)
     {
@@ -130,5 +136,56 @@ abstract class Message implements MessageInterface
     public function getTimestamp()
     {
         return $this->getCreatedAt()->getTimestamp();
+    }
+
+    /**
+     * Adds MessageMetadata to the metadata collection.
+     *
+     * @param MessageMetadata $meta
+     */
+    public function addMetadata(MessageMetadata $meta)
+    {
+        $this->metadata->add($meta);
+    }
+
+    /**
+     * Get the MessageMetadata for a participant.
+     *
+     * @param ParticipantInterface $participant
+     * @return MessageMetadata
+     */
+    public function getMetadataForParticipant(ParticipantInterface $participant)
+    {
+        foreach ($this->metadata as $meta) {
+            if ($meta->getParticipant()->getId() == $participant->getId()) {
+                return $meta;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     */
+    public function isReadByParticipant(ParticipantInterface $participant)
+    {
+        if ($meta = $this->getMetadataForParticipant($participant)) {
+            return $meta->getIsRead();
+        }
+
+        return false;
+    }
+
+    /**
+     * @see Ornicar\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     */
+    public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
+    {
+        if (!$meta = $this->getMetadataForParticipant($participant)) {
+            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+        }
+
+        $meta->setIsRead($isRead);
     }
 }
