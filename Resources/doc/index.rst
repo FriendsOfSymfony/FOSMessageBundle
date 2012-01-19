@@ -87,7 +87,7 @@ For exemple, if your user class is ``Acme\UserBundle\Document\User``::
         // your code here
     }
 
-If you need a bundle providing a base user, see http://github.com/FriendsOfSymfony/UserBundle
+If you need a bundle providing a base user, see http://github.com/FriendsOfSymfony/FOSUserBundle
 
 Creating concrete model classes
 -------------------------------
