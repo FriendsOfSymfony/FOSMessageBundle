@@ -161,7 +161,7 @@ class MessageManager extends BaseMessageManager
      * Returns the fully qualified comment thread class name
      *
      * @return string
-     **/
+     */
     public function getClass()
     {
         return $this->class;

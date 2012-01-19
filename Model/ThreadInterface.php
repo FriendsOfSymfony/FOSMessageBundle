@@ -10,7 +10,7 @@ interface ThreadInterface extends ReadableInterface
      * Gets the message unique id
      *
      * @return mixed
-     **/
+     */
     function getId();
 
     /**

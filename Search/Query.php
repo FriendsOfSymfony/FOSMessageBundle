@@ -63,7 +63,7 @@ class Query
      * Converts to the original term string
      *
      * @return string
-     **/
+     */
     public function __toString()
     {
         return (string) $this->getOriginal();

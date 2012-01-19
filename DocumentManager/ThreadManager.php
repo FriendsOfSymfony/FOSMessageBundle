@@ -251,7 +251,7 @@ class ThreadManager extends BaseThreadManager
      * Returns the fully qualified comment thread class name
      *
      * @return string
-     **/
+     */
     public function getClass()
     {
         return $this->class;

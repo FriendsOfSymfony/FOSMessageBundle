@@ -11,6 +11,6 @@ interface QueryFactoryInterface
      * Gets the search term
      *
      * @return Query the term object
-     **/
+     */
     function createFromRequest();
 }

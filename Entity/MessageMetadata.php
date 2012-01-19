@@ -15,7 +15,7 @@ abstract class MessageMetadata extends BaseMessageMetadata
      * Gets the metadata id
      *
      * @return integer
-     **/
+     */
     public function getId()
     {
         return $this->id;

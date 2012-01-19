@@ -15,7 +15,7 @@ abstract class ThreadMetadata extends BaseThreadMetadata
      * Gets the thread map id
      *
      * @return integer
-     **/
+     */
     public function getId()
     {
         return $this->id;

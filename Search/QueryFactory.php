@@ -37,7 +37,7 @@ class QueryFactory implements QueryFactoryInterface
      * Gets the search term
      *
      * @return Term the term object
-     **/
+     */
     public function createFromRequest()
     {
         $original = $this->request->query->get($this->queryParameter);
