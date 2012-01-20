@@ -23,7 +23,7 @@ Add MessageBundle to your src/ dir
 
 ::
 
-    $ git submodule add git://github.com/Ornicar/MessageBundle.git vendor/bundles/Ornicar/MessageBundle
+    $ git submodule add git://github.com/ornicar/OrnicarMessageBundle.git vendor/bundles/Ornicar/MessageBundle
 
 Add the Ornicar namespace to your autoloader
 ----------------------------------------
