@@ -5,6 +5,8 @@ namespace Ornicar\MessageBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Ornicar\MessageBundle\Model\Message as BaseMessage;
 
+use Ornicar\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
+
 abstract class Message extends BaseMessage
 {
     /**
@@ -20,7 +22,7 @@ abstract class Message extends BaseMessage
     /**
      * @see Ornicar\MessageBundle\Model\Message::addMetadata()
      */
-    public function addMetadata(MessageMetadata $meta)
+    public function addMetadata(ModelMessageMetadata $meta)
     {
         $meta->setMessage($this);
         parent::addMetadata($meta);
