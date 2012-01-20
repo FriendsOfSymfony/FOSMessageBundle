@@ -8,6 +8,8 @@ use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\Thread as BaseThread;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 
+use Ornicar\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
+
 abstract class Thread extends BaseThread
 {
     /**
@@ -122,7 +124,7 @@ abstract class Thread extends BaseThread
     /**
      * @see Ornicar\MessageBundle\Model\Thread::addMetadata()
      */
-    public function addMetadata(ThreadMetadata $meta)
+    public function addMetadata(ModelThreadMetadata $meta)
     {
         $meta->setThread($this);
         parent::addMetadata($meta);
