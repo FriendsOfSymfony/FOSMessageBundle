@@ -4,7 +4,6 @@ namespace Ornicar\MessageBundle\MessageBuilder;
 
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Sender\SenderInterface;
 use Ornicar\MessageBundle\Model\ThreadInterface;
 
 /**
@@ -14,13 +13,6 @@ use Ornicar\MessageBundle\Model\ThreadInterface;
  */
 abstract class AbstractMessageBuilder
 {
-    /**
-     * Message manager
-     *
-     * @var SenderInterface
-     */
-    protected $messageSender;
-
     /**
      * The message we are building
      *
