@@ -177,7 +177,7 @@ class MessageManager extends BaseMessageManager
         $message->denormalize();
         $this->dm->persist($message);
         if ($andFlush) {
-            $this->dm->flush(array('safe' => true));
+            $this->dm->flush();
         }
     }
 
