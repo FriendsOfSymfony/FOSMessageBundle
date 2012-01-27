@@ -231,7 +231,7 @@ class ThreadManager extends BaseThreadManager
         $this->denormalize($thread);
         $this->dm->persist($thread);
         if ($andFlush) {
-            $this->dm->flush(array('safe' => true));
+            $this->dm->flush();
         }
     }
 
