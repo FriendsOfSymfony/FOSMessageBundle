@@ -56,7 +56,6 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
         $this
             ->setName('ornicar:message:mongodb:migrate:metadata')
             ->setDescription('Migrates document hash fields to embedded metadata and active/unread arrays')
-            ->setHelp('woofoo')
             ->addArgument('participantClass', InputArgument::REQUIRED, 'Participant class')
             ->addOption('safe', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->addOption('fsync', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
