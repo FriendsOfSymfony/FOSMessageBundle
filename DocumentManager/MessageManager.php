@@ -136,7 +136,7 @@ class MessageManager extends BaseMessageManager
         $queryBuilder->update()
             ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()));
 
-        /* If marking the message as read for a participant, we can should pull
+        /* If marking the message as read for a participant, we should pull
          * their ID out of the unreadForParticipants array. The same is not
          * true for the inverse. We should only add a participant ID to this
          * array if the message is not considered spam.
