@@ -361,10 +361,11 @@ class ThreadManager extends BaseThreadManager
                     $timestamp = max($timestamp, $message->getTimestamp());
                 }
             }
-
-            $date = new \DateTime();
-            $date->setTimestamp($timestamp);
-            $meta->setLastMessageDate($date);
+            if ($timestamp) {
+                $date = new \DateTime();
+                $date->setTimestamp($timestamp);
+                $meta->setLastMessageDate($date);
+            }
         }
     }
 
