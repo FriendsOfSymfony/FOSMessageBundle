@@ -3,7 +3,7 @@
     "description": "Provides messenging features for your Symfony2 application.",
     "keywords": ["symfony", "message"],
     "homepage": "https://github.com/ornicar/OrnicarMessageBundle",
-    "type": "library",
+    "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
         {
