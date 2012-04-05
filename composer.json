@@ -20,7 +20,7 @@
     },
     "suggest": {
         "doctrine/orm": ">2.1,<2.3",
-        "doctrine/mongodb-odm-bundle": "2.*"
+        "doctrine/mongodb-odm-bundle": "2.1"
 
     },
     "autoload": {
