@@ -22,7 +22,7 @@
         "doctrine/mongodb-odm-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Ornicar\\OrnicarMessageBundle": "" }
+        "psr-0": { "Ornicar\\MessageBundle": "" }
     },
-    "target-dir": "Ornicar/OrnicarMessageBundle"
+    "target-dir": "Ornicar/MessageBundle"
 }
