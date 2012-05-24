@@ -114,10 +114,11 @@ If you need a bundle providing a base user, see http://github.com/FriendsOfSymfo
 Creating concrete model classes
 -------------------------------
 
-For MondoDB: https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/concrete_mongo.rst
+- For MongoDB_
+- For Doctrine_ORM_
 
-For Doctrine ORM: https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/concrete_orm.rst
-
+.. _MongoDB: concrete_mongo.rst
+.. _Doctrine_ORM: concrete_orm.rst
 
 Register routing
 ----------------
