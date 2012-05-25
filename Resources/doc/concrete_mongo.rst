@@ -101,6 +101,10 @@ ThreadMetaData class
      */
     class ThreadMetadata extends BaseThreadMetadata
     {
+        /**
+         * @ODM\ReferenceOne(targetDocument="Mashup\UserBundle\Document\User")
+         */
+        protected $participant;
     }
 
 MessageMetaData class
@@ -119,6 +123,10 @@ MessageMetaData class
      */
     class MessageMetadata extends BaseMessageMetadata
     {
+        /**
+         * @ODM\ReferenceOne(targetDocument="Mashup\UserBundle\Document\User")
+         */
+        protected $participant;
     }
 
 Configure your application::
