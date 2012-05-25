@@ -146,6 +146,11 @@ Have a look to the default controller to learn how to use the messenging service
 
     Controller\MessageController.php
 
+You can also `simply send a message from your code`__.
+
+.. _sending: sending_a_message.rst
+__ sending_
+
 Get user threads
 ----------------
 
