@@ -2,7 +2,7 @@
 
 namespace Ornicar\MessageBundle\FormType;
 
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
  */
 class NewThreadMessageFormType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('recipient', 'fos_user_username')
