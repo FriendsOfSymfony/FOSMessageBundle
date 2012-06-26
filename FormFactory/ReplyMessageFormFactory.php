@@ -22,6 +22,6 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
         $message = $this->createModelInstance();
         $message->setThread($thread);
 
-        return $this->formFactory->createNamed($this->formType, $this->formName, $message);
+        return $this->formFactory->createNamed($this->formName, $this->formType, $message);
     }
 }
