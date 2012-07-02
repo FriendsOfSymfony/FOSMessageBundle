@@ -1,5 +1,7 @@
 Documentation: https://github.com/ornicar/OrnicarMessageBundle/blob/master/Resources/doc/index.rst
 
+Note: Symfony 2.0 users should use the `2.0` branch of this bundle. The `master` branch tracks Symfony 2.1.
+
 ---
 
 Provides messenging features for your Symfony2 application.
