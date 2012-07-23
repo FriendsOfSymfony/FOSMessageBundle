@@ -20,15 +20,11 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
             throw new \InvalidArgumentException(sprintf('Message must be a NewThreadMessage instance, "%s" given', get_class($message)));
         }
 
-        $thread = $this->composer->newThread()
+        return $this->composer->newThread()
             ->setSubject($message->getSubject())
+            ->setRecipients($message->getRecipients())
             ->setSender($this->getAuthenticatedParticipant())
-            ->setBody($message->getBody());
-
-        foreach($message->getRecipients() as $recipient) {
-            $thread->addRecipient($recipient);
-        }
-
-        return $thread->getMessage();
+            ->setBody($message->getBody())
+            ->getMessage();
     }
 }
