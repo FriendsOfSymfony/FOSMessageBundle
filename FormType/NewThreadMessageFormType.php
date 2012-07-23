@@ -15,7 +15,7 @@ class NewThreadMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('collection', array(
+            ->add('recipients', 'collection', array(
                 'type' => 'fos_user_username', 
                 'allow_add' => true, 
                 'by_reference' => false
