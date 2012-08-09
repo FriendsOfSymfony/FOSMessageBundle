@@ -101,6 +101,19 @@ abstract class Thread extends BaseThread
     }
 
     /**
+     * Adds many participants to the thread
+     * 
+     * @param array or Iterable $participants
+     * @return null
+     */
+    public function addParticipants($participants)
+    {
+        foreach($participants as $participant) {
+            $this->addParticipant($participant);
+        }
+    }
+
+    /**
      * Tells if the user participates to the conversation
      *
      * @param ParticipantInterface $participant

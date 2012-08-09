@@ -8,14 +8,16 @@
 
         <constraint name="Ornicar\MessageBundle\Validator\Spam" />
 
-        <property name="recipient">
-            <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
-            <constraint name="Ornicar\MessageBundle\Validator\SelfRecipient" />
-            <constraint name="NotBlank">
-                <option name="message">No user with that username</option>
-            </constraint>
-            <constraint name="Type">
-                <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
+        <property name="recipients">
+            <constraint name="All">
+                <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
+                <constraint name="Ornicar\MessageBundle\Validator\SelfRecipient" />
+                <constraint name="NotBlank">
+                    <option name="message">No user with that username</option>
+                </constraint>
+                <constraint name="Type">
+                    <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
+                </constraint>
             </constraint>
         </property>
 

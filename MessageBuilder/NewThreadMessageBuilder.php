@@ -36,4 +36,15 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
 
         return $this;
     }
+
+    /**
+     * @param array
+     * @return NewThreadMessageBuilder (fluent interface)
+     */
+    public function setRecipients($recipients)
+    {
+        $this->thread->addParticipants($recipients);
+
+        return $this;
+    }
 }
