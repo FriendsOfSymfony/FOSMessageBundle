@@ -81,12 +81,12 @@ abstract class Thread extends AbstractThread
     /**
      * Adds many participants to the thread
      * 
-     * @param array or Iterable $participants
+     * @param array|\Traversable $participants
      * @return null
      */
     public function addParticipants($participants)
     {
-        foreach($participants as $participant) {
+        foreach ($participants as $participant) {
             $this->addParticipant($participant);
         }
     }

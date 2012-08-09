@@ -9,7 +9,7 @@ class NewThreadMessage extends AbstractMessage
      *
      * @var ParticipantInterface
      */
-    protected $recipients;
+    protected $recipients = array();
 
     /**
      * The thread subject
@@ -36,7 +36,7 @@ class NewThreadMessage extends AbstractMessage
     }
 
     /**
-     * @return ParticipantInterface
+     * @return array | Doctrine\Common\Collections\ArrayCollection
      */
     public function getRecipients()
     {
