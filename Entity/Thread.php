@@ -69,7 +69,7 @@ abstract class Thread extends BaseThread
      * Gets the users participating in this conversation
      *
      * Since the ORM schema does not map the participants collection field, it
-     * must be created on demand. 
+     * must be created on demand.
      *
      * @return ArrayCollection
      */
@@ -98,6 +98,26 @@ abstract class Thread extends BaseThread
         if (!$this->isParticipant($participant)) {
             $this->getParticipantsCollection()->add($participant);
         }
+    }
+
+    /**
+     * Adds many participants to the thread
+     *
+     * @param array|Collection
+     *
+     * @return Thread
+     */
+    public function addParticipants($participants)
+    {
+        if (!is_array($participants) && !$participants instanceof Collection) {
+            throw new \InvalidArgumentException("Participants must array or instanceof Collection");
+        }
+
+        foreach ($participants as $participant) {
+            $this->addParticipant($participant);
+        }
+
+        return $this;
     }
 
     /**

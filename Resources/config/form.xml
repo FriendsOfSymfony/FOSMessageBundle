@@ -7,6 +7,7 @@
     <services>
 
         <service id="ornicar_message.new_thread_form.type.default" class="Ornicar\MessageBundle\FormType\NewThreadMessageFormType" public="false" />
+        <service id="ornicar_message.new_thread_multiple_form.type" class="Ornicar\MessageBundle\FormType\NewThreadMultipleMessageFormType" public="false" />
 
         <service id="ornicar_message.reply_form.type.default" class="Ornicar\MessageBundle\FormType\ReplyMessageFormType" public="false" />
 
@@ -31,6 +32,13 @@
             <argument type="service" id="ornicar_message.participant_provider" />
         </service>
 
+        <service id="ornicar_message.new_thread_multiple_form.handler" class="Ornicar\MessageBundle\FormHandler\NewThreadMultipleMessageFormHandler" scope="request" public="false">
+            <argument type="service" id="request" />
+            <argument type="service" id="ornicar_message.composer" />
+            <argument type="service" id="ornicar_message.sender" />
+            <argument type="service" id="ornicar_message.participant_provider" />
+        </service>
+
         <service id="ornicar_message.reply_form.handler.default" class="Ornicar\MessageBundle\FormHandler\ReplyMessageFormHandler" scope="request" public="false">
             <argument type="service" id="request" />
             <argument type="service" id="ornicar_message.composer" />
@@ -38,6 +46,14 @@
             <argument type="service" id="ornicar_message.participant_provider" />
         </service>
 
+        <service id="ornicar_message.recipients_data_transformer" class="Ornicar\MessageBundle\DataTransformer\RecipientsDataTransformer"  public="false">
+            <argument type="service" id="fos_user.user_to_username_transformer" />
+        </service>
+
+        <service id="ornicar_message.recipients_selector" class="Ornicar\MessageBundle\FormType\RecipientsType" public="true">
+            <argument type="service" id="ornicar_message.recipients_data_transformer" />
+            <tag name="form.type" alias="recipients_selector" />
+        </service>
     </services>
 
 </container>

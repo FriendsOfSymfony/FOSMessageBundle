@@ -5,6 +5,7 @@ namespace Ornicar\MessageBundle\MessageBuilder;
 use Ornicar\MessageBundle\Model\MessageInterface;
 use Ornicar\MessageBundle\Model\ParticipantInterface;
 use Ornicar\MessageBundle\Sender\SenderInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Fluent interface message builder for new thread messages
@@ -36,4 +37,18 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
 
         return $this;
     }
+
+    /**
+     * @param \Doctrine\Common\Collections\Collection $recipients
+     *
+     * @return NewThreadMessageBuilder
+     */
+    public function addRecipients(Collection $recipients) {
+        foreach ($recipients as $recipient) {
+            $this->addRecipient($recipient);
+        }
+
+        return $this;
+    }
+
 }
