@@ -16,4 +16,4 @@ Configure your application::
           name:               message
 
 
-Currently multiple functionality is based on FOSUserBundle but you can define custom form type for multiple recipients and use user own recipients transformer
+Currently multiple functionality is based on FOSUserBundle but you can define custom form type for multiple recipients and use your own recipients transformer
