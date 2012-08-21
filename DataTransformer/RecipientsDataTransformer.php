@@ -31,13 +31,13 @@ class RecipientsDataTransformer implements DataTransformerInterface
     /**
      * Transforms a collection of recipients into a string
      *
-     * @param Collection|null $recipients
+     * @param Collection $recipients
      *
      * @return string
      */
     public function transform($recipients)
     {
-        if (null === $recipients || $recipients->count() == 0) {
+        if ($recipients->count() == 0) {
             return "";
         }
 
@@ -55,7 +55,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @param string $usernames
      *
-     * @return array|null
+     * @param Collection $recipients
      */
     public function reverseTransform($usernames)
     {
@@ -67,18 +67,18 @@ class RecipientsDataTransformer implements DataTransformerInterface
             throw new UnexpectedTypeException($usernames, 'string');
         }
 
-        $recipients = array();
+        $recipients = new ArrayCollection();
         $transformer = $this->userToUsernameTransformer;
-        $recipientsNames = array_filter(explode(', ', $usernames));
+        $recipientsNames = array_filter(explode(',', $usernames));
 
         foreach ($recipientsNames as $username) {
-            $user = $this->userToUsernameTransformer->reverseTransform($username);
+            $user = $this->userToUsernameTransformer->reverseTransform(trim($username));
 
             if (!$user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
                 throw new TransformationFailedException(sprintf('User "%s" does not exists', $username));
             }
 
-            $recipients[] = $user;
+            $recipients->add($user);
         }
 
         return $recipients;
