@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Security;
+namespace FOS\MessageBundle\Security;
 
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Provides the authenticated participant

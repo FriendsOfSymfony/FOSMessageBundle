@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\FormHandler;
 
-use Ornicar\MessageBundle\FormModel\AbstractMessage;
-use Ornicar\MessageBundle\FormModel\ReplyMessage;
+use FOS\MessageBundle\FormModel\AbstractMessage;
+use FOS\MessageBundle\FormModel\ReplyMessage;
 
 class ReplyMessageFormHandler extends AbstractMessageFormHandler
 {

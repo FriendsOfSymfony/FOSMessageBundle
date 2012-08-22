@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Security;
+namespace FOS\MessageBundle\Security;
 
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Provides the authenticated participant

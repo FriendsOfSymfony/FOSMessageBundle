@@ -1,15 +1,19 @@
 {
-    "name": "ornicar/message-bundle",
+    "name": "friendsofsymfony/message-bundle",
     "type": "symfony-bundle",
     "description": "Provides user-to-user messaging features for your Symfony2 application.",
     "keywords": ["symfony", "message", "messaging"],
-    "homepage": "https://github.com/ornicar/OrnicarMessageBundle",
+    "homepage": "https://github.com/FriendsOfSymfony/FOSMessageBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Thibault Duplessis",
             "email": "thibault.duplessis@gmail.com",
             "homepage": "http://ornicar.github.com"
+        },
+        {
+            "name": "FriendsOfSymfony Community",
+            "homepage": "https://github.com/friendsofsymfony/FOSMessageBundle/contributors"
         }
     ],
     "require": {
@@ -22,7 +26,7 @@
         "doctrine/mongodb-odm-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Ornicar\\MessageBundle": "" }
+        "psr-0": { "FOS\\MessageBundle": "" }
     },
-    "target-dir": "Ornicar/MessageBundle"
+    "target-dir": "FOS/MessageBundle"
 }

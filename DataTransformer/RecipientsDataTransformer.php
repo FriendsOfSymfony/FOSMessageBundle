@@ -1,13 +1,14 @@
 <?php
-namespace Ornicar\MessageBundle\DataTransformer;
+namespace FOS\MessageBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
 /**
  * Transforms collection of UserInterface into strings separated with coma
  *
@@ -16,7 +17,7 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 class RecipientsDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var \FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer
+     * @var UserToUsernameTransformer
      */
     private $userToUsernameTransformer;
 
@@ -55,7 +56,9 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @param string $usernames
      *
-     * @param Collection $recipients
+     * @throws UnexpectedTypeException
+     * @throws TransformationFailedException
+     * @return Collection $recipients
      */
     public function reverseTransform($usernames)
     {
@@ -74,7 +77,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
         foreach ($recipientsNames as $username) {
             $user = $this->userToUsernameTransformer->reverseTransform(trim($username));
 
-            if (!$user instanceof \Symfony\Component\Security\Core\User\UserInterface) {
+            if (!$user instanceof UserInterface) {
                 throw new TransformationFailedException(sprintf('User "%s" does not exists', $username));
             }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Composer;
+namespace FOS\MessageBundle\Composer;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * Factory for message builders

@@ -1,14 +1,14 @@
 <?php
 
-namespace Ornicar\MessageBundle\Provider;
+namespace FOS\MessageBundle\Provider;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\Security\AuthorizerInterface;
-use Ornicar\MessageBundle\Reader\ReaderInterface;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
-use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Reader\ReaderInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 
 /**
  * Provides threads for the current authenticated user

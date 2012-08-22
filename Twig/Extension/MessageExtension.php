@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Twig\Extension;
+namespace FOS\MessageBundle\Twig\Extension;
 
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
-use Ornicar\MessageBundle\Model\ReadableInterface;
-use Ornicar\MessageBundle\Provider\ProviderInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Provider\ProviderInterface;
 
 class MessageExtension extends \Twig_Extension
 {
@@ -27,8 +27,8 @@ class MessageExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'ornicar_message_is_read'  => new \Twig_Function_Method($this, 'isRead'),
-            'ornicar_message_nb_unread' => new \Twig_Function_Method($this, 'getNbUnread')
+            'fos_message_is_read'  => new \Twig_Function_Method($this, 'isRead'),
+            'fos_message_nb_unread' => new \Twig_Function_Method($this, 'getNbUnread')
         );
     }
 
@@ -73,6 +73,6 @@ class MessageExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return 'ornicar_message';
+        return 'fos_message';
     }
 }

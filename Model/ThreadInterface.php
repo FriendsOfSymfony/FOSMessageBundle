@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace FOS\MessageBundle\Model;
 
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 interface ThreadInterface extends ReadableInterface
 {

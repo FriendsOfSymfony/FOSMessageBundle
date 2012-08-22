@@ -1,11 +1,11 @@
-{% extends 'OrnicarMessageBundle::layout.html.twig' %}
+{% extends 'FOSMessageBundle::layout.html.twig' %}
 
-{% block ornicar_message_content %}
+{% block fos_message_content %}
 
-<h2>{% trans from 'OrnicarMessageBundle' %}inbox{% endtrans %}</h2>
+<h2>{% trans from 'FOSMessageBundle' %}inbox{% endtrans %}</h2>
 
-<a href="{{ url('ornicar_message_thread_new' )}}">{% trans from 'OrnicarMessageBundle' %}send_new{% endtrans %}</a>
+<a href="{{ url('fos_message_thread_new' )}}">{% trans from 'FOSMessageBundle' %}send_new{% endtrans %}</a>
 
-{% include 'OrnicarMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
+{% include 'FOSMessageBundle:Message:threads_list.html.twig' with {'threads': threads} %}
 
 {% endblock %}

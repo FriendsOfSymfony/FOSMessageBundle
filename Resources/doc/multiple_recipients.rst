@@ -5,14 +5,14 @@ Configure your application::
 
     # app/config/config.yml
 
-    ornicar_message:
+    fos_message:
         db_driver: orm
         thread_class: Acme\MessageBundle\Entity\Thread
         message_class: Acme\MessageBundle\Entity\Message
         new_thread_form:
-          type:               ornicar_message.new_thread_multiple_form.type
-          handler:            ornicar_message.new_thread_multiple_form.handler
-          model:              Ornicar\MessageBundle\FormModel\NewThreadMultipleMessage
+          type:               fos_message.new_thread_multiple_form.type
+          handler:            fos_message.new_thread_multiple_form.handler
+          model:              FOS\MessageBundle\FormModel\NewThreadMultipleMessage
           name:               message
 
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\EntityManager;
+namespace FOS\MessageBundle\EntityManager;
 
-use Ornicar\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
+use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use Doctrine\ORM\EntityManager;
-use Ornicar\MessageBundle\Model\ThreadInterface;
-use Ornicar\MessageBundle\Model\ReadableInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\ORM\Query\Builder;
 
 /**

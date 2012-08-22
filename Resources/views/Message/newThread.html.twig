@@ -1,10 +1,10 @@
-{% extends 'OrnicarMessageBundle::layout.html.twig' %}
+{% extends 'FOSMessageBundle::layout.html.twig' %}
 
-{% block ornicar_message_content %}
+{% block fos_message_content %}
 
-<h2>{% trans from 'OrnicarMessageBundle' %}send_new{% endtrans %}</h2>
+<h2>{% trans from 'FOSMessageBundle' %}send_new{% endtrans %}</h2>
 
-<form action="{{ url('ornicar_message_thread_new') }}" method="post">
+<form action="{{ url('fos_message_thread_new') }}" method="post">
     {{ form_widget(form) }}
 
     <input type="submit" />

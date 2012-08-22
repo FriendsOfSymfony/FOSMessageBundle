@@ -1,14 +1,14 @@
 <?php
 
-namespace Ornicar\MessageBundle\DocumentManager;
+namespace FOS\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Ornicar\MessageBundle\Document\Message;
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
-use Ornicar\MessageBundle\Model\ReadableInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Document\Message;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**

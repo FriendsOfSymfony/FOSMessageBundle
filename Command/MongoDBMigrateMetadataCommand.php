@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Command;
+namespace FOS\MessageBundle\Command;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -54,17 +54,17 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ornicar:message:mongodb:migrate:metadata')
+            ->setName('fos:message:mongodb:migrate:metadata')
             ->setDescription('Migrates document hash fields to embedded metadata and active/unread arrays')
             ->addArgument('participantClass', InputArgument::REQUIRED, 'Participant class')
             ->addOption('safe', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->addOption('fsync', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->setHelp(<<<'EOT'
-The <info>ornicar:message:mongodb:migrate:metadata</info> command migrates old document hash
+The <info>fos:message:mongodb:migrate:metadata</info> command migrates old document hash
 fields to a new schema optimized for MongoDB queries. This command requires the
 participant class to be provided as its first and only parameter:
 
-  <info>php app/console ornicar:message:mongodb:migrate:metadata "Acme\Document\User"</info>
+  <info>php app/console fos:message:mongodb:migrate:metadata "Acme\Document\User"</info>
 
 The following hash fields will become obsolete after migration:
 
@@ -72,7 +72,7 @@ The following hash fields will become obsolete after migration:
   <info>*</info> thread.datesOfLastMessageWrittenByOtherParticipant
   <info>*</info> thread.datesOfLastMessageWrittenByParticipant
   <info>*</info> thread.isDeletedByParticipant
- 
+
 The following new fields will be created:
 
   <info>*</info> message.metadata <comment>(array of embedded metadata documents)</comment>
@@ -98,8 +98,8 @@ EOT
     {
         $registry = $this->getContainer()->get('doctrine.odm.mongodb');
 
-        $this->messageCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('ornicar_message.message_class'));
-        $this->threadCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('ornicar_message.thread_class'));
+        $this->messageCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('fos_message.message_class'));
+        $this->threadCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('fos_message.thread_class'));
         $this->participantCollection = $this->getMongoCollectionForClass($registry, $input->getArgument('participantClass'));
 
         $this->updateOptions = array(
@@ -253,7 +253,7 @@ EOT
     /**
      * Sets the unreadForParticipants array on the message.
      *
-     * @see Ornicar\MessageBundle\Document\Message::doEnsureUnreadForParticipantsArray()
+     * @see FOS\MessageBundle\Document\Message::doEnsureUnreadForParticipantsArray()
      * @param array &$message
      */
     private function createMessageUnreadForParticipants(array &$message)
@@ -331,7 +331,7 @@ EOT
     /**
      * Sets the active participant arrays on the thread.
      *
-     * @see Ornicar\MessageBundle\Document\Thread::doEnsureActiveParticipantArrays()
+     * @see FOS\MessageBundle\Document\Thread::doEnsureActiveParticipantArrays()
      * @param array $thread
      */
     private function createThreadActiveParticipantArrays(array &$thread)

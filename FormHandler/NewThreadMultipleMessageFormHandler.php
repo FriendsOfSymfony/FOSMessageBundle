@@ -1,8 +1,8 @@
 <?php
-namespace Ornicar\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\FormHandler;
 
-use Ornicar\MessageBundle\FormModel\AbstractMessage;
-use Ornicar\MessageBundle\FormModel\NewThreadMultipleMessage;
+use FOS\MessageBundle\FormModel\AbstractMessage;
+use FOS\MessageBundle\FormModel\NewThreadMultipleMessage;
 /**
  * Form handler for multiple recipients support
  *

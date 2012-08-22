@@ -1,11 +1,11 @@
 <?php
 
-namespace Ornicar\MessageBundle\Entity;
+namespace FOS\MessageBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
-use Ornicar\MessageBundle\Model\Message as BaseMessage;
+use FOS\MessageBundle\Model\Message as BaseMessage;
 
-use Ornicar\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
+use FOS\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
 
 abstract class Message extends BaseMessage
 {
@@ -20,7 +20,7 @@ abstract class Message extends BaseMessage
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\Message::addMetadata()
+     * @see FOS\MessageBundle\Model\Message::addMetadata()
      */
     public function addMetadata(ModelMessageMetadata $meta)
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Event;
+namespace FOS\MessageBundle\Event;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
-use Ornicar\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
 
 class ReadableEvent extends Event
 {

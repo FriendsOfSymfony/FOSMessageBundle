@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                   http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Entity\Thread" table="ornicar_message_thread">
+    <mapped-superclass name="FOS\MessageBundle\Entity\Thread" table="fos_message_thread">
 
         <field name="subject" column="subject" type="string" />
 

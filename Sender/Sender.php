@@ -1,12 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\Sender;
+namespace FOS\MessageBundle\Sender;
 
-use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
-use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Event\MessageEvent;
-use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
+use FOS\MessageBundle\ModelManager\MessageManagerInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Event\MessageEvent;
+use FOS\MessageBundle\Event\FOSMessageEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -63,6 +63,6 @@ class Sender implements SenderInterface
         $message->getThread()->setIsDeleted(false);
         $this->messageManager->saveMessage($message);
 
-        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_SEND, new MessageEvent($message));
+        $this->dispatcher->dispatch(FOSMessageEvents::POST_SEND, new MessageEvent($message));
     }
 }

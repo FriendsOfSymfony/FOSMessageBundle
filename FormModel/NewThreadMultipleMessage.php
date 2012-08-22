@@ -1,8 +1,8 @@
 <?php
-namespace Ornicar\MessageBundle\FormModel;
+namespace FOS\MessageBundle\FormModel;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Class for handling multiple recipients in thread

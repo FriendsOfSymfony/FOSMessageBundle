@@ -1,11 +1,11 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace FOS\MessageBundle\Document;
 
 use DateTime;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use Ornicar\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\MessageInterface;
 
 class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
 {
@@ -75,7 +75,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
 
     protected function createMessageMock($sender, $recipient, DateTime $date)
     {
-        $message = $this->getMockBuilder('Ornicar\MessageBundle\Document\Message')
+        $message = $this->getMockBuilder('FOS\MessageBundle\Document\Message')
             ->getMock();
 
         $message->expects($this->atLeastOnce())
@@ -95,7 +95,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
 
     protected function createParticipantMock($id)
     {
-        $user = $this->getMockBuilder('Ornicar\MessageBundle\Model\ParticipantInterface')
+        $user = $this->getMockBuilder('FOS\MessageBundle\Model\ParticipantInterface')
             ->disableOriginalConstructor(true)
             ->getMock();
 

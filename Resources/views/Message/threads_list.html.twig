@@ -2,12 +2,12 @@
 
     <thead>
         <tr>
-            <th>{% trans from 'OrnicarMessageBundle' %}subject{% endtrans %}</th>
-            <th>{% trans from 'OrnicarMessageBundle' %}starter{% endtrans %}</th>
-            <th>{% trans from 'OrnicarMessageBundle' %}startdate{% endtrans %}</th>
-            <th>{% trans from 'OrnicarMessageBundle' %}messages{% endtrans %}</th>
-            <th>{% trans from 'OrnicarMessageBundle' %}last_message{% endtrans %}</th>
-            <th>{% trans from 'OrnicarMessageBundle' %}actions{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}subject{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}starter{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}startdate{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}messages{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}last_message{% endtrans %}</th>
+            <th>{% trans from 'FOSMessageBundle' %}actions{% endtrans %}</th>
         </tr>
     </thead>
 
@@ -17,12 +17,12 @@
         {% for thread in threads %}
             <tr>
                 <td>
-                    <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}">
+                    <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}">
                         {{ thread.subject }}
                     </a>
 
-                    {% if not ornicar_message_is_read(thread) %}
-                        ({% trans from 'OrnicarMessageBundle' %}new{% endtrans %})
+                    {% if not fos_message_is_read(thread) %}
+                        ({% trans from 'FOSMessageBundle' %}new{% endtrans %})
                     {% endif %}
                 </td>
                 <td>
@@ -36,18 +36,18 @@
                 </td>
                 <td>
                     {% if thread.lastMessage %}
-                        <a href="{{ url('ornicar_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'OrnicarMessageBundle' %}goto_last{% endtrans %}">
+                        <a href="{{ url('fos_message_thread_view', {'threadId': thread.id}) }}#message_{{ thread.lastMessage.id }}" title="{% trans from 'FOSMessageBundle' %}goto_last{% endtrans %}">
                             →
                         </a>
-                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'OrnicarMessageBundle' %}on{% endtrans %}                        
+                        {% trans with {'%date%': thread.lastMessage.createdAt|date} from 'FOSMessageBundle' %}on{% endtrans %}
                         <br />
-                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'OrnicarMessageBundle' %}by{% endtrans %}
+                        {% trans with {'%sender%': thread.lastMessage.sender|e } from 'FOSMessageBundle' %}by{% endtrans %}
                     {% else %}
                         ----
                     {% endif %}
                 </td>
                 <td>
-                    <form action="{{ url('ornicar_message_thread_delete', {'threadId': thread.id}) }}" method="post">
+                    <form action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
                         <input type="submit" value="Delete" />
                     </form>
                 </td>
@@ -56,7 +56,7 @@
     {% else %}
         <tr>
             <td colspan="4">
-                {% trans from 'OrnicarMessageBundle' %}no_thread{% endtrans %}.
+                {% trans from 'FOSMessageBundle' %}no_thread{% endtrans %}.
             </td>
         </tr>
     {% endif %}

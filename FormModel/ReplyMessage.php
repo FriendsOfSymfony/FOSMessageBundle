@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormModel;
+namespace FOS\MessageBundle\FormModel;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 class ReplyMessage extends AbstractMessage
 {

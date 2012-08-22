@@ -1,11 +1,11 @@
 <?php
-namespace Ornicar\MessageBundle\FormType;
+namespace FOS\MessageBundle\FormType;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Ornicar\MessageBundle\DataTransformer\RecipientsDataTransformer;
+use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
 /**
  * Description of RecipientsType

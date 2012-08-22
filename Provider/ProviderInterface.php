@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Provider;
+namespace FOS\MessageBundle\Provider;
 
 /**
  * Provides threads for the current authenticated user

@@ -15,7 +15,7 @@ Message class
 
     use Doctrine\ORM\Mapping as ORM;
 
-    use Ornicar\MessageBundle\Entity\Message as BaseMessage;
+    use FOS\MessageBundle\Entity\Message as BaseMessage;
 
     /**
      * @ORM\Entity
@@ -58,7 +58,7 @@ MessageMetadata class
 
     use Doctrine\ORM\Mapping as ORM;
 
-    use Ornicar\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
+    use FOS\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
 
     /**
      * @ORM\Entity
@@ -95,7 +95,7 @@ Thread class
 
     use Doctrine\ORM\Mapping as ORM;
 
-    use Ornicar\MessageBundle\Entity\Thread as BaseThread;
+    use FOS\MessageBundle\Entity\Thread as BaseThread;
 
     /**
      * @ORM\Entity
@@ -144,7 +144,7 @@ ThreadMetadata class
 
     use Doctrine\ORM\Mapping as ORM;
 
-    use Ornicar\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
+    use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
 
     /**
      * @ORM\Entity
@@ -175,7 +175,7 @@ Configure your application::
 
     # app/config/config.yml
 
-    ornicar_message:
+    fos_message:
         db_driver: orm
         thread_class: Acme\MessageBundle\Entity\Thread
         message_class: Acme\MessageBundle\Entity\Message

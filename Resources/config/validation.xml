@@ -4,16 +4,16 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
         http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
 
-    <class name="Ornicar\MessageBundle\FormModel\NewThreadMultipleMessage">
+    <class name="FOS\MessageBundle\FormModel\NewThreadMultipleMessage">
         <property name="recipients">
             <constraint name="All">
-                <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
-                <constraint name="Ornicar\MessageBundle\Validator\SelfRecipient" />
+                <constraint name="FOS\MessageBundle\Validator\Authorization" />
+                <constraint name="FOS\MessageBundle\Validator\SelfRecipient" />
                 <constraint name="NotBlank">
                     <option name="message">No recipient specified</option>
                 </constraint>
                 <constraint name="Type">
-                    <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
+                    <option name="value">FOS\MessageBundle\Model\ParticipantInterface</option>
                 </constraint>
             </constraint>
         </property>
@@ -41,18 +41,18 @@
             </constraint>
         </property>
     </class>
-    <class name="Ornicar\MessageBundle\FormModel\NewThreadMessage">
+    <class name="FOS\MessageBundle\FormModel\NewThreadMessage">
 
-        <constraint name="Ornicar\MessageBundle\Validator\Spam" />
+        <constraint name="FOS\MessageBundle\Validator\Spam" />
 
         <property name="recipient">
-            <constraint name="Ornicar\MessageBundle\Validator\Authorization" />
-            <constraint name="Ornicar\MessageBundle\Validator\SelfRecipient" />
+            <constraint name="FOS\MessageBundle\Validator\Authorization" />
+            <constraint name="FOS\MessageBundle\Validator\SelfRecipient" />
             <constraint name="NotBlank">
                 <option name="message">No user with that username</option>
             </constraint>
             <constraint name="Type">
-                <option name="value">Ornicar\MessageBundle\Model\ParticipantInterface</option>
+                <option name="value">FOS\MessageBundle\Model\ParticipantInterface</option>
             </constraint>
         </property>
 
@@ -82,9 +82,9 @@
 
     </class>
 
-    <class name="Ornicar\MessageBundle\FormModel\ReplyMessage">
+    <class name="FOS\MessageBundle\FormModel\ReplyMessage">
 
-        <constraint name="Ornicar\MessageBundle\Validator\ReplyAuthorization" />
+        <constraint name="FOS\MessageBundle\Validator\ReplyAuthorization" />
 
         <property name="body">
             <constraint name="NotBlank">

@@ -1,13 +1,13 @@
 <?php
 
-namespace Ornicar\MessageBundle\Composer;
+namespace FOS\MessageBundle\Composer;
 
-use Ornicar\MessageBundle\ModelManager\MessageManagerInterface;
-use Ornicar\MessageBundle\Sender\SenderInterface;
-use Ornicar\MessageBundle\Model\ThreadInterface;
-use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
-use Ornicar\MessageBundle\MessageBuilder\ReplyMessageBuilder;
+use FOS\MessageBundle\ModelManager\MessageManagerInterface;
+use FOS\MessageBundle\Sender\SenderInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
+use FOS\MessageBundle\MessageBuilder\ReplyMessageBuilder;
 
 /**
  * Factory for message builders

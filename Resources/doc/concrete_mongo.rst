@@ -14,7 +14,7 @@ Thread class
     namespace Acme\MessageBundle\Document;
 
     use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-    use Ornicar\MessageBundle\Document\Thread as BaseThread;
+    use FOS\MessageBundle\Document\Thread as BaseThread;
 
     /**
      * @MongoDB\Document
@@ -57,7 +57,7 @@ Message class
     namespace Acme\MessageBundle\Document;
 
     use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
-    use Ornicar\MessageBundle\Document\Message as BaseMessage;
+    use FOS\MessageBundle\Document\Message as BaseMessage;
 
     /**
      * @MongoDB\Document
@@ -94,7 +94,7 @@ ThreadMetaData class
     namespace Mashup\MessageBundle\Document;
 
     use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-    use Ornicar\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
+    use FOS\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
 
     /**
      * @ODM\EmbeddedDocument
@@ -116,7 +116,7 @@ MessageMetaData class
     namespace Mashup\MessageBundle\Document;
 
     use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-    use Ornicar\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
+    use FOS\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
 
     /**
      * @ODM\EmbeddedDocument
@@ -133,7 +133,7 @@ Configure your application::
 
     # app/config/config.yml
 
-    ornicar_message:
+    fos_message:
         db_driver: mongodb
         thread_class: Acme\MessageBundle\Document\Thread
         message_class: Acme\MessageBundle\Document\Message

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace FOS\MessageBundle\Document;
 
-use Ornicar\MessageBundle\Model\MessageMetadata as BaseMessageMetadata;
+use FOS\MessageBundle\Model\MessageMetadata as BaseMessageMetadata;
 
 abstract class MessageMetadata extends BaseMessageMetadata
 {

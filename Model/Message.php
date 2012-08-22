@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract message model
@@ -65,7 +65,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::getId()
+     * @see FOS\MessageBundle\Model\MessageInterface::getId()
      */
     public function getId()
     {
@@ -73,7 +73,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::getThread()
+     * @see FOS\MessageBundle\Model\MessageInterface::getThread()
      */
     public function getThread()
     {
@@ -81,7 +81,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::setThread()
+     * @see FOS\MessageBundle\Model\MessageInterface::setThread()
      */
     public function setThread(ThreadInterface $thread)
     {
@@ -89,7 +89,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::getCreatedAt()
+     * @see FOS\MessageBundle\Model\MessageInterface::getCreatedAt()
      */
     public function getCreatedAt()
     {
@@ -97,7 +97,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::getBody()
+     * @see FOS\MessageBundle\Model\MessageInterface::getBody()
      */
     public function getBody()
     {
@@ -105,7 +105,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::setBody()
+     * @see FOS\MessageBundle\Model\MessageInterface::setBody()
      */
     public function setBody($body)
     {
@@ -113,7 +113,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::getSender()
+     * @see FOS\MessageBundle\Model\MessageInterface::getSender()
      */
     public function getSender()
     {
@@ -121,7 +121,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\MessageInterface::setSender()
+     * @see FOS\MessageBundle\Model\MessageInterface::setSender()
      */
     public function setSender(ParticipantInterface $sender)
     {
@@ -166,7 +166,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -178,7 +178,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {

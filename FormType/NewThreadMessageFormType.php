@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormType;
+namespace FOS\MessageBundle\FormType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
@@ -22,6 +22,6 @@ class NewThreadMessageFormType extends AbstractType
 
     public function getName()
     {
-        return 'ornicar_message_new_thread';
+        return 'fos_message_new_thread';
     }
 }

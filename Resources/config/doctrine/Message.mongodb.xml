@@ -4,7 +4,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Document\Message" collection="ornicar_message_message">
+    <mapped-superclass name="FOS\MessageBundle\Document\Message" collection="fos_message_message">
 
         <field name="body" fieldName="body" type="string" />
 
@@ -14,11 +14,11 @@
 
         <field name="unreadForParticipants" fieldName="unreadForParticipants" type="collection" />
 
-        <!--<embed-many target-document="Ornicar\MessageBundle\Document\MessageMetadata" field="metadata" />-->
+        <!--<embed-many target-document="FOS\MessageBundle\Document\MessageMetadata" field="metadata" />-->
 
         <!--<reference-one field="sender" target-document="Acme\UserBundle\Document\User" />-->
 
-        <!--<reference-one field="thread" target-document="Ornicar\MessageBundle\Document\Thread" />-->
+        <!--<reference-one field="thread" target-document="FOS\MessageBundle\Document\Thread" />-->
 
         <indexes>
             <index>

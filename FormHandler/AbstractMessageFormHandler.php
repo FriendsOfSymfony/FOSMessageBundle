@@ -1,14 +1,14 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\FormHandler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Ornicar\MessageBundle\Composer\ComposerInterface;
-use Ornicar\MessageBundle\FormModel\AbstractMessage;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Sender\SenderInterface;
+use FOS\MessageBundle\Composer\ComposerInterface;
+use FOS\MessageBundle\FormModel\AbstractMessage;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Sender\SenderInterface;
 
 /**
  * Handles messages forms, from binding request to sending the message

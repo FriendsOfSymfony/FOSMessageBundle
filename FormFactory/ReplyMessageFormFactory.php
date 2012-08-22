@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormFactory;
+namespace FOS\MessageBundle\FormFactory;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * Instanciates message forms

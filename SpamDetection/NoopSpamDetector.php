@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\SpamDetection;
+namespace FOS\MessageBundle\SpamDetection;
 
-use Ornicar\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\FormModel\NewThreadMessage;
 
 class NoopSpamDetector implements SpamDetectorInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Validator;
+namespace FOS\MessageBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Ornicar\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Security\AuthorizerInterface;
 
 class AuthorizationValidator extends ConstraintValidator
 {

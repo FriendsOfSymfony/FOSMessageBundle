@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Tests\Model;
+namespace FOS\MessageBundle\Tests\Model;
 
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 class ThreadTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +12,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
         $u2 = $this->createParticipantMock('u2');
         $u3 = $this->createParticipantMock('u3');
 
-        $thread = $this->getMockForAbstractClass('Ornicar\MessageBundle\Model\Thread');
+        $thread = $this->getMockForAbstractClass('FOS\MessageBundle\Model\Thread');
         $thread->expects($this->atLeastOnce())
             ->method('getParticipants')
             ->will($this->returnValue(array($u1, $u2, $u3)));
@@ -30,7 +30,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
 
     protected function createParticipantMock($id)
     {
-        $participant = $this->getMockBuilder('Ornicar\MessageBundle\Model\ParticipantInterface')
+        $participant = $this->getMockBuilder('FOS\MessageBundle\Model\ParticipantInterface')
             ->disableOriginalConstructor(true)
             ->getMock();
 

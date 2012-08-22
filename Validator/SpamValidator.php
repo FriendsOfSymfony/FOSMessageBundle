@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Validator;
+namespace FOS\MessageBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface;
+use FOS\MessageBundle\SpamDetection\SpamDetectorInterface;
 
 class SpamValidator extends ConstraintValidator
 {

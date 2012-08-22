@@ -11,7 +11,7 @@ recipient. This dependency is optional if you implement a custom form type for
 new messages and specify your class in the `new_thread_form.type` config option.
 
 **Note:** PR #32 introduced significant schema changes for the MongoDB model
-layer. The ``ornicar:message:mongodb:migrate:metadata`` console command may be
+layer. The ``fos:message:mongodb:migrate:metadata`` console command may be
 used to migrate your existing schema. Please refer to the command's help message
 for additional information.
 
@@ -27,7 +27,7 @@ Through submodules:
 
 ::
 
-    $ git submodule add git://github.com/ornicar/OrnicarMessageBundle.git vendor/bundles/Ornicar/MessageBundle
+    $ git submodule add git://github.com/FriendsOfSymfony/FOSMessageBundle.git vendor/bundles/FOS/MessageBundle
 
 
 Through composer:
@@ -37,12 +37,12 @@ Through composer:
 
     "require": {
         ...
-        "ornicar/message-bundle": "dev-master"
+        "friendsofsymfony/message-bundle": "dev-master"
         ...
     }
-    
 
-Add the Ornicar namespace to your autoloader
+
+Add the FOS namespace to your autoloader
 ----------------------------------------
 
 ::
@@ -50,7 +50,7 @@ Add the Ornicar namespace to your autoloader
     // app/autoload.php
 
     $loader->registerNamespaces(array(
-        'Ornicar' => __DIR__.'/../vendor/bundles',
+        'FOS' => __DIR__.'/../vendor/bundles',
         // your other namespaces
     );
 
@@ -65,7 +65,7 @@ Add MessageBundle to your application kernel
     {
         return array(
             // ...
-            new Ornicar\MessageBundle\OrnicarMessageBundle(),
+            new FOS\MessageBundle\FOSMessageBundle(),
             // ...
         );
     }
@@ -82,7 +82,7 @@ along with the bundle containing your custom Thread and Message classes::
         document_managers:
             default:
                 mappings:
-                    OrnicarMessageBundle: ~
+                    FOSMessageBundle: ~
                     # your other bundles
 
 The above example assumes a MongoDB configuration, but the `mappings` configuration
@@ -99,7 +99,7 @@ For exemple, if your user class is ``Acme\UserBundle\Document\User``::
 
     // src/Acme/UserBundle/Document/User.php
 
-    use Ornicar\MessageBundle\Model\ParticipantInterface;
+    use FOS\MessageBundle\Model\ParticipantInterface;
 
     /**
      * @MongoDB\Document
@@ -129,15 +129,15 @@ In YAML::
 
     # app/config/routing.yml
 
-    ornicar_message:
-        resource: "@OrnicarMessageBundle/Resources/config/routing.xml"
+    fos_message:
+        resource: "@FOSMessageBundle/Resources/config/routing.xml"
         prefix: /optional_routing_prefix
 
 Or if you prefer XML::
 
     # app/config/routing.xml
 
-    <import resource="@OrnicarMessageBundle/Resources/config/routing.xml"/>
+    <import resource="@FOSMessageBundle/Resources/config/routing.xml"/>
 
 Basic Usage
 ===========
@@ -156,7 +156,7 @@ Get user threads
 
 Get the threads in the inbox of the authenticated user::
 
-    $provider = $container->get('ornicar_message.provider');
+    $provider = $container->get('fos_message.provider');
 
     $threads = $provider->getInboxThreads();
 
@@ -171,7 +171,7 @@ To get a single thread, check it belongs to the authenticated user and mark it a
 Manipulate threads
 ------------------
 
-See ``Ornicar\\MessageBundle\\Model\\ThreadInterface`` for the complete list of available methods::
+See ``FOS\\MessageBundle\\Model\\ThreadInterface`` for the complete list of available methods::
 
     // Print the thread subject
     echo $thread->getSubject();
@@ -189,7 +189,7 @@ See ``Ornicar\\MessageBundle\\Model\\ThreadInterface`` for the complete list of 
 Manipulate messages
 -------------------
 
-See ``Ornicar\\MessageBundle\\Model\\MessageInterface`` for the complete list of available methods::
+See ``FOS\\MessageBundle\\Model\\MessageInterface`` for the complete list of available methods::
 
     // Print the message body
     echo $message->getBody();
@@ -208,7 +208,7 @@ Compose a message
 
 Create a new message thread::
 
-    $composer = $container->get('ornicar_message.composer');
+    $composer = $container->get('fos_message.composer');
 
     $message = $composer->newThread()
         ->setSender($jack)
@@ -232,7 +232,7 @@ Send a message
 
 Nothing's easier than sending the message you've just composed::
 
-    $sender = $container->get('ornicar_message.sender');
+    $sender = $container->get('fos_message.sender');
 
     $sender->send($message);
 
@@ -244,13 +244,13 @@ MessageBundle provides a few twig functions::
     {# template.html.twig #}
 
     {# Know if a message is read by the authenticated participant #}
-    {% if not ornicar_message_is_read(message) %} This message is new! {% endif %}
+    {% if not fos_message_is_read(message) %} This message is new! {% endif %}
 
     {# Know if a thread is read by the authenticated participant. Yes, it's the same function. #}
-    {% if not ornicar_message_is_read(thread) %} This thread is new! {% endif %}
+    {% if not fos_message_is_read(thread) %} This thread is new! {% endif %}
 
     {# Get the number of new threads for the authenticated participant #}
-    You have {{ ornicar_message_nb_unread() }} new messages
+    You have {{ fos_message_nb_unread() }} new messages
 
 Spam detection
 ==============
@@ -264,14 +264,14 @@ Then, set the spam detector service accordingly::
 
     # app/config/config.yml
 
-        ornicar_message:
-            spam_detector: ornicar_message.akismet_spam_detector
+        fos_message:
+            spam_detector: fos_message.akismet_spam_detector
 
 Other strategy
 --------------
 
 You can use any spam dectetor service, including one of your own, provided the
-class implements ``Ornicar\MessageBundle\SpamDetection\SpamDetectorInterface``.
+class implements ``FOS\MessageBundle\SpamDetection\SpamDetectorInterface``.
 
 Messenging permissions
 ======================
@@ -280,10 +280,10 @@ You can change the security logic by replacing the ``authorizer`` service::
 
     # app/config/config.yml
 
-        ornicar_message:
+        fos_message:
             authorizer: acme_message.authorizer
 
-Your class must implement ``Ornicar\MessageBundle\Security\AuthorizerInterface``::
+Your class must implement ``FOS\MessageBundle\Security\AuthorizerInterface``::
 
     interface AuthorizerInterface
     {
@@ -316,7 +316,7 @@ Your class must implement ``Ornicar\MessageBundle\Security\AuthorizerInterface``
     }
 
 You can tell whether the user can see or delete a thread, and if he can send a new message to another user.
-See the default implementation in ``Ornicar\MessageBundle\Security\Authorizer``.
+See the default implementation in ``FOS\MessageBundle\Security\Authorizer``.
 
 
 Listening to events
@@ -324,7 +324,7 @@ Listening to events
 
 This bundles dispatches event when notable actions are performed.
 
-See ``Ornicar\MessageBundle\Event\OrnicarMessageEvents`` for a documented
+See ``FOS\MessageBundle\Event\FOSMessageEvents`` for a documented
 list of the available events.
 
 Configuration
@@ -334,35 +334,35 @@ All configuration options are listed below::
 
     # app/config/config.yml
 
-    ornicar_message
+    fos_message
         db_driver:              mongodb
         thread_class:           Acme\MessageBundle\Document\Thread
         message_class:          Acme\MessageBundle\Document\Message
-        message_manager:        ornicar_message.message_manager         # See ModelManager\MessageManagerInterface
-        thread_manager:         ornicar_message.thread_manager          # See ModelManager\ThreadManagerInterface
-        sender:                 ornicar_message.sender                  # See Sender\SenderInterface
-        composer:               ornicar_message.composer                # See Composer\ComposerInterface
-        provider:               ornicar_message.provider                # See Provider\ProviderInterface
-        participant_provider:   ornicar_message.participant_provider    # See Security\ParticipantProviderInterface
-        authorizer:             ornicar_message.authorizer              # See Security\AuthorizerInterface
-        message_reader:         ornicar_message.message_reader          # See Reader\ReaderInterface
-        thread_reader:          ornicar_message.thread_reader           # See Reader\ReaderInterface
-        deleter:                ornicar_message.deleter                 # See Deleter\DeleterInterface
-        spam_detector:          ornicar_message.noop_spam_detector      # See SpamDetection\SpamDetectorInterface
-        twig_extension:         ornicar_message.twig_extension          # See Twig\Extension\MessageExtension
+        message_manager:        fos_message.message_manager         # See ModelManager\MessageManagerInterface
+        thread_manager:         fos_message.thread_manager          # See ModelManager\ThreadManagerInterface
+        sender:                 fos_message.sender                  # See Sender\SenderInterface
+        composer:               fos_message.composer                # See Composer\ComposerInterface
+        provider:               fos_message.provider                # See Provider\ProviderInterface
+        participant_provider:   fos_message.participant_provider    # See Security\ParticipantProviderInterface
+        authorizer:             fos_message.authorizer              # See Security\AuthorizerInterface
+        message_reader:         fos_message.message_reader          # See Reader\ReaderInterface
+        thread_reader:          fos_message.thread_reader           # See Reader\ReaderInterface
+        deleter:                fos_message.deleter                 # See Deleter\DeleterInterface
+        spam_detector:          fos_message.noop_spam_detector      # See SpamDetection\SpamDetectorInterface
+        twig_extension:         fos_message.twig_extension          # See Twig\Extension\MessageExtension
         search:
-            finder:             ornicar_message.search_finder           # See Finder\FinderInterface
-            query_factory:      ornicar_message.search_query_factory    # See Finder\QueryFactoryInterface
+            finder:             fos_message.search_finder           # See Finder\FinderInterface
+            query_factory:      fos_message.search_query_factory    # See Finder\QueryFactoryInterface
             query_parameter:    'q'                                     # Request query parameter containing the term
         new_thread_form:
-            factory:            ornicar_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory
-            type:               ornicar_message.new_thread_form.type    # See FormType\NewThreadMessageFormType
-            handler:            ornicar_message.new_thread_form.handler # See FormHandler\NewThreadMessageFormHandler
+            factory:            fos_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory
+            type:               fos_message.new_thread_form.type    # See FormType\NewThreadMessageFormType
+            handler:            fos_message.new_thread_form.handler # See FormHandler\NewThreadMessageFormHandler
             name:               message
         reply_form:
-            factory:            ornicar_message.reply_form.factory      # See FormFactory\ReplyMessageFormFactory
-            type:               ornicar_message.reply_form.type         # See FormType\ReplyMessageFormType
-            handler:            ornicar_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
+            factory:            fos_message.reply_form.factory      # See FormFactory\ReplyMessageFormFactory
+            type:               fos_message.reply_form.type         # See FormType\ReplyMessageFormType
+            handler:            fos_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
             name:               message
 
 Implement a new persistence backend
@@ -398,5 +398,5 @@ You may also need to define mappings.
 
 MongoDB mapping examples:
 
-- ``src/Ornicar/MessageBundle/Resources/config/doctrine/thread.mongodb.xml``
-- ``src/Ornicar/MessageBundle/Resources/config/doctrine/message.mongodb.xml``
+- ``src/FOS/MessageBundle/Resources/config/doctrine/thread.mongodb.xml``
+- ``src/FOS/MessageBundle/Resources/config/doctrine/message.mongodb.xml``

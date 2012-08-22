@@ -1,12 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace FOS\MessageBundle\Document;
 
-use Ornicar\MessageBundle\Model\Thread as AbstractThread;
-use Ornicar\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\Thread as AbstractThread;
+use FOS\MessageBundle\Model\MessageInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 abstract class Thread extends AbstractThread
 {
