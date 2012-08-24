@@ -2,8 +2,9 @@
 
 namespace Ornicar\MessageBundle\FormType;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Message form type for starting a new conversation
@@ -18,6 +19,13 @@ class NewThreadMessageFormType extends AbstractType
             ->add('recipient', 'fos_user_username')
             ->add('subject', 'text')
             ->add('body', 'textarea');
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'intention'  => 'message',
+        ));
     }
 
     public function getName()
