@@ -27,7 +27,7 @@ Through submodules:
 
 ::
 
-    $ git submodule add git://github.com/FriendsOfSymfony/OrnicarMessageBundle.git vendor/bundles/FOS/MessageBundle
+    $ git submodule add git://github.com/FriendsOfSymfony/FOSMessageBundle.git vendor/bundles/FOS/MessageBundle
 
 
 Through composer:
