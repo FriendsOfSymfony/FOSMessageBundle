@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Provides user-to-user messaging features for your Symfony2 application.",
     "keywords": ["symfony", "message", "messaging"],
-    "homepage": "https://github.com/FriendsOfSymfony/OrnicarMessageBundle",
+    "homepage": "https://github.com/FriendsOfSymfony/FOSMessageBundle",
     "license": "MIT",
     "authors": [
         {
@@ -13,7 +13,7 @@
         },
         {
             "name": "FriendsOfSymfony Community",
-            "homepage": "https://github.com/friendsofsymfony/OrnicarMessageBundle/contributors"
+            "homepage": "https://github.com/friendsofsymfony/FOSMessageBundle/contributors"
         }
     ],
     "require": {
