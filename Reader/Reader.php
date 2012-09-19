@@ -1,12 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\Reader;
+namespace FOS\MessageBundle\Reader;
 
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
-use Ornicar\MessageBundle\Model\ReadableInterface;
-use Ornicar\MessageBundle\ModelManager\ReadableManagerInterface;
-use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
-use Ornicar\MessageBundle\Event\ReadableEvent;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\ModelManager\ReadableManagerInterface;
+use FOS\MessageBundle\Event\FOSMessageEvents;
+use FOS\MessageBundle\Event\ReadableEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -57,7 +57,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsReadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_READ, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(FOSMessageEvents::POST_READ, new ReadableEvent($readable));
     }
 
     /**
@@ -73,7 +73,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsUnreadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNREAD, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(FOSMessageEvents::POST_UNREAD, new ReadableEvent($readable));
     }
 
     /**

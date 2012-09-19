@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Search;
+namespace FOS\MessageBundle\Search;
 
 /**
  * Search term

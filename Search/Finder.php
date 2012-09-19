@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\Search;
+namespace FOS\MessageBundle\Search;
 
-use Ornicar\MessageBundle\ModelManager\ThreadManagerInterface;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Finds threads of a participant, matching a given query

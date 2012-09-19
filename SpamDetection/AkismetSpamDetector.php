@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\SpamDetection;
+namespace FOS\MessageBundle\SpamDetection;
 
-use Ornicar\AkismetBundle\Akismet\AkismetInterface;
-use Ornicar\MessageBundle\FormModel\NewThreadMessage;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\AkismetBundle\Akismet\AkismetInterface;
+use FOS\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 class AkismetSpamDetector implements SpamDetectorInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Deleter;
+namespace FOS\MessageBundle\Deleter;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * Marks threads as deleted

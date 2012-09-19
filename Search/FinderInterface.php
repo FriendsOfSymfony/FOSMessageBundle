@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Search;
+namespace FOS\MessageBundle\Search;
 
 /**
  * Finds threads of a participant, matching a given query

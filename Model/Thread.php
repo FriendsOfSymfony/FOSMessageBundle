@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract thread model
@@ -80,7 +80,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getId()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getId()
      */
     public function getId()
     {
@@ -88,7 +88,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getCreatedAt()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedAt()
      */
     public function getCreatedAt()
     {
@@ -96,7 +96,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::setCreatedAt()
+     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedAt()
      */
     public function setCreatedAt(\DateTime $createdAt)
     {
@@ -104,7 +104,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getCreatedBy()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedBy()
      */
     public function getCreatedBy()
     {
@@ -112,7 +112,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::setCreatedBy()
+     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedBy()
      */
     public function setCreatedBy(ParticipantInterface $participant)
     {
@@ -120,7 +120,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getSubject()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getSubject()
      */
     public function getSubject()
     {
@@ -128,7 +128,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::setSubject()
+     * @see FOS\MessageBundle\Model\ThreadInterface::setSubject()
      */
     public function setSubject($subject)
     {
@@ -153,7 +153,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::addMessage()
+     * @see FOS\MessageBundle\Model\ThreadInterface::addMessage()
      */
     public function addMessage(MessageInterface $message)
     {
@@ -161,7 +161,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getMessages()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getMessages()
      */
     public function getMessages()
     {
@@ -169,7 +169,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getFirstMessage()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getFirstMessage()
      */
     public function getFirstMessage()
     {
@@ -179,7 +179,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getLastMessage()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getLastMessage()
      */
     public function getLastMessage()
     {
@@ -189,7 +189,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::isDeletedByParticipant()
+     * @see FOS\MessageBundle\Model\ThreadInterface::isDeletedByParticipant()
      */
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
@@ -201,7 +201,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::setIsDeletedByParticipant()
+     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeletedByParticipant()
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
@@ -220,7 +220,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::setIsDeleted()
+     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeleted()
      */
     public function setIsDeleted($isDeleted)
     {
@@ -230,7 +230,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -244,7 +244,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
@@ -281,7 +281,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\ThreadInterface::getOtherParticipants()
+     * @see FOS\MessageBundle\Model\ThreadInterface::getOtherParticipants()
      */
     public function getOtherParticipants(ParticipantInterface $participant)
     {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\ModelManager;
+namespace FOS\MessageBundle\ModelManager;
 
-use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * Interface to be implemented by comment thread managers. This adds an additional level

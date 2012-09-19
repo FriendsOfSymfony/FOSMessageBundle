@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormFactory;
+namespace FOS\MessageBundle\FormFactory;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
-use Ornicar\MessageBundle\FormModel\AbstractMessage;
+use FOS\MessageBundle\FormModel\AbstractMessage;
 
 /**
  * Instanciates message forms

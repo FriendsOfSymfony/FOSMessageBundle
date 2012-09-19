@@ -1,11 +1,11 @@
 <?php
 
-namespace Ornicar\MessageBundle\Security;
+namespace FOS\MessageBundle\Security;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Manages permissions to manipulate threads and messages

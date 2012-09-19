@@ -20,7 +20,7 @@ To compose a message we retrieve the composer service and compose our message:
 ::
 
     $sender = $this->get('security.context')->getToken()->getUser();
-    $threadBuilder = $this->get('ornicar_message.composer')->newThread();
+    $threadBuilder = $this->get('fos_message.composer')->newThread();
     $threadBuilder
         ->addRecipient($recipient) // Retrieved from your backend, your user manager or ...
         ->setSender($sender)
@@ -35,8 +35,8 @@ Now all you have to do to send your message is get the sender and tell it to sen
 
 ::
 
-    $sender = $this->get('ornicar_message.sender');
+    $sender = $this->get('fos_message.sender');
     $sender->send($threadBuilder->getMessage());
 
 
-That's it, your message should now have been sent 
+That's it, your message should now have been sent

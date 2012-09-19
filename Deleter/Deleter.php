@@ -1,12 +1,12 @@
 <?php
 
-namespace Ornicar\MessageBundle\Deleter;
+namespace FOS\MessageBundle\Deleter;
 
-use Ornicar\MessageBundle\Security\AuthorizerInterface;
-use Ornicar\MessageBundle\Model\ThreadInterface;
-use Ornicar\MessageBundle\Security\ParticipantProviderInterface;
-use Ornicar\MessageBundle\Event\OrnicarMessageEvents;
-use Ornicar\MessageBundle\Event\ThreadEvent;
+use FOS\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Event\FOSMessageEvents;
+use FOS\MessageBundle\Event\ThreadEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -57,7 +57,7 @@ class Deleter implements DeleterInterface
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), true);
 
-        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_DELETE, new ThreadEvent($thread));
+        $this->dispatcher->dispatch(FOSMessageEvents::POST_DELETE, new ThreadEvent($thread));
     }
 
     /**
@@ -72,7 +72,7 @@ class Deleter implements DeleterInterface
         }
         $thread->setIsDeletedByParticipant($this->getAuthenticatedParticipant(), false);
 
-        $this->dispatcher->dispatch(OrnicarMessageEvents::POST_UNDELETE, new ThreadEvent($thread));
+        $this->dispatcher->dispatch(FOSMessageEvents::POST_UNDELETE, new ThreadEvent($thread));
     }
 
     /**

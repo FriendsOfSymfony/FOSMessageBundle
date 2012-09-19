@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\ModelManager;
+namespace FOS\MessageBundle\ModelManager;
 
-use Ornicar\MessageBundle\Model\ReadableInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Capable of updating the read state of objects directly in the storage,

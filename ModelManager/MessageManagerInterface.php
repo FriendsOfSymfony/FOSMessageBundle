@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\ModelManager;
+namespace FOS\MessageBundle\ModelManager;
 
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Interface to be implemented by message managers. This adds an additional level

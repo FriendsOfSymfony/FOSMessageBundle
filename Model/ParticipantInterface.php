@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Model;
+namespace FOS\MessageBundle\Model;
 
 /**
  * A user participating to a thread.

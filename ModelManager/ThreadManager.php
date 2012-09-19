@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\ModelManager;
+namespace FOS\MessageBundle\ModelManager;
 
 /**
  * Abstract Thread Manager implementation which can be used as base class by your

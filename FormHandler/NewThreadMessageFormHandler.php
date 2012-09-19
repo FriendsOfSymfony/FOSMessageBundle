@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\FormHandler;
 
-use Ornicar\MessageBundle\FormModel\AbstractMessage;
-use Ornicar\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\FormModel\AbstractMessage;
+use FOS\MessageBundle\FormModel\NewThreadMessage;
 
 class NewThreadMessageFormHandler extends AbstractMessageFormHandler
 {

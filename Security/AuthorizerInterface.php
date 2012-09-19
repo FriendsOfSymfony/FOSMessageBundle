@@ -1,9 +1,9 @@
 <?php
 
-namespace Ornicar\MessageBundle\Security;
+namespace FOS\MessageBundle\Security;
 
-use Ornicar\MessageBundle\Model\ThreadInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Manages permissions to manipulate threads and messages

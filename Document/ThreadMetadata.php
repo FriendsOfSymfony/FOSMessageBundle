@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Document;
+namespace FOS\MessageBundle\Document;
 
-use Ornicar\MessageBundle\Model\ThreadMetadata as BaseThreadMetadata;
+use FOS\MessageBundle\Model\ThreadMetadata as BaseThreadMetadata;
 
 abstract class ThreadMetadata extends BaseThreadMetadata
 {

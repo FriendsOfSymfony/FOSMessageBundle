@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormFactory;
+namespace FOS\MessageBundle\FormFactory;
 
 /**
  * Instanciates message forms

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ornicar\MessageBundle\MessageBuilder;
+namespace FOS\MessageBundle\MessageBuilder;
 
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
-use Ornicar\MessageBundle\Sender\SenderInterface;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Sender\SenderInterface;
 
 /**
  * Fluent interface message builder for new thread messages

@@ -1,11 +1,11 @@
 <?php
 
-namespace Ornicar\MessageBundle\Event;
+namespace FOS\MessageBundle\Event;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 class MessageEvent extends ThreadEvent
 {

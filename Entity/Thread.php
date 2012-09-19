@@ -1,14 +1,14 @@
 <?php
 
-namespace Ornicar\MessageBundle\Entity;
+namespace FOS\MessageBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Ornicar\MessageBundle\Model\MessageInterface;
-use Ornicar\MessageBundle\Model\Thread as BaseThread;
-use Ornicar\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\Thread as BaseThread;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
-use Ornicar\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
+use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
 
 abstract class Thread extends BaseThread
 {
@@ -69,7 +69,7 @@ abstract class Thread extends BaseThread
      * Gets the users participating in this conversation
      *
      * Since the ORM schema does not map the participants collection field, it
-     * must be created on demand. 
+     * must be created on demand.
      *
      * @return ArrayCollection
      */
@@ -122,7 +122,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * @see Ornicar\MessageBundle\Model\Thread::addMetadata()
+     * @see FOS\MessageBundle\Model\Thread::addMetadata()
      */
     public function addMetadata(ModelThreadMetadata $meta)
     {

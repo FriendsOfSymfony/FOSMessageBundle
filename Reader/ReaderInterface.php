@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Reader;
+namespace FOS\MessageBundle\Reader;
 
-use Ornicar\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
 
 /**
  * Marks messages and threads as read or unread

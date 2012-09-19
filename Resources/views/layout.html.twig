@@ -2,19 +2,19 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}" />
-        <title>{% trans from 'OrnicarMessageBundle' %}messenger{% endtrans %}</title>
+        <title>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</title>
     </head>
 
     <body>
 
-        <h1>{% trans from 'OrnicarMessageBundle' %}messenger{% endtrans %}</h1>
+        <h1>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</h1>
 
         <ul>
-            <li><a href="{{ url('ornicar_message_inbox') }}">{% trans from 'OrnicarMessageBundle' %}inbox{% endtrans %}</a></li>
-            <li><a href="{{ url('ornicar_message_sent') }}">{% trans from 'OrnicarMessageBundle' %}sent{% endtrans %}</a></li>
+            <li><a href="{{ url('fos_message_inbox') }}">{% trans from 'FOSMessageBundle' %}inbox{% endtrans %}</a></li>
+            <li><a href="{{ url('fos_message_sent') }}">{% trans from 'FOSMessageBundle' %}sent{% endtrans %}</a></li>
         </ul>
 
-        {% block ornicar_message_content %}{% endblock %}
+        {% block fos_message_content %}{% endblock %}
 
     </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\Validator;
+namespace FOS\MessageBundle\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -10,7 +10,7 @@ class ReplyAuthorization extends Constraint
 
     public function validatedBy()
     {
-        return 'ornicar_message.validator.reply_authorization';
+        return 'fos_message.validator.reply_authorization';
     }
 
     /**

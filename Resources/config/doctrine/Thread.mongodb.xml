@@ -4,11 +4,11 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                         http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <mapped-superclass name="Ornicar\MessageBundle\Document\Thread" collection="ornicar_message_thread">
+    <mapped-superclass name="FOS\MessageBundle\Document\Thread" collection="fos_message_thread">
 
         <field name="subject" fieldName="subject" type="string" />
 
-        <!--<embed-many target-document="Ornicar\MessageBundle\Document\ThreadMetadata" field="metadata" />-->
+        <!--<embed-many target-document="FOS\MessageBundle\Document\ThreadMetadata" field="metadata" />-->
 
         <!--<reference-many field="participants" target-document="Acme\UserBundle\Document\User" />-->
 

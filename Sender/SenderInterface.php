@@ -1,8 +1,8 @@
 <?php
 
-namespace Ornicar\MessageBundle\Sender;
+namespace FOS\MessageBundle\Sender;
 
-use Ornicar\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\MessageInterface;
 
 /**
  * Sends messages

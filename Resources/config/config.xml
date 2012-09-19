@@ -6,65 +6,65 @@
 
     <services>
 
-        <service id="ornicar_message.sender.default" class="Ornicar\MessageBundle\Sender\Sender" public="false">
-            <argument type="service" id="ornicar_message.message_manager" />
-            <argument type="service" id="ornicar_message.thread_manager" />
+        <service id="fos_message.sender.default" class="FOS\MessageBundle\Sender\Sender" public="false">
+            <argument type="service" id="fos_message.message_manager" />
+            <argument type="service" id="fos_message.thread_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="ornicar_message.composer.default" class="Ornicar\MessageBundle\Composer\Composer" public="false">
-            <argument type="service" id="ornicar_message.message_manager" />
-            <argument type="service" id="ornicar_message.thread_manager" />
+        <service id="fos_message.composer.default" class="FOS\MessageBundle\Composer\Composer" public="false">
+            <argument type="service" id="fos_message.message_manager" />
+            <argument type="service" id="fos_message.thread_manager" />
         </service>
 
-        <service id="ornicar_message.participant_provider.default" class="Ornicar\MessageBundle\Security\ParticipantProvider" public="false">
+        <service id="fos_message.participant_provider.default" class="FOS\MessageBundle\Security\ParticipantProvider" public="false">
             <argument type="service" id="security.context" />
         </service>
 
-        <service id="ornicar_message.authorizer.default" class="Ornicar\MessageBundle\Security\Authorizer" public="false">
-            <argument type="service" id="ornicar_message.participant_provider" />
+        <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\Authorizer" public="false">
+            <argument type="service" id="fos_message.participant_provider" />
         </service>
 
-        <service id="ornicar_message.provider.default" class="Ornicar\MessageBundle\Provider\Provider" public="false">
-            <argument type="service" id="ornicar_message.thread_manager" />
-            <argument type="service" id="ornicar_message.message_manager" />
-            <argument type="service" id="ornicar_message.thread_reader" />
-            <argument type="service" id="ornicar_message.authorizer" />
-            <argument type="service" id="ornicar_message.participant_provider" />
+        <service id="fos_message.provider.default" class="FOS\MessageBundle\Provider\Provider" public="false">
+            <argument type="service" id="fos_message.thread_manager" />
+            <argument type="service" id="fos_message.message_manager" />
+            <argument type="service" id="fos_message.thread_reader" />
+            <argument type="service" id="fos_message.authorizer" />
+            <argument type="service" id="fos_message.participant_provider" />
         </service>
 
-        <service id="ornicar_message.message_reader.default" class="Ornicar\MessageBundle\Reader\Reader" public="false">
-            <argument type="service" id="ornicar_message.participant_provider" />
-            <argument type="service" id="ornicar_message.message_manager" />
+        <service id="fos_message.message_reader.default" class="FOS\MessageBundle\Reader\Reader" public="false">
+            <argument type="service" id="fos_message.participant_provider" />
+            <argument type="service" id="fos_message.message_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="ornicar_message.thread_reader.default" class="Ornicar\MessageBundle\Reader\Reader" public="false">
-            <argument type="service" id="ornicar_message.participant_provider" />
-            <argument type="service" id="ornicar_message.thread_manager" />
+        <service id="fos_message.thread_reader.default" class="FOS\MessageBundle\Reader\Reader" public="false">
+            <argument type="service" id="fos_message.participant_provider" />
+            <argument type="service" id="fos_message.thread_manager" />
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="ornicar_message.deleter.default" class="Ornicar\MessageBundle\Deleter\Deleter" public="false">
-            <argument type="service" id="ornicar_message.authorizer" />
-            <argument type="service" id="ornicar_message.participant_provider" />
+        <service id="fos_message.deleter.default" class="FOS\MessageBundle\Deleter\Deleter" public="false">
+            <argument type="service" id="fos_message.authorizer" />
+            <argument type="service" id="fos_message.participant_provider" />
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="ornicar_message.twig_extension.default" class="Ornicar\MessageBundle\Twig\Extension\MessageExtension" public="false">
-            <argument type="service" id="ornicar_message.participant_provider" />
-            <argument type="service" id="ornicar_message.provider" />
-            <tag name="twig.extension" alias="ornicar_message" />
+        <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\Extension\MessageExtension" public="false">
+            <argument type="service" id="fos_message.participant_provider" />
+            <argument type="service" id="fos_message.provider" />
+            <tag name="twig.extension" alias="fos_message" />
         </service>
 
-        <service id="ornicar_message.search_query_factory.default" class="Ornicar\MessageBundle\Search\QueryFactory" scope="request" public="true">
+        <service id="fos_message.search_query_factory.default" class="FOS\MessageBundle\Search\QueryFactory" scope="request" public="true">
             <argument type="service" id="request" />
             <argument /> <!-- query parameter containing the search terms -->
         </service>
 
-        <service id="ornicar_message.search_finder.default" class="Ornicar\MessageBundle\Search\Finder" public="true">
-            <argument type="service" id="ornicar_message.participant_provider" />
-            <argument type="service" id="ornicar_message.thread_manager" />
+        <service id="fos_message.search_finder.default" class="FOS\MessageBundle\Search\Finder" public="true">
+            <argument type="service" id="fos_message.participant_provider" />
+            <argument type="service" id="fos_message.thread_manager" />
         </service>
 
     </services>

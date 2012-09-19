@@ -1,11 +1,11 @@
 <?php
 
-namespace Ornicar\MessageBundle\Controller;
+namespace FOS\MessageBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Ornicar\MessageBundle\Provider\ProviderInterface;
+use FOS\MessageBundle\Provider\ProviderInterface;
 
 class MessageController extends ContainerAware
 {
@@ -18,7 +18,7 @@ class MessageController extends ContainerAware
     {
         $threads = $this->getProvider()->getInboxThreads();
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:inbox.html.twig', array(
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:inbox.html.twig', array(
             'threads' => $threads
         ));
     }
@@ -32,7 +32,7 @@ class MessageController extends ContainerAware
     {
         $threads = $this->getProvider()->getSentThreads();
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:sent.html.twig', array(
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:sent.html.twig', array(
             'threads' => $threads
         ));
     }
@@ -46,16 +46,16 @@ class MessageController extends ContainerAware
     public function threadAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $form = $this->container->get('ornicar_message.reply_form.factory')->create($thread);
-        $formHandler = $this->container->get('ornicar_message.reply_form.handler');
+        $form = $this->container->get('fos_message.reply_form.factory')->create($thread);
+        $formHandler = $this->container->get('fos_message.reply_form.handler');
 
         if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('ornicar_message_thread_view', array(
+            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
                 'threadId' => $message->getThread()->getId()
             )));
         }
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:thread.html.twig', array(
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:thread.html.twig', array(
             'form' => $form->createView(),
             'thread' => $thread
         ));
@@ -68,16 +68,16 @@ class MessageController extends ContainerAware
      */
     public function newThreadAction()
     {
-        $form = $this->container->get('ornicar_message.new_thread_form.factory')->create();
-        $formHandler = $this->container->get('ornicar_message.new_thread_form.handler');
+        $form = $this->container->get('fos_message.new_thread_form.factory')->create();
+        $formHandler = $this->container->get('fos_message.new_thread_form.handler');
 
         if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('ornicar_message_thread_view', array(
+            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
                 'threadId' => $message->getThread()->getId()
             )));
         }
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:newThread.html.twig', array(
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:newThread.html.twig', array(
             'form' => $form->createView(),
             'data' => $form->getData()
         ));
@@ -91,10 +91,10 @@ class MessageController extends ContainerAware
     public function deleteAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('ornicar_message.deleter')->markAsDeleted($thread);
-        $this->container->get('ornicar_message.thread_manager')->saveThread($thread);
+        $this->container->get('fos_message.deleter')->markAsDeleted($thread);
+        $this->container->get('fos_message.thread_manager')->saveThread($thread);
 
-        return new RedirectResponse($this->container->get('router')->generate('ornicar_message_inbox'));
+        return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
     }
 
     /**
@@ -104,10 +104,10 @@ class MessageController extends ContainerAware
      */
     public function searchAction()
     {
-        $query = $this->container->get('ornicar_message.search_query_factory')->createFromRequest();
-        $threads = $this->container->get('ornicar_message.search_finder')->find($query);
+        $query = $this->container->get('fos_message.search_query_factory')->createFromRequest();
+        $threads = $this->container->get('fos_message.search_finder')->find($query);
 
-        return $this->container->get('templating')->renderResponse('OrnicarMessageBundle:Message:search.html.twig', array(
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:search.html.twig', array(
             'query' => $query,
             'threads' => $threads
         ));
@@ -120,6 +120,6 @@ class MessageController extends ContainerAware
      */
     protected function getProvider()
     {
-        return $this->container->get('ornicar_message.provider');
+        return $this->container->get('fos_message.provider');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ornicar\MessageBundle\FormModel;
+namespace FOS\MessageBundle\FormModel;
 
 abstract class AbstractMessage
 {
