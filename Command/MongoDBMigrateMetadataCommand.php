@@ -54,17 +54,17 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('ornicar:message:mongodb:migrate:metadata')
+            ->setName('fos:message:mongodb:migrate:metadata')
             ->setDescription('Migrates document hash fields to embedded metadata and active/unread arrays')
             ->addArgument('participantClass', InputArgument::REQUIRED, 'Participant class')
             ->addOption('safe', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->addOption('fsync', null, InputOption::VALUE_OPTIONAL, 'Mongo update option', false)
             ->setHelp(<<<'EOT'
-The <info>ornicar:message:mongodb:migrate:metadata</info> command migrates old document hash
+The <info>fos:message:mongodb:migrate:metadata</info> command migrates old document hash
 fields to a new schema optimized for MongoDB queries. This command requires the
 participant class to be provided as its first and only parameter:
 
-  <info>php app/console ornicar:message:mongodb:migrate:metadata "Acme\Document\User"</info>
+  <info>php app/console fos:message:mongodb:migrate:metadata "Acme\Document\User"</info>
 
 The following hash fields will become obsolete after migration:
 

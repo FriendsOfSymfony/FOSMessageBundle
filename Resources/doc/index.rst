@@ -11,7 +11,7 @@ recipient. This dependency is optional if you implement a custom form type for
 new messages and specify your class in the `new_thread_form.type` config option.
 
 **Note:** PR #32 introduced significant schema changes for the MongoDB model
-layer. The ``ornicar:message:mongodb:migrate:metadata`` console command may be
+layer. The ``fos:message:mongodb:migrate:metadata`` console command may be
 used to migrate your existing schema. Please refer to the command's help message
 for additional information.
 
