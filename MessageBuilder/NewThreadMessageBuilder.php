@@ -39,8 +39,7 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
     }
 
     /**
-     * @param \Doctrine\Common\Collections\Collection $recipients
-     *
+     * @param  Collection $recipients
      * @return NewThreadMessageBuilder
      */
     public function addRecipients(Collection $recipients) {
