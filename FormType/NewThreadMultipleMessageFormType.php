@@ -20,6 +20,6 @@ class NewThreadMultipleMessageFormType extends AbstractType
 
     public function getName()
     {
-        return 'fos_message_new_thread';
+        return 'fos_message_new_multiperson_thread';
     }
 }

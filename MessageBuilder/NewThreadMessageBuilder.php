@@ -42,7 +42,8 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
      * @param  Collection $recipients
      * @return NewThreadMessageBuilder
      */
-    public function addRecipients(Collection $recipients) {
+    public function addRecipients(Collection $recipients)
+    {
         foreach ($recipients as $recipient) {
             $this->addRecipient($recipient);
         }
