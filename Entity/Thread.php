@@ -101,6 +101,27 @@ abstract class Thread extends BaseThread
     }
 
     /**
+     * Adds many participants to the thread
+     *
+     * @param array|\Traversable
+     *
+     * @throws \InvalidArgumentException
+     * @return Thread
+     */
+    public function addParticipants($participants)
+    {
+        if (!is_array($participants) && !$participants instanceof \Traversable) {
+            throw new \InvalidArgumentException("Participants must be an array or instanceof Traversable");
+        }
+
+        foreach ($participants as $participant) {
+            $this->addParticipant($participant);
+        }
+
+        return $this;
+    }
+
+    /**
      * Tells if the user participates to the conversation
      *
      * @param ParticipantInterface $participant

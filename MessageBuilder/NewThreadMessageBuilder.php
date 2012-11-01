@@ -5,6 +5,7 @@ namespace FOS\MessageBundle\MessageBuilder;
 use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Sender\SenderInterface;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Fluent interface message builder for new thread messages
@@ -36,4 +37,18 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
 
         return $this;
     }
+
+    /**
+     * @param  Collection $recipients
+     * @return NewThreadMessageBuilder
+     */
+    public function addRecipients(Collection $recipients)
+    {
+        foreach ($recipients as $recipient) {
+            $this->addRecipient($recipient);
+        }
+
+        return $this;
+    }
+
 }
