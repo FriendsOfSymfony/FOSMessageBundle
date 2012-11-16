@@ -95,10 +95,12 @@ class ThreadManager extends BaseThreadManager
             ->setParameter('user_id', $participant->getId())
 
             // the thread does not contain spam or flood
-            ->andWhere('t.isSpam = FALSE')
+            ->andWhere('t.isSpam = :isSpam')
+            ->setParameter('isSpam', false)
 
             // the thread is not deleted by this participant
-            ->andWhere('tm.isDeleted = FALSE')
+            ->andWhere('tm.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false)
 
             // there is at least one message written by an other participant
             ->andWhere('tm.lastMessageDate IS NOT NULL')
@@ -144,10 +146,12 @@ class ThreadManager extends BaseThreadManager
             ->setParameter('user_id', $participant->getId())
 
             // the thread does not contain spam or flood
-            ->andWhere('t.isSpam = FALSE')
+            ->andWhere('t.isSpam = :isSpam')
+            ->setParameter('isSpam', false)
 
             // the thread is not deleted by this participant
-            ->andWhere('tm.isDeleted = FALSE')
+            ->andWhere('tm.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false)
 
             // there is at least one message written by this participant
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
