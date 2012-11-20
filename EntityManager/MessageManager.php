@@ -71,7 +71,8 @@ class MessageManager extends BaseMessageManager
             ->where('p.id = :participant_id')
             ->setParameter('participant_id', $participant->getId())
 
-            ->andWhere('mm.isRead = 0')
+            ->andWhere('mm.isRead = :isRead')
+            ->setParameter('isRead', false)
 
             ->getQuery()
             ->getSingleScalarResult();
