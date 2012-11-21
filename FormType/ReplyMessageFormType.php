@@ -2,8 +2,9 @@
 
 namespace FOS\MessageBundle\FormType;
 
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Form type for a reply
@@ -16,6 +17,13 @@ class ReplyMessageFormType extends AbstractType
     {
         $builder
             ->add('body', 'textarea');
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'intention'  => 'reply',
+        ));
     }
 
     public function getName()
