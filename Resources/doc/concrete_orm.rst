@@ -45,6 +45,13 @@ Message class
          * @ORM\OneToMany(targetEntity="Acme\MessageBundle\Entity\MessageMetadata", mappedBy="message", cascade={"all"})
          */
         protected $metadata;
+
+        public function __construct()
+        {
+            parent::__construct();
+
+            $this->metadata  = new ArrayCollection();
+        }
     }
 
 MessageMetadata class
