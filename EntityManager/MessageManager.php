@@ -125,7 +125,7 @@ class MessageManager extends BaseMessageManager
      * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
+    public function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
         $meta = $message->getMetadataForParticipant($participant);
         if (!$meta || $meta->getIsRead() == $isRead) {
