@@ -33,7 +33,7 @@ class MessageExtension extends \Twig_Extension
     }
 
     /**
-     * Tells if this readable (thread or messae) is read by the current user
+     * Tells if this readable (thread or message) is read by the current user
      *
      * @return boolean
      */
