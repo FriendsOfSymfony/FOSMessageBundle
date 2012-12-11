@@ -88,9 +88,9 @@ class MessageManager extends BaseMessageManager
      * @param ReadableInterface $readable
      * @param ParticipantInterface $participant
      */
-    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
+    public function markAsReadByParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $participant, true);
+        $this->markIsReadByThreadAndParticipant($thread, $participant, true);
     }
 
     /**
@@ -99,9 +99,9 @@ class MessageManager extends BaseMessageManager
      * @param ReadableInterface $readable
      * @param ParticipantInterface $participant
      */
-    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
+    public function markAsUnreadByParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $participant, false);
+        $this->markIsReadByThreadAndParticipant($thread, $participant, false);
     }
 
     /**
