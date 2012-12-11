@@ -90,7 +90,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsReadByParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $participant, true);
+        $this->markIsReadByThreadAndParticipant($thread, $participant, true);
     }
 
     /**
@@ -101,7 +101,7 @@ class MessageManager extends BaseMessageManager
      */
     public function markAsUnreadByParticipant(ThreadInterface $thread, ParticipantInterface $participant)
     {
-        $this->markIsReadByThreadAndParticipant($readable, $participant, false);
+        $this->markIsReadByThreadAndParticipant($thread, $participant, false);
     }
 
     /**
@@ -111,7 +111,7 @@ class MessageManager extends BaseMessageManager
      * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    protected function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
+    public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
         foreach ($thread->getMessages() as $message) {
             $this->markIsReadByParticipant($message, $participant, $isRead);
