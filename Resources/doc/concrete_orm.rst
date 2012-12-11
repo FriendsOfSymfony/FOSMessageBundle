@@ -16,6 +16,9 @@ Message class
     use Doctrine\ORM\Mapping as ORM;
 
     use FOS\MessageBundle\Entity\Message as BaseMessage;
+    use FOS\MessageBundle\Model\ThreadInterface;
+    use FOS\MessageBundle\Model\ParticipantInterface;
+    use FOS\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
 
     /**
      * @ORM\Entity
@@ -52,6 +55,22 @@ Message class
 
             $this->metadata  = new ArrayCollection();
         }
+
+        public function setThread(ThreadInterface $thread) {
+    		$this->thread = $thread;
+    		return $this;
+    	}
+    
+    	public function setSender(ParticipantInterface $sender) {
+    		$this->sender = $sender;
+    		return $this;
+    	}
+    
+    	public function addMetadata(ModelMessageMetadata $meta) {
+    	    $meta->setMessage($this);
+    	    parent::addMetadata($meta);
+    	}
+
     }
 
 MessageMetadata class
@@ -66,6 +85,8 @@ MessageMetadata class
     use Doctrine\ORM\Mapping as ORM;
 
     use FOS\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
+    use FOS\MessageBundle\Model\MessageInterface;
+    use FOS\MessageBundle\Model\ParticipantInterface;
 
     /**
      * @ORM\Entity
@@ -89,6 +110,17 @@ MessageMetadata class
          * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
          */
         protected $participant;
+
+        public function setMessage(MessageInterface $message) {
+    	    $this->message = $message;
+    	    return $this;
+    	}
+    
+    	public function setParticipant(ParticipantInterface $participant) {
+    		$this->participant = $participant;
+    		return $this;
+    	}
+
     }
 
 Thread class
@@ -103,6 +135,9 @@ Thread class
     use Doctrine\ORM\Mapping as ORM;
 
     use FOS\MessageBundle\Entity\Thread as BaseThread;
+    use FOS\MessageBundle\Model\ParticipantInterface;
+    use FOS\MessageBundle\Model\MessageInterface;
+    use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
 
     /**
      * @ORM\Entity
@@ -138,6 +173,21 @@ Thread class
 
             $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
         }
+
+        public function setCreatedBy(ParticipantInterface $participant) {
+    		$this->createdBy = $participant;
+    		return $this;
+    	}
+    
+    	function addMessage(MessageInterface $message) {
+    		$this->messages->add($message);
+    	}
+    
+    	public function addMetadata(ModelThreadMetadata $meta) {
+    	    $meta->setThread($this);
+    	    parent::addMetadata($meta);
+    	}
+
     }
 
 ThreadMetadata class
@@ -152,6 +202,8 @@ ThreadMetadata class
     use Doctrine\ORM\Mapping as ORM;
 
     use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
+    use FOS\MessageBundle\Model\ThreadInterface;
+    use FOS\MessageBundle\Model\ParticipantInterface;
 
     /**
      * @ORM\Entity
@@ -175,6 +227,15 @@ ThreadMetadata class
          * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
          */
         protected $participant;
+
+        public function setThread(ThreadInterface $thread) {
+    	    $this->thread = $thread;
+    	}
+    
+    	public function setParticipant(ParticipantInterface $participant) {
+    	    $this->participant = $participant;
+    	    return $this;
+    	}
 
     }
 
