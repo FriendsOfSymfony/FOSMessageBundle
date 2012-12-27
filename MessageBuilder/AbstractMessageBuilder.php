@@ -21,7 +21,7 @@ abstract class AbstractMessageBuilder
     protected $message;
 
     /**
-     * The message the message goes in
+     * The thread the message goes in
      *
      * @var ThreadInterface
      */
