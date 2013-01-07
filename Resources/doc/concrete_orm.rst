@@ -33,7 +33,7 @@ Message class
         protected $id;
 
         /**
-         * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread")
+         * @ORM\ManyToOne(targetEntity="Acme\MessageBundle\Entity\Thread", inversedBy="messages")
          * @ORM\JoinColumn(name="thread_id", referencedColumnName="id")
          */
         protected $thread;
