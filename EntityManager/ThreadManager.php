@@ -96,11 +96,11 @@ class ThreadManager extends BaseThreadManager
 
             // the thread does not contain spam or flood
             ->andWhere('t.isSpam = :isSpam')
-            ->setParameter('isSpam', false)
+            ->setParameter('isSpam', false, \PDO::PARAM_BOOL)
 
             // the thread is not deleted by this participant
             ->andWhere('tm.isDeleted = :isDeleted')
-            ->setParameter('isDeleted', false)
+            ->setParameter('isDeleted', false, \PDO::PARAM_BOOL)
 
             // there is at least one message written by an other participant
             ->andWhere('tm.lastMessageDate IS NOT NULL')
@@ -147,11 +147,11 @@ class ThreadManager extends BaseThreadManager
 
             // the thread does not contain spam or flood
             ->andWhere('t.isSpam = :isSpam')
-            ->setParameter('isSpam', false)
+            ->setParameter('isSpam', false, \PDO::PARAM_BOOL)
 
             // the thread is not deleted by this participant
             ->andWhere('tm.isDeleted = :isDeleted')
-            ->setParameter('isDeleted', false)
+            ->setParameter('isDeleted', false, \PDO::PARAM_BOOL)
 
             // there is at least one message written by this participant
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
