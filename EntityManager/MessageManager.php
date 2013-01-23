@@ -71,6 +71,9 @@ class MessageManager extends BaseMessageManager
             ->where('p.id = :participant_id')
             ->setParameter('participant_id', $participant->getId())
 
+            ->andWhere('m.sender != :sender')
+            ->setParameter('sender', $participant->getId())
+
             ->andWhere('mm.isRead = :isRead')
             ->setParameter('isRead', false)
 
