@@ -68,11 +68,8 @@ class MessageManager extends BaseMessageManager
             ->innerJoin('m.metadata', 'mm')
             ->innerJoin('mm.participant', 'p')
 
-            ->where('p.id = :participant_id')
+            ->where('p.id = :participant_id AND m.sender != :participant_id')
             ->setParameter('participant_id', $participant->getId())
-
-            ->andWhere('m.sender != :sender')
-            ->setParameter('sender', $participant->getId())
 
             ->andWhere('mm.isRead = :isRead')
             ->setParameter('isRead', false)
@@ -80,6 +77,36 @@ class MessageManager extends BaseMessageManager
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * Tells how many unread threads this participant has
+     *
+     * @param ParticipantInterface $participant
+     * @return int the number of unread threads
+     */
+    public function getNbUnreadThreadByParticipant(ParticipantInterface $participant)
+    {
+        $builder = $this->repository->createQueryBuilder('m');
+
+        return count($builder
+
+            ->innerJoin('m.metadata', 'mm')
+            ->innerJoin('mm.participant', 'p')
+
+            ->where('p.id = :participant_id AND m.sender != :participant_id')
+            ->setParameter('participant_id', $participant->getId())
+
+            ->andWhere('mm.isRead = :isRead')
+            ->setParameter('isRead', false)
+
+            ->groupBy('m.thread')
+
+            ->getQuery()
+            ->getResult()
+        );
+    }
+
+
 
     /**
      * Marks the readable as read by this participant

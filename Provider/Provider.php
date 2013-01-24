@@ -120,6 +120,16 @@ class Provider implements ProviderInterface
     }
 
     /**
+     * Tells how many unread threads the authenticated participant has
+     *
+     * @return int the number of unread threads
+     */
+    public function getNbUnreadThreads()
+    {
+        return $this->messageManager->getNbUnreadThreadByParticipant($this->getAuthenticatedParticipant());
+    }
+
+    /**
      * Gets the current authenticated user
      *
      * @return ParticipantInterface
