@@ -19,3 +19,4 @@ goto_last: Ir al último mensaje
 on: En %date%
 by: Por %sender%
 no_thread: No hay hilos que mostrar
+delete: Eliminar
