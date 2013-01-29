@@ -95,7 +95,7 @@ The message senders and recipients are called *participants* of the thread.
 MessageBundle will only refer to them using the `ParticipantInterface`.
 This allows you to use any user class. Just make it implement this interface.
 
-For exemple, if your user class is ``Acme\UserBundle\Document\User``::
+For example, if your user class is ``Acme\UserBundle\Document\User``::
 
     // src/Acme/UserBundle/Document/User.php
 
