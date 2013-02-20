@@ -135,11 +135,9 @@ class MessageManager extends BaseMessageManager
             return;
         }
 
-        $q = $this->em->createQuery(
-        	'update ' . $this->metaClass . ' m set m.isRead = :is_read where m.id = :id'
-        ) 
-        -> setParameter('is_read', (bool) $isRead)
-        -> setParameter('id', $meta->getId());
+        $q = $this->em->createQuery('update ' . $this->metaClass . ' m set m.isRead = :is_read where m.id = :id') 
+        	->setParameter('is_read', (bool)$isRead)
+        	->setParameter('id', $meta->getId());
         
         $q -> execute();
     }
