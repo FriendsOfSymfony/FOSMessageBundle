@@ -14,6 +14,7 @@ Message class
     namespace Acme\MessageBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\ArrayCollection;
 
     use FOS\MessageBundle\Entity\Message as BaseMessage;
     use FOS\MessageBundle\Model\ThreadInterface;
@@ -133,6 +134,7 @@ Thread class
     namespace Acme\MessageBundle\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Doctrine\Common\Collections\ArrayCollection;
 
     use FOS\MessageBundle\Entity\Thread as BaseThread;
     use FOS\MessageBundle\Model\ParticipantInterface;
@@ -171,7 +173,7 @@ Thread class
         {
             parent::__construct();
 
-            $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+            $this->messages = new ArrayCollection();
         }
 
         public function setCreatedBy(ParticipantInterface $participant) {
