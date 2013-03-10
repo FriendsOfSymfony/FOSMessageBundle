@@ -236,6 +236,17 @@ Nothing's easier than sending the message you've just composed::
 
     $sender->send($message);
 
+Number of Unread Messages
+-------------------------
+
+You can return the number of unread messages for the authenticated user with::
+
+    $provider = $container->get('fos_message.provider');
+
+    $provider->getNbUnreadMessages()
+
+Will return an integer, the number of unread messages.
+
 Templating
 ==========
 
