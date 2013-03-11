@@ -27,7 +27,7 @@ interface ThreadInterface extends ReadableInterface
     /**
      * Gets the messages contained in the thread
      *
-     * @return ArrayCollection of MessageInterface
+     * @return Collection of MessageInterface
      */
     function getMessages();
 
