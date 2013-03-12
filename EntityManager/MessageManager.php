@@ -137,7 +137,8 @@ class MessageManager extends BaseMessageManager
 
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
-            ->set('m.isRead', (int) $isRead)
+            ->set('m.isRead', '?1')
+            ->setParameter('1', (bool)$isRead, \PDO::PARAM_BOOL)
 
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
