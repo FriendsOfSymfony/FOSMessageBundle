@@ -42,7 +42,7 @@ abstract class AbstractMessageFormHandler
             return false;
         }
 
-        $form->bindRequest($this->request);
+        $form->bind($this->request);
 
         if ($form->isValid()) {
             return $this->processValidForm($form);
