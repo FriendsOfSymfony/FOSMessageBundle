@@ -39,10 +39,9 @@ class ReplyAuthorizationValidator extends ConstraintValidator
         foreach ($recipients as $recipient) {
             if (!$this->authorizer->canMessageParticipant($recipient)) {
                 $this->addViolation($constraint->message);
-                return false;
+                
+                return;
             }
         }
-
-        return true;
     }
 }

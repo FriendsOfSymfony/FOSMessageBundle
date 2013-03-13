@@ -33,9 +33,6 @@ class AuthorizationValidator extends ConstraintValidator
     {
         if ($recipient && !$this->authorizer->canMessageParticipant($recipient)) {
             $this->addViolation($constraint->message);
-            return false;
         }
-
-        return true;
     }
 }

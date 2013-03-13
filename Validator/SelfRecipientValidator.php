@@ -33,9 +33,6 @@ class SelfRecipientValidator extends ConstraintValidator
     {
         if ($recipient === $this->participantProvider->getAuthenticatedParticipant()) {
             $this->addViolation($constraint->message);
-            return false;
         }
-
-        return true;
     }
 }
