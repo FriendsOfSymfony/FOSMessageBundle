@@ -32,7 +32,7 @@ class SelfRecipientValidator extends ConstraintValidator
     public function validate($recipient, Constraint $constraint)
     {
         if ($recipient === $this->participantProvider->getAuthenticatedParticipant()) {
-            $this->setMessage($constraint->message);
+            $this->addViolation($constraint->message);
             return false;
         }
 

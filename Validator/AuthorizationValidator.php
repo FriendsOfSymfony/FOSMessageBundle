@@ -32,7 +32,7 @@ class AuthorizationValidator extends ConstraintValidator
     public function validate($recipient, Constraint $constraint)
     {
         if ($recipient && !$this->authorizer->canMessageParticipant($recipient)) {
-            $this->setMessage($constraint->message);
+            $this->addViolation($constraint->message);
             return false;
         }
 
