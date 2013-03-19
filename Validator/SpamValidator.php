@@ -32,7 +32,7 @@ class SpamValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if ($this->spamDetector->isSpam($value)) {
-            $this->addViolation($constraint->message);
+            $this->context->addViolation($constraint->message);
         }
     }
 }
