@@ -345,7 +345,7 @@ All configuration options are listed below::
 
     # app/config/config.yml
 
-    fos_message
+    fos_message:
         db_driver:              mongodb
         thread_class:           Acme\MessageBundle\Document\Thread
         message_class:          Acme\MessageBundle\Document\Message
