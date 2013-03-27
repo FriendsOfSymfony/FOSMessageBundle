@@ -13,7 +13,7 @@
                     <option name="message">No recipient specified</option>
                 </constraint>
                 <constraint name="Type">
-                    <option name="value">FOS\MessageBundle\Model\ParticipantInterface</option>
+                    <option name="type">FOS\MessageBundle\Model\ParticipantInterface</option>
                 </constraint>
             </constraint>
         </property>
@@ -51,7 +51,7 @@
                 <option name="message">No user with that username</option>
             </constraint>
             <constraint name="Type">
-                <option name="value">FOS\MessageBundle\Model\ParticipantInterface</option>
+                <option name="type">FOS\MessageBundle\Model\ParticipantInterface</option>
             </constraint>
         </property>
 
