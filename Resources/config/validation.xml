@@ -33,9 +33,9 @@
             <constraint name="NotBlank">
                 <option name="message">Please enter a body</option>
             </constraint>
-            <constraint name="MinLength">
-                <option name="limit">2</option>
-                <option name="message">The body is too short</option>
+            <constraint name="Length">
+                <option name="min">2</option>
+                <option name="minMessage">The body is too short</option>
             </constraint>
         </property>
     </class>
