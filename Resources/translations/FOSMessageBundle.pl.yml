@@ -19,3 +19,4 @@ goto_last:      Idź do ostatniej wiadomości
 on:             data %date%
 by:             Od %sender%
 no_thread:      Brak wiadomości do wyświetlenia
+delete:         Usuń
