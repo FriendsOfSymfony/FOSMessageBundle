@@ -1,9 +1,9 @@
-Provides messenging features for your Symfony2 application.
+Provides messaging features for your Symfony2 application.
 
 The persistence is storage agnostic. Any backend may be implemented: Doctrine, Propel, etc.
 Presently, only the MongoDB implementation is complete.
 
-MessageBundle supports threads, spam detection, soft deletion and messenging permissions.
+MessageBundle supports threads, spam detection, soft deletion and messaging permissions.
 
 MessageBundle requires FOSUserBundle by default, as `NewThreadMessageFormType`
 depends on the `fos_user_username` field type for entering a new message
@@ -284,7 +284,7 @@ Other strategy
 You can use any spam dectetor service, including one of your own, provided the
 class implements ``FOS\MessageBundle\SpamDetection\SpamDetectorInterface``.
 
-Messenging permissions
+Messaging permissions
 ======================
 
 You can change the security logic by replacing the ``authorizer`` service::
