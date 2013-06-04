@@ -287,7 +287,11 @@ abstract class Thread implements ThreadInterface
     {
         $otherParticipants = $this->getParticipants();
 
-        unset($otherParticipants[array_search($participant, $otherParticipants, true)]);
+        $key = array_search($participant, $otherParticipants, true);
+
+        if (false !== $key) {
+            unset($otherParticipants[$key]);
+        }
 
         // we want to reset the array indexes
         return array_values($otherParticipants);
