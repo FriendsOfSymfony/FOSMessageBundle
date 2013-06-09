@@ -52,7 +52,7 @@ Add the FOS namespace to your autoloader
     $loader->registerNamespaces(array(
         'FOS' => __DIR__.'/../vendor/bundles',
         // your other namespaces
-    );
+    ));
 
 Add MessageBundle to your application kernel
 -----------------------------------------
