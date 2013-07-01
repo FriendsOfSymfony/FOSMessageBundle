@@ -54,7 +54,7 @@ abstract class AbstractMessageFormHandler
     /**
      * Processes the valid form, sends the message
      *
-     * @param Form
+     * @param Form $form
      * @return MessageInterface the sent message
      */
     public function processValidForm(Form $form)

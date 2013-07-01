@@ -14,7 +14,7 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
     /**
      * Creates a reply message
      *
-     * @param ThreadInterface the thread we answer to
+     * @param ThreadInterface $thread the thread we answer to
      * @return Form
      */
     public function create(ThreadInterface $thread)

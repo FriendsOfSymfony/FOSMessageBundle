@@ -30,7 +30,7 @@ abstract class ThreadMetadata extends BaseThreadMetadata
     }
 
     /**
-     * @param  ThreadInterface
+     * @param  ThreadInterface $thread
      * @return null
      */
     public function setThread(ThreadInterface $thread)

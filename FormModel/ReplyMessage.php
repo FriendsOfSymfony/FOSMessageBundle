@@ -22,7 +22,7 @@ class ReplyMessage extends AbstractMessage
     }
 
     /**
-     * @param  ThreadInterface
+     * @param  ThreadInterface $thread
      * @return null
      */
     public function setThread(ThreadInterface $thread)
