@@ -30,7 +30,7 @@ abstract class MessageMetadata extends BaseMessageMetadata
     }
 
     /**
-     * @param  MessageInterface
+     * @param  MessageInterface $message
      * @return null
      */
     public function setMessage(MessageInterface $message)
