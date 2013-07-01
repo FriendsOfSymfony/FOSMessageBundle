@@ -28,7 +28,7 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
     }
 
     /**
-     * @param  ParticipantInterface
+     * @param  ParticipantInterface $recipient
      * @return NewThreadMessageBuilder (fluent interface)
      */
     public function addRecipient(ParticipantInterface $recipient)

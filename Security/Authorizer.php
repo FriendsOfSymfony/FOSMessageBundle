@@ -54,7 +54,7 @@ class Authorizer implements AuthorizerInterface
      * Tells if the current participant is allowed
      * to send a message to this other participant
      *
-     * $param ParticipantInterface $participant the one we want to send a message to
+     * @param ParticipantInterface $participant the one we want to send a message to
      * @return boolean
      */
     public function canMessageParticipant(ParticipantInterface $participant)

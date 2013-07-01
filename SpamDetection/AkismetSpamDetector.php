@@ -29,7 +29,7 @@ class AkismetSpamDetector implements SpamDetectorInterface
     }
 
     /**
-     * Tells wether or not a new message looks like spam
+     * Tells whether or not a new message looks like spam
      *
      * @param NewThreadMessage $message
      * @return boolean true if it is spam, false otherwise

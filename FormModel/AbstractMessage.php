@@ -5,7 +5,7 @@ namespace FOS\MessageBundle\FormModel;
 abstract class AbstractMessage
 {
     /**
-     * The mesage body
+     * The message body
      *
      * @var string
      */
