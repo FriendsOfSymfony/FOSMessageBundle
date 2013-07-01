@@ -40,7 +40,7 @@ class MessageController extends ContainerAware
     /**
      * Displays a thread, also allows to reply to it
      *
-     * @param strind $threadId the thread id
+     * @param string $threadId the thread id
      * @return Response
      */
     public function threadAction($threadId)
@@ -85,8 +85,9 @@ class MessageController extends ContainerAware
 
     /**
      * Deletes a thread
-     *
-     * @return Response
+     * 
+     * @param string $threadId the thread id
+     * @return RedirectResponse
      */
     public function deleteAction($threadId)
     {
