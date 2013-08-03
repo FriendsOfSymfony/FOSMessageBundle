@@ -178,6 +178,38 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant)
+    {
+        return $this->repository->createQueryBuilder('t')
+            ->innerJoin('t.metadata', 'tm')
+            ->innerJoin('tm.participant', 'p')
+
+            // the participant is in the thread participants
+            ->andWhere('p.id = :user_id')
+            ->setParameter('user_id', $participant->getId())
+
+            // the thread is deleted by this participant
+            ->andWhere('tm.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', true, \PDO::PARAM_BOOL)
+
+            // sort by date of last message
+            ->orderBy('tm.lastMessageDate', 'DESC')
+        ;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findParticipantDeletedThreads(ParticipantInterface $participant)
+    {
+        return $this->getParticipantDeletedThreadsQueryBuilder($participant)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Finds not deleted threads for a participant,
      * matching the given search term
      * ordered by last message not written by this participant in reverse order.

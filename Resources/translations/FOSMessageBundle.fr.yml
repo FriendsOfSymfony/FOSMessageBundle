@@ -1,6 +1,7 @@
 messenger:      Messagerie
 inbox:          Boîte de réception
 sent:           Envoyés
+deleted:        Supprimés
 send_new:       Envoyer un nouveau message
 search:         Rechercher
 threads_found:  %num% conversations trouvé avec | %num% conversations trouvés avec

@@ -38,6 +38,20 @@ class MessageController extends ContainerAware
     }
 
     /**
+     * Displays the authenticated participant deleted threads
+     *
+     * @return Response
+     */
+    public function deletedAction()
+    {
+        $threads = $this->getProvider()->getDeletedThreads();
+
+        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:deleted.html.twig', array(
+            'threads' => $threads
+        ));
+    }
+
+    /**
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id

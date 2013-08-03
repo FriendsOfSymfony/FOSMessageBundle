@@ -140,6 +140,25 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant)
+    {
+        return $this->repository->createQueryBuilder()
+            ->field('metadata.isDeleted')->equals(true)
+            ->field('metadata.participantId')->equals($participant->getId())
+            ->sort('lastMessageDate', 'desc');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findParticipantDeletedThreads(ParticipantInterface $participant)
+    {
+        return $this->getParticipantDeletedThreadsQueryBuilder($participant)->getQuery()->execute();
+    }
+
+    /**
      * Finds not deleted threads for a participant,
      * matching the given search term
      * ordered by last message not written by this participant in reverse order.
