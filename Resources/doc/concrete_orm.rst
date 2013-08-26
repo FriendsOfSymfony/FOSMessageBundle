@@ -29,7 +29,7 @@ Message class
         /**
          * @ORM\Id
          * @ORM\Column(type="integer")
-         * @ORM\generatedValue(strategy="AUTO")
+         * @ORM\GeneratedValue(strategy="AUTO")
          */
         protected $id;
 
@@ -98,7 +98,7 @@ MessageMetadata class
         /**
          * @ORM\Id
          * @ORM\Column(type="integer")
-         * @ORM\generatedValue(strategy="AUTO")
+         * @ORM\GeneratedValue(strategy="AUTO")
          */
         protected $id;
 
@@ -150,7 +150,7 @@ Thread class
         /**
          * @ORM\Id
          * @ORM\Column(type="integer")
-         * @ORM\generatedValue(strategy="AUTO")
+         * @ORM\GeneratedValue(strategy="AUTO")
          */
         protected $id;
 
@@ -216,7 +216,7 @@ ThreadMetadata class
         /**
          * @ORM\Id
          * @ORM\Column(type="integer")
-         * @ORM\generatedValue(strategy="AUTO")
+         * @ORM\GeneratedValue(strategy="AUTO")
          */
         protected $id;
 
