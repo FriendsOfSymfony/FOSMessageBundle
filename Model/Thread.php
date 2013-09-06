@@ -175,7 +175,7 @@ abstract class Thread implements ThreadInterface
     {
         $messages = $this->getMessages();
 
-        return empty($messages) ? null : reset($messages);
+        return empty($messages) ? null : $messages->first();
     }
 
     /**
@@ -185,7 +185,7 @@ abstract class Thread implements ThreadInterface
     {
         $messages = $this->getMessages();
 
-        return empty($messages) ? null : end($messages);
+        return empty($messages) ? null : $messages->last();
     }
 
     /**
