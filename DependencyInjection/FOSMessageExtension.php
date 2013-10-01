@@ -3,6 +3,7 @@
 namespace FOS\MessageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -61,5 +62,12 @@ class FOSMessageExtension extends Extension
         $container->setAlias('fos_message.search_finder', $config['search']['finder']);
         $container->getDefinition('fos_message.search_query_factory.default')
             ->replaceArgument(1, $config['search']['query_parameter']);
+
+
+        if($config['user_to_username_transformer']!==null){
+            $userToUsernameTransformerService = new Reference($config['user_to_username_transformer']);
+            $container->getDefinition('fos_message.recipients_data_transformer')
+                ->replaceArgument(0, $userToUsernameTransformerService);
+        }
     }
 }
