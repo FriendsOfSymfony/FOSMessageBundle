@@ -65,9 +65,8 @@ class FOSMessageExtension extends Extension
 
 
         if($config['user_transformer']!==null){
-            $userToUsernameTransformerService = new Reference($config['user_transformer']);
             $container->getDefinition('fos_message.recipients_data_transformer')
-                ->replaceArgument(0, $userToUsernameTransformerService);
+                ->replaceArgument(0, new Reference($config['user_transformer']));
         }
     }
 }
