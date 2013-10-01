@@ -64,8 +64,8 @@ class FOSMessageExtension extends Extension
             ->replaceArgument(1, $config['search']['query_parameter']);
 
 
-        if($config['user_to_username_transformer']!==null){
-            $userToUsernameTransformerService = new Reference($config['user_to_username_transformer']);
+        if($config['user_transformerr']!==null){
+            $userToUsernameTransformerService = new Reference($config['user_transformer']);
             $container->getDefinition('fos_message.recipients_data_transformer')
                 ->replaceArgument(0, $userToUsernameTransformerService);
         }
