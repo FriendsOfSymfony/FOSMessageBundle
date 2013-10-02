@@ -3,7 +3,7 @@ inbox:          Inkorg
 sent:           Skickat
 send_new:       Skriv nytt meddelande
 search:         Sök
-threads_found:  %num% tråd hittad | %num% trådare hittade
+threads_found:  %num% tråd hittad | %num% trådar hittade
 
 message_info:   Av %sender%, den %date%
 reply:          Svara
