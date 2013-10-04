@@ -342,13 +342,17 @@ class ThreadManager extends BaseThreadManager
      */
     protected function doCreatedByAndAt(ThreadInterface $thread)
     {
-        if (isset($thread->createdBy)
-            || !($message = $thread->getFirstMessage())) {
+        if (!($message = $thread->getFirstMessage())) {
             return;
         }
 
-        $thread->setCreatedBy($message->getSender());
-        $thread->setCreatedAt($message->getCreatedAt());
+        if (!$thread->getCreatedAt()) {
+            $thread->setCreatedAt($message->getCreatedAt());
+        }
+
+        if (!$thread->getCreatedBy()) {
+            $thread->setCreatedBy($message->getSender());
+        }
     }
 
     /**
