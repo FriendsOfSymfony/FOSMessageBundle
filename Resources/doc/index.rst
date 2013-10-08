@@ -1,7 +1,7 @@
 Provides messaging features for your Symfony2 application.
 
-The persistence is storage agnostic. Any backend may be implemented: Doctrine, Propel, etc.
-Presently, only the MongoDB implementation is complete.
+The persistence is storage agnostic. We have Doctrine ORM and ODM implementations
+available for use.
 
 MessageBundle supports threads, spam detection, soft deletion and messaging permissions.
 
