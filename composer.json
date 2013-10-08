@@ -28,5 +28,10 @@
     "autoload": {
         "psr-0": { "FOS\\MessageBundle": "" }
     },
-    "target-dir": "FOS/MessageBundle"
+    "target-dir": "FOS/MessageBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    }
 }

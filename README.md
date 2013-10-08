@@ -1,26 +1,28 @@
-Documentation: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/index.rst
+FOSMessageBundle
+================
 
-Note: Symfony 2.0 users should use the `2.0` branch of this bundle. The `master` branch tracks Symfony 2.1.
+This bundle provides messaging features for a Symfony2 application. Features available include:
 
----
+- Support for both the Doctrine ORM and ODM for message storage
+- Threaded conversations
+- Spam detection support
+- Soft deletion of threads
+- Permissions for messaging.
 
-Provides messenging features for your Symfony2 application.
+Documentation
+-------------
 
-MessageBundle supports threads, spam detection, soft deletion and messenging permissions.
+Documentation for this bundle is stored under `Resources/doc` in this repository.
 
-MessageBundle can be used with FOSUserBundle, but it is not required.
+[Read the documentation for master][]
 
-**Note:** PR #32 introduced significant schema changes for the MongoDB model
-layer. The ``fos:message:mongodb:migrate:metadata`` console command may be
-used to migrate your existing schema. Please refer to the command's help message
-for additional information.
+License
+-------
 
----
+This bundle is under the MIT license. See the complete license in the bundle:
 
-For documentation, see:
-
-    Resources/doc/index.rst
-
-License:
-
+```
     Resources/meta/LICENSE
+```
+
+[Read the documentation for master]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/index.rst
