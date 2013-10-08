@@ -165,7 +165,7 @@ abstract class Thread implements ThreadInterface
      */
     public function getMessages()
     {
-        return $this->messages->toArray();
+        return $this->messages;
     }
 
     /**
@@ -173,9 +173,7 @@ abstract class Thread implements ThreadInterface
      */
     public function getFirstMessage()
     {
-        $messages = $this->getMessages();
-
-        return empty($messages) ? null : reset($messages);
+        return $this->getMessages()->first();
     }
 
     /**
@@ -183,9 +181,7 @@ abstract class Thread implements ThreadInterface
      */
     public function getLastMessage()
     {
-        $messages = $this->getMessages();
-
-        return empty($messages) ? null : end($messages);
+        return $this->getMessages()->last();
     }
 
     /**
