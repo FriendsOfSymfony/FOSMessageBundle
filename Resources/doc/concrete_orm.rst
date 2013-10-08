@@ -184,6 +184,11 @@ Thread class
     	function addMessage(MessageInterface $message) {
     		$this->messages->add($message);
     	}
+
+        public function getMessages()
+        {
+            return parent::getMessages();
+        }
     
     	public function addMetadata(ModelThreadMetadata $meta) {
     	    $meta->setThread($this);
