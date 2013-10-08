@@ -12,6 +12,7 @@ class MessageExtension extends \Twig_Extension
     protected $provider;
 
     protected $nbUnreadMessagesCache;
+    protected $nbUnreadThreadsCache;
 
     public function __construct(ParticipantProviderInterface $participantProvider, ProviderInterface $provider)
     {
@@ -28,7 +29,8 @@ class MessageExtension extends \Twig_Extension
     {
         return array(
             'fos_message_is_read'  => new \Twig_Function_Method($this, 'isRead'),
-            'fos_message_nb_unread' => new \Twig_Function_Method($this, 'getNbUnread')
+            'fos_message_nb_unread' => new \Twig_Function_Method($this, 'getNbUnread'),
+            'fos_message_nb_unread_threads' => new \Twig_Function_Method($this, 'getNbUnreadThreads')
         );
     }
 
@@ -54,6 +56,19 @@ class MessageExtension extends \Twig_Extension
         }
 
         return $this->nbUnreadMessagesCache;
+    }
+
+    /**
+     * Get the number of unread threads for the current user
+     * @return int
+     */
+    public function getNbUnreadThreads()
+    {
+        if (null === $this->nbUnreadThreadsCache) {
+            $this->nbUnreadThreadsCache = $this->provider->getNbUnreadThreads();
+        }
+
+        return $this->nbUnreadThreadsCache;
     }
 
     /**

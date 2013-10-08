@@ -38,4 +38,11 @@ interface ProviderInterface
      * @return int the number of unread messages
      */
     function getNbUnreadMessages();
+
+    /**
+     * Tells how many unread threads the authenticated participant has
+     *
+     * @return int the number of unread threads
+     */
+    function getNbUnreadThreads();
 }
