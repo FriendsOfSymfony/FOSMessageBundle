@@ -12,6 +12,10 @@
         <default key="_controller">FOSMessageBundle:Message:sent</default>
     </route>
 
+    <route id="fos_message_deleted" pattern="/deleted">
+        <default key="_controller">FOSMessageBundle:Message:deleted</default>
+    </route>
+
     <route id="fos_message_search" pattern="/search">
         <default key="_controller">FOSMessageBundle:Message:search</default>
     </route>

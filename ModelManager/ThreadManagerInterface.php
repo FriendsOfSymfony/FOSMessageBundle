@@ -67,6 +67,24 @@ interface ThreadManagerInterface extends ReadableManagerInterface
     function findParticipantSentThreads(ParticipantInterface $participant);
 
     /**
+     * Finds deleted threads from a participant,
+     * ordered by last message date
+     *
+     * @param ParticipantInterface $participant
+     * @return Builder a query builder suitable for pagination
+     */
+    function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant);
+
+    /**
+     * Finds deleted threads from a participant,
+     * ordered by last message date
+     *
+     * @param ParticipantInterface $participant
+     * @return ThreadInterface[]
+     */
+    function findParticipantDeletedThreads(ParticipantInterface $participant);
+
+    /**
      * Finds not deleted threads for a participant,
      * matching the given search term
      * ordered by last message not written by this participant in reverse order.
