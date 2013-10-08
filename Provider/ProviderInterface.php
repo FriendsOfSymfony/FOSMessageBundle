@@ -24,6 +24,13 @@ interface ProviderInterface
      function getSentThreads();
 
     /**
+     * Gets the deleted threads of the current user
+     *
+     * @return ThreadInterface[]
+     */
+     function getDeletedThreads();
+
+    /**
      * Gets a thread by its ID
      * Performs authorization checks
      * Marks the thread as read
