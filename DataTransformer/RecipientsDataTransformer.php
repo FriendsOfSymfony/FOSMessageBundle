@@ -8,7 +8,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer;
 /**
  * Transforms collection of UserInterface into strings separated with coma
  *
@@ -17,14 +16,14 @@ use FOS\UserBundle\Form\DataTransformer\UserToUsernameTransformer;
 class RecipientsDataTransformer implements DataTransformerInterface
 {
     /**
-     * @var UserToUsernameTransformer
+     * @var DataTransformerInterface
      */
     private $userToUsernameTransformer;
 
     /**
-     * @param UserToUsernameTransformer $userToUsernameTransformer
+     * @param DataTransformerInterface $userToUsernameTransformer
      */
-    public function __construct(UserToUsernameTransformer $userToUsernameTransformer)
+    public function __construct(DataTransformerInterface $userToUsernameTransformer)
     {
         $this->userToUsernameTransformer = $userToUsernameTransformer;
     }
@@ -71,7 +70,6 @@ class RecipientsDataTransformer implements DataTransformerInterface
         }
 
         $recipients = new ArrayCollection();
-        $transformer = $this->userToUsernameTransformer;
         $recipientsNames = array_filter(explode(',', $usernames));
 
         foreach ($recipientsNames as $username) {

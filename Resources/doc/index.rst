@@ -351,6 +351,7 @@ All configuration options are listed below::
         deleter:                fos_message.deleter                 # See Deleter\DeleterInterface
         spam_detector:          fos_message.noop_spam_detector      # See SpamDetection\SpamDetectorInterface
         twig_extension:         fos_message.twig_extension          # See Twig\Extension\MessageExtension
+        user_transformer:       fos_user.user_transformer           # See Symfony\Component\Form\DataTransformerInterface
         search:
             finder:             fos_message.search_finder           # See Finder\FinderInterface
             query_factory:      fos_message.search_query_factory    # See Finder\QueryFactoryInterface

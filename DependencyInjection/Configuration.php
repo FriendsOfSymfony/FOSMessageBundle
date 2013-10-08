@@ -38,6 +38,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('deleter')->defaultValue('fos_message.deleter.default')->cannotBeEmpty()->end()
                 ->scalarNode('spam_detector')->defaultValue('fos_message.noop_spam_detector')->cannotBeEmpty()->end()
                 ->scalarNode('twig_extension')->defaultValue('fos_message.twig_extension.default')->cannotBeEmpty()->end()
+                ->scalarNode('user_transformer')->defaultValue('fos_user.user_to_username_transformer')->cannotBeEmpty()->end()
                 ->arrayNode('search')
                     ->addDefaultsIfNotSet()
                     ->children()
