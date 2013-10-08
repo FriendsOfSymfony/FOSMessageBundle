@@ -6,9 +6,6 @@ Note: Symfony 2.0 users should use the `2.0` branch of this bundle. The `master`
 
 Provides messenging features for your Symfony2 application.
 
-The persistence is storage agnostic. Any backend may be implemented: Doctrine, Propel, etc.
-Presently, only the MongoDB implementation is complete.
-
 MessageBundle supports threads, spam detection, soft deletion and messenging permissions.
 
 MessageBundle can be used with FOSUserBundle, but it is not required.
