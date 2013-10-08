@@ -1,3 +1,5 @@
+This documentation is currently being rewritten.
+
 Provides messaging features for your Symfony2 application.
 
 The persistence is storage agnostic. We have Doctrine ORM and ODM implementations
