@@ -2,8 +2,6 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
 /**
  * Message model
  *
@@ -12,47 +10,37 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 interface MessageInterface extends ReadableInterface
 {
     /**
-     * Gets the message unique id
-     *
-     * @return mixed
-     */
-    function getId();
-
-    /**
      * @return ThreadInterface
      */
-    function getThread();
+    public function getThread();
 
     /**
-     * @param  ThreadInterface
-     * @return null
+     * @param ThreadInterface
      */
-    function setThread(ThreadInterface $thread);
+    public function setThread(ThreadInterface $thread);
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
-    function getCreatedAt();
+    public function getCreatedAt();
 
     /**
      * @return string
      */
-    function getBody();
+    public function getBody();
 
     /**
-     * @param  string
-     * @return null
+     * @param string
      */
-    function setBody($body);
+    public function setBody($body);
 
     /**
      * @return ParticipantInterface
      */
-    function getSender();
+    public function getSender();
 
     /**
-     * @param  ParticipantInterface
-     * @return null
+     * @param ParticipantInterface
      */
-    function setSender(ParticipantInterface $sender);
+    public function setSender(ParticipantInterface $sender);
 }

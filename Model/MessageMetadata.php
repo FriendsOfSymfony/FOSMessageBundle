@@ -2,12 +2,20 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
+/**
+ * Abstract metadata storage for a message and participants involved
+ * in the thread.
+ */
 abstract class MessageMetadata
 {
+    /**
+     * @var ParticipantInterface
+     */
     protected $participant;
 
+    /**
+     * @var Boolean
+     */
     protected $isRead = false;
 
     /**
@@ -20,7 +28,6 @@ abstract class MessageMetadata
 
     /**
      * @param ParticipantInterface $participant
-     * @return null
      */
     public function setParticipant(ParticipantInterface $participant)
     {
@@ -28,7 +35,7 @@ abstract class MessageMetadata
     }
 
     /**
-     * @return boolean
+     * @return Boolean
      */
     public function getIsRead()
     {
@@ -36,11 +43,10 @@ abstract class MessageMetadata
     }
 
     /**
-     * @param boolean $isRead
-     * @return null
+     * @param Boolean $isRead
      */
     public function setIsRead($isRead)
     {
-        $this->isRead = (boolean)$isRead;
+        $this->isRead = (boolean) $isRead;
     }
 }

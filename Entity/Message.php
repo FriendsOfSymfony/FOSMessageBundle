@@ -2,9 +2,7 @@
 
 namespace FOS\MessageBundle\Entity;
 
-use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Model\Message as BaseMessage;
-
 use FOS\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
 
 abstract class Message extends BaseMessage
@@ -12,7 +10,7 @@ abstract class Message extends BaseMessage
     /**
      * Get the collection of MessageMetadata.
      *
-     * @return Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getAllMetadata()
     {
@@ -20,11 +18,12 @@ abstract class Message extends BaseMessage
     }
 
     /**
-     * @see FOS\MessageBundle\Model\Message::addMetadata()
+     * @param ModelMessageMetadata $meta
      */
     public function addMetadata(ModelMessageMetadata $meta)
     {
-        $meta->setMessage($this);
         parent::addMetadata($meta);
+
+        $meta->setMessage($this);
     }
 }

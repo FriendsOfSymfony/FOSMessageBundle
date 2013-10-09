@@ -2,25 +2,32 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
+/**
+ * An abstract thread metadata object storing metadata about a thread and participant.
+ */
 abstract class ThreadMetadata
 {
+    /**
+     * @var ParticipantInterface
+     */
     protected $participant;
 
+    /**
+     * @var Boolean
+     */
     protected $isDeleted = false;
 
     /**
     * Date of last message written by the participant
     *
-    * @var DateTime
+    * @var \DateTime
     */
     protected $lastParticipantMessageDate;
 
     /**
      * Date of last message written by another participant
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $lastMessageDate;
 
@@ -34,7 +41,6 @@ abstract class ThreadMetadata
 
     /**
      * @param ParticipantInterface
-     * @return null
      */
     public function setParticipant(ParticipantInterface $participant)
     {
@@ -42,7 +48,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @return boolean
+     * @return Boolean
      */
     public function getIsDeleted()
     {
@@ -50,16 +56,15 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param boolean $isDeleted
-     * @return null
+     * @param Boolean $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->isDeleted = (boolean)$isDeleted;
+        $this->isDeleted = (boolean) $isDeleted;
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastParticipantMessageDate()
     {
@@ -67,8 +72,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param DateTime $date
-     * @return null
+     * @param \DateTime $date
      */
     public function setLastParticipantMessageDate(\DateTime $date)
     {
@@ -76,7 +80,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastMessageDate()
     {
@@ -84,8 +88,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param DateTime $date
-     * @return null
+     * @param \DateTime $date
      */
     public function setLastMessageDate(\DateTime $date)
     {

@@ -2,22 +2,25 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
+/**
+ * An interface that indicates the object supports marking itself as read
+ * by participants.
+ */
 interface ReadableInterface
 {
     /**
      * Tells if this is read by this participant
      *
-     * @return bool
+     * @param ParticipantInterface $participant
+     * @return Boolean
      */
-    function isReadByParticipant(ParticipantInterface $participant);
+    public function isReadByParticipant(ParticipantInterface $participant);
 
     /**
      * Sets whether or not this participant has read this
      *
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param Boolean $isRead
      */
-    function setIsReadByParticipant(ParticipantInterface $participant, $isRead);
+    public function setIsReadByParticipant(ParticipantInterface $participant, $isRead);
 }

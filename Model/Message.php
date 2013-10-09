@@ -3,8 +3,6 @@
 namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract message model
@@ -37,7 +35,7 @@ abstract class Message implements MessageInterface
     /**
      * Date when the message was sent
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -51,7 +49,7 @@ abstract class Message implements MessageInterface
     /**
      * Collection of MessageMetadata
      *
-     * @var Collection of MessageMetadata
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $metadata;
 
@@ -64,16 +62,13 @@ abstract class Message implements MessageInterface
         $this->metadata = new ArrayCollection();
     }
 
-    /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getId()
-     */
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getThread()
+     * @return ThreadInterface
      */
     public function getThread()
     {
@@ -81,7 +76,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setThread()
+     * @param ThreadInterface $thread
      */
     public function setThread(ThreadInterface $thread)
     {
@@ -89,7 +84,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getCreatedAt()
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -97,7 +92,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getBody()
+     * @return string
      */
     public function getBody()
     {
@@ -105,7 +100,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setBody()
+     * @param string $body
      */
     public function setBody($body)
     {
@@ -113,7 +108,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getSender()
+     * @return ParticipantInterface
      */
     public function getSender()
     {
@@ -121,7 +116,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setSender()
+     * @param ParticipantInterface $sender
      */
     public function setSender(ParticipantInterface $sender)
     {
@@ -131,7 +126,7 @@ abstract class Message implements MessageInterface
     /**
      * Gets the created at timestamp
      *
-     * @return int
+     * @return integer
      */
     public function getTimestamp()
     {
@@ -151,13 +146,14 @@ abstract class Message implements MessageInterface
     /**
      * Get the MessageMetadata for a participant.
      *
-     * @param ParticipantInterface $participant
-     * @return MessageMetadata
+     * @param  ParticipantInterface $participant
+     * @return MessageMetadata|null
      */
     public function getMetadataForParticipant(ParticipantInterface $participant)
     {
         foreach ($this->metadata as $meta) {
-            if ($meta->getParticipant()->getId() == $participant->getId()) {
+            /** @var MessageMetadata $meta */
+            if ($meta->getParticipant() === $participant) {
                 return $meta;
             }
         }
@@ -166,7 +162,8 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * @param ParticipantInterface $participant
+     * @return Boolean
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -178,7 +175,9 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * @param ParticipantInterface $participant
+     * @param Boolean $isRead
+     * @throws \InvalidArgumentException
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
