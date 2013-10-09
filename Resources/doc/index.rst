@@ -259,7 +259,7 @@ Spam detection
 Using Akismet
 -------------
 
-Install AkismetBundle (http://github.com/ornicar/AkismetBundle).
+Install AkismetBundle (https://github.com/ornicar/OrnicarAkismetBundle).
 
 Then, set the spam detector service accordingly::
 
