@@ -27,4 +27,4 @@ This bundle is under the MIT license. See the complete license in the bundle:
     Resources/meta/LICENSE
 ```
 
-[Read the documentation for master]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/index.rst
+[Read the documentation for master]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
