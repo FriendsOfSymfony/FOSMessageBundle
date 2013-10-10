@@ -23,6 +23,9 @@
         "symfony/security": "~2.1",
         "symfony/twig-bundle": "~2.1"
     },
+    "require-dev": {
+        "mockery/mockery": "~0.8"
+    },
     "suggest": {
         "doctrine/doctrine-bundle": "dev-master",
         "doctrine/mongodb-odm-bundle": "dev-master"
@@ -33,7 +36,7 @@
     "target-dir": "FOS/MessageBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }
