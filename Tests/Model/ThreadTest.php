@@ -134,8 +134,6 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
     protected function getParticipant()
     {
         $participant = m::mock('FOS\\MessageBundle\\Model\\ParticipantInterface');
-        $participant->shouldReceive('getId')
-            ->andReturn(1);
 
         return $participant;
     }

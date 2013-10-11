@@ -2,7 +2,6 @@
 
 namespace FOS\MessageBundle\Tests\Entity;
 
-use FOS\MessageBundle\Tests\Entity\Thread;
 use Mockery as m;
 
 class ThreadTest extends \PHPUnit_Framework_TestCase

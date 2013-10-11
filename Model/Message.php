@@ -124,16 +124,6 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * Gets the created at timestamp
-     *
-     * @return integer
-     */
-    public function getTimestamp()
-    {
-        return $this->getCreatedAt()->getTimestamp();
-    }
-
-    /**
      * Adds MessageMetadata to the metadata collection.
      *
      * @param MessageMetadata $meta
@@ -141,6 +131,16 @@ abstract class Message implements MessageInterface
     public function addMetadata(MessageMetadata $meta)
     {
         $this->metadata->add($meta);
+    }
+
+    /**
+     * Get the collection of MessageMetadata.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllMetadata()
+    {
+        return $this->metadata;
     }
 
     /**
@@ -182,7 +182,7 @@ abstract class Message implements MessageInterface
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
         if (!$meta = $this->getMetadataForParticipant($participant)) {
-            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+            throw new \InvalidArgumentException('No metadata exists for participant');
         }
 
         $meta->setIsRead($isRead);

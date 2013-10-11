@@ -203,7 +203,7 @@ abstract class Thread implements ThreadInterface
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
         if (!$meta = $this->getMetadataForParticipant($participant)) {
-            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+            throw new \InvalidArgumentException('No metadata exists for participant');
         }
 
         $meta->setIsDeleted($isDeleted);
@@ -343,5 +343,15 @@ abstract class Thread implements ThreadInterface
         foreach ($participants as $participant) {
             $this->addParticipant($participant);
         }
+    }
+
+    /**
+     * Returns the entire metadata collection for a thread.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllMetadata()
+    {
+        return $this->metadata;
     }
 }

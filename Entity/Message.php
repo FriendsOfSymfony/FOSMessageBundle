@@ -8,16 +8,6 @@ use FOS\MessageBundle\Model\MessageMetadata as ModelMessageMetadata;
 abstract class Message extends BaseMessage
 {
     /**
-     * Get the collection of MessageMetadata.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAllMetadata()
-    {
-        return $this->metadata;
-    }
-
-    /**
      * @param ModelMessageMetadata $meta
      */
     public function addMetadata(ModelMessageMetadata $meta)
