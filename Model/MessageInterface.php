@@ -43,4 +43,12 @@ interface MessageInterface extends ReadableInterface
      * @param ParticipantInterface
      */
     public function setSender(ParticipantInterface $sender);
+
+    /**
+     * Get the MessageMetadata for a participant.
+     *
+     * @param  ParticipantInterface $participant
+     * @return MessageMetadata|null
+     */
+    public function getMetadataForParticipant(ParticipantInterface $participant);
 }

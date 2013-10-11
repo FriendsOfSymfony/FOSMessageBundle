@@ -32,23 +32,23 @@ class MessageManager extends BaseMessageManager
     protected $class;
 
     /**
-     * @var string
+     * @var MessageDenormalizer
      */
-    protected $metaClass;
+    protected $denormalizer;
 
     /**
      * Constructor.
      *
-     * @param EntityManager     $em
-     * @param string            $class
-     * @param string            $metaClass
+     * @param EntityManager $em
+     * @param string $class
+     * @param MessageDenormalizer $denormalizer
      */
-    public function __construct(EntityManager $em, $class, $metaClass)
+    public function __construct(EntityManager $em, $class, MessageDenormalizer $denormalizer)
     {
-        $this->em         = $em;
+        $this->em = $em;
         $this->repository = $em->getRepository($class);
-        $this->class      = $em->getClassMetadata($class)->name;
-        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
+        $this->class = $em->getClassMetadata($class)->name;
+        $this->denormalizer = $denormalizer;
     }
 
     /**
@@ -129,21 +129,16 @@ class MessageManager extends BaseMessageManager
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
+        $this->denormalizer->denormalize($message);
+
         $meta = $message->getMetadataForParticipant($participant);
-        if (!$meta || $meta->getIsRead() == $isRead) {
+        if (!$meta) {
             return;
         }
 
-        $this->em->createQueryBuilder()
-            ->update($this->metaClass, 'm')
-            ->set('m.isRead', '?1')
-            ->setParameter('1', (bool) $isRead, \PDO::PARAM_BOOL)
+        $message->setIsReadByParticipant($participant, $isRead);
 
-            ->where('m.id = :id')
-            ->setParameter('id', $meta->getId())
-
-            ->getQuery()
-            ->execute();
+        $this->saveMessage($message);
     }
 
     /**
@@ -154,7 +149,8 @@ class MessageManager extends BaseMessageManager
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
-        $this->denormalize($message);
+        $this->denormalizer->denormalize($message);
+
         $this->em->persist($message);
         if ($andFlush) {
             $this->em->flush();
@@ -169,40 +165,5 @@ class MessageManager extends BaseMessageManager
     public function getClass()
     {
         return $this->class;
-    }
-
-    /**
-     * DENORMALIZATION
-     *
-     * All following methods are relative to denormalization
-     */
-
-    /**
-     * Performs denormalization tricks
-     */
-    protected function denormalize(MessageInterface $message)
-    {
-        $this->doMetadata($message);
-    }
-
-    /**
-     * Ensures that the message metadata are up to date
-     */
-    protected function doMetadata(MessageInterface $message)
-    {
-        foreach ($message->getThread()->getAllMetadata() as $threadMeta) {
-            $meta = $message->getMetadataForParticipant($threadMeta->getParticipant());
-            if (!$meta) {
-                $meta = $this->createMessageMetadata();
-                $meta->setParticipant($threadMeta->getParticipant());
-
-                $message->addMetadata($meta);
-            }
-        }
-    }
-
-    protected function createMessageMetadata()
-    {
-        return new $this->metaClass();
     }
 }

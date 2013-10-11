@@ -33,6 +33,13 @@ interface ThreadInterface extends ReadableInterface
     public function addMessage(MessageInterface $message);
 
     /**
+     * Returns a collection of all participant metadata for this thread.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllMetadata();
+
+    /**
      * Gets the first message of the thread
      *
      * @return MessageInterface the first message
@@ -128,7 +135,7 @@ interface ThreadInterface extends ReadableInterface
      * Get the participants this participant is talking with.
      *
      * @param ParticipantInterface $participant
-     * @return \Doctrine\Common\Collections\collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOtherParticipants(ParticipantInterface $participant);
 }

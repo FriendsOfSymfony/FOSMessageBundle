@@ -33,11 +33,9 @@ class ThreadManager extends BaseThreadManager
     protected $class;
 
     /**
-     * The model class
-     *
-     * @var string
+     * @var ThreadDenormalizer
      */
-    protected $metaClass;
+    protected $denormalizer;
 
     /**
      * The message manager, required to mark
@@ -50,17 +48,17 @@ class ThreadManager extends BaseThreadManager
     /**
      * Constructor.
      *
-     * @param EntityManager     $em
-     * @param string            $class
-     * @param string            $metaClass
-     * @param MessageManager    $messageManager
+     * @param EntityManager $em
+     * @param string $class
+     * @param ThreadDenormalizer $denormalizer
+     * @param MessageManager $messageManager
      */
-    public function __construct(EntityManager $em, $class, $metaClass, MessageManager $messageManager)
+    public function __construct(EntityManager $em, $class, ThreadDenormalizer $denormalizer, MessageManager $messageManager)
     {
-        $this->em             = $em;
-        $this->repository     = $em->getRepository($class);
-        $this->class          = $em->getClassMetadata($class)->name;
-        $this->metaClass      = $em->getClassMetadata($metaClass)->name;
+        $this->em = $em;
+        $this->repository = $em->getRepository($class);
+        $this->class = $em->getClassMetadata($class)->name;
+        $this->denormalizer = $denormalizer;
         $this->messageManager = $messageManager;
     }
 
@@ -296,7 +294,8 @@ class ThreadManager extends BaseThreadManager
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
-        $this->denormalize($thread);
+        $this->denormalizer->denormalize($thread);
+
         $this->em->persist($thread);
         if ($andFlush) {
             $this->em->flush();
@@ -322,95 +321,5 @@ class ThreadManager extends BaseThreadManager
     public function getClass()
     {
         return $this->class;
-    }
-
-    /**
-     * DENORMALIZATION
-     *
-     * All following methods are relative to denormalization
-     */
-
-    /**
-     * Performs denormalization tricks
-     */
-    protected function denormalize(ThreadInterface $thread)
-    {
-        $this->doMetadata($thread);
-        $this->doCreatedByAndAt($thread);
-        $this->doDatesOfLastMessageWrittenByOtherParticipant($thread);
-    }
-
-    /**
-     * Ensures that the thread metadata are up to date
-     */
-    protected function doMetadata(ThreadInterface $thread)
-    {
-        // Participants
-        foreach ($thread->getParticipants() as $participant) {
-            $meta = $thread->getMetadataForParticipant($participant);
-            if (!$meta) {
-                $meta = $this->createThreadMetadata();
-                $meta->setParticipant($participant);
-
-                $thread->addMetadata($meta);
-            }
-        }
-
-        // Messages
-        foreach ($thread->getMessages() as $message) {
-            $meta = $thread->getMetadataForParticipant($message->getSender());
-            if (!$meta) {
-                $meta = $this->createThreadMetadata();
-                $meta->setParticipant($message->getSender());
-                $thread->addMetadata($meta);
-            }
-
-            $meta->setLastParticipantMessageDate($message->getCreatedAt());
-        }
-    }
-
-    /**
-     * Ensures that the createdBy & createdAt properties are set
-     */
-    protected function doCreatedByAndAt(ThreadInterface $thread)
-    {
-        if (!($message = $thread->getFirstMessage())) {
-            return;
-        }
-
-        if (!$thread->getCreatedAt()) {
-            $thread->setCreatedAt($message->getCreatedAt());
-        }
-
-        if (!$thread->getCreatedBy()) {
-            $thread->setCreatedBy($message->getSender());
-        }
-    }
-
-    /**
-     * Update the dates of last message written by other participants
-     */
-    protected function doDatesOfLastMessageWrittenByOtherParticipant(ThreadInterface $thread)
-    {
-        foreach ($thread->getAllMetadata() as $meta) {
-            $participantId = $meta->getParticipant()->getId();
-            $timestamp = 0;
-
-            foreach ($thread->getMessages() as $message) {
-                if ($participantId != $message->getSender()->getId()) {
-                    $timestamp = max($timestamp, $message->getTimestamp());
-                }
-            }
-            if ($timestamp) {
-                $date = new \DateTime();
-                $date->setTimestamp($timestamp);
-                $meta->setLastMessageDate($date);
-            }
-        }
-    }
-
-    protected function createThreadMetadata()
-    {
-        return new $this->metaClass();
     }
 }
