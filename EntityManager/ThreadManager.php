@@ -2,12 +2,11 @@
 
 namespace FOS\MessageBundle\EntityManager;
 
-use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use Doctrine\ORM\EntityManager;
-use FOS\MessageBundle\Model\ThreadInterface;
-use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use Doctrine\ORM\Query\Builder;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 
 /**
  * Default ORM ThreadManager.
@@ -17,12 +16,12 @@ use Doctrine\ORM\Query\Builder;
 class ThreadManager extends BaseThreadManager
 {
     /**
-     * @var EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $em;
 
     /**
-     * @var DocumentRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     protected $repository;
 
@@ -68,6 +67,7 @@ class ThreadManager extends BaseThreadManager
     /**
      * Finds a thread by its ID
      *
+     * @param mixed $id
      * @return ThreadInterface or null
      */
     public function findThreadById($id)
@@ -82,7 +82,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
-     * @return Builder a query builder suitable for pagination
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -91,8 +91,8 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('tm.participant', 'p')
 
             // the participant is in the thread participants
-            ->andWhere('p.id = :user_id')
-            ->setParameter('user_id', $participant->getId())
+            ->andWhere('tm.participant = :participant')
+            ->setParameter('participant', $participant)
 
             // the thread does not contain spam or flood
             ->andWhere('t.isSpam = :isSpam')
@@ -133,7 +133,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
-     * @return Builder a query builder suitable for pagination
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -142,8 +142,8 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('tm.participant', 'p')
 
             // the participant is in the thread participants
-            ->andWhere('p.id = :user_id')
-            ->setParameter('user_id', $participant->getId())
+            ->andWhere('tm.participant = :participant')
+            ->setParameter('participant', $participant)
 
             // the thread does not contain spam or flood
             ->andWhere('t.isSpam = :isSpam')
@@ -187,8 +187,8 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('tm.participant', 'p')
 
             // the participant is in the thread participants
-            ->andWhere('p.id = :user_id')
-            ->setParameter('user_id', $participant->getId())
+            ->andWhere('tm.participant = :participant')
+            ->setParameter('participant', $participant)
 
             // the thread is deleted by this participant
             ->andWhere('tm.isDeleted = :isDeleted')
@@ -216,7 +216,7 @@ class ThreadManager extends BaseThreadManager
      *
      * @param ParticipantInterface $participant
      * @param string $search
-     * @return Builder a query builder suitable for pagination
+     * @return \Doctrine\ORM\QueryBuilder a query builder suitable for pagination
      */
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
     {
@@ -255,8 +255,8 @@ class ThreadManager extends BaseThreadManager
         return $this->repository->createQueryBuilder('t')
             ->innerJoin('t.createdBy', 'p')
 
-            ->where('p.id = :participant_id')
-            ->setParameter('participant_id', $participant->getId())
+            ->where('t.createdBy = :participant')
+            ->setParameter('participant', $participant)
 
             ->getQuery()
             ->execute();
@@ -274,7 +274,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, true);
+        $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, true);
     }
 
     /**
@@ -285,7 +285,7 @@ class ThreadManager extends BaseThreadManager
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, false);
+        $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, false);
     }
 
     /**

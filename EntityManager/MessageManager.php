@@ -8,7 +8,6 @@ use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
-use Doctrine\ORM\Query\Builder;
 
 /**
  * Default ORM MessageManager.
@@ -23,7 +22,7 @@ class MessageManager extends BaseMessageManager
     protected $em;
 
     /**
-     * @var DocumentRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     protected $repository;
 
@@ -62,14 +61,14 @@ class MessageManager extends BaseMessageManager
     {
         $builder = $this->repository->createQueryBuilder('m');
 
-        return (int)$builder
+        return (int) $builder
             ->select($builder->expr()->count('mm.id'))
 
             ->innerJoin('m.metadata', 'mm')
             ->innerJoin('mm.participant', 'p')
 
-            ->where('p.id = :participant_id')
-            ->setParameter('participant_id', $participant->getId())
+            ->where('mm.participant = :participant')
+            ->setParameter('participant', $participant)
 
             ->andWhere('m.sender != :sender')
             ->setParameter('sender', $participant->getId())
@@ -138,7 +137,7 @@ class MessageManager extends BaseMessageManager
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
             ->set('m.isRead', '?1')
-            ->setParameter('1', (bool)$isRead, \PDO::PARAM_BOOL)
+            ->setParameter('1', (bool) $isRead, \PDO::PARAM_BOOL)
 
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
