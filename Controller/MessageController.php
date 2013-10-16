@@ -24,7 +24,7 @@ class MessageController extends ContainerAware
     }
 
     /**
-     * Displays the authenticated participant sent mails
+     * Displays the authenticated participant messages sent
      *
      * @return Response
      */
@@ -55,6 +55,7 @@ class MessageController extends ContainerAware
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id
+     * 
      * @return Response
      */
     public function threadAction($threadId)
@@ -101,12 +102,29 @@ class MessageController extends ContainerAware
      * Deletes a thread
      * 
      * @param string $threadId the thread id
+     * 
      * @return RedirectResponse
      */
     public function deleteAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
         $this->container->get('fos_message.deleter')->markAsDeleted($thread);
+        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+
+        return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
+    }
+    
+    /**
+     * Undeletes a thread
+     * 
+     * @param string $threadId
+     * 
+     * @return RedirectResponse
+     */
+    public function undeleteAction($threadId)
+    {
+        $thread = $this->getProvider()->getThread($threadId);
+        $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
         $this->container->get('fos_message.thread_manager')->saveThread($thread);
 
         return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));

@@ -21,3 +21,4 @@ on:             On %date%
 by:             By %sender%
 no_thread:      There is no thread to show
 delete:         Delete
+undelete:       Undelete

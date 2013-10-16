@@ -54,6 +54,7 @@
         <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\Extension\MessageExtension" public="false">
             <argument type="service" id="fos_message.participant_provider" />
             <argument type="service" id="fos_message.provider" />
+            <argument type="service" id="fos_message.authorizer" />
             <tag name="twig.extension" alias="fos_message" />
         </service>
 
