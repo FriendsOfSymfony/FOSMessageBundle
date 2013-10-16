@@ -21,7 +21,7 @@
             <argument type="service" id="security.context" />
         </service>
 
-        <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\Authorizer" public="false">
+        <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\BaseAuthorizer" public="false">
             <argument type="service" id="fos_message.participant_provider" />
         </service>
 
