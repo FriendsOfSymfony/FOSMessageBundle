@@ -1,11 +1,11 @@
 <?php
+
 namespace FOS\MessageBundle\FormType;
 
+use FOS\MessageBundle\Form\DataTransformer\RecipientsDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
 /**
  * Description of RecipientsType

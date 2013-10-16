@@ -1,13 +1,14 @@
 <?php
-namespace FOS\MessageBundle\DataTransformer;
+
+namespace FOS\MessageBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Transforms collection of UserInterface into strings separated with coma
  *
@@ -31,18 +32,25 @@ class RecipientsDataTransformer implements DataTransformerInterface
     /**
      * Transforms a collection of recipients into a string
      *
-     * @param Collection $recipients
-     *
+     * @param mixed $recipients
      * @return string
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      */
     public function transform($recipients)
     {
-        if ($recipients === null || $recipients->count() == 0) {
-            return "";
+        if (null === $recipients) {
+            return '';
+        }
+
+        if (!is_array($recipients) and !$recipients instanceof \Traversable) {
+            throw new UnexpectedTypeException($recipients, 'array or \\Traversable');
+        }
+
+        if (empty($recipients)) {
+            return '';
         }
 
         $usernames = array();
-
         foreach ($recipients as $recipient) {
             $usernames[] = $this->userToUsernameTransformer->transform($recipient);
         }
@@ -51,13 +59,13 @@ class RecipientsDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms a string (usernames) to a Collection of UserInterface
+     * Transforms a comma separated string of usernames to a Collection of UserInterface
      *
      * @param string $usernames
      *
      * @throws UnexpectedTypeException
      * @throws TransformationFailedException
-     * @return Collection $recipients
+     * @return Collection                    $recipients
      */
     public function reverseTransform($usernames)
     {

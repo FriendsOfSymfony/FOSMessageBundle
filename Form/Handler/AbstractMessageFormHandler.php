@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +33,7 @@ abstract class AbstractMessageFormHandler
     /**
      * Processes the form with the request
      *
-     * @param Form $form
+     * @param  Form          $form
      * @return Message|false the sent message if the form is bound and valid, false otherwise
      */
     public function process(Form $form)
@@ -54,7 +54,7 @@ abstract class AbstractMessageFormHandler
     /**
      * Processes the valid form, sends the message
      *
-     * @param Form $form
+     * @param  Form             $form
      * @return MessageInterface the sent message
      */
     public function processValidForm(Form $form)
@@ -69,7 +69,7 @@ abstract class AbstractMessageFormHandler
     /**
      * Composes a message from the form data
      *
-     * @param AbstractMessage $message
+     * @param  AbstractMessage  $message
      * @return MessageInterface the composed message ready to be sent
      */
     abstract protected function composeMessage(AbstractMessage $message);

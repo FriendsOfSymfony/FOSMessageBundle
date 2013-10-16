@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormHandler;
+namespace FOS\MessageBundle\Form\Handler;
 
 use FOS\MessageBundle\FormModel\AbstractMessage;
 use FOS\MessageBundle\FormModel\ReplyMessage;
@@ -10,9 +10,9 @@ class ReplyMessageFormHandler extends AbstractMessageFormHandler
     /**
      * Composes a message from the form data
      *
-     * @param AbstractMessage $message
-     * @return MessageInterface the composed message ready to be sent
-     * @throws InvalidArgumentException if the message is not a ReplyMessage
+     * @param  AbstractMessage          $message
+     * @return \FOS\MessageBundle\Model\MessageInterface         the composed message ready to be sent
+     * @throws \InvalidArgumentException if the message is not a ReplyMessage
      */
     public function composeMessage(AbstractMessage $message)
     {

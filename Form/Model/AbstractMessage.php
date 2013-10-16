@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormModel;
+namespace FOS\MessageBundle\Form\Model;
 
 abstract class AbstractMessage
 {
@@ -20,12 +20,10 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param  string
-     * @return null
+     * @param string $body
      */
     public function setBody($body)
     {
         $this->body = $body;
     }
-
 }

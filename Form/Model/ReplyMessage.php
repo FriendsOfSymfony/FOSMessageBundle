@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormModel;
+namespace FOS\MessageBundle\Form\Model;
 
 use FOS\MessageBundle\Model\ThreadInterface;
 
@@ -22,8 +22,7 @@ class ReplyMessage extends AbstractMessage
     }
 
     /**
-     * @param  ThreadInterface $thread
-     * @return null
+     * @param ThreadInterface $thread
      */
     public function setThread(ThreadInterface $thread)
     {

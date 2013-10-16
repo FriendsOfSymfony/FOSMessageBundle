@@ -1,5 +1,5 @@
 <?php
-namespace FOS\MessageBundle\FormModel;
+namespace FOS\MessageBundle\Form\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\ParticipantInterface;
@@ -23,6 +23,11 @@ class NewThreadMultipleMessage extends AbstractMessage
      */
     protected $subject;
 
+    public function __construct()
+    {
+        $this->recipients = new ArrayCollection;
+    }
+
     /**
      * @return string
      */
@@ -33,8 +38,6 @@ class NewThreadMultipleMessage extends AbstractMessage
 
     /**
      * @param string $subject
-     *
-     * @return null
      */
     public function setSubject($subject)
     {
@@ -46,10 +49,6 @@ class NewThreadMultipleMessage extends AbstractMessage
      */
     public function getRecipients()
     {
-        if ($this->recipients === null) {
-            $this->recipients = new ArrayCollection();
-        }
-
         return $this->recipients;
     }
 
@@ -57,8 +56,6 @@ class NewThreadMultipleMessage extends AbstractMessage
      * Adds single recipient to collection
      *
      * @param ParticipantInterface $recipient
-     *
-     * @return null
      */
     public function addRecipient(ParticipantInterface $recipient)
     {
@@ -67,18 +64,13 @@ class NewThreadMultipleMessage extends AbstractMessage
         }
     }
 
-
     /**
      * Removes recipient from collection
      *
      * @param ParticipantInterface $recipient
-     *
-     * @return null
-     *
      */
     public function removeRecipient(ParticipantInterface $recipient)
     {
         $this->recipients->removeElement($recipient);
     }
-
 }

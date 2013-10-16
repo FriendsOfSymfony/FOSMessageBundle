@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormFactory;
+namespace FOS\MessageBundle\Form\Factory;
 
 use FOS\MessageBundle\Model\ThreadInterface;
 
@@ -14,7 +14,7 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
     /**
      * Creates a reply message
      *
-     * @param ThreadInterface $thread the thread we answer to
+     * @param  ThreadInterface $thread the thread we answer to
      * @return Form
      */
     public function create(ThreadInterface $thread)

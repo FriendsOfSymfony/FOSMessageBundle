@@ -1,8 +1,10 @@
 <?php
-namespace FOS\MessageBundle\FormType;
 
-use Symfony\Component\Form\FormBuilderInterface;
+namespace FOS\MessageBundle\Form\Type;
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
 /**
  * Message form type for starting a new conversation with multiple recipients
  *

@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\FormFactory;
+namespace FOS\MessageBundle\Form\Factory;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
