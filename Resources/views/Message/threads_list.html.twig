@@ -47,9 +47,18 @@
                     {% endif %}
                 </td>
                 <td>
-                    <form action="{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}" method="post">
-                        <input type="submit" value="{% trans from 'FOSMessageBundle' %}delete{% endtrans %}" />
-                    </form>
+                    {% if fos_message_can_delete_thread(thread) %}
+                        {% if fos_message_deleted_by_participant(thread) %}
+                            {% set formAction %}{{ url('fos_message_thread_undelete', {'threadId': thread.id}) }}{% endset %}
+                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}undelete{% endtrans %}{% endset %}
+                        {% else %}
+                            {% set formAction %}{{ url('fos_message_thread_delete', {'threadId': thread.id}) }}{% endset %}
+                            {% set submitValue %}{% trans from 'FOSMessageBundle' %}delete{% endtrans %}{% endset %}
+                        {% endif %}
+                        <form action="{{ formAction }}" method="post">
+                                <input type="submit" value="{{ submitValue }}" />
+                        </form>
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
