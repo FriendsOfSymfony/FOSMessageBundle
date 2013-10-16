@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\Twig\Extension;
+namespace FOS\MessageBundle\Twig;
 
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
@@ -10,10 +10,20 @@ use FOS\MessageBundle\Security\AuthorizerInterface;
 
 class MessageExtension extends \Twig_Extension
 {
+    /**
+     * @var \FOS\MessageBundle\Security\ParticipantProviderInterface
+     */
     protected $participantProvider;
+
+    /**
+     * @var \FOS\MessageBundle\Provider\ProviderInterface
+     */
     protected $provider;
     protected $authorizer;
 
+    /**
+     * @var int
+     */
     protected $nbUnreadMessagesCache;
 
     public function __construct(ParticipantProviderInterface $participantProvider, ProviderInterface $provider, AuthorizerInterface $authorizer)
@@ -41,6 +51,7 @@ class MessageExtension extends \Twig_Extension
     /**
      * Tells if this readable (thread or message) is read by the current user
      *
+     * @param ReadableInterface $readable
      * @return boolean
      */
     public function isRead(ReadableInterface $readable)
@@ -90,7 +101,7 @@ class MessageExtension extends \Twig_Extension
     /**
      * Gets the current authenticated user
      *
-     * @return ParticipantInterface
+     * @return \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected function getAuthenticatedParticipant()
     {
