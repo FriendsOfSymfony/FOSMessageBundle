@@ -17,7 +17,7 @@ class ReplyAuthorizationValidator extends ConstraintValidator
     /**
      * Constructor
      *
-     * @param AuthorizerInterface $authorizer
+     * @param AuthorizerInterface          $authorizer
      * @param ParticipantProviderInterface $participantProvider
      */
     public function __construct(AuthorizerInterface $authorizer, ParticipantProviderInterface $participantProvider)
@@ -39,7 +39,7 @@ class ReplyAuthorizationValidator extends ConstraintValidator
         foreach ($recipients as $recipient) {
             if (!$this->authorizer->canMessageParticipant($recipient)) {
                 $this->context->addViolation($constraint->message);
-                
+
                 return;
             }
         }

@@ -2,7 +2,6 @@
 
 namespace FOS\MessageBundle\Controller;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\MessageBundle\Provider\ProviderInterface;
@@ -54,8 +53,7 @@ class MessageController extends ContainerAware
     /**
      * Displays a thread, also allows to reply to it
      *
-     * @param string $threadId the thread id
-     * 
+     * @param  string   $threadId the thread id
      * @return Response
      */
     public function threadAction($threadId)
@@ -100,9 +98,14 @@ class MessageController extends ContainerAware
 
     /**
      * Deletes a thread
+<<<<<<< HEAD
      * 
      * @param string $threadId the thread id
      * 
+=======
+     *
+     * @param  string           $threadId the thread id
+>>>>>>> CS fixes
      * @return RedirectResponse
      */
     public function deleteAction($threadId)

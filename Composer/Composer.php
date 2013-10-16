@@ -3,7 +3,6 @@
 namespace FOS\MessageBundle\Composer;
 
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
-use FOS\MessageBundle\Sender\SenderInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
@@ -52,6 +51,7 @@ class Composer implements ComposerInterface
     /**
      * Starts composing a message in a reply to a thread
      *
+     * @param ThreadInterface $thread
      * @return ReplyMessageBuilder
      */
     public function reply(ThreadInterface $thread)

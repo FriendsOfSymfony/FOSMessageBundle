@@ -16,5 +16,5 @@ interface SenderInterface
      *
      * @param MessageInterface $message
      */
-    function send(MessageInterface $message);
+    public function send(MessageInterface $message);
 }

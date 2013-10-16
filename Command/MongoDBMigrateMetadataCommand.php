@@ -145,6 +145,7 @@ EOT
 
         if (!$numTotal = $cursor->count()) {
             $output->writeln('There are no message documents to migrate.');
+
             return;
         }
 
@@ -196,6 +197,7 @@ EOT
 
         if (!$numTotal = $cursor->count()) {
             $output->writeln('There are no thread documents to migrate.');
+
             return;
         }
 
@@ -392,8 +394,8 @@ EOT
     /**
      * Get the MongoCollection for the given class
      *
-     * @param ManagerRegistry $registry
-     * @param string          $class
+     * @param  ManagerRegistry   $registry
+     * @param  string            $class
      * @return \MongoCollection
      * @throws \RuntimeException if the class has no DocumentManager
      */

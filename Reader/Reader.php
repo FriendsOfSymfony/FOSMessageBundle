@@ -10,7 +10,7 @@ use FOS\MessageBundle\Event\ReadableEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Marks messages and threads as read or unread
+ * Marks messages and threads as read or unread.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
@@ -37,8 +37,11 @@ class Reader implements ReaderInterface
      */
     protected $dispatcher;
 
-    public function __construct(ParticipantProviderInterface $participantProvider, ReadableManagerInterface $readableManager, EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        ParticipantProviderInterface $participantProvider,
+        ReadableManagerInterface $readableManager,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->participantProvider = $participantProvider;
         $this->readableManager = $readableManager;
         $this->dispatcher = $dispatcher;
@@ -79,7 +82,7 @@ class Reader implements ReaderInterface
     /**
      * Gets the current authenticated user
      *
-     * @return ParticipantInterface
+     * @return \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected function getAuthenticatedParticipant()
     {

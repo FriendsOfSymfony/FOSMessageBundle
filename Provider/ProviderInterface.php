@@ -14,7 +14,7 @@ interface ProviderInterface
      *
      * @return array of ThreadInterface
      */
-    function getInboxThreads();
+    public function getInboxThreads();
 
     /**
      * Gets the thread in the sentbox of the current user
@@ -37,12 +37,12 @@ interface ProviderInterface
      *
      * @return ThreadInterface
      */
-    function getThread($threadId);
+    public function getThread($threadId);
 
     /**
      * Tells how many unread messages the authenticated participant has
      *
      * @return int the number of unread messages
      */
-    function getNbUnreadMessages();
+    public function getNbUnreadMessages();
 }

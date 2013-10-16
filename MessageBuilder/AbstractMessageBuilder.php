@@ -47,8 +47,18 @@ abstract class AbstractMessageBuilder
     }
 
     /**
+     * Gets the created thread.
+     *
+     * @return ThreadInterface
+     */
+    public function getThread()
+    {
+        return $this->thread;
+    }
+
+    /**
      * @param  string
-     * @return MessageBuilder (fluent interface)
+     * @return AbstractMessageBuilder (fluent interface)
      */
     public function setBody($body)
     {
@@ -59,7 +69,7 @@ abstract class AbstractMessageBuilder
 
     /**
      * @param  ParticipantInterface $sender
-     * @return MessageBuilder (fluent interface)
+     * @return AbstractMessageBuilder       (fluent interface)
      */
     public function setSender(ParticipantInterface $sender)
     {
