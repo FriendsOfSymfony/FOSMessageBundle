@@ -1,4 +1,4 @@
-<table>
+<table class="table">
 
     <thead>
         <tr>
@@ -22,7 +22,7 @@
                     </a>
 
                     {% if not fos_message_is_read(thread) %}
-                        ({% trans from 'FOSMessageBundle' %}new{% endtrans %})
+                    <span class="label label-default">{% trans from 'FOSMessageBundle' %}new{% endtrans %}</span>
                     {% endif %}
                 </td>
                 <td>

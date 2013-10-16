@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</title>
     </head>
 
     <body>
+        <div class="container">
 
         <h1>{% trans from 'FOSMessageBundle' %}messenger{% endtrans %}</h1>
 
-        <ul>
-            <li><a href="{{ url('fos_message_inbox') }}">{% trans from 'FOSMessageBundle' %}inbox{% endtrans %}</a></li>
-            <li><a href="{{ url('fos_message_sent') }}">{% trans from 'FOSMessageBundle' %}sent{% endtrans %}</a></li>
-        </ul>
+            <div class="btn-group">
+                <a href="{{ url('fos_message_thread_new' )}}"><button type="button" class="btn btn-default">{% trans from 'FOSMessageBundle' %}send_new{% endtrans %}</button></a>
+                <a href="{{ url('fos_message_inbox') }}"><button type="button" class="btn btn-default">{% trans from 'FOSMessageBundle' %}inbox{% endtrans %}</button></a>
+                <a href="{{ url('fos_message_sent') }}"><button type="button" class="btn btn-default">{% trans from 'FOSMessageBundle' %}sent{% endtrans %}</button></a>
+                <a href="{{ url('fos_message_deleted') }}"><button type="button" class="btn btn-default">{% trans from 'FOSMessageBundle' %}deleted{% endtrans %}</button></a>
+            </div>
 
         {% block fos_message_content %}{% endblock %}
-
+        </div>
     </body>
 </html>

@@ -6,7 +6,6 @@ send_new:       Send a new message
 search:         Search
 threads_found:  %num% thread found with | %num% threads found with
 
-message_info:   By %sender%, on %date%
 reply:          Reply
 
 subject:        Subject
