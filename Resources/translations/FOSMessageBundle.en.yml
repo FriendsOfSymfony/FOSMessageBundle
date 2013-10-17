@@ -22,3 +22,7 @@ by:             By %sender%
 no_thread:      There is no thread to show
 delete:         Delete
 undelete:       Undelete
+
+flash_post_send_success: Your message has been sent
+flash_thread_delete_success: The thread has been deleted
+flash_thread_undelete_success: The thread has been restored

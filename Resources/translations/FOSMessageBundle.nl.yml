@@ -21,3 +21,7 @@ on:             Op %date%
 by:             Door %sender%
 no_thread:      Geen onderwerpen gevonden
 delete:         Verwijder
+
+flash_post_send_success: Jouw bericht werd succesvol verzonden
+flash_thread_delete_success: Onderwerp werd verwijderd
+flash_thread_undelete_success: Onderwerp niet langer verwijderd
