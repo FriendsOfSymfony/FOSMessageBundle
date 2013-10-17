@@ -7,7 +7,7 @@
 {% for message in thread.messages %}
     <div class="messenger_thread_message">
         <div class="messenger_thread_message_info">
-            {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'FOSMessageBundle' %}by{% endtrans %}
+            {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'FOSMessageBundle' %}message_info{% endtrans %}
         </div>
 
         <div class="messenger_thread_message_body" id="message_{{ message.id }}">
