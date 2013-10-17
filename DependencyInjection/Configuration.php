@@ -42,7 +42,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('flash_messages')
                     ->addDefaultsIfNotSet()
                     ->children()
-                        ->booleanNode('show')->defaultValue(false)->end()
+                        ->booleanNode('enabled')->defaultFalse()->end()
                         ->scalarNode('flash_key')->defaultNull()->cannotBeEmpty()->end()
                         ->scalarNode('service')->defaultValue('fos_message.flash_listener.default')->cannotBeEmpty()->end()
                     ->end()
