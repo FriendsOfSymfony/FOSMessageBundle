@@ -6,7 +6,6 @@ send_new:       Verstuur een nieuw bericht
 search:         Zoek
 threads_found:  %num% bericht gevonden met | %num% berichten gevonden met
 
-message_info:   Door %sender%, op %date%
 reply:          Reageer
 
 subject:        Onderwerp
@@ -21,3 +20,4 @@ on:             Op %date%
 by:             Door %sender%
 no_thread:      Geen onderwerpen gevonden
 delete:         Verwijder
+undelete:       Publiceer

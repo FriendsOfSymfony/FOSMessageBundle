@@ -5,12 +5,12 @@
 <h2>{{ thread.subject }}</h2>
 
 {% for message in thread.messages %}
-    <div class="messenger_thread_message">
-        <div class="messenger_thread_message_info">
-            {% trans with {'%sender%': message.sender|e, '%date%': message.createdAt|date} from 'FOSMessageBundle' %}by{% endtrans %}
+    <div class="panel panel-default" id="message_{{ message.id }}">
+        <div class="panel-heading">
+            {% trans with {'%sender%': message.sender|e} from 'FOSMessageBundle' %}by{% endtrans %} {% trans with {'%date%': message.createdAt|date} from 'FOSMessageBundle' %}on{% endtrans %}
         </div>
 
-        <div class="messenger_thread_message_body" id="message_{{ message.id }}">
+        <div class="panel-body">
             {{ message.body }}
         </div>
     </div>
