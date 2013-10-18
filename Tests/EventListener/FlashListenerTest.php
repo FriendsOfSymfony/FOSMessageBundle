@@ -38,7 +38,7 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
         $this->listener->addSuccessFlash($this->event);        
     }
     
-    public function testAddFlashOnValidEventWithDefaultKey()
+    public function testAddFlashOnValidEvent()
     {
         $flashbagMock = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
         
