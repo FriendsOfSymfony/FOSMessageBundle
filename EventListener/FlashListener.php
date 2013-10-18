@@ -33,23 +33,26 @@ class FlashListener implements EventSubscriberInterface
      * @var Session
      */
     protected $session;
+    
+    /**
+     * The flash key
+     * 
+     * @var string
+     */
+    protected $key;
 
     /**
      * Constructor.
      *
      * @param Session             $session    The current session
      * @param TranslatorInterface $translator A translator instance
-     * @param string              $key        An optional flashBag key which overwrites the default key
+     * @param string              $key        The flash key
      */
-    public function __construct(Session $session, TranslatorInterface $translator, $key = '')
+    public function __construct(Session $session, TranslatorInterface $translator, $key)
     {
         $this->session = $session;
         $this->translator = $translator;
-        if (empty($key)) {
-            $this->key = 'success';
-        } else {
-            $this->key = $key;
-        }
+        $this->key = $key;
     }
 
     /**

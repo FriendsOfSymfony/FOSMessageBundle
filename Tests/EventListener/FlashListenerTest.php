@@ -15,6 +15,7 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
     private $session;
     private $translator;
     private $event;   
+    private $key;
     
     public function setUp() 
     {
@@ -23,7 +24,8 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
         //if we use the interface getflashbag returns an error...
         $this->session = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\Session')->disableOriginalConstructor()->getMock();
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->listener = new FlashListener($this->session, $this->translator);
+        $this->key = 'success';
+        $this->listener = new FlashListener($this->session, $this->translator, $this->key);
     }
     
     /**
@@ -57,29 +59,4 @@ class FlashListenerTest extends \PHPUnit_Framework_TestCase
         
         $this->listener->addSuccessFlash($this->event);
     }
-    
-    public function testAddFlashOnValidEventWithCustomKey() 
-    {
-        $customKey = 'message_info';
-        $flashbagMock = $this->getMock('Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface');
-        
-        $this->listener = new FlashListener($this->session, $this->translator, $customKey);
-        
-        $this->event->expects($this->once())->method('getName')->will($this->returnValue(FOSMessageEvents::POST_SEND));
-        
-        $this->translator->expects($this->once())
-            ->method('trans')
-            ->with('flash_post_send_success', array(), 'FOSMessageBundle')
-            ->will($this->returnValue('translatedString'));
-        
-        $this->session->expects($this->once())
-            ->method('getFlashBag')
-            ->will($this->returnValue($flashbagMock));
-        
-        $flashbagMock->expects($this->once())
-            ->method('add')
-            ->with($customKey, 'translatedString');
-        
-        $this->listener->addSuccessFlash($this->event);        
-    }    
 }
