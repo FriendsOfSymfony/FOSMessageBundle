@@ -13,7 +13,7 @@
          <service id="fos_message.flash_listener" class="%fos_message.flash_listener.class%">
             <argument type="service" id="session" />
             <argument type="service" id="translator" />
-            <argument></argument>
+            <argument>%fos_message.flash_messages_key%</argument>
             <tag name="kernel.event_subscriber" />
         </service>
 

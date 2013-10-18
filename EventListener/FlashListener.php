@@ -33,10 +33,10 @@ class FlashListener implements EventSubscriberInterface
      * @var Session
      */
     protected $session;
-    
+
     /**
      * The flash key
-     * 
+     *
      * @var string
      */
     protected $key;
@@ -87,6 +87,6 @@ class FlashListener implements EventSubscriberInterface
 
     private function trans($message, array $params = array())
     {
-       return $this->translator->trans($message, $params, 'FOSMessageBundle');
+        return $this->translator->trans($message, $params, 'FOSMessageBundle');
     }
 }
