@@ -37,4 +37,7 @@ fos_message:
         type:               fos_message.reply_form.type         # See FormType\ReplyMessageFormType
         handler:            fos_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
         name:               message
+    flash_messages: # Optional show flash messages (http://symfony.com/doc/current/book/controller.html#flash-messages)
+        enabled: # Boolean defaults to false, set to true to enable flash messages
+        flash_key: # Optional string, name of the flash key defaults to success
 ```
