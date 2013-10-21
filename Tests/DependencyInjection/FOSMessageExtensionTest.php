@@ -10,7 +10,7 @@ class FOSMessageExtensionTest extends \PHPUnit_Framework_TestCase
 {
 
     /** @var ContainerBuilder */
-    protected $configuration;
+    protected $containerBuilder;
 
     /**
      * @expectedException \Symfony\Component\Config\Definition\Exception\InvalidConfigurationException
@@ -65,10 +65,10 @@ class FOSMessageExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testUserEnablesFlashes()
     {
-        $this->configuration = new ContainerBuilder();
+        $this->containerBuilder = new ContainerBuilder();
         $loader = new FOSMessageExtension();
         $config = $this->getEmptyConfigWithFlashesEnabled();
-        $loader->load(array($config), $this->configuration);
+        $loader->load(array($config), $this->containerBuilder);
 
         $this->assertHasDefinition('fos_message.flash_listener');
         $this->assertParameter('success', 'fos_message.flash_messages_key');
@@ -76,11 +76,11 @@ class FOSMessageExtensionTest extends \PHPUnit_Framework_TestCase
 
     protected function createEmptyConfiguration()
     {
-        $this->configuration = new ContainerBuilder();
+        $this->containerBuilder = new ContainerBuilder();
         $loader = new FOSMessageExtension();
         $config = $this->getEmptyConfig();
-        $loader->load(array($config), $this->configuration);
-        $this->assertTrue($this->configuration instanceof ContainerBuilder);
+        $loader->load(array($config), $this->containerBuilder);
+        $this->assertTrue($this->containerBuilder instanceof ContainerBuilder);
     }
 
     /**
@@ -120,7 +120,7 @@ EOF;
      */
     private function assertParameter($value, $key)
     {
-        $this->assertEquals($value, $this->configuration->getParameter($key), sprintf('%s parameter is correct', $key));
+        $this->assertEquals($value, $this->containerBuilder->getParameter($key), sprintf('%s parameter is correct', $key));
     }
 
     /**
@@ -128,7 +128,7 @@ EOF;
      */
     private function assertHasDefinition($id)
     {
-        $this->assertTrue(($this->configuration->hasDefinition($id) ? : $this->configuration->hasAlias($id)));
+        $this->assertTrue(($this->containerBuilder->hasDefinition($id) || $this->containerBuilder->hasAlias($id)));
     }
 
     /**
@@ -136,6 +136,6 @@ EOF;
      */
     private function assertNotHasDefinition($id)
     {
-        $this->assertFalse(($this->configuration->hasDefinition($id) ? : $this->configuration->hasAlias($id)));
+        $this->assertFalse(($this->containerBuilder->hasDefinition($id) || $this->containerBuilder->hasAlias($id)));
     }
 }
