@@ -96,6 +96,11 @@ abstract class Message implements MessageInterface
         return $this->createdAt;
     }
 
+    public function setCreatedAt(\DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
     /**
      * @see FOS\MessageBundle\Model\MessageInterface::getBody()
      */

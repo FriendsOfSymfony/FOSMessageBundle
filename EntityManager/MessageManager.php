@@ -8,7 +8,6 @@ use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
-use Doctrine\ORM\Query\Builder;
 
 /**
  * Default ORM MessageManager.
@@ -22,9 +21,6 @@ class MessageManager extends BaseMessageManager
      */
     protected $em;
 
-    /**
-     * @var DocumentRepository
-     */
     protected $repository;
 
     /**
@@ -40,9 +36,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Constructor.
      *
-     * @param EntityManager     $em
-     * @param string            $class
-     * @param string            $metaClass
+     * @param EntityManager $em        An entity manager instance
+     * @param string        $class     The fully qualified name of the message class
+     * @param string        $metaClass The fully qualified name of the message meta class
      */
     public function __construct(EntityManager $em, $class, $metaClass)
     {
@@ -56,13 +52,14 @@ class MessageManager extends BaseMessageManager
      * Tells how many unread messages this participant has
      *
      * @param ParticipantInterface $participant
-     * @return int the number of unread messages
+     *
+     * @return integer The number of unread messages
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
         $builder = $this->repository->createQueryBuilder('m');
 
-        return (int)$builder
+        return (int) $builder
             ->select($builder->expr()->count('mm.id'))
 
             ->innerJoin('m.metadata', 'mm')
@@ -88,7 +85,7 @@ class MessageManager extends BaseMessageManager
      * We want to show the unread readables on the page,
      * as well as marking the as read.
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
@@ -99,7 +96,7 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks the readable as unread by this participant
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
@@ -110,9 +107,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks all messages of this thread as read by this participant
      *
-     * @param ThreadInterface $thread
+     * @param ThreadInterface      $thread
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param boolean              $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
@@ -124,9 +121,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks the message as read or unread by this participant
      *
-     * @param MessageInterface $message
+     * @param MessageInterface     $message
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param boolean              $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
@@ -138,11 +135,9 @@ class MessageManager extends BaseMessageManager
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
             ->set('m.isRead', '?1')
-            ->setParameter('1', (bool)$isRead, \PDO::PARAM_BOOL)
-
+            ->setParameter('1', (bool) $isRead, \PDO::PARAM_BOOL)
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
-
             ->getQuery()
             ->execute();
     }
@@ -150,12 +145,11 @@ class MessageManager extends BaseMessageManager
     /**
      * Saves a message
      *
-     * @param MessageInterface $message
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * @param MessageInterface $message  The message we wants to save
+     * @param Boolean          $andFlush Whether to flush the changes (default true)
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
-        $this->denormalize($message);
         $this->em->persist($message);
         if ($andFlush) {
             $this->em->flush();
@@ -163,47 +157,12 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Returns the fully qualified comment thread class name
+     * Returns the  fully qualified name of the message class
      *
      * @return string
      */
     public function getClass()
     {
         return $this->class;
-    }
-
-    /**
-     * DENORMALIZATION
-     *
-     * All following methods are relative to denormalization
-     */
-
-    /**
-     * Performs denormalization tricks
-     */
-    protected function denormalize(MessageInterface $message)
-    {
-        $this->doMetadata($message);
-    }
-
-    /**
-     * Ensures that the message metadata are up to date
-     */
-    protected function doMetadata(MessageInterface $message)
-    {
-        foreach ($message->getThread()->getAllMetadata() as $threadMeta) {
-            $meta = $message->getMetadataForParticipant($threadMeta->getParticipant());
-            if (!$meta) {
-                $meta = $this->createMessageMetadata();
-                $meta->setParticipant($threadMeta->getParticipant());
-
-                $message->addMetadata($meta);
-            }
-        }
-    }
-
-    protected function createMessageMetadata()
-    {
-        return new $this->metaClass();
     }
 }

@@ -8,6 +8,8 @@
 
         <parameter key="fos_message.message_meta_class">%fos_message.message_class%Metadata</parameter>
         <parameter key="fos_message.thread_meta_class">%fos_message.thread_class%Metadata</parameter>
+        <parameter key="fos_message.new_thread_builder_class">FOS\MessageBundle\MessageBuilder\Orm\NewThreadBuilder</parameter>
+        <parameter key="fos_message.reply_builder_class">FOS\MessageBundle\MessageBuilder\Orm\ReplyBuilder</parameter>
 
     </parameters>
 
@@ -25,6 +27,30 @@
             <argument>%fos_message.thread_class%</argument>
             <argument>%fos_message.thread_meta_class%</argument>
             <argument type="service" id="fos_message.message_manager" />
+        </service>
+
+        <service id="fos_message.actions_manager" class="FOS\MessageBundle\EntityManager\ActionsManager" public="false">
+            <argument type="service" id="fos_message.message_manager" />
+            <argument type="service" id="fos_message.thread_manager" />
+        </service>
+
+        <service id="fos_message.new_thread_builder" class="%fos_message.new_thread_builder_class%" parent="fos_message.abstract_message_builder" />
+
+        <service id="fos_message.reply_builder" class="%fos_message.reply_builder_class%" parent="fos_message.abstract_message_builder" />
+
+        <service id="fos_message.abstract_message_builder" class="FOS\MessageBundle\MessageBuilder\Orm\AbstractMessageBuilder" abstract="true">
+            <call method="setMessageClass">
+                <argument>%fos_message.message_class%</argument>
+            </call>
+            <call method="setMessageMetaClass">
+                <argument>%fos_message.message_meta_class%</argument>
+            </call>
+            <call method="setThreadClass">
+                <argument>%fos_message.thread_class%</argument>
+            </call>
+            <call method="setThreadMetaClass">
+                <argument>%fos_message.thread_meta_class%</argument>
+            </call>
         </service>
 
     </services>

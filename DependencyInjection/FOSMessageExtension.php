@@ -24,6 +24,7 @@ class FOSMessageExtension extends Extension
             throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
         $loader->load(sprintf('%s.xml', $config['db_driver']));
+        $loader->load(sprintf('form_%s.xml', $config['db_driver']));
         $loader->load('config.xml');
         $loader->load('form.xml');
         $loader->load('validator.xml');

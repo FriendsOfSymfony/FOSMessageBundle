@@ -16,43 +16,64 @@ interface MessageInterface extends ReadableInterface
      *
      * @return mixed
      */
-    function getId();
+    public function getId();
 
     /**
      * @return ThreadInterface
      */
-    function getThread();
+    public function getThread();
 
     /**
-     * @param  ThreadInterface
-     * @return null
+     * Sets the thread
+     * 
+     * @param ThreadInterface $thread The thread
      */
-    function setThread(ThreadInterface $thread);
+    public function setThread(ThreadInterface $thread);
 
     /**
-     * @return DateTime
+     * Gets the datetime when the message was created
+     * 
+     * @return \DateTime
      */
-    function getCreatedAt();
+    public function getCreatedAt();
 
     /**
+     * Gets the body of the message
+     * 
      * @return string
      */
-    function getBody();
+    public function getBody();
 
     /**
-     * @param  string
-     * @return null
+     * Sets the body of the message
+     * 
+     * @param string $body
      */
-    function setBody($body);
+    public function setBody($body);
 
     /**
      * @return ParticipantInterface
      */
-    function getSender();
+    public function getSender();
 
     /**
-     * @param  ParticipantInterface
-     * @return null
+     * Sets the sender of the message
+     * 
+     * @param ParticipantInterface $sender
      */
-    function setSender(ParticipantInterface $sender);
+    public function setSender(ParticipantInterface $sender);
+
+    /**
+     * Sets the creation time of the message
+     *
+     * @param \DateTime $createdAt the datetime of the new message
+     */
+    public function setCreatedAt(\DateTime $createdAt);
+
+    /**
+     * Gets message metadata for a given participant
+     *
+     * @param ParticipantInterface $participant the participant for who we get teh meta
+     */
+    public function getMetadataForParticipant(ParticipantInterface $participant);
 }
