@@ -148,7 +148,7 @@ class Thread extends BaseThread
     /**
      * @ORM\OneToMany(
      *   targetEntity="Acme\MessageBundle\Entity\Message",
-     *   mappedBy="thread"
+     *   mappedBy="thread", orphanRemoval=true
      * )
      * @var Message[]|\Doctrine\Common\Collections\Collection
      */
