@@ -84,7 +84,7 @@ class FOSMessageExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * getEmptyConfig
+     * gets an empty config
      *
      * @return array
      */
@@ -100,6 +100,11 @@ EOF;
         return $parser->parse($yaml);
     }
 
+    /**
+     * Gets an empty config but with the optional flash settings enabled
+     * 
+     * @return array
+     */
     protected function getEmptyConfigWithFlashesEnabled()
     {
        $yaml = <<<EOF
@@ -115,7 +120,9 @@ EOF;
     }
 
     /**
-     * @param mixed $value
+     * Asserts that a parameter key has a certain value
+     * 
+     * @param mixed  $value
      * @param string $key
      */
     private function assertParameter($value, $key)
@@ -124,6 +131,8 @@ EOF;
     }
 
     /**
+     * Asserts that a definition exists
+     * 
      * @param string $id
      */
     private function assertHasDefinition($id)
@@ -132,6 +141,8 @@ EOF;
     }
 
     /**
+     * Asserts that a definition does not exist 
+     * 
      * @param string $id
      */
     private function assertNotHasDefinition($id)
