@@ -37,7 +37,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      */
     public function transform($recipients)
     {
-        if ($recipients->count() == 0) {
+        if ($recipients === null || $recipients->count() == 0) {
             return "";
         }
 
