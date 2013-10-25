@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\SpamDetection;
 
-use FOS\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\Form\Model\NewThreadMessage;
 
 /**
  * Tells whether or not a new message looks like spam
