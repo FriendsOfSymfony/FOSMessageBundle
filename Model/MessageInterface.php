@@ -2,8 +2,6 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
 /**
  * Message model
  *
@@ -16,43 +14,70 @@ interface MessageInterface extends ReadableInterface
      *
      * @return mixed
      */
-    function getId();
+    public function getId();
 
     /**
+     * Gets the thread this message belongs to
+     * 
      * @return ThreadInterface
      */
-    function getThread();
+    public function getThread();
 
     /**
-     * @param  ThreadInterface
-     * @return null
+     * Set the thread this message belongs to
+     * 
+     * @param ThreadInterface     * 
      */
-    function setThread(ThreadInterface $thread);
+    public function setThread(ThreadInterface $thread);
 
     /**
+     * Gets the time this message was created
+     * 
      * @return DateTime
      */
-    function getCreatedAt();
+    public function getCreatedAt();
+
+   /**
+    * Sets the creation date of the message
+    *
+    * @param \DateTime
+    */
+    public function setCreatedAt(\DateTime $createdAt);
 
     /**
+     * Gets the body of the message
+     * 
      * @return string
      */
-    function getBody();
+    public function getBody();
 
     /**
-     * @param  string
-     * @return null
+     * Sets the body of the message
+     * 
+     * @param string
      */
-    function setBody($body);
+    public function setBody($body);
 
     /**
+     * Returns the sender of the message
+     *
      * @return ParticipantInterface
      */
-    function getSender();
+    public function getSender();
 
     /**
-     * @param  ParticipantInterface
-     * @return null
+     * Sets the sender of the message
+     *
+     * @param ParticipantInterface
      */
-    function setSender(ParticipantInterface $sender);
+    public function setSender(ParticipantInterface $sender);
+
+    /**
+     * Get the MessageMetadata for a participant.
+     *
+     * @param ParticipantInterface $participant
+     * 
+     * @return MessageMetadata|null
+     */
+    public function getMetadataForParticipant(ParticipantInterface $participant);
 }
