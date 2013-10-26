@@ -63,9 +63,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $this->readableManager->shouldReceive('markAsReadByParticipant')
             ->with($readable, $this->participant);
+
+        $that = $this;
         $this->dispatcher->shouldReceive('dispatch')
-            ->with(FOSMessageEvents::POST_READ, m::on(function (ReadableEvent $event) use ($readable) {
-                $this->assertSame($readable, $event->getReadable());
+            ->with(FOSMessageEvents::POST_READ, m::on(function (ReadableEvent $event) use ($readable, $that) {
+                $that->assertSame($readable, $event->getReadable());
 
                 return true;
             }));
@@ -82,9 +84,11 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
 
         $this->readableManager->shouldReceive('markAsUnreadByParticipant')
             ->with($readable, $this->participant);
+
+        $that = $this;
         $this->dispatcher->shouldReceive('dispatch')
-            ->with(FOSMessageEvents::POST_UNREAD, m::on(function (ReadableEvent $event) use ($readable) {
-                $this->assertSame($readable, $event->getReadable());
+            ->with(FOSMessageEvents::POST_UNREAD, m::on(function (ReadableEvent $event) use ($readable, $that) {
+                $that->assertSame($readable, $event->getReadable());
 
                 return true;
             }));
