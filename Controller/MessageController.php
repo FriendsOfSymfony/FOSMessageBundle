@@ -98,14 +98,8 @@ class MessageController extends ContainerAware
 
     /**
      * Deletes a thread
-<<<<<<< HEAD
-     * 
-     * @param string $threadId the thread id
-     * 
-=======
      *
      * @param  string           $threadId the thread id
->>>>>>> CS fixes
      * @return RedirectResponse
      */
     public function deleteAction($threadId)
