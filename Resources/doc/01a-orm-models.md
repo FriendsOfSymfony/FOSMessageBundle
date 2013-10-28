@@ -32,6 +32,9 @@ namespace Acme\MessageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Entity\Message as BaseMessage;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Entity\MessageMetadata;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * @ORM\Entity
@@ -127,6 +130,8 @@ namespace Acme\MessageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Entity\Thread as BaseThread;
+use FOS\MessageBundle\Entity\ThreadMetadata;
+use FOS\MessageBundle\Entity\Message;
 
 /**
  * @ORM\Entity
@@ -177,6 +182,8 @@ namespace Acme\MessageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * @ORM\Entity
