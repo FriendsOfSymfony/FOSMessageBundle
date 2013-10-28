@@ -100,7 +100,10 @@ class Provider implements ProviderInterface
      * Performs authorization checks
      * Marks the thread as read
      *
-     * @return ThreadInterface
+     * @param int $threadId
+     * @return \FOS\MessageBundle\Model\ThreadInterface|ThreadInterface
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function getThread($threadId)
     {
