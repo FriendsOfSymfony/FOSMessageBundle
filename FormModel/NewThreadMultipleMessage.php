@@ -22,6 +22,11 @@ class NewThreadMultipleMessage extends AbstractMessage
      * @var string
      */
     protected $subject;
+    
+    public function __construct()
+    {
+        $this->recipients = new ArrayCollection;
+    }
 
     /**
      * @return string
@@ -46,10 +51,6 @@ class NewThreadMultipleMessage extends AbstractMessage
      */
     public function getRecipients()
     {
-        if ($this->recipients === null) {
-            $this->recipients = new ArrayCollection();
-        }
-
         return $this->recipients;
     }
 
