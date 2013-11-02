@@ -16,26 +16,26 @@ interface AuthorizerInterface
      * Tells if the current user is allowed
      * to see this thread
      *
-     * @param ThreadInterface $thread
+     * @param  ThreadInterface $thread
      * @return boolean
      */
-    function canSeeThread(ThreadInterface $thread);
+    public function canSeeThread(ThreadInterface $thread);
 
     /**
      * Tells if the current participant is allowed
      * to delete this thread
      *
-     * @param ThreadInterface $thread
+     * @param  ThreadInterface $thread
      * @return boolean
      */
-    function canDeleteThread(ThreadInterface $thread);
+    public function canDeleteThread(ThreadInterface $thread);
 
     /**
      * Tells if the current participant is allowed
      * to send a message to this other participant
      *
-     * @param ParticipantInterface $participant the one we want to send a message to
+     * @param  ParticipantInterface $participant the one we want to send a message to
      * @return boolean
      */
-    function canMessageParticipant(ParticipantInterface $participant);
+    public function canMessageParticipant(ParticipantInterface $participant);
 }

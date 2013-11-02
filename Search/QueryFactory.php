@@ -25,7 +25,7 @@ class QueryFactory implements QueryFactoryInterface
      * Instanciates a new TermGetter
      *
      * @param Request $request
-     * @param string $queryParameter
+     * @param string  $queryParameter
      */
     public function __construct(Request $request, $queryParameter)
     {

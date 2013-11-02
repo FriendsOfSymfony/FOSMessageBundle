@@ -24,10 +24,10 @@ class SelfRecipientValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Confirms the recipient entered is not the user who is sending the message.
      *
-     * @param object     $recipient
-     * @param Constraint $constraint
+     * @param \FOS\MessageBundle\Model\ParticipantInterface $recipient
+     * @param SelfRecipient|Constraint $constraint
      */
     public function validate($recipient, Constraint $constraint)
     {

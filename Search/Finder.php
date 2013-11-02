@@ -35,7 +35,7 @@ class Finder implements FinderInterface
     /**
      * Finds threads of a participant, matching a given query
      *
-     * @param Query $query
+     * @param  Query $query
      * @return array of ThreadInterface
      */
     public function find(Query $query)
@@ -46,7 +46,7 @@ class Finder implements FinderInterface
     /**
      * Finds threads of a participant, matching a given query
      *
-     * @param Query $query
+     * @param  Query $query
      * @return mixed a query builder suitable for pagination
      */
     public function getQueryBuilder(Query $query)

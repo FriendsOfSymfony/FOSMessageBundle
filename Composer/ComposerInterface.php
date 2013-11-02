@@ -14,14 +14,15 @@ interface ComposerInterface
     /**
      * Starts composing a message, starting a new thread
      *
-     * @return MessageBuilderInterface
+     * @return \FOS\MessageBundle\MessageBuilder\NewThreadMessageBuilder
      */
-    function newThread();
+    public function newThread();
 
     /**
      * Starts composing a message in a reply to a thread
      *
-     * @return MessageBuilderInterface
+     * @param ThreadInterface $thread
+     * @return \FOS\MessageBundle\MessageBuilder\ReplyMessageBuilder
      */
-    function reply(ThreadInterface $thread);
+    public function reply(ThreadInterface $thread);
 }

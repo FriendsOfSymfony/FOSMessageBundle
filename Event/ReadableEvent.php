@@ -2,7 +2,6 @@
 
 namespace FOS\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
 use FOS\MessageBundle\Model\ReadableInterface;
 

@@ -29,6 +29,7 @@ class ParticipantProvider implements ParticipantProviderInterface
      * Gets the current authenticated user
      *
      * @return ParticipantInterface
+     * @throws AccessDeniedException
      */
     public function getAuthenticatedParticipant()
     {

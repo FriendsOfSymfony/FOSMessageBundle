@@ -3,9 +3,6 @@
 namespace FOS\MessageBundle\Document;
 
 use FOS\MessageBundle\Model\Thread as AbstractThread;
-use FOS\MessageBundle\Model\MessageInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 abstract class Thread extends AbstractThread
@@ -53,41 +50,6 @@ abstract class Thread extends AbstractThread
      * @var array of participant ID's
      */
     protected $activeSenders = array();
-
-    /**
-     * Gets the users participating in this conversation
-     *
-     * @return array of ParticipantInterface
-     */
-    public function getParticipants()
-    {
-        return $this->participants->toArray();
-    }
-
-    /**
-     * Adds a participant to the thread
-     * If it already exists, nothing is done.
-     *
-     * @param ParticipantInterface $participant
-     * @return null
-     */
-    public function addParticipant(ParticipantInterface $participant)
-    {
-        if (!$this->isParticipant($participant)) {
-            $this->participants->add($participant);
-        }
-    }
-
-    /**
-     * Tells if the user participates to the conversation
-     *
-     * @param ParticipantInterface $participant
-     * @return boolean
-     */
-    public function isParticipant(ParticipantInterface $participant)
-    {
-        return $this->participants->contains($participant);
-    }
 
     /**
      * DENORMALIZATION

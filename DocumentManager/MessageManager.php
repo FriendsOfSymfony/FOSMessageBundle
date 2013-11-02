@@ -56,8 +56,8 @@ class MessageManager extends BaseMessageManager
     /**
      * Tells how many unread, non-spam, messages this participant has
      *
-     * @param ParticipantInterface $participant
-     * @return int the number of unread messages
+     * @param  ParticipantInterface $participant
+     * @return int                  the number of unread messages
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
@@ -74,7 +74,7 @@ class MessageManager extends BaseMessageManager
      * We want to show the unread readables on the page,
      * as well as marking the as read.
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
@@ -85,7 +85,7 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks the readable as unread by this participant
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
@@ -96,9 +96,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks all messages of this thread as read by this participant
      *
-     * @param ThreadInterface $thread
+     * @param ThreadInterface      $thread
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param boolean              $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
@@ -110,9 +110,9 @@ class MessageManager extends BaseMessageManager
     /**
      * Marks the message as read or unread by this participant
      *
-     * @param MessageInterface $message
+     * @param MessageInterface     $message
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param boolean              $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
@@ -126,8 +126,8 @@ class MessageManager extends BaseMessageManager
      * by updating directly the storage
      *
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
-     * @param \Closure $condition
+     * @param boolean              $isRead
+     * @param \Closure             $condition
      */
     protected function markIsReadByCondition(ParticipantInterface $participant, $isRead, \Closure $condition)
     {
@@ -170,7 +170,7 @@ class MessageManager extends BaseMessageManager
      * Saves a message
      *
      * @param MessageInterface $message
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * @param Boolean          $andFlush Whether to flush the changes (default true)
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {

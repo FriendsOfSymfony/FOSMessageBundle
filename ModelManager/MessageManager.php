@@ -13,7 +13,7 @@ abstract class MessageManager implements MessageManagerInterface
     /**
      * Creates an empty message instance
      *
-     * @return MessageInterface
+     * @return \FOS\MessageBundle\Model\MessageInterface
      */
     public function createMessage()
     {

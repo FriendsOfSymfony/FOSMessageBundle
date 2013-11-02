@@ -3,8 +3,6 @@
 namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract thread model
@@ -30,35 +28,35 @@ abstract class Thread implements ThreadInterface
     /**
      * Tells if the thread is spam or flood
      *
-     * @var boolean
+     * @var Boolean
      */
     protected $isSpam = false;
 
     /**
      * Messages contained in this thread
      *
-     * @var Collection of MessageInterface
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $messages;
 
     /**
      * Thread metadata
      *
-     * @var Collection of ThreadMetadata
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $metadata;
 
     /**
      * Users participating in this conversation
      *
-     * @var Collection of ParticipantInterface
+     * @var \Doctrine\Common\Collections\Collection
      */
     protected $participants;
 
     /**
      * Date this thread was created at
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -80,7 +78,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getId()
+     * @return mixed
      */
     public function getId()
     {
@@ -88,7 +86,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedAt()
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -96,7 +94,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedAt()
+     * @param \DateTime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt)
     {
@@ -104,7 +102,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedBy()
+     * @return ParticipantInterface
      */
     public function getCreatedBy()
     {
@@ -112,7 +110,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedBy()
+     * @param ParticipantInterface $participant
      */
     public function setCreatedBy(ParticipantInterface $participant)
     {
@@ -120,7 +118,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getSubject()
+     * @return string
      */
     public function getSubject()
     {
@@ -128,7 +126,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setSubject()
+     * @param string $subject
      */
     public function setSubject($subject)
     {
@@ -136,7 +134,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @return boolean
+     * @return Boolean
      */
     public function getIsSpam()
     {
@@ -144,8 +142,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @param  boolean
-     * @return null
+     * @param Boolean
      */
     public function setIsSpam($isSpam)
     {
@@ -153,15 +150,16 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::addMessage()
+     * @param MessageInterface $message
      */
     public function addMessage(MessageInterface $message)
     {
         $this->messages->add($message);
+        $message->setThread($this);
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getMessages()
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getMessages()
     {
@@ -169,7 +167,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getFirstMessage()
+     * @return MessageInterface
      */
     public function getFirstMessage()
     {
@@ -177,7 +175,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getLastMessage()
+     * @return MessageInterface
      */
     public function getLastMessage()
     {
@@ -185,7 +183,8 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::isDeletedByParticipant()
+     * @param ParticipantInterface $participant
+     * @return Boolean
      */
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
@@ -197,12 +196,14 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeletedByParticipant()
+     * @param ParticipantInterface $participant
+     * @param Boolean $isDeleted
+     * @throws \InvalidArgumentException
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
         if (!$meta = $this->getMetadataForParticipant($participant)) {
-            throw new \InvalidArgumentException(sprintf('No metadata exists for participant with id "%s"', $participant->getId()));
+            throw new \InvalidArgumentException('No metadata exists for participant');
         }
 
         $meta->setIsDeleted($isDeleted);
@@ -216,17 +217,18 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeleted()
+     * @param Boolean $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {
-        foreach($this->getParticipants() as $participant) {
+        foreach ($this->getParticipants() as $participant) {
             $this->setIsDeletedByParticipant($participant, $isDeleted);
         }
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * @param ParticipantInterface $participant
+     * @return Boolean
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -240,7 +242,8 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * @param ParticipantInterface $participant
+     * @param bool $isRead
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
@@ -262,13 +265,13 @@ abstract class Thread implements ThreadInterface
     /**
      * Gets the ThreadMetadata for a participant.
      *
-     * @param ParticipantInterface $participant
+     * @param  ParticipantInterface $participant
      * @return ThreadMetadata
      */
     public function getMetadataForParticipant(ParticipantInterface $participant)
     {
         foreach ($this->metadata as $meta) {
-            if ($meta->getParticipant()->getId() == $participant->getId()) {
+            if ($meta->getParticipant() === $participant) {
                 return $meta;
             }
         }
@@ -277,19 +280,78 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getOtherParticipants()
+     * @param ParticipantInterface $participant
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getOtherParticipants(ParticipantInterface $participant)
     {
-        $otherParticipants = $this->getParticipants();
+        $otherParticipants = $this->getParticipants()->filter(function (ParticipantInterface $search) use ($participant) {
+            return $search !== $participant;
+        });
 
-        $key = array_search($participant, $otherParticipants, true);
+        return $otherParticipants;
+    }
 
-        if (false !== $key) {
-            unset($otherParticipants[$key]);
+    /**
+     * Gets the users participating in this conversation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getParticipants()
+    {
+        return $this->participants;
+    }
+
+    /**
+     * Tells if the user participates to the conversation
+     *
+     * @param  ParticipantInterface $participant
+     * @return boolean
+     */
+    public function isParticipant(ParticipantInterface $participant)
+    {
+        return $this->getParticipants()->contains($participant);
+    }
+
+    /**
+     * Adds a participant to the thread
+     * If it already exists, nothing is done.
+     *
+     * @param  ParticipantInterface $participant
+     * @return null
+     */
+    public function addParticipant(ParticipantInterface $participant)
+    {
+        if (!$this->isParticipant($participant)) {
+            $this->getParticipants()->add($participant);
+        }
+    }
+
+    /**
+     * Adds many participants to the thread
+     *
+     * @param array|\Traversable
+     * @throws \InvalidArgumentException
+     * @return Thread
+     */
+    public function addParticipants($participants)
+    {
+        if (!is_array($participants) && !$participants instanceof \Traversable) {
+            throw new \InvalidArgumentException("Participants must be an array or instanceof Traversable");
         }
 
-        // we want to reset the array indexes
-        return array_values($otherParticipants);
+        foreach ($participants as $participant) {
+            $this->addParticipant($participant);
+        }
+    }
+
+    /**
+     * Returns the entire metadata collection for a thread.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAllMetadata()
+    {
+        return $this->metadata;
     }
 }

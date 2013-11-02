@@ -13,7 +13,7 @@ abstract class ThreadManager implements ThreadManagerInterface
     /**
      * Creates an empty comment thread instance
      *
-     * @return ThreadInterface
+     * @return \FOS\MessageBundle\Model\ThreadInterface
      */
     public function createThread()
     {

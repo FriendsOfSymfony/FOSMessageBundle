@@ -7,8 +7,14 @@ use FOS\MessageBundle\Model\ThreadMetadata as BaseThreadMetadata;
 
 abstract class ThreadMetadata extends BaseThreadMetadata
 {
+    /**
+     * @var int
+     */
     protected $id;
 
+    /**
+     * @var ThreadInterface
+     */
     protected $thread;
 
     /**

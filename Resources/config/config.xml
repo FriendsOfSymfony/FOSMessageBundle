@@ -21,7 +21,7 @@
             <argument type="service" id="security.context" />
         </service>
 
-        <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\Authorizer" public="false">
+        <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\BasicAuthorizer" public="false">
             <argument type="service" id="fos_message.participant_provider" />
         </service>
 
@@ -51,7 +51,7 @@
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\Extension\MessageExtension" public="false">
+        <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\MessageExtension" public="false">
             <argument type="service" id="fos_message.participant_provider" />
             <argument type="service" id="fos_message.provider" />
             <argument type="service" id="fos_message.authorizer" />

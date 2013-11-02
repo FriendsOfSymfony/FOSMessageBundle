@@ -2,41 +2,138 @@
 
 namespace FOS\MessageBundle\Tests\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
+use Mockery as m;
 
 class ThreadTest extends \PHPUnit_Framework_TestCase
 {
-    public function testGetOtherParticipants()
+    public function testAddParticipant()
     {
-        $u1 = $this->createParticipantMock('u1');
-        $u2 = $this->createParticipantMock('u2');
-        $u3 = $this->createParticipantMock('u3');
+        $thread = new Thread;
+        $thread->addParticipant($this->getParticipant());
+        $thread->addParticipant($this->getParticipant());
 
-        $thread = $this->getMockForAbstractClass('FOS\MessageBundle\Model\Thread');
-        $thread->expects($this->atLeastOnce())
-            ->method('getParticipants')
-            ->will($this->returnValue(array($u1, $u2, $u3)));
-
-        $toIds = function(array $participants) {
-            return array_map(function (ParticipantInterface $participant) {
-                return $participant->getId();
-            }, $participants);
-        };
-
-        $this->assertSame($toIds(array($u2, $u3)), $toIds($thread->getOtherParticipants($u1)));
-        $this->assertSame($toIds(array($u1, $u3)), $toIds($thread->getOtherParticipants($u2)));
-        $this->assertSame($toIds(array($u1, $u2)), $toIds($thread->getOtherParticipants($u3)));
+        $this->assertCount(2, $thread->getParticipants());
     }
 
-    protected function createParticipantMock($id)
+    public function testAddParticipants()
     {
-        $participant = $this->getMockBuilder('FOS\MessageBundle\Model\ParticipantInterface')
-            ->disableOriginalConstructor(true)
-            ->getMock();
+        $thread = new Thread;
+        $thread->addParticipants(array($this->getParticipant()));
 
-        $participant->expects($this->any())
-            ->method('getId')
-            ->will($this->returnValue($id));
+        $this->assertCount(1, $thread->getParticipants());
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testAddParticipantsNonArray()
+    {
+        $thread = new Thread;
+        $thread->addParticipants(new \stdClass);
+    }
+
+    public function testOtherParticipants()
+    {
+        $thread = new Thread;
+        $thread->addParticipants(array(
+            $participant = $this->getParticipant(),
+            $this->getParticipant(),
+            $this->getParticipant()
+        ));
+
+        $others = $thread->getOtherParticipants($participant);
+
+        $this->assertCount(2, $others);
+        $this->assertNotContains($participant, $others);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidMetadata()
+    {
+        $thread = new Thread;
+        $thread->addParticipants(array(
+            $participant = $this->getParticipant(),
+        ));
+
+        $thread->setIsDeletedByParticipant($participant, true);
+    }
+
+    public function testDeletion()
+    {
+        $thread = new Thread;
+
+        $message = m::mock('FOS\\MessageBundle\\Model\\MessageInterface');
+        $message->shouldReceive('setThread')
+            ->with($thread)
+            ->once();
+
+        $thread->addParticipants(array(
+            $participant1 = $this->getParticipant(),
+            $participant2 = $this->getParticipant(),
+        ));
+        $metadata1 = new ThreadMetadata;
+        $metadata1->setParticipant($participant1);
+        $thread->addMetadata($metadata1);
+        $metadata2 = new ThreadMetadata;
+        $metadata2->setParticipant($participant2);
+        $thread->addMetadata($metadata2);
+
+        $thread->addMessage($message);
+
+        $message->shouldReceive('setIsReadByParticipant')
+            ->with($participant1, true)
+            ->andReturnUndefined()
+            ->once();
+
+        $thread->setIsDeletedByParticipant($participant1, true);
+
+        $this->assertTrue($thread->isDeletedByParticipant($participant1));
+        $this->assertFalse($thread->isDeletedByParticipant($participant2));
+        $this->assertFalse($thread->isDeletedByParticipant($this->getParticipant()));
+
+        $thread->getMessages()->clear();
+        $thread->setIsDeleted(true);
+
+        $this->assertTrue($thread->isDeletedByParticipant($participant1));
+        $this->assertTrue($thread->isDeletedByParticipant($participant2));
+    }
+
+    public function testReading()
+    {
+        $thread = new Thread;
+        $thread->addParticipants(array(
+            $participant1 = $this->getParticipant(),
+            $participant2 = $this->getParticipant(),
+        ));
+        $metadata1 = new ThreadMetadata;
+        $metadata1->setParticipant($participant1);
+        $thread->addMetadata($metadata1);
+        $metadata2 = new ThreadMetadata;
+        $metadata2->setParticipant($participant2);
+        $thread->addMetadata($metadata2);
+
+        $thread->addMessage($message = new Message);
+        $mmetadata1 = new MessageMetadata;
+        $mmetadata1->setParticipant($participant1);
+        $message->addMetadata($mmetadata1);
+        $mmetadata2 = new MessageMetadata;
+        $mmetadata2->setParticipant($participant2);
+        $message->addMetadata($mmetadata2);
+
+        $thread->setIsReadByParticipant($participant2, true);
+
+        $this->assertFalse($thread->isReadByParticipant($participant1));
+        $this->assertTrue($thread->isReadByParticipant($participant2));
+    }
+
+    /**
+     * @return \FOS\MessageBundle\Model\ParticipantInterface|\Mockery\MockInterface
+     */
+    protected function getParticipant()
+    {
+        $participant = m::mock('FOS\\MessageBundle\\Model\\ParticipantInterface');
 
         return $participant;
     }
