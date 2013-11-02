@@ -26,8 +26,8 @@ class SpamValidator extends ConstraintValidator
     /**
      * Indicates whether the constraint is valid
      *
-     * @param object     $value
-     * @param Constraint $constraint
+     * @param \FOS\MessageBundle\Form\Model\NewThreadMessage $value
+     * @param Spam|Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {

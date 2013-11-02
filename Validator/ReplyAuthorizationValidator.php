@@ -15,6 +15,11 @@ class ReplyAuthorizationValidator extends ConstraintValidator
     protected $authorizer;
 
     /**
+     * @var \FOS\MessageBundle\Security\ParticipantProviderInterface
+     */
+    protected $participantProvider;
+
+    /**
      * Constructor
      *
      * @param AuthorizerInterface          $authorizer
@@ -27,10 +32,10 @@ class ReplyAuthorizationValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Confirms the message sender is allowed to reply to all other participants of the thread.
      *
-     * @param object     $value
-     * @param Constraint $constraint
+     * @param \FOS\MessageBundle\Model\MessageInterface $value
+     * @param ReplyAuthorization|Constraint $constraint
      */
     public function validate($value, Constraint $constraint)
     {

@@ -24,9 +24,9 @@ class AuthorizationValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Checks if the
      *
-     * @param object     $recipient
+     * @param \FOS\MessageBundle\Model\ParticipantInterface     $recipient
      * @param Constraint $constraint
      */
     public function validate($recipient, Constraint $constraint)
