@@ -15,7 +15,7 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
      * Creates a reply message
      *
      * @param  ThreadInterface $thread the thread we answer to
-     * @return Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function create(ThreadInterface $thread)
     {

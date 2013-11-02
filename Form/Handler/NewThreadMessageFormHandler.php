@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\Form\Handler;
 
-use FOS\MessageBundle\FormModel\AbstractMessage;
-use FOS\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\Form\Model\AbstractMessage;
+use FOS\MessageBundle\Form\Model\NewThreadMessage;
 
 class NewThreadMessageFormHandler extends AbstractMessageFormHandler
 {

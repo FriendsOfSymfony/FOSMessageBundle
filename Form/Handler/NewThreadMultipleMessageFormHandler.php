@@ -1,8 +1,8 @@
 <?php
 namespace FOS\MessageBundle\Form\Handler;
 
-use FOS\MessageBundle\FormModel\AbstractMessage;
-use FOS\MessageBundle\FormModel\NewThreadMultipleMessage;
+use FOS\MessageBundle\Form\Model\AbstractMessage;
+use FOS\MessageBundle\Form\Model\NewThreadMultipleMessage;
 /**
  * Form handler for multiple recipients support
  *

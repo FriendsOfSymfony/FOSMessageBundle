@@ -12,7 +12,7 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
     /**
      * Creates a new thread message
      *
-     * @return Form
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function create()
     {
