@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -21,7 +22,7 @@ class FOSMessageExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
 
         if (!in_array(strtolower($config['db_driver']), array('orm', 'mongodb'))) {
-            throw new \InvalidArgumentException(sprintf('Invalid db driver "%s".', $config['db_driver']));
+            throw new InvalidConfigurationException(sprintf('Invalid db driver "%s".', $config['db_driver']));
         }
         $loader->load(sprintf('%s.xml', $config['db_driver']));
         $loader->load('config.xml');
