@@ -27,7 +27,7 @@ Your user class may look something like the following:
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\UserBundle\Model\User;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
