@@ -1,6 +1,7 @@
 messenger:      Messenger
 inbox:          Prejeto
 sent:           Poslano
+deleted:        Izbrisano
 send_new:       Pošlji novo sporočilo
 search:         Iskanje
 threads_found:  %num% najden pogovor | %num% najdena pogovora | %num% najdeni pogovori | %num% najdenih pogovorov
@@ -18,4 +19,6 @@ new:            Novo
 goto_last:      Pojdi na zadnje sporočilo
 on:             %date%
 by:             Od %sender%
-no_thread:      Ni pogovorov
+no_thread:      Ni pogovorov za prikaz
+delete:         Izbriši
+undelete:       Odbriši
