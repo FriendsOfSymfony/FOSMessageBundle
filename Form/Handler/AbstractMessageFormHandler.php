@@ -7,7 +7,7 @@ use FOS\MessageBundle\Form\Model\AbstractMessage;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Sender\SenderInterface;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -33,16 +33,16 @@ abstract class AbstractMessageFormHandler
     /**
      * Processes the form with the request
      *
-     * @param  Form          $form
+     * @param  FormInterface          $form
      * @return Message|false the sent message if the form is bound and valid, false otherwise
      */
-    public function process(Form $form)
+    public function process(FormInterface $form)
     {
         if ('POST' !== $this->request->getMethod()) {
             return false;
         }
 
-        $form->bind($this->request);
+        $form->handleRequest($this->request);
 
         if ($form->isValid()) {
             return $this->processValidForm($form);
@@ -54,10 +54,10 @@ abstract class AbstractMessageFormHandler
     /**
      * Processes the valid form, sends the message
      *
-     * @param  Form             $form
+     * @param  FormInterface             $form
      * @return MessageInterface the sent message
      */
-    public function processValidForm(Form $form)
+    public function processValidForm(FormInterface $form)
     {
         $message = $this->composeMessage($form->getData());
 
