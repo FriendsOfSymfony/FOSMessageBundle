@@ -18,5 +18,5 @@ new:            Neu
 goto_last:      Gehe zur letzten Nachricht
 on:             Am %date%
 by:             Von %sender%
-no_thread:      Es gibt keine Konversation zum anzeigen
+no_thread:      Es gibt keine Konversation zum Anzeigen
 delete:         löschen
