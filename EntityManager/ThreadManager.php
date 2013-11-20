@@ -51,10 +51,10 @@ class ThreadManager extends BaseThreadManager
     /**
      * Constructor.
      *
-     * @param EntityManager     $em
-     * @param string            $class
-     * @param string            $metaClass
-     * @param MessageManager    $messageManager
+     * @param EntityManager  $em
+     * @param string         $class
+     * @param string         $metaClass
+     * @param MessageManager $messageManager
      */
     public function __construct(EntityManager $em, $class, $metaClass, MessageManager $messageManager)
     {
@@ -66,9 +66,11 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds a thread by its ID
+     * Finds a thread by its unique id
      *
-     * @return ThreadInterface or null
+     * @param string $id The unique id
+     *
+     * @return ThreadInterface|null
      */
     public function findThreadById($id)
     {
@@ -82,6 +84,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
@@ -106,8 +109,7 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('tm.lastMessageDate IS NOT NULL')
 
             // sort by date of last message written by an other participant
-            ->orderBy('tm.lastMessageDate', 'DESC')
-        ;
+            ->orderBy('tm.lastMessageDate', 'DESC');
     }
 
     /**
@@ -117,7 +119,8 @@ class ThreadManager extends BaseThreadManager
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     *
+     * @return ThreadInterface[] An array of threadInterfaces
      */
     public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
@@ -133,6 +136,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
@@ -157,8 +161,7 @@ class ThreadManager extends BaseThreadManager
             ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
 
             // sort by date of last message written by this participant
-            ->orderBy('tm.lastParticipantMessageDate', 'DESC')
-        ;
+            ->orderBy('tm.lastParticipantMessageDate', 'DESC');
     }
 
     /**
@@ -168,7 +171,8 @@ class ThreadManager extends BaseThreadManager
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     *
+     * @return ThreadInterface[] An array of threadInterfaces
      */
     public function findParticipantSentThreads(ParticipantInterface $participant)
     {
@@ -195,8 +199,7 @@ class ThreadManager extends BaseThreadManager
             ->setParameter('isDeleted', true, \PDO::PARAM_BOOL)
 
             // sort by date of last message
-            ->orderBy('tm.lastMessageDate', 'DESC')
-        ;
+            ->orderBy('tm.lastMessageDate', 'DESC');
     }
 
     /**
@@ -215,7 +218,8 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message not written by this participant in reverse order.
      *
      * @param ParticipantInterface $participant
-     * @param string $search
+     * @param string               $search
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
@@ -234,8 +238,9 @@ class ThreadManager extends BaseThreadManager
      * ordered by last message not written by this participant in reverse order.
      *
      * @param ParticipantInterface $participant
-     * @param string $search
-     * @return array of ThreadInterface
+     * @param string               $search
+     *
+     * @return ThreadInterface[] An array of thread interfaces
      */
     public function findParticipantThreadsBySearch(participantinterface $participant, $search)
     {
@@ -248,7 +253,8 @@ class ThreadManager extends BaseThreadManager
      * Gets threads created by a participant
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     *
+     * @return ThreadInterface[]
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {
@@ -269,34 +275,33 @@ class ThreadManager extends BaseThreadManager
      * We want to show the unread readables on the page,
      * as well as marking the as read.
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, true);
+        $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, true);
     }
 
     /**
      * Marks the readable as unread by this participant
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $participant
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
-        return $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, false);
+        $this->messageManager->markIsReadByThreadAndParticipant($readable, $participant, false);
     }
 
     /**
      * Saves a thread
      *
-     * @param ThreadInterface $thread
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * @param ThreadInterface $thread   The thread we want to save
+     * @param Boolean         $andFlush Whether to flush the changes (default true)
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
-        $this->denormalize($thread);
         $this->em->persist($thread);
         if ($andFlush) {
             $this->em->flush();
@@ -322,95 +327,5 @@ class ThreadManager extends BaseThreadManager
     public function getClass()
     {
         return $this->class;
-    }
-
-    /**
-     * DENORMALIZATION
-     *
-     * All following methods are relative to denormalization
-     */
-
-    /**
-     * Performs denormalization tricks
-     */
-    protected function denormalize(ThreadInterface $thread)
-    {
-        $this->doMetadata($thread);
-        $this->doCreatedByAndAt($thread);
-        $this->doDatesOfLastMessageWrittenByOtherParticipant($thread);
-    }
-
-    /**
-     * Ensures that the thread metadata are up to date
-     */
-    protected function doMetadata(ThreadInterface $thread)
-    {
-        // Participants
-        foreach ($thread->getParticipants() as $participant) {
-            $meta = $thread->getMetadataForParticipant($participant);
-            if (!$meta) {
-                $meta = $this->createThreadMetadata();
-                $meta->setParticipant($participant);
-
-                $thread->addMetadata($meta);
-            }
-        }
-
-        // Messages
-        foreach ($thread->getMessages() as $message) {
-            $meta = $thread->getMetadataForParticipant($message->getSender());
-            if (!$meta) {
-                $meta = $this->createThreadMetadata();
-                $meta->setParticipant($message->getSender());
-                $thread->addMetadata($meta);
-            }
-
-            $meta->setLastParticipantMessageDate($message->getCreatedAt());
-        }
-    }
-
-    /**
-     * Ensures that the createdBy & createdAt properties are set
-     */
-    protected function doCreatedByAndAt(ThreadInterface $thread)
-    {
-        if (!($message = $thread->getFirstMessage())) {
-            return;
-        }
-
-        if (!$thread->getCreatedAt()) {
-            $thread->setCreatedAt($message->getCreatedAt());
-        }
-
-        if (!$thread->getCreatedBy()) {
-            $thread->setCreatedBy($message->getSender());
-        }
-    }
-
-    /**
-     * Update the dates of last message written by other participants
-     */
-    protected function doDatesOfLastMessageWrittenByOtherParticipant(ThreadInterface $thread)
-    {
-        foreach ($thread->getAllMetadata() as $meta) {
-            $participantId = $meta->getParticipant()->getId();
-            $timestamp = 0;
-
-            foreach ($thread->getMessages() as $message) {
-                if ($participantId != $message->getSender()->getId()) {
-                    $timestamp = max($timestamp, $message->getTimestamp());
-                }
-            }
-            if ($timestamp) {
-                $date = new \DateTime();
-                $date->setTimestamp($timestamp);
-                $meta->setLastMessageDate($date);
-            }
-        }
-    }
-
-    protected function createThreadMetadata()
-    {
-        return new $this->metaClass();
     }
 }

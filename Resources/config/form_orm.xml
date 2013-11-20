@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="fos_message.new_thread_form.handler.default" class="FOS\MessageBundle\FormHandler\Orm\NewThreadFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_message.new_thread_builder" />
+            <argument type="service" id="fos_message.actions_manager" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_message.participant_provider" />
+        </service>
+
+        <service id="fos_message.reply_form.handler.default" class="FOS\MessageBundle\FormHandler\Orm\ReplyThreadFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_message.reply_builder" />
+            <argument type="service" id="fos_message.actions_manager" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_message.participant_provider" />
+        </service>
+
+        <service id="fos_message.new_thread_multiple_form.handler" class="FOS\MessageBundle\FormHandler\Orm\NewThreadMultipleRecipientsFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_message.new_thread_builder" />
+            <argument type="service" id="fos_message.actions_manager" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_message.participant_provider" />
+        </service>
+
+    </services>
+
+</container>
