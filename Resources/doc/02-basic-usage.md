@@ -102,7 +102,7 @@ Nothing's easier than sending the message you've just composed::
     $sender = $container->get('fos_message.sender');
 
     $sender->send($message);
-```php
+```
 
 Number of Unread Messages
 -------------------------
