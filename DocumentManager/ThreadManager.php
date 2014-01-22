@@ -146,7 +146,7 @@ class ThreadManager extends BaseThreadManager
     {
         return $this->repository->createQueryBuilder()
             ->field('metadata.isDeleted')->equals(true)
-            ->field('metadata.participantId')->equals($participant->getId())
+            ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()))
             ->sort('lastMessageDate', 'desc');
     }
 
