@@ -1,6 +1,7 @@
 messenger:      Wiadomości
 inbox:          Skrzynka Odbiorcza
 sent:           Wysłane
+deleted:        Usunięte
 send_new:       Wyślij nową wiadomość
 search:         Szukaj
 threads_found:  Znaleziono %num% wątek | Znaleziono %num% wątki | Znaleziono %num% wątków
@@ -20,3 +21,4 @@ on:             data %date%
 by:             Od %sender%
 no_thread:      Brak wiadomości do wyświetlenia
 delete:         Usuń
+undelete:       Przywróć
