@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\SpamDetection;
 
-use FOS\AkismetBundle\Akismet\AkismetInterface;
+use Ornicar\AkismetBundle\Akismet\AkismetInterface;
 use FOS\MessageBundle\FormModel\NewThreadMessage;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
