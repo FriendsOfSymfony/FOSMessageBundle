@@ -16,9 +16,9 @@ class NewThreadMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', 'fos_user_username')
-            ->add('subject', 'text')
-            ->add('body', 'textarea');
+            ->add('recipient', 'fos_user_username', array('label' => 'recipient', 'translation_domain' => 'FOSMessageBundle'))
+            ->add('subject', 'text', array('label' => 'subject', 'translation_domain' => 'FOSMessageBundle'))
+            ->add('body', 'textarea', array('label' => 'body', 'translation_domain' => 'FOSMessageBundle'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

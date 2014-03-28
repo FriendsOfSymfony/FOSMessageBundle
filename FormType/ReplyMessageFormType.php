@@ -16,7 +16,7 @@ class ReplyMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('body', 'textarea');
+            ->add('body', 'textarea', array('label' => 'body', 'translation_domain' => 'FOSMessageBundle'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
