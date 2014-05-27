@@ -91,7 +91,7 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
-            ->innerJoin ->innerJoin('m.metadata', 'mm')
+            ->innerJoin('m.metadata', 'mm')
 
             // the participant is in the thread participants
             ->andWhere('p.id = :user_id')
@@ -145,7 +145,7 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
-            ->innerJoin ->innerJoin('m.metadata', 'mm')
+            ->innerJoin('m.metadata', 'mm')
 
 
             // the participant is in the thread participants
@@ -194,7 +194,7 @@ class ThreadManager extends BaseThreadManager
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
-            ->innerJoin ->innerJoin('m.metadata', 'mm')
+            ->innerJoin('m.metadata', 'mm')
 
 
             // the participant is in the thread participants
