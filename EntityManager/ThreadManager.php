@@ -87,7 +87,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->select('t, tm, p, m, mm')
+            ->select('t', 'tm', 'p', 'm', 'mm')
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
@@ -141,7 +141,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->select('t, tm, p, m, mm')
+            ->select('t', 'tm', 'p', 'm', 'mm')
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
@@ -190,7 +190,7 @@ class ThreadManager extends BaseThreadManager
     public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant)
     {
         return $this->repository->createQueryBuilder('t')
-            ->select('t, tm, p, m, mm')
+            ->select('t', 'tm', 'p', 'm', 'mm')
             ->innerJoin('t.metadata', 'tm')
             ->innerJoin('tm.participant', 'p')
             ->innerJoin('t.messages', 'm')
