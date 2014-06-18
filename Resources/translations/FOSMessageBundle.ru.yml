@@ -1,6 +1,7 @@
-messenger:      Мессенджер
+messenger:      Сообщения
 inbox:          Входящие
 sent:           Отправленные
+deleted:        Удаленные
 send_new:       Отправить новое сообщение
 search:         Поиск
 threads_found:  найдена %num% цепочка сообщений | найдено %num% цепочки сообщений | найдено %num% цепочек сообщений
@@ -9,7 +10,7 @@ message_info:   От %sender%, %date%
 reply:          Ответить
 
 subject:        Тема
-starter:        Инициатор
+starter:        Отправитель
 startdate:      Дата начала
 messages:       Сообщения
 last_message:   Последнее сообщение
@@ -18,4 +19,6 @@ new:            Новое
 goto_last:      К последнему сообщению
 on:             Дата %date%
 by:             От %sender%
-no_thread:      Нет сообщений для отображения
+no_thread:      Нет цепочек для отображения
+delete:         Удалить
+undelete:       Восстановить
