@@ -23,6 +23,7 @@ class ReplyMessageFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'intention'  => 'reply',
+            'translation_domain' => 'FOSMessageBundle',
         ));
     }
 
