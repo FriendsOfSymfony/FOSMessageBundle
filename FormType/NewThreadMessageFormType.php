@@ -25,6 +25,7 @@ class NewThreadMessageFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'intention'  => 'message',
+            'translation_domain' => 'FOSMessageBundle',
         ));
     }
 
