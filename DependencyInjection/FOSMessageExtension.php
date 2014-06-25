@@ -65,5 +65,10 @@ class FOSMessageExtension extends Extension
 
         $container->getDefinition('fos_message.recipients_data_transformer')
             ->replaceArgument(0, new Reference($config['user_transformer']));
+
+        if ($config['flash_messages']['enabled']) {
+            $container->setParameter('fos_message.flash_messages_key', $config['flash_messages']['flash_key']);
+            $loader->load('flash.xml');
+        }
     }
 }
