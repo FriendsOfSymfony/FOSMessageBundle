@@ -1,6 +1,8 @@
 FOSMessageBundle
 ================
 
+> This bundle does not currently have an active maintainer. https://github.com/FriendsOfSymfony/FOSMessageBundle/issues/229
+
 This bundle provides messaging features for a Symfony2 application. Features available include:
 
 - Support for both the Doctrine ORM and ODM for message storage
