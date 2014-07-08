@@ -3,6 +3,8 @@ namespace FOS\MessageBundle\FormType;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 /**
  * Message form type for starting a new conversation with multiple recipients
  *
@@ -21,5 +23,12 @@ class NewThreadMultipleMessageFormType extends AbstractType
     public function getName()
     {
         return 'fos_message_new_multiperson_thread';
+    }
+    
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'translation_domain' => 'FOSMessageBundle',
+        ));
     }
 }
