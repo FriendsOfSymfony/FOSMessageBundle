@@ -22,3 +22,6 @@ by:             By %sender%
 no_thread:      There is no thread to show
 delete:         Delete
 undelete:       Undelete
+recipient:      Recipient
+recipients:     Recipients
+body:           Body

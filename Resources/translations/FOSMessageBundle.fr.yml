@@ -22,3 +22,6 @@ by:             De %sender%
 no_thread:      Aucune conversation
 delete:         Supprimer
 undelete:       Restaurer
+recipient:      Destinataire
+recipients:     Destinataires
+body:           Corps
