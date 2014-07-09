@@ -24,8 +24,8 @@
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="max">255</option>
-                <option name="minMessage">fos_message.subject.too_short</option>
-                <option name="maxMessage">fos_message.subject.too_long</option>
+                <option name="minMessage">fos_message.subject.short</option>
+                <option name="maxMessage">fos_message.subject.long</option>
             </constraint>
         </property>
 
@@ -35,7 +35,7 @@
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">fos_message.body.too_short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
     </class>
@@ -62,8 +62,8 @@
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="max">255</option>
-                <option name="minMessage">fos_message.subject.too_short</option>
-                <option name="maxMessage">fos_message.subject.too_long</option>
+                <option name="minMessage">fos_message.subject.short</option>
+                <option name="maxMessage">fos_message.subject.long</option>
             </constraint>
         </property>
 
@@ -73,7 +73,7 @@
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">fos_message.body.too_short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
 
@@ -89,7 +89,7 @@
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">fos_message.body.too_short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
 

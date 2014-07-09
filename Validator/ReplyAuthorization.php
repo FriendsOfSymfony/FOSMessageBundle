@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class ReplyAuthorization extends Constraint
 {
-    public $message = 'fos_message.authorization.not_authorized';
+    public $message = 'fos_message.not_authorized';
 
     public function validatedBy()
     {
