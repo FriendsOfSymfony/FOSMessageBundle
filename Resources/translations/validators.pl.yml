@@ -12,5 +12,6 @@ fos_message:
     short: Treść jest za krótka
     spam: Przykro mi, Twoja wiadomość wygląda jak spam
   not_authorized: Nie masz uprawnień, aby wysłać tą wiadomość
+  reply_not_authorized: Nie masz uprawnień, aby odpowiadać na tą wiadomość
   self_recipient: Nie możesz wysyłać wiadomości do siebie
 
