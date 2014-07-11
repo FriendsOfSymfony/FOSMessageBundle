@@ -13,4 +13,4 @@ fos_message:
     spam: Il semble que votre message soit du SPAM, il n'a pas été envoyé
   not_authorized: Vous n'avez pas le droit d'envoyer ce message
   reply_not_authorized: Vous n'avez pas de droit de répondre dans cette discussion
-  self_recipient: VOus ne pouvez vous envoyer à vous-même un message
+  self_recipient: Vous ne pouvez vous envoyer à vous-même un message
