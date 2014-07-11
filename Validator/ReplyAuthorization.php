@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class ReplyAuthorization extends Constraint
 {
-    public $message = 'You are not allowed to reply to this message';
+    public $message = 'fos_message.reply_not_authorized';
 
     public function validatedBy()
     {

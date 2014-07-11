@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class Spam extends Constraint
 {
-    public $message = 'Sorry, your message looks like spam';
+    public $message = 'fos_user.body.spam';
 
     public function validatedBy()
     {

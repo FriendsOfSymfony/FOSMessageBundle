@@ -10,7 +10,7 @@
                 <constraint name="FOS\MessageBundle\Validator\Authorization" />
                 <constraint name="FOS\MessageBundle\Validator\SelfRecipient" />
                 <constraint name="NotBlank">
-                    <option name="message">No recipient specified</option>
+                    <option name="message">fos_message.recipients.blank</option>
                 </constraint>
                 <constraint name="Type">
                     <option name="type">FOS\MessageBundle\Model\ParticipantInterface</option>
@@ -19,23 +19,23 @@
         </property>
         <property name="subject">
             <constraint name="NotBlank">
-                <option name="message">Please enter a subject</option>
+                <option name="message">fos_message.subject.blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="max">255</option>
-                <option name="minMessage">The subject is too short|The subject is too short</option>
-                <option name="maxMessage">The subject is too long|The subject is too long</option>
+                <option name="minMessage">fos_message.subject.short</option>
+                <option name="maxMessage">fos_message.subject.long</option>
             </constraint>
         </property>
 
         <property name="body">
             <constraint name="NotBlank">
-                <option name="message">Please enter a body</option>
+                <option name="message">fos_message.body.blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">The body is too short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
     </class>
@@ -48,7 +48,7 @@
             <constraint name="FOS\MessageBundle\Validator\Authorization" />
             <constraint name="FOS\MessageBundle\Validator\SelfRecipient" />
             <constraint name="NotBlank">
-                <option name="message">No user with that username</option>
+                <option name="message">fos_message.recipient.blank</option>
             </constraint>
             <constraint name="Type">
                 <option name="type">FOS\MessageBundle\Model\ParticipantInterface</option>
@@ -57,23 +57,23 @@
 
         <property name="subject">
             <constraint name="NotBlank">
-                <option name="message">Please enter a subject</option>
+                <option name="message">fos_message.subject.blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
                 <option name="max">255</option>
-                <option name="minMessage">The subject is too short|The subject is too short</option>
-                <option name="maxMessage">The subject is too long|The subject is too long</option>
+                <option name="minMessage">fos_message.subject.short</option>
+                <option name="maxMessage">fos_message.subject.long</option>
             </constraint>
         </property>
 
         <property name="body">
             <constraint name="NotBlank">
-                <option name="message">Please enter a body</option>
+                <option name="message">fos_message.body.blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">The body is too short|The body is too short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
 
@@ -85,11 +85,11 @@
 
         <property name="body">
             <constraint name="NotBlank">
-                <option name="message">Please enter a body</option>
+                <option name="message">fos_message.body.blank</option>
             </constraint>
             <constraint name="Length">
                 <option name="min">2</option>
-                <option name="minMessage">The body is too short|The body is too short</option>
+                <option name="minMessage">fos_message.body.short</option>
             </constraint>
         </property>
 

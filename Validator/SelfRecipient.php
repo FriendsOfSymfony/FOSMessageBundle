@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class SelfRecipient extends Constraint
 {
-    public $message = 'You cannot send a message to yourself';
+    public $message = 'fos_message.self_recipient';
 
     public function validatedBy()
     {
