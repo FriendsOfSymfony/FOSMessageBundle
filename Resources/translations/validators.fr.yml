@@ -1,0 +1,16 @@
+fos_message:
+  recipient:
+    blank: Pas de destinataire spécifié
+  recipients:
+    blank: Pas de destinataires spécifié
+  subject:
+    blank: Vous devez entrer un sujet
+    too_short: Le sujet est trop court|Le sujet est trop court
+    too_long: Le sujet est trop long|Le sujet est trop long
+  body:
+    blank: Vous devez entrer un message
+    too_short: Le message est trop court
+    spam: Il semble que votre message soit du SPAM, il n'a pas été envoyé
+  not_authorized: Vous n'avez pas le droit d'envoyer ce message
+  reply_not_authorized: Vous n'avez pas de droit de répondre dans cette discussion
+  self_recipient: VOus ne pouvez vous envoyer à vous-même un message
