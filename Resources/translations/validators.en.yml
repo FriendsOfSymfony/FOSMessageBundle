@@ -5,11 +5,11 @@ fos_message:
     blank: No recipients specified
   subject:
     blank: Please enter a subject
-    too_short: The subject is too short|The subject is too short
-    too_long: The subject is too long|The subject is too long
+    short: The subject is too short|The subject is too short
+    long: The subject is too long|The subject is too long
   body:
     blank: Please enter a body
-    too_short: The body is too short
+    short: The body is too short
     spam: Sorry, your message looks like spam
   not_authorized: You are not allowed to send this message
   reply_not_authorized: You are not allowed to reply to this message
