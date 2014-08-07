@@ -1,0 +1,27 @@
+messenger:      نظام مراسلة
+inbox:          صندوق الوارد
+sent:           المرسلة
+deleted:        المحذوفة
+send_new:       إنشاء رسالة
+search:         بحث
+threads_found:  {0} لا يوجد نتائج مطابقة | {1} نتيجة واحدة مطابقة| ]1,Inf] %num% نتائج مطابقة
+
+message_info:   من %sender%, في %date%
+reply:          رد
+
+subject:        العنوان
+starter:        البادئ
+startdate:      تاريخ الإنشاء
+messages:       رسائل
+last_message:   أخر رسالة
+actions:        الإجراءات
+new:            جديد
+goto_last:      الذهاب لأخر رسالة
+on:             في %date%
+by:             من %sender%
+no_thread:      لا يوجد أي محادثات
+delete:         حذف
+undelete:       استعادة
+recipient:      المرسل إليه
+recipients:     المرسل إليهم
+body:           المحتوى
