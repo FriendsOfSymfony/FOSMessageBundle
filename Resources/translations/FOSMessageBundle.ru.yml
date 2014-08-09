@@ -22,3 +22,6 @@ by:             От %sender%
 no_thread:      Нет цепочек для отображения
 delete:         Удалить
 undelete:       Восстановить
+recipient:      Кому
+recipients:     Кому
+body:           Сообщение
