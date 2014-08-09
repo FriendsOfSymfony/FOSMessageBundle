@@ -4,7 +4,7 @@ sent:           المرسلة
 deleted:        المحذوفة
 send_new:       إنشاء رسالة
 search:         بحث
-threads_found:  {0} لا يوجد نتائج مطابقة | {1} نتيجة واحدة مطابقة| ]1,Inf] %num% نتائج مطابقة
+threads_found:  "{0} لا يوجد نتائج مطابقة | {1} نتيجة واحدة مطابقة| ]1,Inf] %num% نتائج مطابقة"
 
 message_info:   من %sender%, في %date%
 reply:          رد
