@@ -22,3 +22,6 @@ by:             Od %sender%
 no_thread:      Brak wiadomości do wyświetlenia
 delete:         Usuń
 undelete:       Przywróć
+recipient:      Odbiorca
+recipients:     Odbiorcy
+body:           Treść
