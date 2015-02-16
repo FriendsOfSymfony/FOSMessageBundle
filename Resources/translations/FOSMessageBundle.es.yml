@@ -1,6 +1,7 @@
 messenger: Mensajes
 inbox: Carpeta de entrada
 sent: Enviado
+deleted: Eliminados
 send_new: Enviar nuevo mensaje
 search: Buscar
 threads_found: %num% hilo encontrado | %num% hilos encontrados
@@ -20,3 +21,7 @@ on: En %date%
 by: Por %sender%
 no_thread: No hay hilos que mostrar
 delete: Eliminar
+undelete: Restaurar
+recipient: Destinatario
+recipients: Destinatario
+body: Cuerpo
