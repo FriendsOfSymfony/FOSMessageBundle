@@ -48,7 +48,7 @@ abstract class AbstractMessageBuilder
 
     /**
      * @param  string
-     * @return MessageBuilder (fluent interface)
+     * @return AbstractMessageBuilder (fluent interface)
      */
     public function setBody($body)
     {
@@ -59,7 +59,7 @@ abstract class AbstractMessageBuilder
 
     /**
      * @param  ParticipantInterface $sender
-     * @return MessageBuilder (fluent interface)
+     * @return AbstractMessageBuilder (fluent interface)
      */
     public function setSender(ParticipantInterface $sender)
     {
