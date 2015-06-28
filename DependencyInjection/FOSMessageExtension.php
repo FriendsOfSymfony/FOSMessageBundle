@@ -34,6 +34,10 @@ class FOSMessageExtension extends Extension
 
         $container->setParameter('fos_message.new_thread_form.model', $config['new_thread_form']['model']);
         $container->setParameter('fos_message.new_thread_form.name', $config['new_thread_form']['name']);
+
+        $container->setParameter('fos_message.new_thread_multiple_form.model', $config['new_thread_multiple_form']['model']);
+        $container->setParameter('fos_message.new_thread_multiple_form.name', $config['new_thread_multiple_form']['name']);
+
         $container->setParameter('fos_message.reply_form.model', $config['reply_form']['model']);
         $container->setParameter('fos_message.reply_form.name', $config['reply_form']['name']);
 
@@ -54,6 +58,11 @@ class FOSMessageExtension extends Extension
         $container->setAlias('fos_message.new_thread_form.type', $config['new_thread_form']['type']);
         $container->setAlias('fos_message.new_thread_form.factory', $config['new_thread_form']['factory']);
         $container->setAlias('fos_message.new_thread_form.handler', $config['new_thread_form']['handler']);
+
+        $container->setAlias('fos_message.new_thread_multiple_form.type', $config['new_thread_multiple_form']['type']);
+        $container->setAlias('fos_message.new_thread_multiple_form.factory', $config['new_thread_multiple_form']['factory']);
+        $container->setAlias('fos_message.new_thread_multiple_form.handler', $config['new_thread_multiple_form']['handler']);
+
         $container->setAlias('fos_message.reply_form.type', $config['reply_form']['type']);
         $container->setAlias('fos_message.reply_form.factory', $config['reply_form']['factory']);
         $container->setAlias('fos_message.reply_form.handler', $config['reply_form']['handler']);
