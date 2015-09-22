@@ -18,6 +18,20 @@ fos_message:
     message_class: Acme\MessageBundle\Document\Message
 ```
 
+You may have to include the MessageBundle in your Doctrine mapping configuration,
+along with the bundle containing your custom Thread and Message classes:
+
+```yaml
+# app/config/config.yml
+
+doctrine_mongodb:
+    document_managers:
+        default:
+            mappings:
+                FOSMessageBundle: ~
+```
+
+
 [Continue with the installation][]
 
 Message class
