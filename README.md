@@ -2,8 +2,8 @@ FOSMessageBundle
 ================
 
 > A maintainer has been found for this bundle but a new version is being rewritten from scratch.
-> This version (1.2) is maintained for bugs and issues but no features will be added: you
-> should wait for the new version to use it in a new project.
+> This version (1.2) is maintained for bugs and issues but no features will be added. If you need more
+> features, don't hesitate to propose them in the library.
 >
 > [Read more in the new library repository](https://github.com/FriendsOfSymfony/FOSMessage)
 
