@@ -18,7 +18,7 @@ This is probably all you will need in many cases.
 To compose a message we retrieve the composer service and compose our message:
 
 ```php
-    $sender = $this->get('security.context')->getToken()->getUser();
+    $sender = $this->get('security.token_storage')->getToken()->getUser();
     $threadBuilder = $this->get('fos_message.composer')->newThread();
     $threadBuilder
         ->addRecipient($recipient) // Retrieved from your backend, your user manager or ...

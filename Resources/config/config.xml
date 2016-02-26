@@ -18,7 +18,7 @@
         </service>
 
         <service id="fos_message.participant_provider.default" class="FOS\MessageBundle\Security\ParticipantProvider" public="false">
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.token_storage" />
         </service>
 
         <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\Authorizer" public="false">
