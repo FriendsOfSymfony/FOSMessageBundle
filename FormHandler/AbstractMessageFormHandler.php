@@ -2,13 +2,14 @@
 
 namespace FOS\MessageBundle\FormHandler;
 
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\Request;
 use FOS\MessageBundle\Composer\ComposerInterface;
 use FOS\MessageBundle\FormModel\AbstractMessage;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Sender\SenderInterface;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Handles messages forms, from binding request to sending the message
@@ -22,11 +23,11 @@ abstract class AbstractMessageFormHandler
     protected $sender;
     protected $participantProvider;
 
-    public function __construct(Request $request, ComposerInterface $composer, SenderInterface $sender, ParticipantProviderInterface $participantProvider)
+    public function __construct(RequestStack $requestStack, ComposerInterface $composer, SenderInterface $sender, ParticipantProviderInterface $participantProvider)
     {
-        $this->request = $request;
-        $this->composer = $composer;
-        $this->sender = $sender;
+        $this->request             = $requestStack->getCurrentRequest();
+        $this->composer            = $composer;
+        $this->sender              = $sender;
         $this->participantProvider = $participantProvider;
     }
 

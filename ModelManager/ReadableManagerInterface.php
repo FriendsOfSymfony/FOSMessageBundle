@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\ModelManager;
 
-use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
 
 /**
  * Capable of updating the read state of objects directly in the storage,

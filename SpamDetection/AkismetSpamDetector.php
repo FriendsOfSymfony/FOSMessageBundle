@@ -2,9 +2,9 @@
 
 namespace FOS\MessageBundle\SpamDetection;
 
-use Ornicar\AkismetBundle\Akismet\AkismetInterface;
 use FOS\MessageBundle\FormModel\NewThreadMessage;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use Ornicar\AkismetBundle\Akismet\AkismetInterface;
 
 class AkismetSpamDetector implements SpamDetectorInterface
 {

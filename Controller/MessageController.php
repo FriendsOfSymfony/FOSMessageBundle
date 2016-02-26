@@ -2,10 +2,10 @@
 
 namespace FOS\MessageBundle\Controller;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use FOS\MessageBundle\Provider\ProviderInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use FOS\MessageBundle\Provider\ProviderInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class MessageController extends ContainerAware
 {

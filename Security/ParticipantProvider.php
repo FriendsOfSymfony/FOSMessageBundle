@@ -2,9 +2,9 @@
 
 namespace FOS\MessageBundle\Security;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Provides the authenticated participant

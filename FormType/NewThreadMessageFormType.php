@@ -3,8 +3,10 @@
 namespace FOS\MessageBundle\FormType;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Message form type for starting a new conversation
@@ -17,18 +19,18 @@ class NewThreadMessageFormType extends AbstractType
     {
         $builder
             ->add('recipient', 'fos_user_username', array('label' => 'recipient', 'translation_domain' => 'FOSMessageBundle'))
-            ->add('subject', 'text', array('label' => 'subject', 'translation_domain' => 'FOSMessageBundle'))
-            ->add('body', 'textarea', array('label' => 'body', 'translation_domain' => 'FOSMessageBundle'));
+            ->add('subject', TextType::class, array('label' => 'subject', 'translation_domain' => 'FOSMessageBundle'))
+            ->add('body', TextareaType::class, array('label' => 'body', 'translation_domain' => 'FOSMessageBundle'));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'intention'  => 'message',
         ));
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'fos_message_new_thread';
     }

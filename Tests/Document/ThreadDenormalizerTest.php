@@ -3,9 +3,9 @@
 namespace FOS\MessageBundle\Document;
 
 use DateTime;
-use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
 {
