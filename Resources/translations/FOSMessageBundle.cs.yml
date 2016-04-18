@@ -4,7 +4,7 @@ sent:           Odeslané
 deleted:        Smazané
 send_new:       Poslat novou zprávu
 search:         Hledat
-threads_found:  {1}Nalezena %num% konverzace s|[2,4]Nalezeny %num% konverzace s|[5,Inf]Nalezeno %count% konverzací s
+threads_found:  "{1}Nalezena %num% konverzace s|[2,4]Nalezeny %num% konverzace s|[5,Inf]Nalezeno %count% konverzací s"
 
 message_info:   Od %sender% z %date%
 reply:          Odpovědět
