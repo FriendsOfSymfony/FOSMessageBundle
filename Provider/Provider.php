@@ -2,13 +2,13 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\ModelManager\MessageManagerInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\Reader\ReaderInterface;
+use FOS\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
-use FOS\MessageBundle\Security\AuthorizerInterface;
-use FOS\MessageBundle\Reader\ReaderInterface;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
-use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 
 /**
  * Provides threads for the current authenticated user

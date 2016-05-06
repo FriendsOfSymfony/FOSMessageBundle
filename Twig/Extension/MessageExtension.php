@@ -2,11 +2,11 @@
 
 namespace FOS\MessageBundle\Twig\Extension;
 
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
-use FOS\MessageBundle\Provider\ProviderInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Provider\ProviderInterface;
 use FOS\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 class MessageExtension extends \Twig_Extension
 {

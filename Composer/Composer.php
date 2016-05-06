@@ -2,12 +2,12 @@
 
 namespace FOS\MessageBundle\Composer;
 
-use FOS\MessageBundle\ModelManager\MessageManagerInterface;
-use FOS\MessageBundle\Sender\SenderInterface;
-use FOS\MessageBundle\Model\ThreadInterface;
-use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
 use FOS\MessageBundle\MessageBuilder\ReplyMessageBuilder;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\MessageManagerInterface;
+use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
+use FOS\MessageBundle\Sender\SenderInterface;
 
 /**
  * Factory for message builders

@@ -3,6 +3,7 @@
 namespace FOS\MessageBundle\Search;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Gets the search term from the request and prepares it
@@ -12,7 +13,7 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * @var Request
      */
-    protected $request = null;
+    protected $request;
 
     /**
      * the query parameter containing the search term
@@ -24,12 +25,12 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * Instanciates a new TermGetter
      *
-     * @param Request $request
+     * @param RequestStack $requestStack
      * @param string $queryParameter
      */
-    public function __construct(Request $request, $queryParameter)
+    public function __construct(RequestStack $requestStack, $queryParameter)
     {
-        $this->request = $request;
+        $this->request        = $requestStack->getCurrentRequest();
         $this->queryParameter = $queryParameter;
     }
 

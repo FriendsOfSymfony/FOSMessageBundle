@@ -2,10 +2,10 @@
 
 namespace FOS\MessageBundle\Security;
 
-use FOS\MessageBundle\Model\ThreadInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Manages permissions to manipulate threads and messages
