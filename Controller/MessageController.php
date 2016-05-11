@@ -13,7 +13,7 @@ class MessageController implements ContainerAwareInterface
     /**
      * @var ContainerInterface
      */
-    private $container;
+    protected $container;
 
     /**
      * {@inheritDoc}
