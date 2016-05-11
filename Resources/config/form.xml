@@ -6,22 +6,18 @@
 
     <services>
 
-        <service id="fos_message.new_thread_form.type.default" class="FOS\MessageBundle\FormType\NewThreadMessageFormType" public="false" />
-
         <service id="fos_message.new_thread_multiple_form.type" class="FOS\MessageBundle\FormType\NewThreadMultipleMessageFormType" public="false" />
-
-        <service id="fos_message.reply_form.type.default" class="FOS\MessageBundle\FormType\ReplyMessageFormType" public="false" />
 
         <service id="fos_message.new_thread_form.factory.default" class="FOS\MessageBundle\FormFactory\NewThreadMessageFormFactory" public="false">
             <argument type="service" id="form.factory" />
-            <argument type="service" id="fos_message.new_thread_form.type" />
+            <argument>%fos_message.new_thread_form.class%</argument>
             <argument>%fos_message.new_thread_form.name%</argument>
             <argument>%fos_message.new_thread_form.model%</argument>
         </service>
 
         <service id="fos_message.reply_form.factory.default" class="FOS\MessageBundle\FormFactory\ReplyMessageFormFactory" public="false">
             <argument type="service" id="form.factory" />
-            <argument type="service" id="fos_message.reply_form.type" />
+            <argument>%fos_message.reply_form.class%</argument>
             <argument>%fos_message.reply_form.name%</argument>
             <argument>%fos_message.reply_form.model%</argument>
         </service>
