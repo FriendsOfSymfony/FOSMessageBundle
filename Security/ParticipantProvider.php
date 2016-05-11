@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\Security;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
@@ -14,15 +14,15 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 class ParticipantProvider implements ParticipantProviderInterface
 {
     /**
-     * The security context
+     * The token storage
      *
-     * @var SecurityContextInterface
+     * @var TokenStorageInterface
      */
-    protected $securityContext;
+    protected $tokenStorage;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(TokenStorageInterface $tokenStorage)
     {
-        $this->securityContext = $securityContext;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -32,7 +32,7 @@ class ParticipantProvider implements ParticipantProviderInterface
      */
     public function getAuthenticatedParticipant()
     {
-        $participant = $this->securityContext->getToken()->getUser();
+        $participant = $this->tokenStorage->getToken()->getUser();
 
         if (!$participant instanceof ParticipantInterface) {
             throw new AccessDeniedException('Must be logged in with a ParticipantInterface instance');
