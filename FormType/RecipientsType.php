@@ -4,7 +4,7 @@ namespace FOS\MessageBundle\FormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
 /**
@@ -38,7 +38,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'invalid_message' => 'The selected recipient does not exist',
