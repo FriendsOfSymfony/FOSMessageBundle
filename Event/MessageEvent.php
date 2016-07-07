@@ -2,10 +2,10 @@
 
 namespace FOS\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\EventDispatcher\Event;
 use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class MessageEvent extends ThreadEvent
 {

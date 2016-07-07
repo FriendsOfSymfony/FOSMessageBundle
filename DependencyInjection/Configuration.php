@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
@@ -51,7 +51,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('factory')->defaultValue('fos_message.new_thread_form.factory.default')->cannotBeEmpty()->end()
-                        ->scalarNode('type')->defaultValue('fos_message.new_thread_form.type.default')->cannotBeEmpty()->end()
+                        ->scalarNode('class')->defaultValue('FOS\MessageBundle\FormType\NewThreadMessageFormType')->cannotBeEmpty()->end()
                         ->scalarNode('handler')->defaultValue('fos_message.new_thread_form.handler.default')->cannotBeEmpty()->end()
                         ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
                         ->scalarNode('model')->defaultValue('FOS\MessageBundle\FormModel\NewThreadMessage')->end()
@@ -61,7 +61,7 @@ class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('factory')->defaultValue('fos_message.reply_form.factory.default')->cannotBeEmpty()->end()
-                        ->scalarNode('type')->defaultValue('fos_message.reply_form.type.default')->cannotBeEmpty()->end()
+                        ->scalarNode('class')->defaultValue('FOS\MessageBundle\FormType\ReplyMessageFormType')->cannotBeEmpty()->end()
                         ->scalarNode('handler')->defaultValue('fos_message.reply_form.handler.default')->cannotBeEmpty()->end()
                         ->scalarNode('name')->defaultValue('message')->cannotBeEmpty()->end()
                         ->scalarNode('model')->defaultValue('FOS\MessageBundle\FormModel\ReplyMessage')->end()

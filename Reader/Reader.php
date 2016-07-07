@@ -2,11 +2,11 @@
 
 namespace FOS\MessageBundle\Reader;
 
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
-use FOS\MessageBundle\Model\ReadableInterface;
-use FOS\MessageBundle\ModelManager\ReadableManagerInterface;
 use FOS\MessageBundle\Event\FOSMessageEvents;
 use FOS\MessageBundle\Event\ReadableEvent;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\ModelManager\ReadableManagerInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
