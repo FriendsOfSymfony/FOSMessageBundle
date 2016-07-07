@@ -2,11 +2,11 @@
 namespace FOS\MessageBundle\FormType;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Description of RecipientsType

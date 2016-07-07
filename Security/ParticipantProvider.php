@@ -13,7 +13,11 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  */
 class ParticipantProvider implements ParticipantProviderInterface
 {
-    /** @var  TokenStorageInterface */
+    /**
+     * The token storage
+     *
+     * @var TokenStorageInterface
+     */
     protected $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)

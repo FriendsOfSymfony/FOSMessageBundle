@@ -2,14 +2,28 @@
 
 namespace FOS\MessageBundle\Controller;
 
-use FOS\MessageBundle\Provider\ProviderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use FOS\MessageBundle\Provider\ProviderInterface;
+use Symfony\Component\HttpFoundation\Response;
 
-class MessageController extends Controller
+class MessageController implements ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Displays the authenticated participant inbox
      *
@@ -56,7 +70,7 @@ class MessageController extends Controller
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id
-     * 
+     *
      * @return Response
      */
     public function threadAction($threadId)
@@ -101,9 +115,9 @@ class MessageController extends Controller
 
     /**
      * Deletes a thread
-     * 
+     *
      * @param string $threadId the thread id
-     * 
+     *
      * @return RedirectResponse
      */
     public function deleteAction($threadId)
@@ -114,12 +128,12 @@ class MessageController extends Controller
 
         return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
     }
-    
+
     /**
      * Undeletes a thread
-     * 
+     *
      * @param string $threadId
-     * 
+     *
      * @return RedirectResponse
      */
     public function undeleteAction($threadId)
