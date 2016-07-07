@@ -2,9 +2,8 @@
 
 namespace FOS\MessageBundle\FormFactory;
 
-use FOS\MessageBundle\FormModel\AbstractMessage;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
+use FOS\MessageBundle\FormModel\AbstractMessage;
 
 /**
  * Instanciates message forms
@@ -21,11 +20,11 @@ abstract class AbstractMessageFormFactory
     protected $formFactory;
 
     /**
-     * The message form type
+     * The message form class
      *
-     * @var AbstractType
+     * @var string
      */
-    protected $formType;
+    protected $formClass;
 
     /**
      * The name of the form
@@ -41,10 +40,10 @@ abstract class AbstractMessageFormFactory
      */
     protected $messageClass;
 
-    public function __construct(FormFactoryInterface $formFactory, AbstractType $formType, $formName, $messageClass)
+    public function __construct(FormFactoryInterface $formFactory, $formClass, $formName, $messageClass)
     {
         $this->formFactory = $formFactory;
-        $this->formType = $formType;
+        $this->formClass = $formClass;
         $this->formName = $formName;
         $this->messageClass = $messageClass;
     }

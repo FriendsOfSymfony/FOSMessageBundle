@@ -13,7 +13,7 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * @var Request
      */
-    protected $request;
+    protected $request = null;
 
     /**
      * the query parameter containing the search term
@@ -30,7 +30,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     public function __construct(RequestStack $requestStack, $queryParameter)
     {
-        $this->request        = $requestStack->getCurrentRequest();
+        $this->request = $requestStack->getCurrentRequest();
         $this->queryParameter = $queryParameter;
     }
 

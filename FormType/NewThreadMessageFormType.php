@@ -2,9 +2,10 @@
 
 namespace FOS\MessageBundle\FormType;
 
+use FOS\UserBundle\Form\Type\UsernameFormType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,7 @@ class NewThreadMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', 'fos_user_username', array('label' => 'recipient', 'translation_domain' => 'FOSMessageBundle'))
+            ->add('recipient', UsernameFormType::class, array('label' => 'recipient', 'translation_domain' => 'FOSMessageBundle'))
             ->add('subject', TextType::class, array('label' => 'subject', 'translation_domain' => 'FOSMessageBundle'))
             ->add('body', TextareaType::class, array('label' => 'body', 'translation_domain' => 'FOSMessageBundle'));
     }
