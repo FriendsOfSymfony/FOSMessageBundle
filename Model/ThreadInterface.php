@@ -80,14 +80,14 @@ interface ThreadInterface extends ReadableInterface
      * Sets the date this thread was created at
      * Generally the date of the first message
      *
-     * @param DateTime
+     * @param \DateTime $createdAt
      */
     function setCreatedAt(\DateTime $createdAt);
 
     /**
      * Gets the users participating in this conversation
      *
-     * @return array of ParticipantInterface
+     * @return ParticipantInterface[]
      */
     function getParticipants();
 
@@ -133,7 +133,9 @@ interface ThreadInterface extends ReadableInterface
     /**
      * Get the participants this participant is talking with.
      *
-     * @return array of ParticipantInterface
+     * @param ParticipantInterface $participant
+     *
+     * @return ParticipantInterface[]
      */
     function getOtherParticipants(ParticipantInterface $participant);
 }

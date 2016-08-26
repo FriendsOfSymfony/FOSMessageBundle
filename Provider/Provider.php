@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
@@ -64,7 +65,7 @@ class Provider implements ProviderInterface
     /**
      * Gets the thread in the inbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function getInboxThreads()
     {
@@ -76,7 +77,7 @@ class Provider implements ProviderInterface
     /**
      * Gets the thread in the sentbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function getSentThreads()
     {

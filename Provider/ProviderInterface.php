@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\ThreadInterface;
+
 /**
  * Provides threads for the current authenticated user
  *
@@ -12,14 +14,14 @@ interface ProviderInterface
     /**
      * Gets the thread in the inbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function getInboxThreads();
 
     /**
      * Gets the thread in the sentbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
      function getSentThreads();
 

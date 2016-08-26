@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\Search;
 
+use FOS\MessageBundle\Model\ThreadInterface;
+
 /**
  * Finds threads of a participant, matching a given query
  *
@@ -13,7 +15,7 @@ interface FinderInterface
      * Finds threads of a participant, matching a given query
      *
      * @param Query $query
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function find(Query $query);
 

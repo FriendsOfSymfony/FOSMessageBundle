@@ -40,7 +40,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function findParticipantInboxThreads(ParticipantInterface $participant);
 
@@ -62,7 +62,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function findParticipantSentThreads(ParticipantInterface $participant);
 
@@ -102,7 +102,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      *
      * @param ParticipantInterface $participant
      * @param string $search
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function findParticipantThreadsBySearch(ParticipantInterface $participant, $search);
 
@@ -110,7 +110,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * Gets threads created by a participant
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     function findThreadsCreatedBy(ParticipantInterface $participant);
 
