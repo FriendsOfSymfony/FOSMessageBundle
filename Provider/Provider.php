@@ -64,7 +64,7 @@ class Provider implements ProviderInterface
     /**
      * Gets the thread in the inbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function getInboxThreads()
     {
@@ -76,7 +76,7 @@ class Provider implements ProviderInterface
     /**
      * Gets the thread in the sentbox of the current user
      *
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function getSentThreads()
     {

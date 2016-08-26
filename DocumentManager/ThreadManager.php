@@ -98,7 +98,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
@@ -132,7 +132,7 @@ class ThreadManager extends BaseThreadManager
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function findParticipantSentThreads(ParticipantInterface $participant)
     {
@@ -192,7 +192,7 @@ class ThreadManager extends BaseThreadManager
      *
      * @param ParticipantInterface $participant
      * @param string $search
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function findParticipantThreadsBySearch(participantinterface $participant, $search)
     {
@@ -203,7 +203,7 @@ class ThreadManager extends BaseThreadManager
      * Gets threads created by a participant
      *
      * @param ParticipantInterface $participant
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {

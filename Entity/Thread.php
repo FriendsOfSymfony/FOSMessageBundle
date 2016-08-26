@@ -58,7 +58,7 @@ abstract class Thread extends BaseThread
     /**
      * Gets the users participating in this conversation
      *
-     * @return array of ParticipantInterface
+     * @return ParticipantInterface[]
      */
     public function getParticipants()
     {

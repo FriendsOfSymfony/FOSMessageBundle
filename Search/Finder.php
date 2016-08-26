@@ -36,7 +36,7 @@ class Finder implements FinderInterface
      * Finds threads of a participant, matching a given query
      *
      * @param Query $query
-     * @return array of ThreadInterface
+     * @return ThreadInterface[]
      */
     public function find(Query $query)
     {
