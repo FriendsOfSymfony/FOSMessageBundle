@@ -9,27 +9,28 @@ use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
+use FOS\MessageBundle\Model\ThreadMetadata;
 
 abstract class Thread extends BaseThread
 {
     /**
      * Messages contained in this thread
      *
-     * @var Collection of MessageInterface
+     * @var Collection|MessageInterface[]
      */
     protected $messages;
 
     /**
      * Users participating in this conversation
      *
-     * @var Collection of ParticipantInterface
+     * @var Collection|ParticipantInterface[]
      */
     protected $participants;
 
     /**
      * Thread metadata
      *
-     * @var Collection of ThreadMetadata
+     * @var Collection|ThreadMetadata[]
      */
     protected $metadata;
 
@@ -71,7 +72,7 @@ abstract class Thread extends BaseThread
      * Since the ORM schema does not map the participants collection field, it
      * must be created on demand.
      *
-     * @return ArrayCollection
+     * @return ArrayCollection|ParticipantInterface[]
      */
     protected function getParticipantsCollection()
     {

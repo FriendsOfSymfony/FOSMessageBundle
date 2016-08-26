@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Search;
 
+use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 

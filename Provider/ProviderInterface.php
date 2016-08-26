@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\ThreadInterface;
+
 /**
  * Provides threads for the current authenticated user
  *

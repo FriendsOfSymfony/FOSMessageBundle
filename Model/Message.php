@@ -51,7 +51,7 @@ abstract class Message implements MessageInterface
     /**
      * Collection of MessageMetadata
      *
-     * @var Collection of MessageMetadata
+     * @var Collection|MessageMetadata[]
      */
     protected $metadata;
 

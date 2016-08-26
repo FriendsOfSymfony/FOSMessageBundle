@@ -37,21 +37,21 @@ abstract class Thread implements ThreadInterface
     /**
      * Messages contained in this thread
      *
-     * @var Collection of MessageInterface
+     * @var Collection|MessageInterface[]
      */
     protected $messages;
 
     /**
      * Thread metadata
      *
-     * @var Collection of ThreadMetadata
+     * @var Collection|ThreadMetadata[]
      */
     protected $metadata;
 
     /**
      * Users participating in this conversation
      *
-     * @var Collection of ParticipantInterface
+     * @var Collection|ParticipantInterface[]
      */
     protected $participants;
 

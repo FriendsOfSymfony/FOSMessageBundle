@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
