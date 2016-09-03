@@ -17,7 +17,7 @@
             <tag name="validator.constraint_validator" alias="fos_message.validator.reply_authorization" />
         </service>
 
-        <service id="fos_message.validator.spam" class="FOS\MessageBundle\Validator\SpamValidator" scope="request">
+        <service id="fos_message.validator.spam" class="FOS\MessageBundle\Validator\SpamValidator">
             <argument type="service" id="fos_message.spam_detector" />
             <tag name="validator.constraint_validator" alias="fos_message.validator.spam" />
         </service>

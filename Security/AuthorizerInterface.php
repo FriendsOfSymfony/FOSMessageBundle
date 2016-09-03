@@ -17,7 +17,7 @@ interface AuthorizerInterface
      * to see this thread
      *
      * @param ThreadInterface $thread
-     * @return boolean
+     * @return bool
      */
     public function canSeeThread(ThreadInterface $thread);
 
@@ -26,7 +26,7 @@ interface AuthorizerInterface
      * to delete this thread
      *
      * @param ThreadInterface $thread
-     * @return boolean
+     * @return bool
      */
     public function canDeleteThread(ThreadInterface $thread);
 
@@ -35,7 +35,7 @@ interface AuthorizerInterface
      * to send a message to this other participant
      *
      * @param ParticipantInterface $participant the one we want to send a message to
-     * @return boolean
+     * @return bool
      */
     public function canMessageParticipant(ParticipantInterface $participant);
 }

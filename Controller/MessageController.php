@@ -2,13 +2,19 @@
 
 namespace FOS\MessageBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\MessageBundle\Provider\ProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MessageController extends ContainerAware
+class MessageController implements ContainerAwareInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
     /**
      * Displays the authenticated participant inbox
      *
@@ -55,7 +61,7 @@ class MessageController extends ContainerAware
      * Displays a thread, also allows to reply to it
      *
      * @param string $threadId the thread id
-     * 
+     *
      * @return Response
      */
     public function threadAction($threadId)
@@ -100,9 +106,9 @@ class MessageController extends ContainerAware
 
     /**
      * Deletes a thread
-     * 
+     *
      * @param string $threadId the thread id
-     * 
+     *
      * @return RedirectResponse
      */
     public function deleteAction($threadId)
@@ -116,9 +122,9 @@ class MessageController extends ContainerAware
     
     /**
      * Undeletes a thread
-     * 
+     *
      * @param string $threadId
-     * 
+     *
      * @return RedirectResponse
      */
     public function undeleteAction($threadId)
@@ -154,5 +160,13 @@ class MessageController extends ContainerAware
     protected function getProvider()
     {
         return $this->container->get('fos_message.provider');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }

@@ -150,8 +150,7 @@ You can copy and paste the bundle versions into your application and define them
     <argument type="service" id="acme_user.user_to_username_transformer" />
 </service>
 
-<service id="acme_user.new_thread_form_factory" class="Acme\UserBundle\Form\NewThreadMessageFormFactory"
-         public="false" scope="request">
+<service id="acme_user.new_thread_form_factory" class="Acme\UserBundle\Form\NewThreadMessageFormFactory" public="false">
     <argument type="service" id="form.factory" />
     <argument type="service" id="fos_message.new_thread_form.type" />
     <argument>%fos_message.new_thread_form.name%</argument>

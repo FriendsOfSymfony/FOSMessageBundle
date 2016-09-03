@@ -79,7 +79,7 @@ abstract class Thread extends AbstractThread
      * Tells if the user participates to the conversation
      *
      * @param ParticipantInterface $participant
-     * @return boolean
+     * @return bool
      */
     public function isParticipant(ParticipantInterface $participant)
     {

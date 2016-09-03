@@ -1,9 +1,11 @@
 <?php
+
 namespace FOS\MessageBundle\FormType;
 
+use FOS\MessageBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
@@ -38,11 +40,24 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritDoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'invalid_message' => 'The selected recipient does not exist',
         ));
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $this->configureOptions($resolver);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'recipients_selector';
     }
 
     /**
@@ -50,14 +65,14 @@ class RecipientsType extends AbstractType
      */
     public function getParent()
     {
-        return 'text';
+        return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType');
     }
 
     /**
-     * {@inheritDoc}
+     * @deprecated To remove when supporting only Symfony 3
      */
     public function getName()
     {
-        return 'recipients_selector';
+        return $this->getBlockPrefix();
     }
 }

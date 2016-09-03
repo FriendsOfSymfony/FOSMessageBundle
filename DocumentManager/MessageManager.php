@@ -84,7 +84,7 @@ class MessageManager extends BaseMessageManager
      *
      * @param ThreadInterface $thread
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param bool $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
@@ -98,7 +98,7 @@ class MessageManager extends BaseMessageManager
      *
      * @param MessageInterface $message
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param bool $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
@@ -112,7 +112,7 @@ class MessageManager extends BaseMessageManager
      * by updating directly the storage
      *
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param bool $isRead
      * @param \Closure $condition
      */
     protected function markIsReadByCondition(ParticipantInterface $participant, $isRead, \Closure $condition)
@@ -132,7 +132,7 @@ class MessageManager extends BaseMessageManager
         }
 
         $queryBuilder
-            ->field('metadata.$.isRead')->set((boolean) $isRead)
+            ->field('metadata.$.isRead')->set((bool) $isRead)
             ->getQuery(array('multiple' => true))
             ->execute();
 

@@ -3,19 +3,17 @@
 namespace FOS\MessageBundle\Search;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Gets the search term from the request and prepares it
  */
 class QueryFactory implements QueryFactoryInterface
 {
-    /**
-     * @var Request
-     */
     protected $request;
 
     /**
-     * the query parameter containing the search term
+     * The query parameter containing the search term
      *
      * @var string
      */
@@ -24,12 +22,12 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * Instanciates a new TermGetter
      *
-     * @param Request $request
+     * @param RequestStack|Request $requestStack
      * @param string $queryParameter
      */
-    public function __construct(Request $request, $queryParameter)
+    public function __construct($requestStack, $queryParameter)
     {
-        $this->request = $request;
+        $this->request = $requestStack;
         $this->queryParameter = $queryParameter;
     }
 
@@ -38,7 +36,7 @@ class QueryFactory implements QueryFactoryInterface
      */
     public function createFromRequest()
     {
-        $original = $this->request->query->get($this->queryParameter);
+        $original = $this->getCurrentRequest()->query->get($this->queryParameter);
         $original = trim($original);
 
         $escaped = $this->escapeTerm($original);
@@ -59,5 +57,18 @@ class QueryFactory implements QueryFactoryInterface
     protected function escapeTerm($term)
     {
         return $term;
+    }
+
+    /**
+     * BC layer to retrieve the current request directly or from a stack.
+     *
+     * @return null|Request
+     */
+    private function getCurrentRequest() {
+        if ($this->request instanceof Request) {
+            return $this->request;
+        }
+
+        return $this->request->getCurrentRequest();
     }
 }

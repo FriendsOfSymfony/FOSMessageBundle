@@ -18,7 +18,7 @@
         </service>
 
         <service id="fos_message.participant_provider.default" class="FOS\MessageBundle\Security\ParticipantProvider" public="false">
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.token_storage" />
         </service>
 
         <service id="fos_message.authorizer.default" class="FOS\MessageBundle\Security\Authorizer" public="false">
@@ -58,8 +58,8 @@
             <tag name="twig.extension" alias="fos_message" />
         </service>
 
-        <service id="fos_message.search_query_factory.default" class="FOS\MessageBundle\Search\QueryFactory" scope="request" public="true">
-            <argument type="service" id="request" />
+        <service id="fos_message.search_query_factory.default" class="FOS\MessageBundle\Search\QueryFactory" public="true">
+            <argument type="service" id="request_stack" />
             <argument /> <!-- query parameter containing the search terms -->
         </service>
 

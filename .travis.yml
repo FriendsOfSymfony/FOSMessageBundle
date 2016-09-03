@@ -1,30 +1,45 @@
 language: php
 
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - hhvm
+sudo: false
 
-env:
-  - SYMFONY_VERSION=2.1.*
-  - SYMFONY_VERSION=2.2.*
-  - SYMFONY_VERSION=2.3.*
-  - SYMFONY_VERSION=dev-master
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+    - php: 5.3
+      env:
+        - deps=low
+        - SYMFONY_VERSION=2.7.*
+    - php: 5.4
+      env:
+        - deps=high
+        - SYMFONY_VERSION=2.7.*
+    - php: 5.5
+      env:
+        - deps=low
+        - SYMFONY_VERSION=2.8.*
+    - php: 5.6
+      env:
+        - deps=high
+        - SYMFONY_VERSION=3.0.*
+    - php: 7.0
+      env:
+        - deps=low
+        - SYMFONY_VERSION=3.1.*
+    - php: 7.1
+      env:
+        - deps=high
+        - SYMFONY_VERSION=3.1.*
 
 before_script:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
-  - composer update --dev
+  - if [[ $deps = high ]]; then composer update --no-progress --ansi; fi
+  - if [[ $deps = low ]]; then composer update --no-progress --ansi --prefer-lowest --prefer-stable; fi
 
 script: phpunit --coverage-text
 
 notifications:
   email:
     - friendsofsymfony-dev@googlegroups.com
-
-matrix:
-  allow_failures:
-    - env: SYMFONY_VERSION=dev-master
-    - php: 5.6
-    - php: hhvm

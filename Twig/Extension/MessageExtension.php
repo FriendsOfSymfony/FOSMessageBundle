@@ -40,7 +40,7 @@ class MessageExtension extends \Twig_Extension
     /**
      * Tells if this readable (thread or message) is read by the current user
      *
-     * @return boolean
+     * @return bool
      */
     public function isRead(ReadableInterface $readable)
     {
@@ -53,7 +53,7 @@ class MessageExtension extends \Twig_Extension
      * 
      * @param ThreadInterface $thread
      * 
-     * @return boolean true if participant can mark a thread as deleted, false otherwise
+     * @return bool true if participant can mark a thread as deleted, false otherwise
      */
     public function canDeleteThread(ThreadInterface $thread)
     {
@@ -65,7 +65,7 @@ class MessageExtension extends \Twig_Extension
      * 
      * @param ThreadInterface $thread
      * 
-     * @return boolean true if participant has marked the thread as deleted, false otherwise
+     * @return bool true if participant has marked the thread as deleted, false otherwise
      */
     public function isThreadDeletedByParticipant(ThreadInterface $thread)
     {

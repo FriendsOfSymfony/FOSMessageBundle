@@ -10,7 +10,7 @@ abstract class Message extends BaseMessage
      * Tells if the message is spam or flood
      * This denormalizes Thread.isSpam
      *
-     * @var boolean
+     * @var bool
      */
     protected $isSpam = false;
 
@@ -23,11 +23,11 @@ abstract class Message extends BaseMessage
     protected $unreadForParticipants = array();
 
     /**
-     * @param boolean $isSpam
+     * @param bool $isSpam
      */
     public function setIsSpam($isSpam)
     {
-        $this->isSpam = (boolean) $isSpam;
+        $this->isSpam = (bool) $isSpam;
     }
 
     /*

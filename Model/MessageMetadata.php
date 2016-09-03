@@ -15,16 +15,13 @@ abstract class MessageMetadata
         return $this->participant;
     }
 
-    /**
-     * @param ParticipantInterface $participant
-     */
     public function setParticipant(ParticipantInterface $participant)
     {
         $this->participant = $participant;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsRead()
     {
@@ -32,10 +29,10 @@ abstract class MessageMetadata
     }
 
     /**
-     * @param boolean $isRead
+     * @param bool $isRead
      */
     public function setIsRead($isRead)
     {
-        $this->isRead = (boolean)$isRead;
+        $this->isRead = (bool)$isRead;
     }
 }

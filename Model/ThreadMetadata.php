@@ -29,16 +29,13 @@ abstract class ThreadMetadata
         return $this->participant;
     }
 
-    /**
-     * @param ParticipantInterface
-     */
     public function setParticipant(ParticipantInterface $participant)
     {
         $this->participant = $participant;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsDeleted()
     {
@@ -46,11 +43,11 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param boolean $isDeleted
+     * @param bool $isDeleted
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->isDeleted = (boolean)$isDeleted;
+        $this->isDeleted = (bool)$isDeleted;
     }
 
     /**
@@ -61,9 +58,6 @@ abstract class ThreadMetadata
         return $this->lastParticipantMessageDate;
     }
 
-    /**
-     * @param \DateTime $date
-     */
     public function setLastParticipantMessageDate(\DateTime $date)
     {
         $this->lastParticipantMessageDate = $date;
@@ -77,9 +71,6 @@ abstract class ThreadMetadata
         return $this->lastMessageDate;
     }
 
-    /**
-     * @param \DateTime $date
-     */
     public function setLastMessageDate(\DateTime $date)
     {
         $this->lastMessageDate = $date;

@@ -34,7 +34,7 @@ interface MessageManagerInterface extends ReadableManagerInterface
      * Saves a message
      *
      * @param MessageInterface $message
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * @param bool $andFlush Whether to flush the changes (default true)
      */
     public function saveMessage(MessageInterface $message, $andFlush = true);
 

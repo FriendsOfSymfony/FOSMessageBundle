@@ -125,7 +125,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * Saves a thread
      *
      * @param ThreadInterface $thread
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * @param bool $andFlush Whether to flush the changes (default true)
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true);
 

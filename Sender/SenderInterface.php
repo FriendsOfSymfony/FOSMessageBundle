@@ -12,9 +12,7 @@ use FOS\MessageBundle\Model\MessageInterface;
 interface SenderInterface
 {
     /**
-     * Sends the message
-     *
-     * @param MessageInterface $message
+     * Sends the given message.
      */
     public function send(MessageInterface $message);
 }

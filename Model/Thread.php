@@ -29,7 +29,7 @@ abstract class Thread implements ThreadInterface
     /**
      * Tells if the thread is spam or flood
      *
-     * @var boolean
+     * @var bool
      */
     protected $isSpam = false;
 
@@ -135,7 +135,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getIsSpam()
     {
@@ -143,11 +143,11 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @param boolean
+     * @param bool
      */
     public function setIsSpam($isSpam)
     {
-        $this->isSpam = (boolean) $isSpam;
+        $this->isSpam = (bool) $isSpam;
     }
 
     /**

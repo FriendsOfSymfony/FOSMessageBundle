@@ -97,7 +97,7 @@ class MessageManager extends BaseMessageManager
      *
      * @param ThreadInterface $thread
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param bool $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
@@ -111,7 +111,7 @@ class MessageManager extends BaseMessageManager
      *
      * @param MessageInterface $message
      * @param ParticipantInterface $participant
-     * @param boolean $isRead
+     * @param bool $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
