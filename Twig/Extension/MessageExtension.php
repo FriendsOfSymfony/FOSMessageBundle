@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Twig\Extension;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Provider\ProviderInterface;
@@ -24,9 +25,7 @@ class MessageExtension extends \Twig_Extension
     }
 
     /**
-     * Returns a list of global functions to add to the existing list.
-     *
-     * @return array An array of global functions
+     * {@inheritdoc}
      */
     public function getFunctions()
     {
@@ -98,9 +97,7 @@ class MessageExtension extends \Twig_Extension
     }
 
     /**
-     * Returns the name of the extension.
-     *
-     * @return string The extension name
+     * {@inheritdoc}
      */
     public function getName()
     {

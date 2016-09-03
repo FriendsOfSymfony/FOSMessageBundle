@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\FormHandler;
 
+use FOS\MessageBundle\Model\MessageInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\MessageBundle\Composer\ComposerInterface;
@@ -34,7 +35,7 @@ abstract class AbstractMessageFormHandler
      * Processes the form with the request
      *
      * @param Form $form
-     * @return Message|false the sent message if the form is bound and valid, false otherwise
+     * @return MessageInterface|false the sent message if the form is bound and valid, false otherwise
      */
     public function process(Form $form)
     {

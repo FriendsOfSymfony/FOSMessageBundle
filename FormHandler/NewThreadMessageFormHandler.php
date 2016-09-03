@@ -4,6 +4,7 @@ namespace FOS\MessageBundle\FormHandler;
 
 use FOS\MessageBundle\FormModel\AbstractMessage;
 use FOS\MessageBundle\FormModel\NewThreadMessage;
+use FOS\MessageBundle\Model\MessageInterface;
 
 class NewThreadMessageFormHandler extends AbstractMessageFormHandler
 {
@@ -12,7 +13,7 @@ class NewThreadMessageFormHandler extends AbstractMessageFormHandler
      *
      * @param AbstractMessage $message
      * @return MessageInterface the composed message ready to be sent
-     * @throws InvalidArgumentException if the message is not a NewThreadMessage
+     * @throws \InvalidArgumentException if the message is not a NewThreadMessage
      */
     public function composeMessage(AbstractMessage $message)
     {

@@ -17,7 +17,7 @@ interface FinderInterface
      * @param Query $query
      * @return ThreadInterface[]
      */
-    function find(Query $query);
+    public function find(Query $query);
 
     /**
      * Finds threads of a participant, matching a given query
@@ -25,5 +25,5 @@ interface FinderInterface
      * @param Query $query
      * @return Builder a query builder suitable for pagination
      */
-    function getQueryBuilder(Query $query);
+    public function getQueryBuilder(Query $query);
 }

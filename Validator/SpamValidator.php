@@ -13,11 +13,6 @@ class SpamValidator extends ConstraintValidator
      */
     protected $spamDetector;
 
-    /**
-     * Constructor
-     *
-     * @param SpamDetectorInterface $spamDetector
-     */
     public function __construct(SpamDetectorInterface $spamDetector)
     {
         $this->spamDetector = $spamDetector;

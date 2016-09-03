@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Search;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
@@ -34,10 +35,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * Finds threads of a participant, matching a given query
-     *
-     * @param Query $query
-     * @return ThreadInterface[]
+     * {@inheritdoc}
      */
     public function find(Query $query)
     {
@@ -45,10 +43,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * Finds threads of a participant, matching a given query
-     *
-     * @param Query $query
-     * @return mixed a query builder suitable for pagination
+     * {@inheritdoc}
      */
     public function getQueryBuilder(Query $query)
     {

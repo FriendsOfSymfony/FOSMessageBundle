@@ -2,25 +2,22 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
 abstract class ThreadMetadata
 {
     protected $participant;
-
     protected $isDeleted = false;
 
     /**
     * Date of last message written by the participant
     *
-    * @var DateTime
+    * @var \DateTime
     */
     protected $lastParticipantMessageDate;
 
     /**
      * Date of last message written by another participant
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $lastMessageDate;
 
@@ -34,7 +31,6 @@ abstract class ThreadMetadata
 
     /**
      * @param ParticipantInterface
-     * @return null
      */
     public function setParticipant(ParticipantInterface $participant)
     {
@@ -51,7 +47,6 @@ abstract class ThreadMetadata
 
     /**
      * @param boolean $isDeleted
-     * @return null
      */
     public function setIsDeleted($isDeleted)
     {
@@ -59,7 +54,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastParticipantMessageDate()
     {
@@ -67,8 +62,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param DateTime $date
-     * @return null
+     * @param \DateTime $date
      */
     public function setLastParticipantMessageDate(\DateTime $date)
     {
@@ -76,7 +70,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getLastMessageDate()
     {
@@ -84,8 +78,7 @@ abstract class ThreadMetadata
     }
 
     /**
-     * @param DateTime $date
-     * @return null
+     * @param \DateTime $date
      */
     public function setLastMessageDate(\DateTime $date)
     {

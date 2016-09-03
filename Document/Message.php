@@ -23,15 +23,14 @@ abstract class Message extends BaseMessage
     protected $unreadForParticipants = array();
 
     /**
-     * @param  boolean
-     * @return null
+     * @param boolean $isSpam
      */
     public function setIsSpam($isSpam)
     {
         $this->isSpam = (boolean) $isSpam;
     }
 
-    /**
+    /*
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization

@@ -3,6 +3,7 @@
 namespace FOS\MessageBundle\FormFactory;
 
 use FOS\MessageBundle\Model\ThreadInterface;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * Instanciates message forms
@@ -15,7 +16,7 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
      * Creates a reply message
      *
      * @param ThreadInterface $thread the thread we answer to
-     * @return Form
+     * @return FormInterface
      */
     public function create(ThreadInterface $thread)
     {

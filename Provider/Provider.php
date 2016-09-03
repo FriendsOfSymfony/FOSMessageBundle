@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Provider;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -63,9 +64,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Gets the thread in the inbox of the current user
-     *
-     * @return ThreadInterface[]
+     * {@inheritdoc}
      */
     public function getInboxThreads()
     {
@@ -75,9 +74,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Gets the thread in the sentbox of the current user
-     *
-     * @return ThreadInterface[]
+     * {@inheritdoc}
      */
     public function getSentThreads()
     {
@@ -97,11 +94,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Gets a thread by its ID
-     * Performs authorization checks
-     * Marks the thread as read
-     *
-     * @return ThreadInterface
+     * {@inheritdoc}
      */
     public function getThread($threadId)
     {
@@ -121,9 +114,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Tells how many unread messages the authenticated participant has
-     *
-     * @return int the number of unread messages
+     * {@inheritdoc}
      */
     public function getNbUnreadMessages()
     {

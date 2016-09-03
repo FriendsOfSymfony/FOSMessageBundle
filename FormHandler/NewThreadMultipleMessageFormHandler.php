@@ -3,6 +3,8 @@ namespace FOS\MessageBundle\FormHandler;
 
 use FOS\MessageBundle\FormModel\AbstractMessage;
 use FOS\MessageBundle\FormModel\NewThreadMultipleMessage;
+use FOS\MessageBundle\Model\MessageInterface;
+
 /**
  * Form handler for multiple recipients support
  *

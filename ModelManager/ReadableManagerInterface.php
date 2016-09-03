@@ -23,7 +23,7 @@ interface ReadableManagerInterface
      * @param ReadableInterface $readable
      * @param ParticipantInterface $user
      */
-    function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
+    public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
 
     /**
      * Marks the readable as unread by this participant
@@ -31,5 +31,5 @@ interface ReadableManagerInterface
      * @param ReadableInterface $readable
      * @param ParticipantInterface $user
      */
-    function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
+    public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
 }

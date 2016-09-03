@@ -3,6 +3,8 @@
 namespace FOS\MessageBundle\Command;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
+use FOS\MessageBundle\Document\Message;
+use FOS\MessageBundle\Document\Thread;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,7 +39,7 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     private $printStatusCallback;
 
     /**
-     * @see Symfony\Component\Console\Command\Command::isEnabled()
+     * {@inheritdoc}
      */
     public function isEnabled()
     {
@@ -49,7 +51,7 @@ class MongoDBMigrateMetadataCommand extends ContainerAwareCommand
     }
 
     /**
-     * @see Symfony\Component\Console\Command\Command::configure()
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -92,7 +94,7 @@ EOT
     }
 
     /**
-     * @see Symfony\Bundle\FrameworkBundle\Command\Command::initialize()
+     * {@inheritdoc}
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
@@ -113,7 +115,7 @@ EOT
     }
 
     /**
-     * @see Symfony\Component\Console\Command\Command::execute()
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -122,13 +124,11 @@ EOT
 
         $size = memory_get_peak_usage(true);
         $unit = array('b', 'k', 'm', 'g', 't', 'p');
-        $output->writeln(sprintf("Peak Memory Usage: <comment>%s</comment>", round($size / pow(1024, ($i = floor(log($size, 1024)))), 2).$unit[$i]));
+        $output->writeln(sprintf('Peak Memory Usage: <comment>%s</comment>', round($size / pow(1024, $i = floor(log($size, 1024))), 2).$unit[$i]));
     }
 
     /**
      * Migrate message documents
-     *
-     * @param OutputInterface $output
      */
     private function migrateMessages(OutputInterface $output)
     {
@@ -175,8 +175,6 @@ EOT
 
     /**
      * Migrate thread documents
-     *
-     * @param OutputInterface $output
      */
     private function migrateThreads(OutputInterface $output)
     {
@@ -233,8 +231,6 @@ EOT
      *
      * By default, Mongo will not include "$db" when creating the participant
      * reference. We'll add that manually to be consistent with Doctrine.
-     *
-     * @param array &$message
      */
     private function createMessageMetadata(array &$message)
     {
@@ -253,7 +249,7 @@ EOT
     /**
      * Sets the unreadForParticipants array on the message.
      *
-     * @see FOS\MessageBundle\Document\Message::doEnsureUnreadForParticipantsArray()
+     * @see Message::doEnsureUnreadForParticipantsArray()
      * @param array &$message
      */
     private function createMessageUnreadForParticipants(array &$message)
@@ -331,7 +327,7 @@ EOT
     /**
      * Sets the active participant arrays on the thread.
      *
-     * @see FOS\MessageBundle\Document\Thread::doEnsureActiveParticipantArrays()
+     * @see Thread::doEnsureActiveParticipantArrays()
      * @param array $thread
      */
     private function createThreadActiveParticipantArrays(array &$thread)
@@ -342,7 +338,7 @@ EOT
 
         foreach ($thread['participants'] as $participantRef) {
             foreach ($thread['metadata'] as $metadata) {
-                if ($participantRef['$id'] == $metadata['participant']['$id'] && $metadata['isDeleted']) {
+                if ($metadata['isDeleted'] && $participantRef['$id'] === $metadata['participant']['$id']) {
                     continue 2;
                 }
             }

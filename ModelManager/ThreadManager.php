@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\ModelManager;
 
+use FOS\MessageBundle\Model\ThreadInterface;
+
 /**
  * Abstract Thread Manager implementation which can be used as base class by your
  * concrete manager.
@@ -18,8 +20,7 @@ abstract class ThreadManager implements ThreadManagerInterface
     public function createThread()
     {
         $class = $this->getClass();
-        $commentThread = new $class;
 
-        return $commentThread;
+        return new $class();
     }
 }

@@ -5,8 +5,6 @@ namespace FOS\MessageBundle\FormModel;
 abstract class AbstractMessage
 {
     /**
-     * The message body
-     *
      * @var string
      */
     protected $body;
@@ -20,8 +18,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param  string
-     * @return null
+     * @param string
      */
     public function setBody($body)
     {

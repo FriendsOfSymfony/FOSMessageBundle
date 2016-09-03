@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
+use Doctrine\Common\Collections\Collection;
 
 interface ThreadInterface extends ReadableInterface
 {
@@ -11,46 +11,46 @@ interface ThreadInterface extends ReadableInterface
      *
      * @return mixed
      */
-    function getId();
+    public function getId();
 
     /**
      * @return string
      */
-    function getSubject();
+    public function getSubject();
 
     /**
      * @param  string
      * @return null
      */
-    function setSubject($subject);
+    public function setSubject($subject);
 
     /**
      * Gets the messages contained in the thread
      *
      * @return Collection of MessageInterface
      */
-    function getMessages();
+    public function getMessages();
 
     /**
      * Adds a new message to the thread
      *
      * @param MessageInterface $message
      */
-    function addMessage(MessageInterface $message);
+    public function addMessage(MessageInterface $message);
 
     /**
      * Gets the first message of the thread
      *
      * @return MessageInterface the first message
      */
-    function getFirstMessage();
+    public function getFirstMessage();
 
     /**
      * Gets the last message of the thread
      *
      * @return MessageInterface the last message
      */
-    function getLastMessage();
+    public function getLastMessage();
 
     /**
      * Gets the participant that created the thread
@@ -58,7 +58,7 @@ interface ThreadInterface extends ReadableInterface
      *
      * @return ParticipantInterface
      */
-    function getCreatedBy();
+    public function getCreatedBy();
 
     /**
      * Sets the participant that created the thread
@@ -66,15 +66,15 @@ interface ThreadInterface extends ReadableInterface
      *
      * @param ParticipantInterface
      */
-    function setCreatedBy(ParticipantInterface $participant);
+    public function setCreatedBy(ParticipantInterface $participant);
 
     /**
      * Gets the date this thread was created at
      * Generally the date of the first message
      *
-     * @return DateTime
+     * @return \DateTime
      */
-    function getCreatedAt();
+    public function getCreatedAt();
 
     /**
      * Sets the date this thread was created at
@@ -82,14 +82,14 @@ interface ThreadInterface extends ReadableInterface
      *
      * @param \DateTime $createdAt
      */
-    function setCreatedAt(\DateTime $createdAt);
+    public function setCreatedAt(\DateTime $createdAt);
 
     /**
      * Gets the users participating in this conversation
      *
      * @return ParticipantInterface[]
      */
-    function getParticipants();
+    public function getParticipants();
 
     /**
      * Tells if the user participates to the conversation
@@ -97,7 +97,7 @@ interface ThreadInterface extends ReadableInterface
      * @param ParticipantInterface $participant
      * @return boolean
      */
-    function isParticipant(ParticipantInterface $participant);
+    public function isParticipant(ParticipantInterface $participant);
 
     /**
      * Adds a participant to the thread
@@ -106,14 +106,14 @@ interface ThreadInterface extends ReadableInterface
      * @param ParticipantInterface $participant
      * @return null
      */
-    function addParticipant(ParticipantInterface $participant);
+    public function addParticipant(ParticipantInterface $participant);
 
     /**
      * Tells if this thread is deleted by this participant
      *
      * @return bool
      */
-    function isDeletedByParticipant(ParticipantInterface $participant);
+    public function isDeletedByParticipant(ParticipantInterface $participant);
 
     /**
      * Sets whether or not this participant has deleted this thread
@@ -121,14 +121,14 @@ interface ThreadInterface extends ReadableInterface
      * @param ParticipantInterface $participant
      * @param boolean $isDeleted
      */
-    function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted);
+    public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted);
 
     /**
      * Sets the thread as deleted or not deleted for all participants
      *
      * @param boolean $isDeleted
      */
-    function setIsDeleted($isDeleted);
+    public function setIsDeleted($isDeleted);
 
     /**
      * Get the participants this participant is talking with.
@@ -137,5 +137,5 @@ interface ThreadInterface extends ReadableInterface
      *
      * @return ParticipantInterface[]
      */
-    function getOtherParticipants(ParticipantInterface $participant);
+    public function getOtherParticipants(ParticipantInterface $participant);
 }

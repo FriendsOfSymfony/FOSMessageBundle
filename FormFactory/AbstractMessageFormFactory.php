@@ -56,8 +56,6 @@ abstract class AbstractMessageFormFactory
      */
     protected function createModelInstance()
     {
-        $class = $this->messageClass;
-
-        return new $class();
+        return new $this->messageClass();
     }
 }

@@ -2,12 +2,9 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
 abstract class MessageMetadata
 {
     protected $participant;
-
     protected $isRead = false;
 
     /**
@@ -20,7 +17,6 @@ abstract class MessageMetadata
 
     /**
      * @param ParticipantInterface $participant
-     * @return null
      */
     public function setParticipant(ParticipantInterface $participant)
     {
@@ -37,7 +33,6 @@ abstract class MessageMetadata
 
     /**
      * @param boolean $isRead
-     * @return null
      */
     public function setIsRead($isRead)
     {

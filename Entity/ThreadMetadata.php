@@ -8,7 +8,6 @@ use FOS\MessageBundle\Model\ThreadMetadata as BaseThreadMetadata;
 abstract class ThreadMetadata extends BaseThreadMetadata
 {
     protected $id;
-
     protected $thread;
 
     /**
@@ -29,10 +28,6 @@ abstract class ThreadMetadata extends BaseThreadMetadata
         return $this->thread;
     }
 
-    /**
-     * @param  ThreadInterface $thread
-     * @return null
-     */
     public function setThread(ThreadInterface $thread)
     {
         $this->thread = $thread;

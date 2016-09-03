@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Composer;
 
+use FOS\MessageBundle\MessageBuilder\AbstractMessageBuilder;
 use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
@@ -14,14 +15,14 @@ interface ComposerInterface
     /**
      * Starts composing a message, starting a new thread
      *
-     * @return MessageBuilderInterface
+     * @return AbstractMessageBuilder
      */
-    function newThread();
+    public function newThread();
 
     /**
      * Starts composing a message in a reply to a thread
      *
-     * @return MessageBuilderInterface
+     * @return AbstractMessageBuilder
      */
-    function reply(ThreadInterface $thread);
+    public function reply(ThreadInterface $thread);
 }

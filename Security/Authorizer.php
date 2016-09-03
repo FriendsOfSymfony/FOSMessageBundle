@@ -3,9 +3,7 @@
 namespace FOS\MessageBundle\Security;
 
 use FOS\MessageBundle\Model\ThreadInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
  * Manages permissions to manipulate threads and messages
@@ -15,8 +13,6 @@ use FOS\MessageBundle\Security\ParticipantProviderInterface;
 class Authorizer implements AuthorizerInterface
 {
     /**
-     * The participant provider
-     *
      * @var ParticipantProviderInterface
      */
     protected $participantProvider;
@@ -27,11 +23,7 @@ class Authorizer implements AuthorizerInterface
     }
 
     /**
-     * Tells if the current participant is allowed
-     * to see this thread
-     *
-     * @param ThreadInterface $thread
-     * @return boolean
+     * {@inheritdoc}
      */
     public function canSeeThread(ThreadInterface $thread)
     {
@@ -39,11 +31,7 @@ class Authorizer implements AuthorizerInterface
     }
 
     /**
-     * Tells if the current participant is allowed
-     * to delete this thread
-     *
-     * @param ThreadInterface $thread
-     * @return boolean
+     * {@inheritdoc}
      */
     public function canDeleteThread(ThreadInterface $thread)
     {
@@ -51,11 +39,7 @@ class Authorizer implements AuthorizerInterface
     }
 
     /**
-     * Tells if the current participant is allowed
-     * to send a message to this other participant
-     *
-     * @param ParticipantInterface $participant the one we want to send a message to
-     * @return boolean
+     * {@inheritdoc}
      */
     public function canMessageParticipant(ParticipantInterface $participant)
     {

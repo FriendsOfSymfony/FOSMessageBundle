@@ -3,9 +3,6 @@
 namespace FOS\MessageBundle\Document;
 
 use FOS\MessageBundle\Model\Thread as AbstractThread;
-use FOS\MessageBundle\Model\MessageInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 abstract class Thread extends AbstractThread
@@ -16,7 +13,7 @@ abstract class Thread extends AbstractThread
      * This denormalization field is used for sorting threads in the inbox and
      * sent list.
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $lastMessageDate;
 
@@ -69,7 +66,7 @@ abstract class Thread extends AbstractThread
      * If it already exists, nothing is done.
      *
      * @param ParticipantInterface $participant
-     * @return null
+     * @return void
      */
     public function addParticipant(ParticipantInterface $participant)
     {
@@ -89,7 +86,7 @@ abstract class Thread extends AbstractThread
         return $this->participants->contains($participant);
     }
 
-    /**
+    /*
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization
