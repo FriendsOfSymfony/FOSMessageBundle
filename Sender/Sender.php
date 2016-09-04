@@ -10,7 +10,7 @@ use FOS\MessageBundle\Event\FOSMessageEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Sends messages
+ * Sends messages.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */

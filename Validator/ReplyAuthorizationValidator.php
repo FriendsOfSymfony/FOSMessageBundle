@@ -26,7 +26,7 @@ class ReplyAuthorizationValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Indicates whether the constraint is valid.
      *
      * @param object     $value
      * @param Constraint $constraint
@@ -39,6 +39,7 @@ class ReplyAuthorizationValidator extends ConstraintValidator
         foreach ($recipients as $recipient) {
             if (!$this->authorizer->canMessageParticipant($recipient)) {
                 $this->context->addViolation($constraint->message);
+
                 return;
             }
         }

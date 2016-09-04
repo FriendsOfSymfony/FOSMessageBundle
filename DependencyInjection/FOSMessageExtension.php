@@ -2,7 +2,6 @@
 
 namespace FOS\MessageBundle\DependencyInjection;
 
-use FOS\MessageBundle\Util\LegacyFormHelper;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;

@@ -12,28 +12,28 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Marks threads as deleted
+ * Marks threads as deleted.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class Deleter implements DeleterInterface
 {
     /**
-     * The authorizer instance
+     * The authorizer instance.
      *
      * @var AuthorizerInterface
      */
     protected $authorizer;
 
     /**
-     * The participant provider instance
+     * The participant provider instance.
      *
      * @var ParticipantProviderInterface
      */
     protected $participantProvider;
 
     /**
-     * The event dispatcher
+     * The event dispatcher.
      *
      * @var EventDispatcherInterface
      */
@@ -73,7 +73,7 @@ class Deleter implements DeleterInterface
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated user.
      *
      * @return ParticipantInterface
      */

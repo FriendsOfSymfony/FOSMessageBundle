@@ -14,7 +14,7 @@ class SelfRecipient extends Constraint
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTargets()
     {

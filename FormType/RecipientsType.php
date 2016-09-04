@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
 /**
- * Description of RecipientsType
+ * Description of RecipientsType.
  *
  * @author Łukasz Pospiech <zocimek@gmail.com>
  */
@@ -30,7 +30,7 @@ class RecipientsType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,7 +38,7 @@ class RecipientsType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
@@ -53,7 +53,7 @@ class RecipientsType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
@@ -61,7 +61,7 @@ class RecipientsType extends AbstractType
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParent()
     {

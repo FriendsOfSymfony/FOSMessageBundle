@@ -1,4 +1,5 @@
 <?php
+
 namespace FOS\MessageBundle\FormType;
 
 use FOS\MessageBundle\Util\LegacyFormHelper;
@@ -6,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 
 /**
- * Message form type for starting a new conversation with multiple recipients
+ * Message form type for starting a new conversation with multiple recipients.
  *
  * @author Łukasz Pospiech <zocimek@gmail.com>
  */
@@ -17,20 +18,20 @@ class NewThreadMultipleMessageFormType extends AbstractType
         $builder
             ->add('recipients', LegacyFormHelper::getType('FOS\MessageBundle\FormType\RecipientsType'), array(
                 'label' => 'recipients',
-                'translation_domain' => 'FOSMessageBundle'
+                'translation_domain' => 'FOSMessageBundle',
             ))
             ->add('subject', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), array(
                 'label' => 'subject',
-                'translation_domain' => 'FOSMessageBundle'
+                'translation_domain' => 'FOSMessageBundle',
             ))
             ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), array(
                 'label' => 'body',
-                'translation_domain' => 'FOSMessageBundle'
+                'translation_domain' => 'FOSMessageBundle',
             ));
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getBlockPrefix()
     {

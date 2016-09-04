@@ -19,7 +19,7 @@ class SpamValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Indicates whether the constraint is valid.
      *
      * @param object     $value
      * @param Constraint $constraint

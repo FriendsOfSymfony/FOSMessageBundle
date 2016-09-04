@@ -110,7 +110,8 @@ EOT
             'fsync' => $input->getOption('fsync'),
         );
 
-        $this->printStatusCallback = function() {};
+        $this->printStatusCallback = function () {
+        };
         register_tick_function(array($this, 'printStatus'));
     }
 
@@ -128,7 +129,7 @@ EOT
     }
 
     /**
-     * Migrate message documents
+     * Migrate message documents.
      */
     private function migrateMessages(OutputInterface $output)
     {
@@ -145,10 +146,11 @@ EOT
 
         if (!$numTotal = $cursor->count()) {
             $output->writeln('There are no message documents to migrate.');
+
             return;
         }
 
-        $this->printStatusCallback = function() use ($output, &$numProcessed, $numTotal) {
+        $this->printStatusCallback = function () use ($output, &$numProcessed, $numTotal) {
             $output->write(sprintf("Processed: <info>%d</info> / Complete: <info>%d%%</info>\r", $numProcessed, round(100 * ($numProcessed / $numTotal))));
         };
 
@@ -169,12 +171,12 @@ EOT
             }
         }
 
-        $output->write(str_repeat(' ', 28 + ceil(log10($numProcessed))) . "\r");
+        $output->write(str_repeat(' ', 28 + ceil(log10($numProcessed)))."\r");
         $output->writeln(sprintf('Migrated <info>%d</info> message documents.', $numProcessed));
     }
 
     /**
-     * Migrate thread documents
+     * Migrate thread documents.
      */
     private function migrateThreads(OutputInterface $output)
     {
@@ -194,10 +196,11 @@ EOT
 
         if (!$numTotal = $cursor->count()) {
             $output->writeln('There are no thread documents to migrate.');
+
             return;
         }
 
-        $this->printStatusCallback = function() use ($output, &$numProcessed, $numTotal) {
+        $this->printStatusCallback = function () use ($output, &$numProcessed, $numTotal) {
             $output->write(sprintf("Processed: <info>%d</info> / Complete: <info>%d%%</info>\r", $numProcessed, round(100 * ($numProcessed / $numTotal))));
         };
 
@@ -222,7 +225,7 @@ EOT
             }
         }
 
-        $output->write(str_repeat(' ', 28 + ceil(log10($numProcessed))) . "\r");
+        $output->write(str_repeat(' ', 28 + ceil(log10($numProcessed)))."\r");
         $output->writeln(sprintf('Migrated <info>%d</info> thread documents.', $numProcessed));
     }
 
@@ -250,6 +253,7 @@ EOT
      * Sets the unreadForParticipants array on the message.
      *
      * @see Message::doEnsureUnreadForParticipantsArray()
+     *
      * @param array &$message
      */
     private function createMessageUnreadForParticipants(array &$message)
@@ -328,6 +332,7 @@ EOT
      * Sets the active participant arrays on the thread.
      *
      * @see Thread::doEnsureActiveParticipantArrays()
+     *
      * @param array $thread
      */
     private function createThreadActiveParticipantArrays(array &$thread)
@@ -386,11 +391,13 @@ EOT
     }
 
     /**
-     * Get the MongoCollection for the given class
+     * Get the MongoCollection for the given class.
      *
      * @param ManagerRegistry $registry
      * @param string          $class
+     *
      * @return \MongoCollection
+     *
      * @throws \RuntimeException if the class has no DocumentManager
      */
     private function getMongoCollectionForClass(ManagerRegistry $registry, $class)
@@ -403,7 +410,7 @@ EOT
     }
 
     /**
-     * Invokes the print status callback
+     * Invokes the print status callback.
      *
      * Since unregister_tick_function() does not support anonymous functions, it
      * is easier to register one method (this) and invoke a dynamic callback.

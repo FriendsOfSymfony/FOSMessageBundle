@@ -3,14 +3,14 @@
 namespace FOS\MessageBundle\Model;
 
 /**
- * Message model
+ * Message model.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 interface MessageInterface extends ReadableInterface
 {
     /**
-     * Gets the message unique id
+     * Gets the message unique id.
      *
      * @return mixed
      */
@@ -23,7 +23,6 @@ interface MessageInterface extends ReadableInterface
 
     /**
      * @param  ThreadInterface
-     * @return null
      */
     public function setThread(ThreadInterface $thread);
 
@@ -39,7 +38,6 @@ interface MessageInterface extends ReadableInterface
 
     /**
      * @param  string
-     * @return null
      */
     public function setBody($body);
 
@@ -50,7 +48,6 @@ interface MessageInterface extends ReadableInterface
 
     /**
      * @param  ParticipantInterface
-     * @return null
      */
     public function setSender(ParticipantInterface $sender);
 }

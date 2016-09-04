@@ -8,7 +8,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 abstract class Thread extends AbstractThread
 {
     /**
-     * Date that the last message in this thread was created at
+     * Date that the last message in this thread was created at.
      *
      * This denormalization field is used for sorting threads in the inbox and
      * sent list.
@@ -19,7 +19,7 @@ abstract class Thread extends AbstractThread
 
     /**
      * All text contained in the thread messages
-     * Used for the full text search
+     * Used for the full text search.
      *
      * @var string
      */
@@ -52,7 +52,7 @@ abstract class Thread extends AbstractThread
     protected $activeSenders = array();
 
     /**
-     * Gets the users participating in this conversation
+     * Gets the users participating in this conversation.
      *
      * @return ParticipantInterface[]
      */
@@ -66,7 +66,6 @@ abstract class Thread extends AbstractThread
      * If it already exists, nothing is done.
      *
      * @param ParticipantInterface $participant
-     * @return void
      */
     public function addParticipant(ParticipantInterface $participant)
     {
@@ -76,9 +75,10 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Tells if the user participates to the conversation
+     * Tells if the user participates to the conversation.
      *
      * @param ParticipantInterface $participant
+     *
      * @return bool
      */
     public function isParticipant(ParticipantInterface $participant)
@@ -93,7 +93,7 @@ abstract class Thread extends AbstractThread
      */
 
     /**
-     * Performs denormalization tricks
+     * Performs denormalization tricks.
      */
     public function denormalize()
     {
@@ -106,7 +106,7 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Ensures that the createdBy & createdAt properties are set
+     * Ensures that the createdBy & createdAt properties are set.
      */
     protected function doCreatedByAndAt()
     {
@@ -123,7 +123,7 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Ensures that the lastMessageDate property is up to date
+     * Ensures that the lastMessageDate property is up to date.
      */
     protected function doLastMessageDate()
     {
@@ -135,7 +135,7 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Adds all messages contents to the keywords property
+     * Adds all messages contents to the keywords property.
      */
     protected function doKeywords()
     {
@@ -150,7 +150,7 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Denormalizes the value of isSpam to messages
+     * Denormalizes the value of isSpam to messages.
      */
     protected function doSpam()
     {
@@ -160,7 +160,7 @@ abstract class Thread extends AbstractThread
     }
 
     /**
-     * Ensures that metadata last message dates are up to date
+     * Ensures that metadata last message dates are up to date.
      *
      * Precondition: metadata exists for all thread participants
      */

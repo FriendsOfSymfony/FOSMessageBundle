@@ -7,7 +7,7 @@ use FOS\MessageBundle\Model\ThreadInterface;
 class ReplyMessage extends AbstractMessage
 {
     /**
-     * The thread we reply to
+     * The thread we reply to.
      *
      * @var ThreadInterface
      */

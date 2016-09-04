@@ -4,7 +4,9 @@ namespace FOS\MessageBundle\Util;
 
 /**
  * @internal
+ *
  * @see https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Util/LegacyFormHelper.php
+ *
  * @author Titouan Galopin <galopintitouan@gmail.com>
  */
 final class LegacyFormHelper

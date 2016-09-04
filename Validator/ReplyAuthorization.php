@@ -14,7 +14,7 @@ class ReplyAuthorization extends Constraint
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTargets()
     {

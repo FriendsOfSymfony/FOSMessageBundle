@@ -8,14 +8,14 @@ abstract class ThreadMetadata
     protected $isDeleted = false;
 
     /**
-    * Date of last message written by the participant
-    *
-    * @var \DateTime
-    */
+     * Date of last message written by the participant.
+     *
+     * @var \DateTime
+     */
     protected $lastParticipantMessageDate;
 
     /**
-     * Date of last message written by another participant
+     * Date of last message written by another participant.
      *
      * @var \DateTime
      */
@@ -47,7 +47,7 @@ abstract class ThreadMetadata
      */
     public function setIsDeleted($isDeleted)
     {
-        $this->isDeleted = (bool)$isDeleted;
+        $this->isDeleted = (bool) $isDeleted;
     }
 
     /**

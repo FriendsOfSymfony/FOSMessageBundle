@@ -38,7 +38,7 @@ class MessageExtension extends \Twig_Extension
     }
 
     /**
-     * Tells if this readable (thread or message) is read by the current user
+     * Tells if this readable (thread or message) is read by the current user.
      *
      * @return bool
      */
@@ -46,34 +46,33 @@ class MessageExtension extends \Twig_Extension
     {
         return $readable->isReadByParticipant($this->getAuthenticatedParticipant());
     }
-    
-    
+
     /**
-     * Checks if the participant can mark a thread as deleted
-     * 
+     * Checks if the participant can mark a thread as deleted.
+     *
      * @param ThreadInterface $thread
-     * 
+     *
      * @return bool true if participant can mark a thread as deleted, false otherwise
      */
     public function canDeleteThread(ThreadInterface $thread)
     {
         return $this->authorizer->canDeleteThread($thread);
     }
-    
+
     /**
-     * Checks if the participant has marked the thread as deleted
-     * 
+     * Checks if the participant has marked the thread as deleted.
+     *
      * @param ThreadInterface $thread
-     * 
+     *
      * @return bool true if participant has marked the thread as deleted, false otherwise
      */
     public function isThreadDeletedByParticipant(ThreadInterface $thread)
     {
-       return $thread->isDeletedByParticipant($this->getAuthenticatedParticipant());
+        return $thread->isDeletedByParticipant($this->getAuthenticatedParticipant());
     }
 
     /**
-     * Gets the number of unread messages for the current user
+     * Gets the number of unread messages for the current user.
      *
      * @return int
      */
@@ -87,7 +86,7 @@ class MessageExtension extends \Twig_Extension
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated user.
      *
      * @return ParticipantInterface
      */

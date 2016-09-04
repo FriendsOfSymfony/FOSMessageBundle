@@ -6,7 +6,7 @@ use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
- * Manages permissions to manipulate threads and messages
+ * Manages permissions to manipulate threads and messages.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
@@ -47,7 +47,7 @@ class Authorizer implements AuthorizerInterface
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated user.
      *
      * @return ParticipantInterface
      */

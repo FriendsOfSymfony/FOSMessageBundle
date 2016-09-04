@@ -7,7 +7,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Capable of updating the read state of objects directly in the storage,
- * without modifying the state of the object
+ * without modifying the state of the object.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
@@ -20,15 +20,15 @@ interface ReadableManagerInterface
      * We want to show the unread readables on the page,
      * as well as marking them as read.
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $user
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $user);
 
     /**
-     * Marks the readable as unread by this participant
+     * Marks the readable as unread by this participant.
      *
-     * @param ReadableInterface $readable
+     * @param ReadableInterface    $readable
      * @param ParticipantInterface $user
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $user);

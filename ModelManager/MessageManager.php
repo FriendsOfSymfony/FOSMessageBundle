@@ -13,7 +13,7 @@ use FOS\MessageBundle\Model\MessageInterface;
 abstract class MessageManager implements MessageManagerInterface
 {
     /**
-     * Creates an empty message instance
+     * Creates an empty message instance.
      *
      * @return MessageInterface
      */

@@ -1,28 +1,29 @@
 <?php
+
 namespace FOS\MessageBundle\FormModel;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
- * Class for handling multiple recipients in thread
+ * Class for handling multiple recipients in thread.
  */
 class NewThreadMultipleMessage extends AbstractMessage
 {
     /**
-     * The user who receives the message
+     * The user who receives the message.
      *
      * @var ArrayCollection
      */
     protected $recipients;
 
     /**
-     * The thread subject
+     * The thread subject.
      *
      * @var string
      */
     protected $subject;
-    
+
     public function __construct()
     {
         $this->recipients = new ArrayCollection();
@@ -53,7 +54,7 @@ class NewThreadMultipleMessage extends AbstractMessage
     }
 
     /**
-     * Adds single recipient to collection
+     * Adds single recipient to collection.
      *
      * @param ParticipantInterface $recipient
      */
@@ -65,7 +66,7 @@ class NewThreadMultipleMessage extends AbstractMessage
     }
 
     /**
-     * Removes recipient from collection
+     * Removes recipient from collection.
      *
      * @param ParticipantInterface $recipient
      */

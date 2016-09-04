@@ -16,7 +16,7 @@ class MessageController implements ContainerAwareInterface
     protected $container;
 
     /**
-     * Displays the authenticated participant inbox
+     * Displays the authenticated participant inbox.
      *
      * @return Response
      */
@@ -25,12 +25,12 @@ class MessageController implements ContainerAwareInterface
         $threads = $this->getProvider()->getInboxThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:inbox.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays the authenticated participant messages sent
+     * Displays the authenticated participant messages sent.
      *
      * @return Response
      */
@@ -39,12 +39,12 @@ class MessageController implements ContainerAwareInterface
         $threads = $this->getProvider()->getSentThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:sent.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays the authenticated participant deleted threads
+     * Displays the authenticated participant deleted threads.
      *
      * @return Response
      */
@@ -53,12 +53,12 @@ class MessageController implements ContainerAwareInterface
         $threads = $this->getProvider()->getDeletedThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:deleted.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays a thread, also allows to reply to it
+     * Displays a thread, also allows to reply to it.
      *
      * @param string $threadId the thread id
      *
@@ -72,18 +72,18 @@ class MessageController implements ContainerAwareInterface
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
+                'threadId' => $message->getThread()->getId(),
             )));
         }
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:thread.html.twig', array(
             'form' => $form->createView(),
-            'thread' => $thread
+            'thread' => $thread,
         ));
     }
 
     /**
-     * Create a new message thread
+     * Create a new message thread.
      *
      * @return Response
      */
@@ -94,18 +94,18 @@ class MessageController implements ContainerAwareInterface
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
+                'threadId' => $message->getThread()->getId(),
             )));
         }
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:newThread.html.twig', array(
             'form' => $form->createView(),
-            'data' => $form->getData()
+            'data' => $form->getData(),
         ));
     }
 
     /**
-     * Deletes a thread
+     * Deletes a thread.
      *
      * @param string $threadId the thread id
      *
@@ -119,9 +119,9 @@ class MessageController implements ContainerAwareInterface
 
         return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
     }
-    
+
     /**
-     * Undeletes a thread
+     * Undeletes a thread.
      *
      * @param string $threadId
      *
@@ -137,7 +137,7 @@ class MessageController implements ContainerAwareInterface
     }
 
     /**
-     * Searches for messages in the inbox and sentbox
+     * Searches for messages in the inbox and sentbox.
      *
      * @return Response
      */
@@ -148,12 +148,12 @@ class MessageController implements ContainerAwareInterface
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:search.html.twig', array(
             'query' => $query,
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Gets the provider service
+     * Gets the provider service.
      *
      * @return ProviderInterface
      */

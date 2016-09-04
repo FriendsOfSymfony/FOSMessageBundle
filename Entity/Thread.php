@@ -7,27 +7,26 @@ use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ParticipantInterface;
-
 use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
 
 abstract class Thread extends BaseThread
 {
     /**
-     * Messages contained in this thread
+     * Messages contained in this thread.
      *
      * @var Collection|MessageInterface[]
      */
     protected $messages;
 
     /**
-     * Users participating in this conversation
+     * Users participating in this conversation.
      *
      * @var Collection|ParticipantInterface[]
      */
     protected $participants;
 
     /**
-     * Thread metadata
+     * Thread metadata.
      *
      * @var Collection|ModelThreadMetadata[]
      */
@@ -35,28 +34,28 @@ abstract class Thread extends BaseThread
 
     /**
      * All text contained in the thread messages
-     * Used for the full text search
+     * Used for the full text search.
      *
      * @var string
      */
     protected $keywords = '';
 
     /**
-     * Participant that created the thread
+     * Participant that created the thread.
      *
      * @var ParticipantInterface
      */
     protected $createdBy;
 
     /**
-     * Date this thread was created at
+     * Date this thread was created at.
      *
      * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParticipants()
     {
@@ -64,7 +63,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Gets the users participating in this conversation
+     * Gets the users participating in this conversation.
      *
      * Since the ORM schema does not map the participants collection field, it
      * must be created on demand.
@@ -85,7 +84,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function addParticipant(ParticipantInterface $participant)
     {
@@ -95,11 +94,12 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Adds many participants to the thread
+     * Adds many participants to the thread.
      *
      * @param array|\Traversable
      *
      * @throws \InvalidArgumentException
+     *
      * @return Thread
      */
     public function addParticipants($participants)
@@ -116,7 +116,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isParticipant(ParticipantInterface $participant)
     {
@@ -134,7 +134,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function addMetadata(ModelThreadMetadata $meta)
     {

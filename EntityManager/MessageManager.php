@@ -8,7 +8,6 @@ use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
-use Doctrine\ORM\Query\Builder;
 
 /**
  * Default ORM MessageManager.
@@ -38,26 +37,26 @@ class MessageManager extends BaseMessageManager
     protected $metaClass;
 
     /**
-     * @param EntityManager     $em
-     * @param string            $class
-     * @param string            $metaClass
+     * @param EntityManager $em
+     * @param string        $class
+     * @param string        $metaClass
      */
     public function __construct(EntityManager $em, $class, $metaClass)
     {
-        $this->em         = $em;
+        $this->em = $em;
         $this->repository = $em->getRepository($class);
-        $this->class      = $em->getClassMetadata($class)->name;
-        $this->metaClass  = $em->getClassMetadata($metaClass)->name;
+        $this->class = $em->getClassMetadata($class)->name;
+        $this->metaClass = $em->getClassMetadata($metaClass)->name;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
         $builder = $this->repository->createQueryBuilder('m');
 
-        return (int)$builder
+        return (int) $builder
             ->select($builder->expr()->count('mm.id'))
 
             ->innerJoin('m.metadata', 'mm')
@@ -77,7 +76,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -85,7 +84,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -93,11 +92,11 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Marks all messages of this thread as read by this participant
+     * Marks all messages of this thread as read by this participant.
      *
-     * @param ThreadInterface $thread
+     * @param ThreadInterface      $thread
      * @param ParticipantInterface $participant
-     * @param bool $isRead
+     * @param bool                 $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
@@ -107,11 +106,11 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Marks the message as read or unread by this participant
+     * Marks the message as read or unread by this participant.
      *
-     * @param MessageInterface $message
+     * @param MessageInterface     $message
      * @param ParticipantInterface $participant
-     * @param bool $isRead
+     * @param bool                 $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
@@ -123,7 +122,7 @@ class MessageManager extends BaseMessageManager
         $this->em->createQueryBuilder()
             ->update($this->metaClass, 'm')
             ->set('m.isRead', '?1')
-            ->setParameter('1', (bool)$isRead, \PDO::PARAM_BOOL)
+            ->setParameter('1', (bool) $isRead, \PDO::PARAM_BOOL)
 
             ->where('m.id = :id')
             ->setParameter('id', $meta->getId())
@@ -133,7 +132,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
@@ -145,7 +144,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getClass()
     {
@@ -159,7 +158,7 @@ class MessageManager extends BaseMessageManager
      */
 
     /**
-     * Performs denormalization tricks
+     * Performs denormalization tricks.
      */
     protected function denormalize(MessageInterface $message)
     {
@@ -167,7 +166,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Ensures that the message metadata are up to date
+     * Ensures that the message metadata are up to date.
      */
     protected function doMetadata(MessageInterface $message)
     {

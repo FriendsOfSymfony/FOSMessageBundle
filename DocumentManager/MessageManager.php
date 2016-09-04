@@ -46,14 +46,14 @@ class MessageManager extends BaseMessageManager
      */
     public function __construct(DocumentManager $dm, $class, $metaClass)
     {
-        $this->dm         = $dm;
+        $this->dm = $dm;
         $this->repository = $dm->getRepository($class);
-        $this->class      = $dm->getClassMetadata($class)->name;
-        $this->metaClass  = $dm->getClassMetadata($metaClass)->name;
+        $this->class = $dm->getClassMetadata($class)->name;
+        $this->metaClass = $dm->getClassMetadata($metaClass)->name;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
@@ -64,7 +64,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -72,7 +72,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -80,40 +80,40 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Marks all messages of this thread as read by this participant
+     * Marks all messages of this thread as read by this participant.
      *
-     * @param ThreadInterface $thread
+     * @param ThreadInterface      $thread
      * @param ParticipantInterface $participant
-     * @param bool $isRead
+     * @param bool                 $isRead
      */
     public function markIsReadByThreadAndParticipant(ThreadInterface $thread, ParticipantInterface $participant, $isRead)
     {
-        $this->markIsReadByCondition($participant, $isRead, function(Builder $queryBuilder) use ($thread) {
+        $this->markIsReadByCondition($participant, $isRead, function (Builder $queryBuilder) use ($thread) {
             $queryBuilder->field('thread.$id')->equals(new \MongoId($thread->getId()));
         });
     }
 
     /**
-     * Marks the message as read or unread by this participant
+     * Marks the message as read or unread by this participant.
      *
-     * @param MessageInterface $message
+     * @param MessageInterface     $message
      * @param ParticipantInterface $participant
-     * @param bool $isRead
+     * @param bool                 $isRead
      */
     protected function markIsReadByParticipant(MessageInterface $message, ParticipantInterface $participant, $isRead)
     {
-        $this->markIsReadByCondition($participant, $isRead, function(Builder $queryBuilder) use ($message) {
+        $this->markIsReadByCondition($participant, $isRead, function (Builder $queryBuilder) use ($message) {
             $queryBuilder->field('_id')->equals(new \MongoId($message->getId()));
         });
     }
 
     /**
      * Marks messages as read/unread
-     * by updating directly the storage
+     * by updating directly the storage.
      *
      * @param ParticipantInterface $participant
-     * @param bool $isRead
-     * @param \Closure $condition
+     * @param bool                 $isRead
+     * @param \Closure             $condition
      */
     protected function markIsReadByCondition(ParticipantInterface $participant, $isRead, \Closure $condition)
     {
@@ -153,7 +153,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
@@ -165,7 +165,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getClass()
     {
@@ -173,7 +173,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Creates a new MessageMetadata instance
+     * Creates a new MessageMetadata instance.
      *
      * @return MessageMetadata
      */
@@ -189,7 +189,7 @@ class MessageManager extends BaseMessageManager
      */
 
     /**
-     * Performs denormalization tricks
+     * Performs denormalization tricks.
      *
      * @param Message $message
      */
@@ -200,7 +200,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Ensures that the message has metadata for each thread participant
+     * Ensures that the message has metadata for each thread participant.
      *
      * @param Message $message
      */

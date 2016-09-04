@@ -12,42 +12,42 @@ use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 
 /**
- * Provides threads for the current authenticated user
+ * Provides threads for the current authenticated user.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class Provider implements ProviderInterface
 {
     /**
-     * The thread manager
+     * The thread manager.
      *
      * @var ThreadManagerInterface
      */
     protected $threadManager;
 
     /**
-     * The message manager
+     * The message manager.
      *
      * @var MessageManagerInterface
      */
     protected $messageManager;
 
     /**
-     * The reader used to mark threads as read
+     * The reader used to mark threads as read.
      *
      * @var ReaderInterface
      */
     protected $threadReader;
 
     /**
-     * The authorizer manager
+     * The authorizer manager.
      *
      * @var authorizerInterface
      */
     protected $authorizer;
 
     /**
-     * The participant provider instance
+     * The participant provider instance.
      *
      * @var ParticipantProviderInterface
      */
@@ -83,7 +83,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getDeletedThreads()
     {
@@ -121,7 +121,7 @@ class Provider implements ProviderInterface
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated user.
      *
      * @return ParticipantInterface
      */

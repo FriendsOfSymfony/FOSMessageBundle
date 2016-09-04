@@ -6,16 +6,17 @@ use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * Instanciates message forms
+ * Instanciates message forms.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class ReplyMessageFormFactory extends AbstractMessageFormFactory
 {
     /**
-     * Creates a reply message
+     * Creates a reply message.
      *
      * @param ThreadInterface $thread the thread we answer to
+     *
      * @return FormInterface
      */
     public function create(ThreadInterface $thread)

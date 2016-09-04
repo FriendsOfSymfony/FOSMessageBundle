@@ -19,7 +19,7 @@ class SelfRecipientValidator extends ConstraintValidator
     }
 
     /**
-     * Indicates whether the constraint is valid
+     * Indicates whether the constraint is valid.
      *
      * @param object     $recipient
      * @param Constraint $constraint

@@ -9,10 +9,12 @@ use FOS\MessageBundle\Model\MessageInterface;
 class ReplyMessageFormHandler extends AbstractMessageFormHandler
 {
     /**
-     * Composes a message from the form data
+     * Composes a message from the form data.
      *
      * @param AbstractMessage $message
+     *
      * @return MessageInterface the composed message ready to be sent
+     *
      * @throws \InvalidArgumentException if the message is not a ReplyMessage
      */
     public function composeMessage(AbstractMessage $message)

@@ -6,63 +6,63 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Abstract thread model
+ * Abstract thread model.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 abstract class Thread implements ThreadInterface
 {
     /**
-     * Unique id of the thread
+     * Unique id of the thread.
      *
      * @var mixed
      */
     protected $id;
 
     /**
-     * Text subject of the thread
+     * Text subject of the thread.
      *
      * @var string
      */
     protected $subject;
 
     /**
-     * Tells if the thread is spam or flood
+     * Tells if the thread is spam or flood.
      *
      * @var bool
      */
     protected $isSpam = false;
 
     /**
-     * Messages contained in this thread
+     * Messages contained in this thread.
      *
      * @var Collection|MessageInterface[]
      */
     protected $messages;
 
     /**
-     * Thread metadata
+     * Thread metadata.
      *
      * @var Collection|ThreadMetadata[]
      */
     protected $metadata;
 
     /**
-     * Users participating in this conversation
+     * Users participating in this conversation.
      *
      * @var Collection|ParticipantInterface[]
      */
     protected $participants;
 
     /**
-     * Date this thread was created at
+     * Date this thread was created at.
      *
      * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * Participant that created the thread
+     * Participant that created the thread.
      *
      * @var ParticipantInterface
      */
@@ -218,7 +218,7 @@ abstract class Thread implements ThreadInterface
      */
     public function setIsDeleted($isDeleted)
     {
-        foreach($this->getParticipants() as $participant) {
+        foreach ($this->getParticipants() as $participant) {
             $this->setIsDeletedByParticipant($participant, $isDeleted);
         }
     }
@@ -261,6 +261,7 @@ abstract class Thread implements ThreadInterface
      * Gets the ThreadMetadata for a participant.
      *
      * @param ParticipantInterface $participant
+     *
      * @return ThreadMetadata
      */
     public function getMetadataForParticipant(ParticipantInterface $participant)

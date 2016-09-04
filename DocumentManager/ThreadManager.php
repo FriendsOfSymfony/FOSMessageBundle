@@ -9,7 +9,6 @@ use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use Doctrine\ODM\MongoDB\Query\Builder;
 
 /**
  * Default MongoDB ThreadManager.
@@ -55,15 +54,15 @@ class ThreadManager extends BaseThreadManager
      */
     public function __construct(DocumentManager $dm, $class, $metaClass, MessageManager $messageManager)
     {
-        $this->dm             = $dm;
-        $this->repository     = $dm->getRepository($class);
-        $this->class          = $dm->getClassMetadata($class)->name;
-        $this->metaClass      = $dm->getClassMetadata($metaClass)->name;
+        $this->dm = $dm;
+        $this->repository = $dm->getRepository($class);
+        $this->class = $dm->getClassMetadata($class)->name;
+        $this->metaClass = $dm->getClassMetadata($metaClass)->name;
         $this->messageManager = $messageManager;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findThreadById($id)
     {
@@ -71,7 +70,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -85,7 +84,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
@@ -93,7 +92,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -107,7 +106,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findParticipantSentThreads(ParticipantInterface $participant)
     {
@@ -115,7 +114,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -126,7 +125,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findParticipantDeletedThreads(ParticipantInterface $participant)
     {
@@ -134,7 +133,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
     {
@@ -155,7 +154,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search)
     {
@@ -163,7 +162,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {
@@ -174,7 +173,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -182,7 +181,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -190,7 +189,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
@@ -202,7 +201,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function deleteThread(ThreadInterface $thread)
     {
@@ -211,7 +210,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Returns the fully qualified comment thread class name
+     * Returns the fully qualified comment thread class name.
      *
      * @return string
      */
@@ -221,7 +220,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Creates a new ThreadMetadata instance
+     * Creates a new ThreadMetadata instance.
      *
      * @return ThreadMetadata
      */
@@ -237,7 +236,7 @@ class ThreadManager extends BaseThreadManager
      */
 
     /**
-     * Performs denormalization tricks
+     * Performs denormalization tricks.
      *
      * @param Thread $thread
      */
@@ -253,7 +252,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Ensures that the thread participants are up to date
+     * Ensures that the thread participants are up to date.
      */
     protected function doParticipants(Thread $thread)
     {
@@ -264,7 +263,7 @@ class ThreadManager extends BaseThreadManager
 
     /**
      * Ensures that metadata exists for each thread participant and that the
-     * last message dates are current
+     * last message dates are current.
      *
      * @param Thread $thread
      */

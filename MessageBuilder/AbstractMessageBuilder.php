@@ -7,21 +7,21 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
- * Fluent interface message builder
+ * Fluent interface message builder.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 abstract class AbstractMessageBuilder
 {
     /**
-     * The message we are building
+     * The message we are building.
      *
      * @var MessageInterface
      */
     protected $message;
 
     /**
-     * The thread the message goes in
+     * The thread the message goes in.
      *
      * @var ThreadInterface
      */
@@ -48,6 +48,7 @@ abstract class AbstractMessageBuilder
 
     /**
      * @param  string
+     *
      * @return AbstractMessageBuilder (fluent interface)
      */
     public function setBody($body)
@@ -58,7 +59,8 @@ abstract class AbstractMessageBuilder
     }
 
     /**
-     * @param  ParticipantInterface $sender
+     * @param ParticipantInterface $sender
+     *
      * @return AbstractMessageBuilder (fluent interface)
      */
     public function setSender(ParticipantInterface $sender)

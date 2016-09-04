@@ -3,7 +3,7 @@
 namespace FOS\MessageBundle\Search;
 
 /**
- * Search term
+ * Search term.
  */
 class Query
 {
@@ -60,7 +60,7 @@ class Query
     }
 
     /**
-     * Converts to the original term string
+     * Converts to the original term string.
      *
      * @return string
      */

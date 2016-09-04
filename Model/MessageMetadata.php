@@ -33,6 +33,6 @@ abstract class MessageMetadata
      */
     public function setIsRead($isRead)
     {
-        $this->isRead = (bool)$isRead;
+        $this->isRead = (bool) $isRead;
     }
 }

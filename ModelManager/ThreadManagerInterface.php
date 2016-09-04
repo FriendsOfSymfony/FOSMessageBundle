@@ -16,7 +16,7 @@ use FOS\MessageBundle\Model\ThreadInterface;
 interface ThreadManagerInterface extends ReadableManagerInterface
 {
     /**
-     * Finds a thread by its ID
+     * Finds a thread by its ID.
      *
      * @return ThreadInterface or null
      */
@@ -29,6 +29,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant);
@@ -40,6 +41,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an inbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return ThreadInterface[]
      */
     public function findParticipantInboxThreads(ParticipantInterface $participant);
@@ -51,6 +53,7 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant);
@@ -62,24 +65,27 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * In one word: an sentbox.
      *
      * @param ParticipantInterface $participant
+     *
      * @return ThreadInterface[]
      */
     public function findParticipantSentThreads(ParticipantInterface $participant);
 
     /**
      * Finds deleted threads from a participant,
-     * ordered by last message date
+     * ordered by last message date.
      *
      * @param ParticipantInterface $participant
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant);
 
     /**
      * Finds deleted threads from a participant,
-     * ordered by last message date
+     * ordered by last message date.
      *
      * @param ParticipantInterface $participant
+     *
      * @return ThreadInterface[]
      */
     public function findParticipantDeletedThreads(ParticipantInterface $participant);
@@ -90,7 +96,8 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message not written by this participant in reverse order.
      *
      * @param ParticipantInterface $participant
-     * @param string $search
+     * @param string               $search
+     *
      * @return Builder a query builder suitable for pagination
      */
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search);
@@ -101,37 +108,39 @@ interface ThreadManagerInterface extends ReadableManagerInterface
      * ordered by last message not written by this participant in reverse order.
      *
      * @param ParticipantInterface $participant
-     * @param string $search
+     * @param string               $search
+     *
      * @return ThreadInterface[]
      */
     public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search);
 
     /**
-     * Gets threads created by a participant
+     * Gets threads created by a participant.
      *
      * @param ParticipantInterface $participant
+     *
      * @return ThreadInterface[]
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant);
 
     /**
-     * Creates an empty comment thread instance
+     * Creates an empty comment thread instance.
      *
      * @return ThreadInterface
      */
     public function createThread();
 
     /**
-     * Saves a thread
+     * Saves a thread.
      *
      * @param ThreadInterface $thread
-     * @param bool $andFlush Whether to flush the changes (default true)
+     * @param bool            $andFlush Whether to flush the changes (default true)
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true);
 
     /**
      * Deletes a thread
-     * This is not participant deletion but real deletion
+     * This is not participant deletion but real deletion.
      *
      * @param ThreadInterface $thread the thread to delete
      */

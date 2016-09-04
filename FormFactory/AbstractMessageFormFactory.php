@@ -7,35 +7,35 @@ use Symfony\Component\Form\FormFactoryInterface;
 use FOS\MessageBundle\FormModel\AbstractMessage;
 
 /**
- * Instanciates message forms
+ * Instanciates message forms.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 abstract class AbstractMessageFormFactory
 {
     /**
-     * The Symfony form factory
+     * The Symfony form factory.
      *
      * @var FormFactoryInterface
      */
     protected $formFactory;
 
     /**
-     * The message form type
+     * The message form type.
      *
      * @var AbstractType|string
      */
     protected $formType;
 
     /**
-     * The name of the form
+     * The name of the form.
      *
      * @var string
      */
     protected $formName;
 
     /**
-     * The FQCN of the message model
+     * The FQCN of the message model.
      *
      * @var string
      */
@@ -58,7 +58,7 @@ abstract class AbstractMessageFormFactory
     }
 
     /**
-     * Creates a new instance of the form model
+     * Creates a new instance of the form model.
      *
      * @return AbstractMessage
      */

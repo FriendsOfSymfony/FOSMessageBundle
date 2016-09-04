@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\Collection;
 interface ThreadInterface extends ReadableInterface
 {
     /**
-     * Gets the message unique id
+     * Gets the message unique id.
      *
      * @return mixed
      */
@@ -20,31 +20,30 @@ interface ThreadInterface extends ReadableInterface
 
     /**
      * @param string
-     * @return null
      */
     public function setSubject($subject);
 
     /**
-     * Gets the messages contained in the thread
+     * Gets the messages contained in the thread.
      *
      * @return MessageInterface[]|Collection
      */
     public function getMessages();
 
     /**
-     * Adds a new message to the thread
+     * Adds a new message to the thread.
      */
     public function addMessage(MessageInterface $message);
 
     /**
-     * Gets the first message of the thread
+     * Gets the first message of the thread.
      *
      * @return MessageInterface
      */
     public function getFirstMessage();
 
     /**
-     * Gets the last message of the thread
+     * Gets the last message of the thread.
      *
      * @return MessageInterface
      */
@@ -52,7 +51,7 @@ interface ThreadInterface extends ReadableInterface
 
     /**
      * Gets the participant that created the thread
-     * Generally the sender of the first message
+     * Generally the sender of the first message.
      *
      * @return ParticipantInterface
      */
@@ -60,13 +59,13 @@ interface ThreadInterface extends ReadableInterface
 
     /**
      * Sets the participant that created the thread
-     * Generally the sender of the first message
+     * Generally the sender of the first message.
      */
     public function setCreatedBy(ParticipantInterface $participant);
 
     /**
      * Gets the date this thread was created at
-     * Generally the date of the first message
+     * Generally the date of the first message.
      *
      * @return \DateTime
      */
@@ -74,21 +73,22 @@ interface ThreadInterface extends ReadableInterface
 
     /**
      * Sets the date this thread was created at
-     * Generally the date of the first message
+     * Generally the date of the first message.
      */
     public function setCreatedAt(\DateTime $createdAt);
 
     /**
-     * Gets the users participating in this conversation
+     * Gets the users participating in this conversation.
      *
      * @return ParticipantInterface[]|Collection
      */
     public function getParticipants();
 
     /**
-     * Tells if the user participates to the conversation
+     * Tells if the user participates to the conversation.
      *
      * @param ParticipantInterface $participant
+     *
      * @return bool
      */
     public function isParticipant(ParticipantInterface $participant);
@@ -100,22 +100,22 @@ interface ThreadInterface extends ReadableInterface
     public function addParticipant(ParticipantInterface $participant);
 
     /**
-     * Tells if this thread is deleted by this participant
+     * Tells if this thread is deleted by this participant.
      *
      * @return bool
      */
     public function isDeletedByParticipant(ParticipantInterface $participant);
 
     /**
-     * Sets whether or not this participant has deleted this thread
+     * Sets whether or not this participant has deleted this thread.
      *
      * @param ParticipantInterface $participant
-     * @param bool $isDeleted
+     * @param bool                 $isDeleted
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted);
 
     /**
-     * Sets the thread as deleted or not deleted for all participants
+     * Sets the thread as deleted or not deleted for all participants.
      *
      * @param bool $isDeleted
      */

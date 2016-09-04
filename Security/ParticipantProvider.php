@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
- * Provides the authenticated participant
+ * Provides the authenticated participant.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
