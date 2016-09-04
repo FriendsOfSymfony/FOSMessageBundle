@@ -2,14 +2,12 @@
 
 namespace FOS\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
 use FOS\MessageBundle\Model\ThreadInterface;
 
 class ThreadEvent extends Event
 {
     /**
-     * The thread
      * @var ThreadInterface
      */
     private $thread;
@@ -20,8 +18,6 @@ class ThreadEvent extends Event
     }
 
     /**
-     * Returns the thread
-     *
      * @return ThreadInterface
      */
     public function getThread()

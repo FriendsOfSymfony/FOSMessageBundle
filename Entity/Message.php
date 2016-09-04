@@ -20,7 +20,7 @@ abstract class Message extends BaseMessage
     }
 
     /**
-     * @see FOS\MessageBundle\Model\Message::addMetadata()
+     * {@inheritDoc}
      */
     public function addMetadata(ModelMessageMetadata $meta)
     {

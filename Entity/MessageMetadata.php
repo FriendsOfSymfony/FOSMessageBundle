@@ -8,12 +8,9 @@ use FOS\MessageBundle\Model\MessageInterface;
 abstract class MessageMetadata extends BaseMessageMetadata
 {
     protected $id;
-
     protected $message;
 
     /**
-     * Gets the metadata id
-     *
      * @return integer
      */
     public function getId()
@@ -29,10 +26,6 @@ abstract class MessageMetadata extends BaseMessageMetadata
         return $this->message;
     }
 
-    /**
-     * @param  MessageInterface $message
-     * @return null
-     */
     public function setMessage(MessageInterface $message)
     {
         $this->message = $message;

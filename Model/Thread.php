@@ -4,7 +4,6 @@ namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract thread model
@@ -58,7 +57,7 @@ abstract class Thread implements ThreadInterface
     /**
      * Date this thread was created at
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -80,7 +79,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getId()
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -88,7 +87,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedAt()
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
@@ -96,7 +95,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedAt()
+     * {@inheritdoc}
      */
     public function setCreatedAt(\DateTime $createdAt)
     {
@@ -104,7 +103,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getCreatedBy()
+     * {@inheritdoc}
      */
     public function getCreatedBy()
     {
@@ -112,7 +111,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setCreatedBy()
+     * {@inheritdoc}
      */
     public function setCreatedBy(ParticipantInterface $participant)
     {
@@ -120,7 +119,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getSubject()
+     * {@inheritdoc}
      */
     public function getSubject()
     {
@@ -128,7 +127,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setSubject()
+     * {@inheritdoc}
      */
     public function setSubject($subject)
     {
@@ -144,8 +143,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @param  boolean
-     * @return null
+     * @param boolean
      */
     public function setIsSpam($isSpam)
     {
@@ -153,7 +151,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::addMessage()
+     * {@inheritdoc}
      */
     public function addMessage(MessageInterface $message)
     {
@@ -161,7 +159,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getMessages()
+     * {@inheritdoc}
      */
     public function getMessages()
     {
@@ -169,7 +167,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getFirstMessage()
+     * {@inheritdoc}
      */
     public function getFirstMessage()
     {
@@ -177,7 +175,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getLastMessage()
+     * {@inheritdoc}
      */
     public function getLastMessage()
     {
@@ -185,7 +183,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::isDeletedByParticipant()
+     * {@inheritdoc}
      */
     public function isDeletedByParticipant(ParticipantInterface $participant)
     {
@@ -197,7 +195,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeletedByParticipant()
+     * {@inheritdoc}
      */
     public function setIsDeletedByParticipant(ParticipantInterface $participant, $isDeleted)
     {
@@ -216,7 +214,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::setIsDeleted()
+     * {@inheritdoc}
      */
     public function setIsDeleted($isDeleted)
     {
@@ -226,7 +224,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * {@inheritdoc}
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -240,7 +238,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * {@inheritdoc}
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {
@@ -277,7 +275,7 @@ abstract class Thread implements ThreadInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ThreadInterface::getOtherParticipants()
+     * {@inheritdoc}
      */
     public function getOtherParticipants(ParticipantInterface $participant)
     {

@@ -18,8 +18,8 @@ class Query
     protected $escaped = null;
 
     /**
-     * @param string original
-     * @param string escaped
+     * @param string $original
+     * @param string $escaped
      */
     public function __construct($original, $escaped)
     {
@@ -36,7 +36,7 @@ class Query
     }
 
     /**
-     * @param string original
+     * @param string $original
      */
     public function setOriginal($original)
     {
@@ -52,7 +52,7 @@ class Query
     }
 
     /**
-     * @param string escaped
+     * @param string $escaped
      */
     public function setEscaped($escaped)
     {

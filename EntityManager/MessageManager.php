@@ -38,8 +38,6 @@ class MessageManager extends BaseMessageManager
     protected $metaClass;
 
     /**
-     * Constructor.
-     *
      * @param EntityManager     $em
      * @param string            $class
      * @param string            $metaClass
@@ -53,10 +51,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Tells how many unread messages this participant has
-     *
-     * @param ParticipantInterface $participant
-     * @return int the number of unread messages
+     * {@inheritDoc}
      */
     public function getNbUnreadMessageByParticipant(ParticipantInterface $participant)
     {
@@ -82,14 +77,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Marks the readable as read by this participant
-     * Must be applied directly to the storage,
-     * without modifying the readable state.
-     * We want to show the unread readables on the page,
-     * as well as marking the as read.
-     *
-     * @param ReadableInterface $readable
-     * @param ParticipantInterface $participant
+     * {@inheritDoc}
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -97,10 +85,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Marks the readable as unread by this participant
-     *
-     * @param ReadableInterface $readable
-     * @param ParticipantInterface $participant
+     * {@inheritDoc}
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -148,10 +133,7 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Saves a message
-     *
-     * @param MessageInterface $message
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * {@inheritDoc}
      */
     public function saveMessage(MessageInterface $message, $andFlush = true)
     {
@@ -163,16 +145,14 @@ class MessageManager extends BaseMessageManager
     }
 
     /**
-     * Returns the fully qualified comment thread class name
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getClass()
     {
         return $this->class;
     }
 
-    /**
+    /*
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization

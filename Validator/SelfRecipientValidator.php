@@ -13,11 +13,6 @@ class SelfRecipientValidator extends ConstraintValidator
      */
     protected $participantProvider;
 
-    /**
-     * Constructor
-     *
-     * @param ParticipantProviderInterface $participantProvider
-     */
     public function __construct(ParticipantProviderInterface $participantProvider)
     {
         $this->participantProvider = $participantProvider;

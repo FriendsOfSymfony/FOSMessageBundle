@@ -4,6 +4,7 @@ namespace FOS\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use FOS\MessageBundle\Document\Thread;
+use FOS\MessageBundle\Document\ThreadMetadata;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
@@ -62,9 +63,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds a thread by its ID
-     *
-     * @return ThreadInterface or null
+     * {@inheritDoc}
      */
     public function findThreadById($id)
     {
@@ -72,13 +71,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted, non-spam threads for a participant,
-     * containing at least one message not written by this participant,
-     * ordered by last message not written by this participant in reverse order.
-     * In one word: an inbox.
-     *
-     * @param ParticipantInterface $participant
-     * @return Builder a query builder suitable for pagination
+     * {@inheritDoc}
      */
     public function getParticipantInboxThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -92,13 +85,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted, non-spam threads for a participant,
-     * containing at least one message not written by this participant,
-     * ordered by last message not written by this participant in reverse order.
-     * In one word: an inbox.
-     *
-     * @param ParticipantInterface $participant
-     * @return ThreadInterface[]
+     * {@inheritDoc}
      */
     public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
@@ -106,13 +93,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads from a participant,
-     * containing at least one message written by this participant,
-     * ordered by last message written by this participant in reverse order.
-     * In one word: an sentbox.
-     *
-     * @param ParticipantInterface $participant
-     * @return Builder a query builder suitable for pagination
+     * {@inheritDoc}
      */
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
     {
@@ -126,13 +107,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads from a participant,
-     * containing at least one message written by this participant,
-     * ordered by last message written by this participant in reverse order.
-     * In one word: an sentbox.
-     *
-     * @param ParticipantInterface $participant
-     * @return ThreadInterface[]
+     * {@inheritDoc}
      */
     public function findParticipantSentThreads(ParticipantInterface $participant)
     {
@@ -159,13 +134,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a participant,
-     * matching the given search term
-     * ordered by last message not written by this participant in reverse order.
-     *
-     * @param ParticipantInterface $participant
-     * @param string $search
-     * @return Builder a query builder suitable for pagination
+     * {@inheritDoc}
      */
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
     {
@@ -186,24 +155,15 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Finds not deleted threads for a participant,
-     * matching the given search term
-     * ordered by last message not written by this participant in reverse order.
-     *
-     * @param ParticipantInterface $participant
-     * @param string $search
-     * @return ThreadInterface[]
+     * {@inheritDoc}
      */
-    public function findParticipantThreadsBySearch(participantinterface $participant, $search)
+    public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search)
     {
         return $this->getParticipantThreadsBySearchQueryBuilder($participant, $search)->getQuery()->execute();
     }
 
     /**
-     * Gets threads created by a participant
-     *
-     * @param ParticipantInterface $participant
-     * @return ThreadInterface[]
+     * {@inheritDoc}
      */
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {
@@ -214,14 +174,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Marks the readable as read by this participant
-     * Must be applied directly to the storage,
-     * without modifying the readable state.
-     * We want to show the unread readables on the page,
-     * as well as marking the as read.
-     *
-     * @param ReadableInterface $readable
-     * @param ParticipantInterface $participant
+     * {@inheritDoc}
      */
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -229,10 +182,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Marks the readable as unread by this participant
-     *
-     * @param ReadableInterface $readable
-     * @param ParticipantInterface $participant
+     * {@inheritDoc}
      */
     public function markAsUnreadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
     {
@@ -240,10 +190,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Saves a thread
-     *
-     * @param ThreadInterface $thread
-     * @param Boolean $andFlush Whether to flush the changes (default true)
+     * {@inheritDoc}
      */
     public function saveThread(ThreadInterface $thread, $andFlush = true)
     {
@@ -255,10 +202,7 @@ class ThreadManager extends BaseThreadManager
     }
 
     /**
-     * Deletes a thread
-     * This is not participant deletion but real deletion
-     *
-     * @param ThreadInterface $thread the thread to delete
+     * {@inheritDoc}
      */
     public function deleteThread(ThreadInterface $thread)
     {
@@ -286,7 +230,7 @@ class ThreadManager extends BaseThreadManager
         return new $this->metaClass();
     }
 
-    /**
+    /*
      * DENORMALIZATION
      *
      * All following methods are relative to denormalization

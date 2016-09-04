@@ -5,7 +5,6 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
@@ -20,9 +19,6 @@ class RecipientsDataTransformer implements DataTransformerInterface
      */
     private $userToUsernameTransformer;
 
-    /**
-     * @param DataTransformerInterface $userToUsernameTransformer
-     */
     public function __construct(DataTransformerInterface $userToUsernameTransformer)
     {
         $this->userToUsernameTransformer = $userToUsernameTransformer;
@@ -37,8 +33,8 @@ class RecipientsDataTransformer implements DataTransformerInterface
      */
     public function transform($recipients)
     {
-        if ($recipients === null || $recipients->count() == 0) {
-            return "";
+        if ($recipients === null || $recipients->count() === 0) {
+            return '';
         }
 
         $usernames = array();

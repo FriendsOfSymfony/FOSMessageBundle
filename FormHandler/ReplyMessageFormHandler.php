@@ -4,6 +4,7 @@ namespace FOS\MessageBundle\FormHandler;
 
 use FOS\MessageBundle\FormModel\AbstractMessage;
 use FOS\MessageBundle\FormModel\ReplyMessage;
+use FOS\MessageBundle\Model\MessageInterface;
 
 class ReplyMessageFormHandler extends AbstractMessageFormHandler
 {
@@ -12,7 +13,7 @@ class ReplyMessageFormHandler extends AbstractMessageFormHandler
      *
      * @param AbstractMessage $message
      * @return MessageInterface the composed message ready to be sent
-     * @throws InvalidArgumentException if the message is not a ReplyMessage
+     * @throws \InvalidArgumentException if the message is not a ReplyMessage
      */
     public function composeMessage(AbstractMessage $message)
     {

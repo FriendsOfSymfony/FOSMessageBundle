@@ -13,11 +13,6 @@ class AuthorizationValidator extends ConstraintValidator
      */
     protected $authorizer;
 
-    /**
-     * Constructor
-     *
-     * @param AuthorizerInterface $authorizer
-     */
     public function __construct(AuthorizerInterface $authorizer)
     {
         $this->authorizer = $authorizer;

@@ -4,7 +4,6 @@ namespace FOS\MessageBundle\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Abstract message model
@@ -37,7 +36,7 @@ abstract class Message implements MessageInterface
     /**
      * Date when the message was sent
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
@@ -65,7 +64,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getId()
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -73,7 +72,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getThread()
+     * {@inheritdoc}
      */
     public function getThread()
     {
@@ -81,7 +80,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setThread()
+     * {@inheritdoc}
      */
     public function setThread(ThreadInterface $thread)
     {
@@ -89,7 +88,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getCreatedAt()
+     * {@inheritdoc}
      */
     public function getCreatedAt()
     {
@@ -97,7 +96,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getBody()
+     * {@inheritdoc}
      */
     public function getBody()
     {
@@ -105,7 +104,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setBody()
+     * {@inheritdoc}
      */
     public function setBody($body)
     {
@@ -113,7 +112,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::getSender()
+     * {@inheritdoc}
      */
     public function getSender()
     {
@@ -121,7 +120,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\MessageInterface::setSender()
+     * {@inheritdoc}
      */
     public function setSender(ParticipantInterface $sender)
     {
@@ -166,7 +165,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::isReadByParticipant()
+     * {@inheritdoc}
      */
     public function isReadByParticipant(ParticipantInterface $participant)
     {
@@ -178,7 +177,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * @see FOS\MessageBundle\Model\ReadableInterface::setIsReadByParticipant()
+     * {@inheritdoc}
      */
     public function setIsReadByParticipant(ParticipantInterface $participant, $isRead)
     {

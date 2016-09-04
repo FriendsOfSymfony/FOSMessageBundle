@@ -12,5 +12,5 @@ interface QueryFactoryInterface
      *
      * @return Query the term object
      */
-    function createFromRequest();
+    public function createFromRequest();
 }

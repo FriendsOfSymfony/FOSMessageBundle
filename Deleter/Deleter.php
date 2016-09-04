@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Deleter;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Security\AuthorizerInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
@@ -46,9 +47,7 @@ class Deleter implements DeleterInterface
     }
 
     /**
-     * Marks the thread as deleted by the current authenticated user
-     *
-     * @param ThreadInterface $thread
+     * {@inheritdoc}
      */
     public function markAsDeleted(ThreadInterface $thread)
     {
@@ -61,9 +60,7 @@ class Deleter implements DeleterInterface
     }
 
     /**
-     * Marks the thread as undeleted by the current authenticated user
-     *
-     * @param ThreadInterface $thread
+     * {@inheritdoc}
      */
     public function markAsUndeleted(ThreadInterface $thread)
     {

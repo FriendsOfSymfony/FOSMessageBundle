@@ -2,14 +2,12 @@
 
 namespace FOS\MessageBundle\Event;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
 use FOS\MessageBundle\Model\ReadableInterface;
 
 class ReadableEvent extends Event
 {
     /**
-     * The readable
      * @var ReadableInterface
      */
     private $readable;
@@ -20,8 +18,6 @@ class ReadableEvent extends Event
     }
 
     /**
-     * Returns the readable
-     *
      * @return ReadableInterface
      */
     public function getReadable()

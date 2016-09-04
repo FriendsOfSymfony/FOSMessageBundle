@@ -2,8 +2,6 @@
 
 namespace FOS\MessageBundle\Model;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-
 interface ReadableInterface
 {
     /**
@@ -11,7 +9,7 @@ interface ReadableInterface
      *
      * @return bool
      */
-    function isReadByParticipant(ParticipantInterface $participant);
+    public function isReadByParticipant(ParticipantInterface $participant);
 
     /**
      * Sets whether or not this participant has read this
@@ -19,5 +17,5 @@ interface ReadableInterface
      * @param ParticipantInterface $participant
      * @param boolean $isRead
      */
-    function setIsReadByParticipant(ParticipantInterface $participant, $isRead);
+    public function setIsReadByParticipant(ParticipantInterface $participant, $isRead);
 }

@@ -16,5 +16,5 @@ interface ParticipantProviderInterface
      *
      * @return ParticipantInterface
      */
-    function getAuthenticatedParticipant();
+    public function getAuthenticatedParticipant();
 }

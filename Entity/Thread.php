@@ -9,7 +9,6 @@ use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ParticipantInterface;
 
 use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
-use FOS\MessageBundle\Model\ThreadMetadata;
 
 abstract class Thread extends BaseThread
 {
@@ -30,7 +29,7 @@ abstract class Thread extends BaseThread
     /**
      * Thread metadata
      *
-     * @var Collection|ThreadMetadata[]
+     * @var Collection|ModelThreadMetadata[]
      */
     protected $metadata;
 
@@ -52,14 +51,12 @@ abstract class Thread extends BaseThread
     /**
      * Date this thread was created at
      *
-     * @var DateTime
+     * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * Gets the users participating in this conversation
-     *
-     * @return ParticipantInterface[]
+     * {@inheritDoc}
      */
     public function getParticipants()
     {
@@ -76,7 +73,7 @@ abstract class Thread extends BaseThread
      */
     protected function getParticipantsCollection()
     {
-        if ($this->participants == null) {
+        if (null === $this->participants) {
             $this->participants = new ArrayCollection();
 
             foreach ($this->metadata as $data) {
@@ -88,11 +85,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Adds a participant to the thread
-     * If it already exists, nothing is done.
-     *
-     * @param ParticipantInterface $participant
-     * @return null
+     * {@inheritDoc}
      */
     public function addParticipant(ParticipantInterface $participant)
     {
@@ -112,7 +105,7 @@ abstract class Thread extends BaseThread
     public function addParticipants($participants)
     {
         if (!is_array($participants) && !$participants instanceof \Traversable) {
-            throw new \InvalidArgumentException("Participants must be an array or instanceof Traversable");
+            throw new \InvalidArgumentException('Participants must be an array or instance of Traversable');
         }
 
         foreach ($participants as $participant) {
@@ -123,10 +116,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Tells if the user participates to the conversation
-     *
-     * @param ParticipantInterface $participant
-     * @return boolean
+     * {@inheritDoc}
      */
     public function isParticipant(ParticipantInterface $participant)
     {
@@ -134,7 +124,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * Get the collection of ThreadMetadata.
+     * Get the collection of ModelThreadMetadata.
      *
      * @return Collection
      */
@@ -144,7 +134,7 @@ abstract class Thread extends BaseThread
     }
 
     /**
-     * @see FOS\MessageBundle\Model\Thread::addMetadata()
+     * {@inheritDoc}
      */
     public function addMetadata(ModelThreadMetadata $meta)
     {

@@ -17,22 +17,16 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class Sender implements SenderInterface
 {
     /**
-     * The message manager
-     *
      * @var MessageManagerInterface
      */
     protected $messageManager;
 
     /**
-     * The thread manager
-     *
      * @var ThreadManagerInterface
      */
     protected $threadManager;
 
     /**
-     * The event dispatcher
-     *
      * @var EventDispatcherInterface
      */
     protected $dispatcher;
@@ -45,10 +39,7 @@ class Sender implements SenderInterface
     }
 
     /**
-     * Sends the message by persisting it to the message manager and undeletes
-     * the thread for all participants.
-     *
-     * @param MessageInterface $message
+     * {@inheritdoc}
      */
     public function send(MessageInterface $message)
     {

@@ -2,9 +2,7 @@
 
 namespace FOS\MessageBundle\MessageBuilder;
 
-use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\MessageBundle\Sender\SenderInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**

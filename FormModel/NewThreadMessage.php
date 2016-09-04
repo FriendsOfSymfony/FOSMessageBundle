@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\FormModel;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
+
 class NewThreadMessage extends AbstractMessage
 {
     /**
@@ -27,8 +29,7 @@ class NewThreadMessage extends AbstractMessage
     }
 
     /**
-     * @param  string
-     * @return null
+     * @param string
      */
     public function setSubject($subject)
     {
@@ -44,12 +45,10 @@ class NewThreadMessage extends AbstractMessage
     }
 
     /**
-     * @param  ParticipantInterface
-     * @return null
+     * @param ParticipantInterface
      */
     public function setRecipient($recipient)
     {
         $this->recipient = $recipient;
     }
-
 }

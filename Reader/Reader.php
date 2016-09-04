@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\Reader;
 
+use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\ModelManager\ReadableManagerInterface;
@@ -45,9 +46,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * Marks the readable as read by the current authenticated user
-     *
-     * @param ReadableInterface $readable
+     * {@inheritdoc}
      */
     public function markAsRead(ReadableInterface $readable)
     {
@@ -61,9 +60,7 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * Marks the readable as unread by the current authenticated user
-     *
-     * @param ReadableInterface $readable
+     * {@inheritdoc}
      */
     public function markAsUnread(ReadableInterface $readable)
     {

@@ -2,6 +2,8 @@
 
 namespace FOS\MessageBundle\ModelManager;
 
+use FOS\MessageBundle\Model\MessageInterface;
+
 /**
  * Abstract Message Manager implementation which can be used as base by
  * your concrete manager.
@@ -18,8 +20,7 @@ abstract class MessageManager implements MessageManagerInterface
     public function createMessage()
     {
         $class = $this->getClass();
-        $message = new $class;
 
-        return $message;
+        return new $class();
     }
 }

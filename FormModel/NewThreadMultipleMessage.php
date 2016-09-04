@@ -25,7 +25,7 @@ class NewThreadMultipleMessage extends AbstractMessage
     
     public function __construct()
     {
-        $this->recipients = new ArrayCollection;
+        $this->recipients = new ArrayCollection();
     }
 
     /**
@@ -38,8 +38,6 @@ class NewThreadMultipleMessage extends AbstractMessage
 
     /**
      * @param string $subject
-     *
-     * @return null
      */
     public function setSubject($subject)
     {
@@ -58,8 +56,6 @@ class NewThreadMultipleMessage extends AbstractMessage
      * Adds single recipient to collection
      *
      * @param ParticipantInterface $recipient
-     *
-     * @return null
      */
     public function addRecipient(ParticipantInterface $recipient)
     {
@@ -68,18 +64,13 @@ class NewThreadMultipleMessage extends AbstractMessage
         }
     }
 
-
     /**
      * Removes recipient from collection
      *
      * @param ParticipantInterface $recipient
-     *
-     * @return null
-     *
      */
     public function removeRecipient(ParticipantInterface $recipient)
     {
         $this->recipients->removeElement($recipient);
     }
-
 }

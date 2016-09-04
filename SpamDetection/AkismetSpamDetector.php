@@ -9,15 +9,11 @@ use FOS\MessageBundle\Security\ParticipantProviderInterface;
 class AkismetSpamDetector implements SpamDetectorInterface
 {
     /**
-     * Akismet instance
-     *
      * @var AkismetInterface
      */
     protected $akismet;
 
     /**
-     * The participantProvider instance
-     *
      * @var ParticipantProviderInterface
      */
     protected $participantProvider;
@@ -29,10 +25,7 @@ class AkismetSpamDetector implements SpamDetectorInterface
     }
 
     /**
-     * Tells whether or not a new message looks like spam
-     *
-     * @param NewThreadMessage $message
-     * @return boolean true if it is spam, false otherwise
+     * {@inheritdoc}
      */
     public function isSpam(NewThreadMessage $message)
     {

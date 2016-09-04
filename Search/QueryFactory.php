@@ -12,7 +12,7 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * @var Request
      */
-    protected $request = null;
+    protected $request;
 
     /**
      * the query parameter containing the search term
@@ -34,9 +34,7 @@ class QueryFactory implements QueryFactoryInterface
     }
 
     /**
-     * Gets the search term
-     *
-     * @return Term the term object
+     * {@inheritdoc}
      */
     public function createFromRequest()
     {
@@ -51,7 +49,7 @@ class QueryFactory implements QueryFactoryInterface
     /**
      * Sets: the query parameter containing the search term
      *
-     * @param string queryParameter
+     * @param string $queryParameter
      */
     public function setQueryParameter($queryParameter)
     {

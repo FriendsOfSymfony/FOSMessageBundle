@@ -14,8 +14,6 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 class ParticipantProvider implements ParticipantProviderInterface
 {
     /**
-     * The security context
-     *
      * @var SecurityContextInterface
      */
     protected $securityContext;
@@ -26,9 +24,7 @@ class ParticipantProvider implements ParticipantProviderInterface
     }
 
     /**
-     * Gets the current authenticated user
-     *
-     * @return ParticipantInterface
+     * {@inheritdoc}
      */
     public function getAuthenticatedParticipant()
     {
