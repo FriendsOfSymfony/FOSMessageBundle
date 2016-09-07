@@ -14,8 +14,8 @@ Add the following to your `app/config/config.yml` file.
 
 fos_message:
     db_driver: orm
-    thread_class: Acme\MessageBundle\Entity\Thread
-    message_class: Acme\MessageBundle\Entity\Message
+    thread_class: AppBundle\Entity\Thread
+    message_class: AppBundle\Entity\Message
 ```
 
 [Continue with the installation][]
@@ -25,12 +25,12 @@ Message class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Entity/Message.php
+// src/AppBundle/Entity/Message.php
 
-namespace Acme\MessageBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Entity\Message as BaseMessage;
 
 /**
@@ -47,7 +47,7 @@ class Message extends BaseMessage
 
     /**
      * @ORM\ManyToOne(
-     *   targetEntity="Acme\MessageBundle\Entity\Thread",
+     *   targetEntity="AppBundle\Entity\Thread",
      *   inversedBy="messages"
      * )
      * @var \FOS\MessageBundle\Model\ThreadInterface
@@ -55,18 +55,18 @@ class Message extends BaseMessage
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $sender;
 
     /**
      * @ORM\OneToMany(
-     *   targetEntity="Acme\MessageBundle\Entity\MessageMetadata",
+     *   targetEntity="AppBundle\Entity\MessageMetadata",
      *   mappedBy="message",
      *   cascade={"all"}
      * )
-     * @var MessageMetadata[]|\Doctrine\Common\Collections\Collection
+     * @var MessageMetadata[]|Collection
      */
     protected $metadata;
 }
@@ -77,9 +77,9 @@ MessageMetadata class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Entity/MessageMetadata.php
+// src/AppBundle/Entity/MessageMetadata.php
 
-namespace Acme\MessageBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
@@ -98,7 +98,7 @@ class MessageMetadata extends BaseMessageMetadata
 
     /**
      * @ORM\ManyToOne(
-     *   targetEntity="Acme\MessageBundle\Entity\Message",
+     *   targetEntity="AppBundle\Entity\Message",
      *   inversedBy="metadata"
      * )
      * @var \FOS\MessageBundle\Model\MessageInterface
@@ -106,7 +106,7 @@ class MessageMetadata extends BaseMessageMetadata
     protected $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $participant;
@@ -118,12 +118,12 @@ Thread class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Entity/Thread.php
+// src/AppBundle/Entity/Thread.php
 
-namespace Acme\MessageBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Entity\Thread as BaseThread;
 
 /**
@@ -139,27 +139,27 @@ class Thread extends BaseThread
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $createdBy;
 
     /**
      * @ORM\OneToMany(
-     *   targetEntity="Acme\MessageBundle\Entity\Message",
+     *   targetEntity="AppBundle\Entity\Message",
      *   mappedBy="thread"
      * )
-     * @var Message[]|\Doctrine\Common\Collections\Collection
+     * @var Message[]|Collection
      */
     protected $messages;
 
     /**
      * @ORM\OneToMany(
-     *   targetEntity="Acme\MessageBundle\Entity\ThreadMetadata",
+     *   targetEntity="AppBundle\Entity\ThreadMetadata",
      *   mappedBy="thread",
      *   cascade={"all"}
      * )
-     * @var ThreadMetadata[]|\Doctrine\Common\Collections\Collection
+     * @var ThreadMetadata[]|Collection
      */
     protected $metadata;
 }
@@ -170,9 +170,9 @@ ThreadMetadata class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Entity/ThreadMetadata.php
+// src/AppBundle/Entity/ThreadMetadata.php
 
-namespace Acme\MessageBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
@@ -191,7 +191,7 @@ class ThreadMetadata extends BaseThreadMetadata
 
     /**
      * @ORM\ManyToOne(
-     *   targetEntity="Acme\MessageBundle\Entity\Thread",
+     *   targetEntity="AppBundle\Entity\Thread",
      *   inversedBy="metadata"
      * )
      * @var \FOS\MessageBundle\Model\ThreadInterface
@@ -199,7 +199,7 @@ class ThreadMetadata extends BaseThreadMetadata
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Acme\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
     protected $participant;

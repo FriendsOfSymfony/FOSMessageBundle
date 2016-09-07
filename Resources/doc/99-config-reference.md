@@ -8,8 +8,8 @@ All configuration options are listed below::
 
 fos_message:
     db_driver:              orm
-    thread_class:           Acme\MessageBundle\Entity\Thread
-    message_class:          Acme\MessageBundle\Entity\Message
+    thread_class:           AppBundle\Entity\Thread
+    message_class:          AppBundle\Entity\Message
     message_manager:        fos_message.message_manager         # See ModelManager\MessageManagerInterface
     thread_manager:         fos_message.thread_manager          # See ModelManager\ThreadManagerInterface
     sender:                 fos_message.sender                  # See Sender\SenderInterface
