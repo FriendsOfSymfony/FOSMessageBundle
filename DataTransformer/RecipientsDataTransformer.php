@@ -1,4 +1,5 @@
 <?php
+
 namespace FOS\MessageBundle\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
@@ -7,8 +8,9 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+
 /**
- * Transforms collection of UserInterface into strings separated with coma
+ * Transforms collection of UserInterface into strings separated with coma.
  *
  * @author Łukasz Pospiech <zocimek@gmail.com>
  */
@@ -25,7 +27,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms a collection of recipients into a string
+     * Transforms a collection of recipients into a string.
      *
      * @param Collection $recipients
      *
@@ -47,12 +49,13 @@ class RecipientsDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * Transforms a string (usernames) to a Collection of UserInterface
+     * Transforms a string (usernames) to a Collection of UserInterface.
      *
      * @param string $usernames
      *
      * @throws UnexpectedTypeException
      * @throws TransformationFailedException
+     *
      * @return Collection $recipients
      */
     public function reverseTransform($usernames)

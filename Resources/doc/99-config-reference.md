@@ -29,12 +29,12 @@ fos_message:
         query_parameter:    'q'                                     # Request query parameter containing the term
     new_thread_form:
         factory:            fos_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory
-        type:               fos_message.new_thread_form.type    # See FormType\NewThreadMessageFormType
+        type:               FOS\MessageBundle\FormType\NewThreadMessageFormType
         handler:            fos_message.new_thread_form.handler # See FormHandler\NewThreadMessageFormHandler
         name:               message
     reply_form:
         factory:            fos_message.reply_form.factory      # See FormFactory\ReplyMessageFormFactory
-        type:               fos_message.reply_form.type         # See FormType\ReplyMessageFormType
+        type:               FOS\MessageBundle\FormType\ReplyMessageFormType
         handler:            fos_message.reply_form.handler      # See FormHandler\ReplyMessageFormHandler
         name:               message
 ```

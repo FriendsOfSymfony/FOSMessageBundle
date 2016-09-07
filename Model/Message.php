@@ -6,49 +6,49 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Abstract message model
+ * Abstract message model.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 abstract class Message implements MessageInterface
 {
     /**
-     * Unique id of the message
+     * Unique id of the message.
      *
      * @var mixed
      */
     protected $id;
 
     /**
-     * User who sent the message
+     * User who sent the message.
      *
      * @var ParticipantInterface
      */
     protected $sender;
 
     /**
-     * Text body of the message
+     * Text body of the message.
      *
      * @var string
      */
     protected $body;
 
     /**
-     * Date when the message was sent
+     * Date when the message was sent.
      *
      * @var \DateTime
      */
     protected $createdAt;
 
     /**
-     * Thread the message belongs to
+     * Thread the message belongs to.
      *
      * @var ThreadInterface
      */
     protected $thread;
 
     /**
-     * Collection of MessageMetadata
+     * Collection of MessageMetadata.
      *
      * @var Collection|MessageMetadata[]
      */
@@ -128,7 +128,7 @@ abstract class Message implements MessageInterface
     }
 
     /**
-     * Gets the created at timestamp
+     * Gets the created at timestamp.
      *
      * @return int
      */
@@ -151,6 +151,7 @@ abstract class Message implements MessageInterface
      * Get the MessageMetadata for a participant.
      *
      * @param ParticipantInterface $participant
+     *
      * @return MessageMetadata
      */
     public function getMetadataForParticipant(ParticipantInterface $participant)

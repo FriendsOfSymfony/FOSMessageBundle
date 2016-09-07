@@ -3,28 +3,27 @@
 namespace FOS\MessageBundle\Composer;
 
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
-use FOS\MessageBundle\Sender\SenderInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\MessageBuilder\NewThreadMessageBuilder;
 use FOS\MessageBundle\MessageBuilder\ReplyMessageBuilder;
 
 /**
- * Factory for message builders
+ * Factory for message builders.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class Composer implements ComposerInterface
 {
     /**
-     * Message manager
+     * Message manager.
      *
      * @var MessageManagerInterface
      */
     protected $messageManager;
 
     /**
-     * Thread manager
+     * Thread manager.
      *
      * @var ThreadManagerInterface
      */
@@ -37,7 +36,7 @@ class Composer implements ComposerInterface
     }
 
     /**
-     * Starts composing a message, starting a new thread
+     * Starts composing a message, starting a new thread.
      *
      * @return NewThreadMessageBuilder
      */
@@ -50,7 +49,7 @@ class Composer implements ComposerInterface
     }
 
     /**
-     * Starts composing a message in a reply to a thread
+     * Starts composing a message in a reply to a thread.
      *
      * @return ReplyMessageBuilder
      */

@@ -8,9 +8,9 @@ abstract class Message extends BaseMessage
 {
     /**
      * Tells if the message is spam or flood
-     * This denormalizes Thread.isSpam
+     * This denormalizes Thread.isSpam.
      *
-     * @var boolean
+     * @var bool
      */
     protected $isSpam = false;
 
@@ -23,11 +23,11 @@ abstract class Message extends BaseMessage
     protected $unreadForParticipants = array();
 
     /**
-     * @param boolean $isSpam
+     * @param bool $isSpam
      */
     public function setIsSpam($isSpam)
     {
-        $this->isSpam = (boolean) $isSpam;
+        $this->isSpam = (bool) $isSpam;
     }
 
     /*
@@ -37,7 +37,7 @@ abstract class Message extends BaseMessage
      */
 
     /**
-     * Performs denormalization tricks
+     * Performs denormalization tricks.
      */
     public function denormalize()
     {
@@ -46,7 +46,7 @@ abstract class Message extends BaseMessage
     }
 
     /**
-     * Ensures that the sender is considered to have read this message
+     * Ensures that the sender is considered to have read this message.
      */
     protected function doSenderIsRead()
     {

@@ -12,9 +12,9 @@ namespace FOS\MessageBundle\Model;
 interface ParticipantInterface
 {
     /**
-     * Gets the unique identifier of the participant
+     * Gets the unique identifier of the participant.
      *
-     * @return string
+     * @return mixed
      */
     public function getId();
 }

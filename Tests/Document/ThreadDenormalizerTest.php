@@ -19,7 +19,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
             new DateTime('- 3 days'),
             new DateTime('- 2 days'),
             new DateTime('- 1 days'),
-            new DateTime('- 1 hour')
+            new DateTime('- 1 hour'),
         );
     }
 
@@ -29,7 +29,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
         $user1 = $this->createParticipantMock('u1');
         $user2 = $this->createParticipantMock('u2');
 
-        /**
+        /*
          * First message
          */
         $message = $this->createMessageMock($user1, $user2, $this->dates[0]);
@@ -41,7 +41,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
         $this->assertSame(array('u1' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
-        /**
+        /*
          * Second message
          */
         $message = $this->createMessageMock($user2, $user1, $this->dates[1]);
@@ -51,7 +51,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('u1' => $this->dates[1]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
         $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[1]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
-        /**
+        /*
          * Third message
          */
         $message = $this->createMessageMock($user2, $user1, $this->dates[2]);
@@ -61,7 +61,7 @@ class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(array('u1' => $this->dates[2]->getTimestamp(), 'u2' => $this->dates[0]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByOtherParticipant());
         $this->assertSame(array('u1' => $this->dates[0]->getTimestamp(), 'u2' => $this->dates[2]->getTimestamp()), $thread->getDatesOfLastMessageWrittenByParticipant());
 
-        /**
+        /*
          * Fourth message
          */
         $message = $this->createMessageMock($user1, $user2, $this->dates[3]);
@@ -139,7 +139,7 @@ class TestThread extends Thread
     }
 
     /**
-     * Sort denormalized properties to ease testing
+     * Sort denormalized properties to ease testing.
      */
     protected function sortDenormalizedProperties()
     {
@@ -147,7 +147,7 @@ class TestThread extends Thread
         ksort($this->datesOfLastMessageWrittenByParticipant);
         ksort($this->datesOfLastMessageWrittenByOtherParticipant);
         $participants = $this->participants->toArray();
-        usort($participants, function(ParticipantInterface $p1, ParticipantInterface $p2) {
+        usort($participants, function (ParticipantInterface $p1, ParticipantInterface $p2) {
             return $p1->getId() > $p2->getId();
         });
         $this->participants = new ArrayCollection($participants);

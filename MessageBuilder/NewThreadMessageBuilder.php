@@ -6,16 +6,17 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\Common\Collections\Collection;
 
 /**
- * Fluent interface message builder for new thread messages
+ * Fluent interface message builder for new thread messages.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class NewThreadMessageBuilder extends AbstractMessageBuilder
 {
     /**
-     * The thread subject
+     * The thread subject.
      *
      * @param  string
+     *
      * @return NewThreadMessageBuilder (fluent interface)
      */
     public function setSubject($subject)
@@ -26,7 +27,8 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
     }
 
     /**
-     * @param  ParticipantInterface $recipient
+     * @param ParticipantInterface $recipient
+     *
      * @return NewThreadMessageBuilder (fluent interface)
      */
     public function addRecipient(ParticipantInterface $recipient)
@@ -37,7 +39,8 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
     }
 
     /**
-     * @param  Collection $recipients
+     * @param Collection $recipients
+     *
      * @return NewThreadMessageBuilder
      */
     public function addRecipients(Collection $recipients)
@@ -48,5 +51,4 @@ class NewThreadMessageBuilder extends AbstractMessageBuilder
 
         return $this;
     }
-
 }

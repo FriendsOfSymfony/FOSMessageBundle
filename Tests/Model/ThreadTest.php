@@ -17,7 +17,7 @@ class ThreadTest extends \PHPUnit_Framework_TestCase
             ->method('getParticipants')
             ->will($this->returnValue(array($u1, $u2, $u3)));
 
-        $toIds = function(array $participants) {
+        $toIds = function (array $participants) {
             return array_map(function (ParticipantInterface $participant) {
                 return $participant->getId();
             }, $participants);

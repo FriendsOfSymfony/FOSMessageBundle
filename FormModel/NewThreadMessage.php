@@ -7,14 +7,14 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 class NewThreadMessage extends AbstractMessage
 {
     /**
-     * The user who receives the message
+     * The user who receives the message.
      *
      * @var ParticipantInterface
      */
     protected $recipient;
 
     /**
-     * The thread subject
+     * The thread subject.
      *
      * @var string
      */

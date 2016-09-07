@@ -24,5 +24,4 @@ abstract class AbstractMessage
     {
         $this->body = $body;
     }
-
 }

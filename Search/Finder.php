@@ -3,26 +3,25 @@
 namespace FOS\MessageBundle\Search;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
 use FOS\MessageBundle\Security\ParticipantProviderInterface;
 
 /**
- * Finds threads of a participant, matching a given query
+ * Finds threads of a participant, matching a given query.
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
 class Finder implements FinderInterface
 {
     /**
-     * The participant provider instance
+     * The participant provider instance.
      *
      * @var ParticipantProviderInterface
      */
     protected $participantProvider;
 
     /**
-     * The thread manager
+     * The thread manager.
      *
      * @var ThreadManagerInterface
      */
@@ -51,7 +50,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * Gets the current authenticated user
+     * Gets the current authenticated user.
      *
      * @return ParticipantInterface
      */

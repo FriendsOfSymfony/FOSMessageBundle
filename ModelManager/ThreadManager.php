@@ -13,7 +13,7 @@ use FOS\MessageBundle\Model\ThreadInterface;
 abstract class ThreadManager implements ThreadManagerInterface
 {
     /**
-     * Creates an empty comment thread instance
+     * Creates an empty comment thread instance.
      *
      * @return ThreadInterface
      */

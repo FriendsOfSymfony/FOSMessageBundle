@@ -1,11 +1,12 @@
 <?php
 
 namespace FOS\MessageBundle\Tests\EntityManager;
+
 use FOS\MessageBundle\EntityManager\ThreadManager;
 use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
- * Class ThreadManagerTest
+ * Class ThreadManagerTest.
  *
  * @author Tobias Nyholm
  */
@@ -21,7 +22,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Usual test case where neither createdBy or createdAt is set
+     * Usual test case where neither createdBy or createdAt is set.
      */
     public function testDoCreatedByAndAt()
     {
@@ -34,7 +35,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test where createdBy is set
+     * Test where createdBy is set.
      */
     public function testDoCreatedByAndAtWithCreatedBy()
     {
@@ -53,7 +54,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test where createdAt is set
+     * Test where createdAt is set.
      */
     public function testDoCreatedByAndAtWithCreatedAt()
     {
@@ -72,7 +73,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test where both craetedAt and createdBy is set
+     * Test where both craetedAt and createdBy is set.
      */
     public function testDoCreatedByAndAtWithCreatedAtAndBy()
     {
@@ -93,7 +94,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test where thread do not have a message
+     * Test where thread do not have a message.
      */
     public function testDoCreatedByAndNoMessage()
     {
@@ -112,7 +113,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get a message mock
+     * Get a message mock.
      *
      * @return mixed
      */
@@ -133,13 +134,13 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Add expectations on the thread mock
+     * Add expectations on the thread mock.
      *
      * @param mock &$thread
-     * @param int $createdByCalls
-     * @param int $createdAtCalls
+     * @param int  $createdByCalls
+     * @param int  $createdAtCalls
      */
-    protected function addThreadExpectations(&$thread, $createdByCalls=1, $createdAtCalls=1)
+    protected function addThreadExpectations(&$thread, $createdByCalls = 1, $createdAtCalls = 1)
     {
         $thread->expects($this->exactly($createdByCalls))
             ->method('setCreatedBy')
@@ -151,7 +152,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Get a Participant
+     * Get a Participant.
      *
      * @param $id
      *
@@ -171,7 +172,7 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns a thread mock
+     * Returns a thread mock.
      *
      * @return mixed
      */
@@ -186,15 +187,16 @@ class ThreadManagerTest extends \PHPUnit_Framework_TestCase
 class TestThreadManager extends ThreadManager
 {
     /**
-     * Empty constructor
+     * Empty constructor.
      */
-    public function __construct() { }
+    public function __construct()
+    {
+    }
 
     /**
-     * Make the function public
+     * Make the function public.
      *
      * @param ThreadInterface $thread
-     *
      */
     public function doCreatedByAndAt(ThreadInterface $thread)
     {

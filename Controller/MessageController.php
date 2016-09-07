@@ -2,15 +2,21 @@
 
 namespace FOS\MessageBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\MessageBundle\Provider\ProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MessageController extends ContainerAware
+class MessageController implements ContainerAwareInterface
 {
     /**
-     * Displays the authenticated participant inbox
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Displays the authenticated participant inbox.
      *
      * @return Response
      */
@@ -19,12 +25,12 @@ class MessageController extends ContainerAware
         $threads = $this->getProvider()->getInboxThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:inbox.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays the authenticated participant messages sent
+     * Displays the authenticated participant messages sent.
      *
      * @return Response
      */
@@ -33,12 +39,12 @@ class MessageController extends ContainerAware
         $threads = $this->getProvider()->getSentThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:sent.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays the authenticated participant deleted threads
+     * Displays the authenticated participant deleted threads.
      *
      * @return Response
      */
@@ -47,15 +53,15 @@ class MessageController extends ContainerAware
         $threads = $this->getProvider()->getDeletedThreads();
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:deleted.html.twig', array(
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Displays a thread, also allows to reply to it
+     * Displays a thread, also allows to reply to it.
      *
      * @param string $threadId the thread id
-     * 
+     *
      * @return Response
      */
     public function threadAction($threadId)
@@ -66,18 +72,18 @@ class MessageController extends ContainerAware
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
+                'threadId' => $message->getThread()->getId(),
             )));
         }
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:thread.html.twig', array(
             'form' => $form->createView(),
-            'thread' => $thread
+            'thread' => $thread,
         ));
     }
 
     /**
-     * Create a new message thread
+     * Create a new message thread.
      *
      * @return Response
      */
@@ -88,21 +94,21 @@ class MessageController extends ContainerAware
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-                'threadId' => $message->getThread()->getId()
+                'threadId' => $message->getThread()->getId(),
             )));
         }
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:newThread.html.twig', array(
             'form' => $form->createView(),
-            'data' => $form->getData()
+            'data' => $form->getData(),
         ));
     }
 
     /**
-     * Deletes a thread
-     * 
+     * Deletes a thread.
+     *
      * @param string $threadId the thread id
-     * 
+     *
      * @return RedirectResponse
      */
     public function deleteAction($threadId)
@@ -113,12 +119,12 @@ class MessageController extends ContainerAware
 
         return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
     }
-    
+
     /**
-     * Undeletes a thread
-     * 
+     * Undeletes a thread.
+     *
      * @param string $threadId
-     * 
+     *
      * @return RedirectResponse
      */
     public function undeleteAction($threadId)
@@ -131,7 +137,7 @@ class MessageController extends ContainerAware
     }
 
     /**
-     * Searches for messages in the inbox and sentbox
+     * Searches for messages in the inbox and sentbox.
      *
      * @return Response
      */
@@ -142,17 +148,25 @@ class MessageController extends ContainerAware
 
         return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:search.html.twig', array(
             'query' => $query,
-            'threads' => $threads
+            'threads' => $threads,
         ));
     }
 
     /**
-     * Gets the provider service
+     * Gets the provider service.
      *
      * @return ProviderInterface
      */
     protected function getProvider()
     {
         return $this->container->get('fos_message.provider');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 }
