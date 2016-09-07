@@ -11,7 +11,7 @@ The first step is to tell composer that you want to download FOSMessageBundle wh
 be achieved by typing the following at the command prompt:
 
 ```bash
-$ php composer.phar require friendsofsymfony/message-bundle
+$ composer require friendsofsymfony/message-bundle
 ```
 
 ### Step 2 - Setting up your user class
@@ -24,6 +24,7 @@ Your user class may look something like the following:
 
 ```php
 <?php
+// src/AppBundle/Entity/User.php
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Model\ParticipantInterface;
@@ -52,7 +53,7 @@ We provide examples for both Mongo DB and ORM.
 The bundle must be added to your `AppKernel`
 
 ```php
-# app/AppKernel.php
+// app/AppKernel.php
 
 public function registerBundles()
 {
@@ -71,11 +72,9 @@ Add FOSMessageBundle's routing to your application with an optional routing pref
 ```yaml
 # app/config/routing.yml
 
-# ...
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
     prefix: /optional_routing_prefix
-# ...
 ```
 
 ## Installation Finished

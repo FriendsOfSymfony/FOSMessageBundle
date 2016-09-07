@@ -14,8 +14,8 @@ Add the following to your `app/config/config.yml` file.
 
 fos_message:
     db_driver: mongodb
-    thread_class: Acme\MessageBundle\Document\Thread
-    message_class: Acme\MessageBundle\Document\Message
+    thread_class: AppBundle\Document\Thread
+    message_class: AppBundle\Document\Message
 ```
 
 You may have to include the MessageBundle in your Doctrine mapping configuration,
@@ -39,9 +39,9 @@ Message class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Document/Message.php
+// src/AppBundle/Document/Message.php
 
-namespace Acme\MessageBundle\Document;
+namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\MessageBundle\Document\Message as BaseMessage;
@@ -57,17 +57,17 @@ class Message extends BaseMessage
     protected $id;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument="Acme\MessageBundle\Document\MessageMetadata")
+     * @MongoDB\EmbedMany(targetDocument="AppBundle\Document\MessageMetadata")
      */
     protected $metadata;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Acme\MessageBundle\Document\Thread")
+     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\Thread")
      */
     protected $thread;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Acme\UserBundle\Document\User")
+     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\User")
      */
     protected $sender;
 }
@@ -78,8 +78,9 @@ MessageMetadata class
 
 ```php
 <?php
+// src/AppBundle/Document/MessageMetadata.php
 
-namespace Mashup\MessageBundle\Document;
+namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use FOS\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
@@ -90,7 +91,7 @@ use FOS\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
 class MessageMetadata extends BaseMessageMetadata
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="Mashup\UserBundle\Document\User")
+     * @ODM\ReferenceOne(targetDocument="AppBundle\Document\User")
      */
     protected $participant;
 }
@@ -101,9 +102,9 @@ Thread class
 
 ```php
 <?php
-// src/Acme/MessageBundle/Document/Thread.php
+// src/AppBundle/Document/Thread.php
 
-namespace Acme\MessageBundle\Document;
+namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\MessageBundle\Document\Thread as BaseThread;
@@ -119,22 +120,22 @@ class Thread extends BaseThread
     protected $id;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Acme\MessageBundle\Document\Message")
+     * @MongoDB\ReferenceMany(targetDocument="AppBundle\Document\Message")
      */
     protected $messages;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument="Acme\MessageBundle\Document\ThreadMetadata")
+     * @MongoDB\EmbedMany(targetDocument="AppBundle\Document\ThreadMetadata")
      */
     protected $metadata;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="Acme\UserBundle\Document\User")
+     * @MongoDB\ReferenceMany(targetDocument="AppBundle\Document\User")
      */
     protected $participants;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="Acme\UserBundle\Document\User")
+     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\User")
      */
     protected $createdBy;
 }
@@ -145,8 +146,9 @@ ThreadMetadata class
 
 ```php
 <?php
+// src/AppBundle/Document/ThreadMetadata.php
 
-namespace Mashup\MessageBundle\Document;
+namespace AppBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use FOS\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
@@ -157,7 +159,7 @@ use FOS\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
 class ThreadMetadata extends BaseThreadMetadata
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="Mashup\UserBundle\Document\User")
+     * @ODM\ReferenceOne(targetDocument="AppBundle\Document\User")
      */
     protected $participant;
 }

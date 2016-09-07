@@ -13,15 +13,16 @@ You can base your own on this one:
 
 ``` php
 <?php
+// src/AppBundle/Form/DataTransformer/UserToUsernameTransformer.php
 
-namespace Acme\UserBundle\Form\DataTransformer;
+namespace AppBundle\Form\DataTransformer;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
-use Acme\UserBundle\Entity\User;
+use AppBundle\Entity\User;
 
 /**
  * Transforms between a User instance and a username string
@@ -38,7 +39,7 @@ class UserToUsernameTransformer implements DataTransformerInterface
      */
     public function __construct(Registry $doctrine)
     {
-        $this->repository = $doctrine->getManager()->getRepository('AcmeUserBundle:User');
+        $this->repository = $doctrine->getManager()->getRepository('AppBundle:User');
     }
 
     /**
@@ -57,7 +58,7 @@ class UserToUsernameTransformer implements DataTransformerInterface
         }
 
         if (! $value instanceof User) {
-            throw new UnexpectedTypeException($value, 'Acme\UserBundle\Entity\User');
+            throw new UnexpectedTypeException($value, 'AppBundle\Entity\User');
         }
 
         return $value->getUsername();
@@ -92,14 +93,14 @@ For the moment, there is no configuration key to do it so we will emulate the
 FOSUserBundle transformer by using its name as an alias of our own service:
 
 ``` xml
-<service id="acme_user.user_to_username_transformer" class="Acme\UserBundle\Form\DataTransformer\UserToUsernameTransformer">
+<!-- app/config/services.xml -->
+
+<service id="app.user_to_username_transformer" class="AppBundle\Form\DataTransformer\UserToUsernameTransformer">
     <argument type="service" id="doctrine" />
 </service>
 
-<service id="fos_user.user_to_username_transformer" alias="acme_user.user_to_username_transformer" />
+<service id="fos_user.user_to_username_transformer" alias="app.user_to_username_transformer" />
 ```
-
-
 
 ### Problems you may encounter
 
@@ -113,28 +114,31 @@ You can copy the default ones (in `FOS\MessageBundle\EntityManager` if you use t
 into your bundle, change their queries and register them as services:
 
 ``` xml
-<service id="acme_user.message_manager" class="Acme\UserBundle\EntityManager\MessageManager" public="false">
+<!-- app/config/services.xml -->
+
+<service id="app.message_manager" class="AppBundle\EntityManager\MessageManager" public="false">
     <argument type="service" id="doctrine.orm.entity_manager" />
     <argument>%fos_message.message_class%</argument>
     <argument>%fos_message.message_meta_class%</argument>
 </service>
 
-<service id="acme_user.thread_manager" class="Acme\UserBundle\EntityManager\ThreadManager" public="false">
+<service id="app.thread_manager" class="AppBundle\EntityManager\ThreadManager" public="false">
     <argument type="service" id="doctrine.orm.entity_manager" />
     <argument>%fos_message.thread_class%</argument>
     <argument>%fos_message.thread_meta_class%</argument>
-    <argument type="service" id="acme_user.message_manager" />
+    <argument type="service" id="app.message_manager" />
 </service>
 ```
 
 Once done, tell FOSMessageBundle to use them in the configuration:
 
 ``` yaml
-# Messages
+# app/config/config.yml
+
 fos_message:
 	# ...
-    thread_manager: acme_user.thread_manager
-    message_manager: acme_user.message_manager
+    thread_manager: app.thread_manager
+    message_manager: app.message_manager
 ```
 
 #### The default form does not work with my User entity
@@ -146,11 +150,11 @@ You have to redefine two things :
 You can copy and paste the bundle versions into your application and define them as services:
 
 ``` xml
-<service id="acme_user.new_thread_form_type" class="Acme\UserBundle\Form\NewThreadMessageFormType" public="false">
-    <argument type="service" id="acme_user.user_to_username_transformer" />
+<service id="app.new_thread_form_type" class="AppBundle\Form\NewThreadMessageFormType" public="false">
+    <argument type="service" id="app.user_to_username_transformer" />
 </service>
 
-<service id="acme_user.new_thread_form_factory" class="Acme\UserBundle\Form\NewThreadMessageFormFactory" public="false">
+<service id="app.new_thread_form_factory" class="AppBundle\Form\NewThreadMessageFormFactory" public="false">
     <argument type="service" id="form.factory" />
     <argument type="service" id="fos_message.new_thread_form.type" />
     <argument>%fos_message.new_thread_form.name%</argument>
@@ -163,11 +167,13 @@ You can copy and paste the bundle versions into your application and define them
 And configure the bundle to use your services:
 
 ``` yaml
+# app/config/config.yml
+
 fos_message:
     # ...
     new_thread_form:
-        type: md.new_thread_form_type
-        factory: md.new_thread_form_factory
+        type: app.new_thread_form_type
+        factory: app.new_thread_form_factory
 ```
 
 #### Another problem?

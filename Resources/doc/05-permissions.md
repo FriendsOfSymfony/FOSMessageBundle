@@ -11,7 +11,7 @@ FOSMessageBundle about it:
 # app/config/config.yml
 
 fos_message:
-    authorizer: acme_message.authorizer
+    authorizer: app.authorizer
 ```
 
 Any such service must implement `FOS\MessageBundle\Security\AuthorizerInterface`.
