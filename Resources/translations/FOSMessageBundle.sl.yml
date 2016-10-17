@@ -4,7 +4,7 @@ sent:           Poslano
 deleted:        Izbrisano
 send_new:       Pošlji novo sporočilo
 search:         Iskanje
-threads_found:  %num% najden pogovor | %num% najdena pogovora | %num% najdeni pogovori | %num% najdenih pogovorov
+threads_found:  "%num% najden pogovor | %num% najdena pogovora | %num% najdeni pogovori | %num% najdenih pogovorov"
 
 message_info:   Od %sender%, %date%
 reply:          Odgovori
@@ -17,7 +17,7 @@ last_message:   Zadnje sporočilo
 actions:        Akcije
 new:            Novo
 goto_last:      Pojdi na zadnje sporočilo
-on:             %date%
+on:             "%date%"
 by:             Od %sender%
 no_thread:      Ni pogovorov za prikaz
 delete:         Izbriši
