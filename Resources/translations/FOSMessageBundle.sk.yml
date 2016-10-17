@@ -4,7 +4,7 @@ sent:           Odoslané správy
 deleted:        Vymazané správy
 send_new:       Napísať správu
 search:         Hľadať
-threads_found:  %num% Konverzácia nájdená s | %num% Konverzácií nájdených s
+threads_found:  "%num% Konverzácia nájdená s | %num% Konverzácií nájdených s"
 
 message_info:   Od %sender%, %date%
 reply:          Odpovedať
@@ -17,7 +17,7 @@ last_message:   Posledná správa
 actions:        Akcie
 new:            Nová
 goto_last:      Ísť na poslednú správu
-on:             %date%
+on:             "%date%"
 by:             od %sender%
 no_thread:      Neexistujú správy, ktoré by bolo možné zobraziť
 delete:         Vymazať
