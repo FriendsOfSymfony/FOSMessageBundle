@@ -4,7 +4,7 @@ sent:           Verzonden
 deleted:        Verwijderd
 send_new:       Verstuur een nieuw bericht
 search:         Zoek
-threads_found:  %num% bericht gevonden met | %num% berichten gevonden met
+threads_found:  "%num% bericht gevonden met | %num% berichten gevonden met"
 
 message_info:   Door %sender%, op %date%
 reply:          Reageer

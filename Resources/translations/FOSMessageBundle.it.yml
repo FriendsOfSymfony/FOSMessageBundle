@@ -4,7 +4,7 @@ sent:           Posta inviata
 deleted:        Cestino
 send_new:       Scrivere un nuovo messaggio
 search:         Cercare
-threads_found:  %num% conversazione trovata con | %num%  conversazioni trovate con
+threads_found:  "%num% conversazione trovata con | %num%  conversazioni trovate con"
 
 message_info:   Di %sender%, il %date%
 reply:          Rispondere

@@ -4,7 +4,7 @@ sent:           ارسالی
 deleted:        حذف‌شده
 send_new:       فرستادن یک پیام جدید
 search:         جستجو
-threads_found:  %num% مورد یافت شد | %num% مورد یافت شد
+threads_found:  "%num% مورد یافت شد | %num% مورد یافت شد"
 
 message_info:   توسط %sender%، در %date%
 reply:          پاسخ
