@@ -4,7 +4,7 @@ sent: Enviado
 deleted: Eliminados
 send_new: Enviar nuevo mensaje
 search: Buscar
-threads_found: %num% hilo encontrado | %num% hilos encontrados
+threads_found: "%num% hilo encontrado | %num% hilos encontrados"
 
 message_info: Por %sender%, el %date%
 reply: Responder
