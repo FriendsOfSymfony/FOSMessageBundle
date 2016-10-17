@@ -4,7 +4,7 @@ sent:           Envoyés
 deleted:        Supprimés
 send_new:       Envoyer un nouveau message
 search:         Rechercher
-threads_found:  %num% conversation trouvée avec | %num% conversations trouvées avec
+threads_found:  "%num% conversation trouvée avec | %num% conversations trouvées avec"
 
 message_info:   De %sender%, le %date%
 reply:          Répondre
