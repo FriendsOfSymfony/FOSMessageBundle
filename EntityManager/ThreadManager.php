@@ -190,7 +190,29 @@ class ThreadManager extends BaseThreadManager
         // build a regex like (term1|term2)
         $regex = sprintf('/(%s)/', implode('|', explode(' ', $search)));
 
-        throw new \Exception('not yet implemented');
+        return $this->repository->createQueryBuilder('t')
+            ->innerJoin('t.metadata', 'tm')
+            ->innerJoin('tm.participant', 'p')
+            ->innerJoin('t.messages', 'm')
+
+            // the participant is in the thread participants
+            ->andWhere('p.id = :user_id')
+            ->setParameter('user_id', $participant->getId())
+
+            ->andWhere('m.body LIKE :search')
+            ->setParameter('search', "%$search%")
+
+
+            // the thread is not deleted by this participant
+            ->andWhere('tm.isDeleted = :isDeleted')
+            ->setParameter('isDeleted', false, \PDO::PARAM_BOOL)
+
+            // there is at least one message written by this participant
+            ->andWhere('tm.lastParticipantMessageDate IS NOT NULL')
+
+            // sort by date of last message written by this participant
+            ->orderBy('tm.lastParticipantMessageDate', 'DESC')
+            ;
     }
 
     /**
