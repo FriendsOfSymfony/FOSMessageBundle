@@ -185,4 +185,19 @@ class MessageManager extends BaseMessageManager
     {
         return new $this->metaClass();
     }
+
+    /**
+     * Return the last $limit messages, by default the value is 10
+     *
+     * @param int $limit
+     * @return mixed
+     */
+    public function getLast($limit =  10)
+    {
+        return $this->em->createQuery('m')
+            ->orderBy('m.id','desc')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
 }
