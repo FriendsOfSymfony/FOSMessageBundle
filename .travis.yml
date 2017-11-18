@@ -32,9 +32,12 @@ matrix:
       env:
         - deps=high
         - SYMFONY_VERSION=3.1.*
+    - php: 7.1
+      env: DEPENDENCIES=beta
 
 before_script:
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
+  - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
   - if [[ $deps = high ]]; then composer update --no-progress --ansi; fi
   - if [[ $deps = low ]]; then composer update --no-progress --ansi --prefer-lowest --prefer-stable; fi
 
