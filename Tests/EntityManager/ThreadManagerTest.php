@@ -10,7 +10,7 @@ use FOS\MessageBundle\Model\ThreadInterface;
  *
  * @author Tobias Nyholm
  */
-class ThreadManagerTest extends \PHPUnit_Framework_TestCase
+class ThreadManagerTest extends \PHPUnit\Framework\TestCase
 {
     protected $user;
     protected $date;

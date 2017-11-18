@@ -7,7 +7,7 @@ use FOS\MessageBundle\Twig\Extension\MessageExtension;
 /**
  * Testfile for MessageExtension.
  */
-class MessageExtensionTest extends \PHPUnit_Framework_TestCase
+class MessageExtensionTest extends \PHPUnit\Framework\TestCase
 {
     private $extension;
     private $participantProvider;

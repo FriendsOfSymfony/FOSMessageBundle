@@ -7,7 +7,7 @@ use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\MessageBundle\Model\MessageInterface;
 
-class ThreadDenormalizerTest extends \PHPUnit_Framework_TestCase
+class ThreadDenormalizerTest extends \PHPUnit\Framework\TestCase
 {
     protected $dates;
 
