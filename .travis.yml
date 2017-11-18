@@ -34,6 +34,7 @@ matrix:
         - SYMFONY_VERSION=3.1.*
     - php: 7.1
       env:
+        - deps=low
         - DEPENDENCIES=beta
         - SYMFONY_VERSION=4.0.*
 
