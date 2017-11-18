@@ -33,6 +33,8 @@ matrix:
         - deps=high
         - SYMFONY_VERSION=3.1.*
     - php: 7.1
+      before_script:
+        - composer require --dev "doctrine/annotations=^v1.5.0"
       env:
         - deps=low
         - DEPENDENCIES=beta
