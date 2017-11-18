@@ -39,8 +39,7 @@ matrix:
         - DEPENDENCIES=beta
 
 before_script:
-  - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
-  - if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then composer require --dev "phpunit/phpunit=5.7.*"; fi;
+  - if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then composer require --dev "phpunit/phpunit=4.8.*"; fi;
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
   - if [[ $deps = high ]]; then composer update --no-progress --ansi; fi;
   - if [[ $deps = low ]]; then composer update --no-progress --ansi --prefer-lowest --prefer-stable; fi;
