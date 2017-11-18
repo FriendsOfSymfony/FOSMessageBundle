@@ -8,8 +8,6 @@ use Composer\Autoload\ClassLoader;
  */
 $loader = require __DIR__.'/../vendor/autoload.php';
 
-if (!class_exists('Doctrine\Common\Annotations\AnnotationRegistry', false) && class_exists('Doctrine\Common\Annotations\AnnotationRegistry')) {
-    AnnotationRegistry::registerLoader('class_exists');
-}
+AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 return $loader;
