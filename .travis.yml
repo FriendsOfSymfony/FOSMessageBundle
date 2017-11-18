@@ -9,6 +9,7 @@ branches:
 matrix:
   include:
     - php: 5.3
+      dist: precise
       env:
         - deps=low
         - SYMFONY_VERSION=2.7.*
