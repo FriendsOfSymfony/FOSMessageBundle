@@ -33,18 +33,20 @@ matrix:
         - deps=high
         - SYMFONY_VERSION=3.1.*
     - php: 7.1
-      before_script:
-        - composer require --dev "doctrine/annotations=^v1.5.0"
       env:
+        - WITH_DOCTRINE_ANNOTATION=true
         - deps=low
         - DEPENDENCIES=beta
         - SYMFONY_VERSION=4.0.*
 
 
 before_script:
+  - if [ "$WITH_DOCTRINE_ANNOTATION" = "true" ]; then composer require --dev "doctrine/annotations=^v1.5.0"; fi;
   - if [ "$DEPENDENCIES" = "beta" ]; then composer config minimum-stability beta; fi;
   - if [[ ${TRAVIS_PHP_VERSION:0:2} == "7." ]]; then composer require --dev "phpunit/phpunit=4.8.*"; fi;
+
   - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
+
   - if [[ $deps = high ]]; then composer update --no-progress --ansi; fi;
   - if [[ $deps = low ]]; then composer update --no-progress --ansi --prefer-lowest --prefer-stable; fi;
 
