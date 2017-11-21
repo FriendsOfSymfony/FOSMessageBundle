@@ -146,7 +146,14 @@ abstract class Thread extends AbstractThread
         }
 
         // we only need each word once
-        $this->keywords = implode(' ', array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1)));
+        $keywords = array_unique(str_word_count(mb_strtolower($keywords, 'UTF-8'), 1));
+
+        //But ensure every single keyword will be UTF-8 encoded or Mongo would crash
+        array_walk($keywords, function($keyword, $key) use (&$keywords){
+            $keywords[$key] = utf8_encode($keyword);
+        });
+
+        $this->keywords = implode(' ', $keywords);
     }
 
     /**
