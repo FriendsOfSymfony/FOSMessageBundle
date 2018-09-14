@@ -1,45 +1,33 @@
 language: php
 
 sudo: false
+dist: precise
+
+cache:
+  directories:
+    - .phpunit
+    - $HOME/.composer/cache/files
 
 branches:
   only:
     - master
 
 matrix:
+  fast_finish: true
   include:
     - php: 5.3
-      env:
-        - deps=low
-        - SYMFONY_VERSION=2.7.*
-    - php: 5.4
-      env:
-        - deps=high
-        - SYMFONY_VERSION=2.7.*
-    - php: 5.5
-      env:
-        - deps=low
-        - SYMFONY_VERSION=2.8.*
-    - php: 5.6
-      env:
-        - deps=high
-        - SYMFONY_VERSION=3.0.*
-    - php: 7.0
-      env:
-        - deps=low
-        - SYMFONY_VERSION=3.1.*
-    - php: 7.1
-      env:
-        - deps=high
-        - SYMFONY_VERSION=3.1.*
+      env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak
+    - php: 7.2
+      env: SYMFONY_LTS='^3'
+    - php: 7.2
 
-before_script:
-  - composer require symfony/framework-bundle:${SYMFONY_VERSION} --no-update
-  - if [[ $deps = high ]]; then composer update --no-progress --ansi; fi
-  - if [[ $deps = low ]]; then composer update --no-progress --ansi --prefer-lowest --prefer-stable; fi
+before_install:
+  - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - phpenv config-rm xdebug.ini
+  - if [ "$SYMFONY_LTS" != "" ]; then composer require --dev --no-update symfony/lts=$SYMFONY_LTS; fi
 
-script: phpunit --coverage-text
+install:
+  - composer update $COMPOSER_FLAGS
+  - ./phpunit install
 
-notifications:
-  email:
-    - friendsofsymfony-dev@googlegroups.com
+script: ./phpunit
