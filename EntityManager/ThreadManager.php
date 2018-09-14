@@ -2,11 +2,11 @@
 
 namespace FOS\MessageBundle\EntityManager;
 
-use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use Doctrine\ORM\EntityManager;
-use FOS\MessageBundle\Model\ThreadInterface;
-use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 
 /**
  * Default ORM ThreadManager.

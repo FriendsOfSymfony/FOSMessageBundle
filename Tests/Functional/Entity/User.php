@@ -2,18 +2,36 @@
 
 namespace FOS\MessageBundle\Tests\Functional\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements ParticipantInterface
+class User implements ParticipantInterface, UserInterface
 {
     public function getUsername()
     {
-        return 'Guilhem';
+        return 'guilhem';
     }
 
-   public function getId()
-   {
-       return 1;
-   }
+    public function getPassword()
+    {
+        return 'pass';
+    }
+
+    public function getSalt()
+    {
+    }
+
+    public function getRoles()
+    {
+        return array();
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getId()
+    {
+        return 1;
+    }
 }

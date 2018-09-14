@@ -2,15 +2,15 @@
 
 namespace FOS\MessageBundle\FormHandler;
 
+use FOS\MessageBundle\Composer\ComposerInterface;
+use FOS\MessageBundle\FormModel\AbstractMessage;
 use FOS\MessageBundle\Model\MessageInterface;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
+use FOS\MessageBundle\Sender\SenderInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use FOS\MessageBundle\Composer\ComposerInterface;
-use FOS\MessageBundle\FormModel\AbstractMessage;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
-use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\MessageBundle\Sender\SenderInterface;
 
 /**
  * Handles messages forms, from binding request to sending the message.

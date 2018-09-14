@@ -5,10 +5,10 @@ namespace FOS\MessageBundle\DocumentManager;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use FOS\MessageBundle\Document\Thread;
 use FOS\MessageBundle\Document\ThreadMetadata;
-use FOS\MessageBundle\Model\ThreadInterface;
-use FOS\MessageBundle\Model\ReadableInterface;
-use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\ThreadManager as BaseThreadManager;
 
 /**
  * Default MongoDB ThreadManager.

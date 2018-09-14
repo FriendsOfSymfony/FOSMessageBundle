@@ -39,7 +39,7 @@ class MessageController extends Controller implements ContainerAwareInterface
     {
         $threads = $this->getProvider()->getSentThreads();
 
-        return $this->render('@FOSMessage/Message/sent.html.twig',, array(
+        return $this->render('@FOSMessage/Message/sent.html.twig', array(
             'threads' => $threads,
         ));
     }

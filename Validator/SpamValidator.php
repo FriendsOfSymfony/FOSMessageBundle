@@ -2,9 +2,9 @@
 
 namespace FOS\MessageBundle\Validator;
 
+use FOS\MessageBundle\SpamDetection\SpamDetectorInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use FOS\MessageBundle\SpamDetection\SpamDetectorInterface;
 
 class SpamValidator extends ConstraintValidator
 {

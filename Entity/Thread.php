@@ -5,8 +5,8 @@ namespace FOS\MessageBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Model\MessageInterface;
-use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\Thread as BaseThread;
 use FOS\MessageBundle\Model\ThreadMetadata as ModelThreadMetadata;
 
 abstract class Thread extends BaseThread

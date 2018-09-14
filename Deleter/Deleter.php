@@ -2,14 +2,14 @@
 
 namespace FOS\MessageBundle\Deleter;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
-use FOS\MessageBundle\Security\AuthorizerInterface;
-use FOS\MessageBundle\Model\ThreadInterface;
-use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use FOS\MessageBundle\Event\FOSMessageEvents;
 use FOS\MessageBundle\Event\ThreadEvent;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\Security\AuthorizerInterface;
+use FOS\MessageBundle\Security\ParticipantProviderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Marks threads as deleted.

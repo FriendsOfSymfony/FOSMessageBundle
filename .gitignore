@@ -2,5 +2,7 @@ composer.lock
 phpunit.xml
 .phpunit
 vendor
-/Tests/Functional/cache
-/Tests/Functional/logs
+.php_cs.cache
+.php_cs
+Tests/Functional/cache
+Tests/Functional/logs

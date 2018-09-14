@@ -2,9 +2,9 @@
 
 namespace FOS\MessageBundle\Validator;
 
+use FOS\MessageBundle\Security\AuthorizerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
-use FOS\MessageBundle\Security\AuthorizerInterface;
 
 class AuthorizationValidator extends ConstraintValidator
 {

@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use FOS\MessageBundle\Model\ThreadInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 class ThreadEvent extends Event
 {

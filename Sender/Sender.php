@@ -2,11 +2,11 @@
 
 namespace FOS\MessageBundle\Sender;
 
+use FOS\MessageBundle\Event\FOSMessageEvents;
+use FOS\MessageBundle\Event\MessageEvent;
+use FOS\MessageBundle\Model\MessageInterface;
 use FOS\MessageBundle\ModelManager\MessageManagerInterface;
 use FOS\MessageBundle\ModelManager\ThreadManagerInterface;
-use FOS\MessageBundle\Model\MessageInterface;
-use FOS\MessageBundle\Event\MessageEvent;
-use FOS\MessageBundle\Event\FOSMessageEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**

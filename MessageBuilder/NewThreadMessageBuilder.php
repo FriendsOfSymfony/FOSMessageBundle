@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\MessageBuilder;
 
-use FOS\MessageBundle\Model\ParticipantInterface;
 use Doctrine\Common\Collections\Collection;
+use FOS\MessageBundle\Model\ParticipantInterface;
 
 /**
  * Fluent interface message builder for new thread messages.

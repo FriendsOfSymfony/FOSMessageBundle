@@ -26,9 +26,9 @@ class UserToUsernameTransformer implements DataTransformerInterface
      *
      * @param string $value Username
      *
-     * @return UserInterface the corresponding UserInterface instance
-     *
      * @throws UnexpectedTypeException if the given value is not a string
+     *
+     * @return UserInterface the corresponding UserInterface instance
      */
     public function reverseTransform($value)
     {

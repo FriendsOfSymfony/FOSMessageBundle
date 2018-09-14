@@ -2,12 +2,12 @@
 
 namespace FOS\MessageBundle\FormType;
 
+use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 use FOS\MessageBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use FOS\MessageBundle\DataTransformer\RecipientsDataTransformer;
 
 /**
  * Description of RecipientsType.
