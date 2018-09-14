@@ -2,13 +2,14 @@
 
 namespace FOS\MessageBundle\Controller;
 
+use FOS\MessageBundle\Provider\ProviderInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use FOS\MessageBundle\Provider\ProviderInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-class MessageController implements ContainerAwareInterface
+class MessageController extends Controller implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -24,7 +25,7 @@ class MessageController implements ContainerAwareInterface
     {
         $threads = $this->getProvider()->getInboxThreads();
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:inbox.html.twig', array(
+        return $this->render('@FOSMessage/Message/inbox.html.twig', array(
             'threads' => $threads,
         ));
     }
@@ -38,7 +39,7 @@ class MessageController implements ContainerAwareInterface
     {
         $threads = $this->getProvider()->getSentThreads();
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:sent.html.twig', array(
+        return $this->render('@FOSMessage/Message/sent.html.twig',, array(
             'threads' => $threads,
         ));
     }
@@ -52,7 +53,7 @@ class MessageController implements ContainerAwareInterface
     {
         $threads = $this->getProvider()->getDeletedThreads();
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:deleted.html.twig', array(
+        return $this->render('@FOSMessage/Message/deleted.html.twig', array(
             'threads' => $threads,
         ));
     }
@@ -76,7 +77,7 @@ class MessageController implements ContainerAwareInterface
             )));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:thread.html.twig', array(
+        return $this->render('@FOSMessage/Message/thread.html.twig', array(
             'form' => $form->createView(),
             'thread' => $thread,
         ));
@@ -98,7 +99,7 @@ class MessageController implements ContainerAwareInterface
             )));
         }
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:newThread.html.twig', array(
+        return $this->render('@FOSMessage/Message/newThread.html.twig', array(
             'form' => $form->createView(),
             'data' => $form->getData(),
         ));
@@ -146,7 +147,7 @@ class MessageController implements ContainerAwareInterface
         $query = $this->container->get('fos_message.search_query_factory')->createFromRequest();
         $threads = $this->container->get('fos_message.search_finder')->find($query);
 
-        return $this->container->get('templating')->renderResponse('FOSMessageBundle:Message:search.html.twig', array(
+        return $this->render('@FOSMessage/Message/search.html.twig', array(
             'query' => $query,
             'threads' => $threads,
         ));
