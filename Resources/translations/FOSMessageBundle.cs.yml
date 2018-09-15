@@ -6,7 +6,7 @@ send_new:       Poslat novou zprávu
 search:         Hledat
 threads_found:  "{1}Nalezena %num% konverzace s|[2,4]Nalezeny %num% konverzace s|[5,Inf]Nalezeno %count% konverzací s"
 
-message_info:   Od %sender% z %date%
+message_info:   "Od %sender% z %date%"
 reply:          Odpovědět
 
 subject:        Předmět
@@ -17,9 +17,9 @@ last_message:   Poslední zpráva
 actions:        Akce
 new:            Nová 
 goto_last:      Jít na poslední zprávu
-on:             Z %date%
-by:             Od %sender%
-no_thread:      Žádná konverzace ke zobrazení 
+on:             "Z %date%"
+by:             "Od %sender%"
+no_thread:      Žádná konverzace ke zobrazení
 delete:         Smazat
 undelete:       Obnovit
 recipient:      Příjemce 
