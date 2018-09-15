@@ -4,13 +4,14 @@ namespace FOS\MessageBundle\Tests\EntityManager;
 
 use FOS\MessageBundle\EntityManager\ThreadManager;
 use FOS\MessageBundle\Model\ThreadInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ThreadManagerTest.
  *
  * @author Tobias Nyholm
  */
-class ThreadManagerTest extends \PHPUnit_Framework_TestCase
+class ThreadManagerTest extends TestCase
 {
     protected $user;
     protected $date;

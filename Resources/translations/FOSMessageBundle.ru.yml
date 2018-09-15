@@ -4,9 +4,9 @@ sent:           Отправленные
 deleted:        Удаленные
 send_new:       Отправить новое сообщение
 search:         Поиск
-threads_found:  найдена %num% цепочка сообщений | найдено %num% цепочки сообщений | найдено %num% цепочек сообщений
+threads_found:  "найдена %num% цепочка сообщений | найдено %num% цепочки сообщений | найдено %num% цепочек сообщений"
 
-message_info:   От %sender%, %date%
+message_info:   "От %sender%, %date%"
 reply:          Ответить
 
 subject:        Тема
@@ -17,8 +17,8 @@ last_message:   Последнее сообщение
 actions:        Действия
 new:            Новое
 goto_last:      К последнему сообщению
-on:             Дата %date%
-by:             От %sender%
+on:             "Дата %date%"
+by:             "От %sender%"
 no_thread:      Нет цепочек для отображения
 delete:         Удалить
 undelete:       Восстановить

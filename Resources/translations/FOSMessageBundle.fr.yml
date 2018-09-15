@@ -6,7 +6,7 @@ send_new:       Envoyer un nouveau message
 search:         Rechercher
 threads_found:  "%num% conversation trouvée avec | %num% conversations trouvées avec"
 
-message_info:   De %sender%, le %date%
+message_info:   "De %sender%, le %date%"
 reply:          Répondre
 
 subject:        Sujet
@@ -17,8 +17,8 @@ last_message:   Dernier message
 actions:        Actions
 new:            Nouveau
 goto_last:      Aller au dernier message
-on:             Le %date%
-by:             De %sender%
+on:             "Le %date%"
+by:             "De %sender%"
 no_thread:      Aucune conversation
 delete:         Supprimer
 undelete:       Restaurer

@@ -3,8 +3,9 @@
 namespace FOS\MessageBundle\Tests\Model;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
+use PHPUnit\Framework\TestCase;
 
-class ThreadTest extends \PHPUnit_Framework_TestCase
+class ThreadTest extends TestCase
 {
     public function testGetOtherParticipants()
     {
