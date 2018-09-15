@@ -2,8 +2,8 @@
 
 namespace FOS\MessageBundle\Security;
 
-use FOS\MessageBundle\Model\ThreadInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ThreadInterface;
 
 /**
  * Manages permissions to manipulate threads and messages.

@@ -2,12 +2,12 @@
 
 namespace FOS\MessageBundle\DataTransformer;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Transforms collection of UserInterface into strings separated with coma.
@@ -35,7 +35,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      */
     public function transform($recipients)
     {
-        if ($recipients === null || $recipients->count() === 0) {
+        if (null === $recipients || 0 === $recipients->count()) {
             return '';
         }
 

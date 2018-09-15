@@ -2,9 +2,9 @@
 
 namespace FOS\MessageBundle\FormFactory;
 
+use FOS\MessageBundle\FormModel\AbstractMessage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormFactoryInterface;
-use FOS\MessageBundle\FormModel\AbstractMessage;
 
 /**
  * Instanciates message forms.

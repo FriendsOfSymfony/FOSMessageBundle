@@ -3,14 +3,14 @@
 namespace FOS\MessageBundle\DocumentManager;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Query\Builder;
 use FOS\MessageBundle\Document\Message;
 use FOS\MessageBundle\Document\MessageMetadata;
 use FOS\MessageBundle\Model\MessageInterface;
-use FOS\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
-use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
-use Doctrine\ODM\MongoDB\Query\Builder;
+use FOS\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
 
 /**
  * Default MongoDB MessageManager.

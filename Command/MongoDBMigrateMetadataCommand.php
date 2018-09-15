@@ -343,7 +343,7 @@ EOT
 
         foreach ($thread['participants'] as $participantRef) {
             foreach ($thread['metadata'] as $metadata) {
-                if ($metadata['isDeleted'] && $participantRef['$id'] === $metadata['participant']['$id']) {
+                if ($metadata['isDeleted'] && $metadata['participant']['$id'] === $participantRef['$id']) {
                     continue 2;
                 }
             }
@@ -361,7 +361,7 @@ EOT
                     throw new \UnexpectedValueException(sprintf('Sender reference not found for message "%s"', $messageRef['$id']));
                 }
 
-                if ($participantRef['$id'] == $message['sender']['$id']) {
+                if ($message['sender']['$id'] == $participantRef['$id']) {
                     $participantIsActiveSender = true;
                 } elseif (!$thread['isSpam']) {
                     $participantIsActiveRecipient = true;
@@ -396,9 +396,9 @@ EOT
      * @param ManagerRegistry $registry
      * @param string          $class
      *
-     * @return \MongoCollection
-     *
      * @throws \RuntimeException if the class has no DocumentManager
+     *
+     * @return \MongoCollection
      */
     private function getMongoCollectionForClass(ManagerRegistry $registry, $class)
     {

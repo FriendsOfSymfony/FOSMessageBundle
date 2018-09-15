@@ -2,12 +2,12 @@
 
 namespace FOS\MessageBundle\EntityManager;
 
-use FOS\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
 use Doctrine\ORM\EntityManager;
 use FOS\MessageBundle\Model\MessageInterface;
-use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ParticipantInterface;
+use FOS\MessageBundle\Model\ReadableInterface;
 use FOS\MessageBundle\Model\ThreadInterface;
+use FOS\MessageBundle\ModelManager\MessageManager as BaseMessageManager;
 
 /**
  * Default ORM MessageManager.

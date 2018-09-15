@@ -5,35 +5,35 @@
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="fos_message_inbox" path="/">
-        <default key="_controller">FOSMessageBundle:Message:inbox</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::inboxAction</default>
     </route>
 
     <route id="fos_message_sent" path="/sent">
-        <default key="_controller">FOSMessageBundle:Message:sent</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::sentAction</default>
     </route>
 
     <route id="fos_message_deleted" path="/deleted">
-        <default key="_controller">FOSMessageBundle:Message:deleted</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::deletedAction</default>
     </route>
 
     <route id="fos_message_search" path="/search">
-        <default key="_controller">FOSMessageBundle:Message:search</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::searchAction</default>
     </route>
 
     <route id="fos_message_thread_new" path="/new">
-        <default key="_controller">FOSMessageBundle:Message:newThread</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::newThreadAction</default>
     </route>
 
     <route id="fos_message_thread_delete" path="/{threadId}/delete" methods="POST|DELETE">
-        <default key="_controller">FOSMessageBundle:Message:delete</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::deleteAction</default>
     </route>
-    
+
     <route id="fos_message_thread_undelete" path="/{threadId}/undelete" methods="POST">
-        <default key="_controller">FOSMessageBundle:Message:undelete</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::undeleteAction</default>
     </route>
 
     <route id="fos_message_thread_view" path="/{threadId}">
-        <default key="_controller">FOSMessageBundle:Message:thread</default>
+        <default key="_controller">FOS\MessageBundle\Controller\MessageController::threadAction</default>
     </route>
 
 </routes>
