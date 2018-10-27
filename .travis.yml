@@ -19,6 +19,7 @@ matrix:
     - php: 7.2
       env: SYMFONY_LTS='^3' SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.2
+    - php: 7.3
 
 before_install:
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
