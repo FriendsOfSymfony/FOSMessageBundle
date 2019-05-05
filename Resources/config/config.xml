@@ -6,7 +6,7 @@
 
     <services>
 
-        <service id="FOS\MessageBundle\Controller\MessageController" synthetic="true" public="true">
+        <service class="FOS\MessageBundle\Controller\MessageController" id="FOS\MessageBundle\Controller\MessageController" public="true">
             <argument type="service" id="service_container"/>
         </service>
 
