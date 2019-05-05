@@ -21,7 +21,9 @@ Documentation for this bundle is stored under `Resources/doc` in this repository
 Legacy (Symfony 2)
 ------
 
-Due to difficulties in CI testing and the [deprecation coming November of this year (2019)][], support for 2 has been dropp in this bundle (may be added later).
+Due to difficulties in CI testing, deprecation of the `Controller` class and the [deprecation coming November of this year (2019)][] support for Symfony2 has been dropped in this bundle.
+
+For more info, see the pull request that ultimately made the decision for us - https://github.com/FriendsOfSymfony/FOSMessageBundle/pull/340
 
 If using Symfony 2, make sure to use version 1.3.
 
