@@ -15,7 +15,7 @@ matrix:
   fast_finish: true
   include:
     - php: 5.5
-      env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak
+      env: SYMFONY_LTS='^3' SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.2
       env: SYMFONY_LTS='^3' SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.2
@@ -24,8 +24,9 @@ before_install:
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini
   - if [ "$SYMFONY_LTS" != "" ]; then composer require --dev --no-update symfony/lts=$SYMFONY_LTS; fi
-  - composer install
 
 install:
   - composer update $COMPOSER_FLAGS
-  - php bin/phpunit
+  - ./phpunit install
+
+script: ./phpunit
