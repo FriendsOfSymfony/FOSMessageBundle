@@ -7,10 +7,7 @@
     <services>
 
         <service id="FOS\MessageBundle\Controller\MessageController" public="true">
-            <bind key="$container"
-                type="service"
-                id="service_container"
-            />
+            <argument type="service" id="service_container"/>
         </service>
 
         <service id="fos_message.sender.default" class="FOS\MessageBundle\Sender\Sender" public="false">
