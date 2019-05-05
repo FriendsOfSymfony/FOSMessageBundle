@@ -11,46 +11,6 @@
                 type="service"
                 id="service_container"
             />
-            <bind key="$router"
-                type="service"
-                id="router"
-            />
-            <bind key="$replyFormFactory"
-                type="service"
-                id="fos_message.reply_form.factory"
-            />
-            <bind key="$replyFormHandler"
-                type="service"
-                id="fos_message.reply_form.handler"
-            />
-            <bind key="$newThreadFormFactory"
-                type="service"
-                id="fos_message.new_thread_form.factory"
-            />
-            <bind key="$newThreadFormHandler"
-                type="service"
-                id="fos_message.new_thread_form.handler"
-            />
-            <bind key="$deleter"
-                type="service"
-                id="fos_message.deleter"
-            />
-            <bind key="$threadManager"
-                type="service"
-                id="fos_message.thread_manager"
-            />
-            <bind key="$searchQueryFactory"
-                type="service"
-                id="fos_message.search_query_factory"
-            />
-            <bind key="$searchFinder"
-                type="service"
-                id="fos_message.search_finder"
-            />
-            <bind key="$provider"
-                type="service"
-                id="fos_message.provider"
-            />
         </service>
 
         <service id="fos_message.sender.default" class="FOS\MessageBundle\Sender\Sender" public="false">
