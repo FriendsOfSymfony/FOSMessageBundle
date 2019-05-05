@@ -30,6 +30,7 @@ class FOSMessageExtension extends Extension
         $loader->load('form.xml');
         $loader->load('validator.xml');
         $loader->load('spam_detection.xml');
+        $loader->load('services.xml');
 
         $container->setParameter('fos_message.message_class', $config['message_class']);
         $container->setParameter('fos_message.thread_class', $config['thread_class']);

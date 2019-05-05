@@ -1,0 +1,16 @@
+parameters:
+
+services:
+  FOS\MessageBundle\Controller\MessageController:
+      public: true
+      bind:
+          $router: '@router'
+          $replyFormFactory: '@fos_message.reply_form.factory'
+          $replyFormHandler: '@fos_message.reply_form.handler'
+          $newThreadFormFactory: '@fos_message.new_thread_form.factory'
+          $newThreadFormHandler: '@fos_message.new_thread_form.handler'
+          $deleter: '@fos_message.deleter'
+          $threadManager: '@fos_message.thread_manager'
+          $searchQueryFactory: '@fos_message.search_query_factory'
+          $searchFinder: '@fos_message.search_finder'
+          $provider: '@fos_message.provider'

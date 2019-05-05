@@ -3,18 +3,83 @@
 namespace FOS\MessageBundle\Controller;
 
 use FOS\MessageBundle\Provider\ProviderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class MessageController extends Controller implements ContainerAwareInterface
+//Dependency Injection
+use Symfony\Component\Routing\RouterInterface;
+
+use FOS\MessageBundle\FormFactory\ReplyMessageFormFactory;
+use FOS\MessageBundle\FormHandler\ReplyMessageFormHandler;
+
+use FOS\MessageBundle\FormFactory\NewThreadMessageFormFactory;
+use FOS\MessageBundle\FormHandler\NewThreadMessageFormHandler;
+
+use FOS\MessageBundle\Deleter\Deleter;
+use FOS\MessageBundle\EntityManager\ThreadManager;
+
+use FOS\MessageBundle\Search\QueryFactory;
+use FOS\MessageBundle\Search\Finder;
+
+use FOS\MessageBundle\Provider\Provider;
+
+
+// service names
+
+// fos_message.reply_form.factory
+// fos_message.reply_form.handler
+
+// router
+
+// fos_message.new_thread_form.factory
+// fos_message.new_thread_form.handler
+
+// fos_message.deleter
+// fos_message.thread_manager
+
+// fos_message.search_query_factory
+// fos_message.search_finder
+
+// fos_message.provider
+
+class MessageController extends AbstractController
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected $router;
+    protected $replyFormFactory;
+    protected $replyFormHandler;
+    protected $newThreadFormFactory;
+    protected $newThreadFormHandler;
+    protected $deleter;
+    protected $threadManager;
+    protected $searchQueryFactory;
+    protected $searchFinder;
+    protected $provider;
+
+    public function __construct(
+        $router,
+        $replyFormFactory,
+        $replyFormHandler,
+        $newThreadFormFactory,
+        $newThreadFormHandler,
+        $deleter,
+        $threadManager,
+        $searchQueryFactory,
+        $searchFinder,
+        $provider
+    )
+    {
+        $this->router = $router;
+        $this->replyFormFactory = $replyFormFactory;
+        $this->replyFormHandler = $replyFormHandler;
+        $this->newThreadFormFactory = $newThreadFormFactory;
+        $this->newThreadFormHandler = $newThreadFormHandler;
+        $this->deleter = $deleter;
+        $this->threadManager = $threadManager;
+        $this->searchQueryFactory = $searchQueryFactory;
+        $this->searchFinder = $searchFinder;
+        $this->provider = $provider;
+    }
 
     /**
      * Displays the authenticated participant inbox.
@@ -68,11 +133,11 @@ class MessageController extends Controller implements ContainerAwareInterface
     public function threadAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $form = $this->container->get('fos_message.reply_form.factory')->create($thread);
-        $formHandler = $this->container->get('fos_message.reply_form.handler');
+        $form = $this->replyFormFactory->create($thread);
+        $formHandler = $this->replyFormHandler;
 
         if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
+            return new RedirectResponse($this->router->generate('fos_message_thread_view', array(
                 'threadId' => $message->getThread()->getId(),
             )));
         }
@@ -90,11 +155,11 @@ class MessageController extends Controller implements ContainerAwareInterface
      */
     public function newThreadAction()
     {
-        $form = $this->container->get('fos_message.new_thread_form.factory')->create();
-        $formHandler = $this->container->get('fos_message.new_thread_form.handler');
+        $form = $this->newThreadFormFactory->create();
+        $formHandler = $this->newThreadFormHandler->get('fos_message.new_thread_form.handler');
 
         if ($message = $formHandler->process($form)) {
-            return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
+            return new RedirectResponse($this->router->generate('fos_message_thread_view', array(
                 'threadId' => $message->getThread()->getId(),
             )));
         }
@@ -115,10 +180,10 @@ class MessageController extends Controller implements ContainerAwareInterface
     public function deleteAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('fos_message.deleter')->markAsDeleted($thread);
-        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+        $this->deleter->markAsDeleted($thread);
+        $this->threadManager->saveThread($thread);
 
-        return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
+        return new RedirectResponse($this->router->generate('fos_message_inbox'));
     }
 
     /**
@@ -131,10 +196,10 @@ class MessageController extends Controller implements ContainerAwareInterface
     public function undeleteAction($threadId)
     {
         $thread = $this->getProvider()->getThread($threadId);
-        $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
-        $this->container->get('fos_message.thread_manager')->saveThread($thread);
+        $this->deleter->markAsUndeleted($thread);
+        $this->threadManager->saveThread($thread);
 
-        return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
+        return new RedirectResponse($this->router->generate('fos_message_inbox'));
     }
 
     /**
@@ -144,8 +209,8 @@ class MessageController extends Controller implements ContainerAwareInterface
      */
     public function searchAction()
     {
-        $query = $this->container->get('fos_message.search_query_factory')->createFromRequest();
-        $threads = $this->container->get('fos_message.search_finder')->find($query);
+        $query = $this->searchQueryFactory->createFromRequest();
+        $threads = $this->searchFinder->find($query);
 
         return $this->render('@FOSMessage/Message/search.html.twig', array(
             'query' => $query,
@@ -160,14 +225,6 @@ class MessageController extends Controller implements ContainerAwareInterface
      */
     protected function getProvider()
     {
-        return $this->container->get('fos_message.provider');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
+        return $this->provider;
     }
 }

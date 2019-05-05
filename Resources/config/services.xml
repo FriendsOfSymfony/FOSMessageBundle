@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="FOS\MessageBundle\Controller\MessageController" public="true">
+            <bind key="$router"
+                type="service"
+                id="router"
+            />
+            <bind key="$replyFormFactory"
+                type="service"
+                id="fos_message.reply_form.factory"
+            />
+            <bind key="$replyFormHandler"
+                type="service"
+                id="fos_message.reply_form.handler"
+            />
+            <bind key="$newThreadFormFactory"
+                type="service"
+                id="fos_message.new_thread_form.factory"
+            />
+            <bind key="$newThreadFormHandler"
+                type="service"
+                id="fos_message.new_thread_form.handler"
+            />
+            <bind key="$deleter"
+                type="service"
+                id="fos_message.deleter"
+            />
+            <bind key="$threadManager"
+                type="service"
+                id="fos_message.thread_manager"
+            />
+            <bind key="$searchQueryFactory"
+                type="service"
+                id="fos_message.search_query_factory"
+            />
+            <bind key="$searchFinder"
+                type="service"
+                id="fos_message.search_finder"
+            />
+            <bind key="$provider"
+                type="service"
+                id="fos_message.provider"
+            />
+        </service>
+    </services>
+</container>
