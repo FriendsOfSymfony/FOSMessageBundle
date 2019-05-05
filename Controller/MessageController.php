@@ -57,6 +57,7 @@ class MessageController extends AbstractController
     protected $provider;
 
     public function __construct(
+        $container,
         $router,
         $replyFormFactory,
         $replyFormHandler,
@@ -79,6 +80,7 @@ class MessageController extends AbstractController
         $this->searchQueryFactory = $searchQueryFactory;
         $this->searchFinder = $searchFinder;
         $this->provider = $provider;
+        $this->setContainer($container);
     }
 
     /**
@@ -156,7 +158,7 @@ class MessageController extends AbstractController
     public function newThreadAction()
     {
         $form = $this->newThreadFormFactory->create();
-        $formHandler = $this->newThreadFormHandler->get('fos_message.new_thread_form.handler');
+        $formHandler = $this->newThreadFormHandler;
 
         if ($message = $formHandler->process($form)) {
             return new RedirectResponse($this->router->generate('fos_message_thread_view', array(

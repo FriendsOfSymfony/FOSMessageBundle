@@ -7,6 +7,10 @@
     <services>
 
         <service id="fos_message.message_controller" class="FOS\MessageBundle\Controller\MessageController" public="true">
+            <bind key="$container"
+                type="service"
+                id="service_container"
+            />
             <bind key="$router"
                 type="service"
                 id="router"
