@@ -28,6 +28,5 @@ before_install:
 
 install:
   - composer update $COMPOSER_FLAGS
-  - ./phpunit install
 
 script: ./phpunit
