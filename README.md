@@ -16,7 +16,7 @@ Documentation
 
 Documentation for this bundle is stored under `Resources/doc` in this repository.
 
-[Read the documentation for the last stable (1.3)][]
+[Read the documentation for the last stable (1.4)][]
 
 License
 -------
@@ -27,4 +27,4 @@ This bundle is under the MIT license. See the complete license in the bundle:
 Resources/meta/LICENSE
 ```
 
-[Read the documentation for the last stable (1.3)]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
+[Read the documentation for the last stable (1.4)]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
