@@ -21,6 +21,7 @@ matrix:
     - php: 7.2
 
 before_install:
+  - composer install
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - phpenv config-rm xdebug.ini
   - if [ "$SYMFONY_LTS" != "" ]; then composer require --dev --no-update symfony/lts=$SYMFONY_LTS; fi
