@@ -18,14 +18,14 @@ Documentation for this bundle is stored under `Resources/doc` in this repository
 
 [Read the documentation for the last stable (2.0)][]
 
-Legacy (Symfony 2)
+Legacy (Symfony 2, or <=3.2)
 ------
 
-Due to difficulties in CI testing, deprecation of the `Controller` class and the [deprecation coming November of this year (2019)][] support for Symfony2 has been dropped in this bundle.
+Due to difficulties in CI testing, deprecation of the `Controller` class and the [deprecation coming November of this year (2019)][] support for anything older than Symfony3.3 has been dropped in this bundle.
 
 For more info, see the pull request that ultimately made the decision for us - https://github.com/FriendsOfSymfony/FOSMessageBundle/pull/340
 
-If using Symfony 2, make sure to use version 1.3.
+If using versions older than Symfony3.3, make sure to use version 1.3 of this bundle.
 
 https://github.com/FriendsOfSymfony/FOSMessageBundle/tree/v1.3.0
 
