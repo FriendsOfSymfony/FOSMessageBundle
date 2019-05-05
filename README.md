@@ -16,7 +16,22 @@ Documentation
 
 Documentation for this bundle is stored under `Resources/doc` in this repository.
 
-[Read the documentation for the last stable (1.4)][]
+[Read the documentation for the last stable (2.0)][]
+
+Legacy (Symfony 2)
+------
+
+Due to difficulties in CI testing and the [deprecation coming November of this year (2019)][], support for 2 has been dropp in this bundle (may be added later).
+
+If using Symfony 2, make sure to use version 1.3.
+
+https://github.com/FriendsOfSymfony/FOSMessageBundle/tree/v1.3.0
+
+When using composer, tag it as such but otherwise install as per the 1.3 docs:
+
+```bash
+composer require friendsofsymfony/message-bundle:1.3.0
+```
 
 License
 -------
@@ -27,4 +42,4 @@ This bundle is under the MIT license. See the complete license in the bundle:
 Resources/meta/LICENSE
 ```
 
-[Read the documentation for the last stable (1.4)]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
+[Read the documentation for the last stable (2.0)]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md

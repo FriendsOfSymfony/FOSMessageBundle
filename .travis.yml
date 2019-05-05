@@ -15,7 +15,7 @@ matrix:
   fast_finish: true
   include:
     - php: 5.5
-      env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_DEPRECATIONS_HELPER=weak
+      env: SYMFONY_LTS='^3' SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.2
       env: SYMFONY_LTS='^3' SYMFONY_DEPRECATIONS_HELPER=weak
     - php: 7.2
