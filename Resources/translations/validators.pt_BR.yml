@@ -1,0 +1,17 @@
+fos_message:
+  recipient:
+    blank: Nenhum destinatário especificado
+  recipients:
+    blank: Nenhum destinatário especificado
+  subject:
+    blank: Insira um assunto
+    short: O assunto é muito curto|O assunto é muito curto
+    long: O assunto é muito longo|O assunto é muito longo
+  body:
+    blank: Insira uma mensagem
+    short: A mensagem é muito curta
+    spam: Desculpe, sua mensagem parece ser um spam
+  not_authorized: Você não tem permissão para enviar esta mensagem
+  reply_not_authorized: Você não tem permissão para responder a esta mensagem
+  self_recipient: Não é possível enviar uma mensagem para si mesmo
+

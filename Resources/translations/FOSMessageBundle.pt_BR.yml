@@ -1,0 +1,27 @@
+messenger:      Mensagens
+inbox:          Caixa de entrada 
+sent:           Envio
+deleted:        Apagado
+send_new:       Enviar uma nova mensagem
+search:         Buscar
+threads_found:  "%num% tópico encontrado | %num% tópicos encontrados"
+
+message_info:   Por %sender%, em %date%
+reply:          Responder
+
+subject:        Assunto
+starter:        Emissor
+startdate:      Data de emissão
+messages:       Mensagens
+last_message:   Última mensagem
+actions:        Ações
+new:            Novo
+goto_last:      Vá para a última mensagem
+on:             Em %date%
+by:             Por %sender%
+no_thread:      Não há tópicos para mostrar
+delete:         Apagar
+undelete:       Restaurar
+recipient:      Destinatário
+recipients:     Destinatários
+body:           Corpo
