@@ -21,3 +21,7 @@ on:             "Am %date%"
 by:             "Von %sender%"
 no_thread:      Es gibt keine Konversation zum Anzeigen
 delete:         löschen
+undelete:       wiederherstellen
+recipient:      Empfänger
+recipients:     Empfänger
+body:           Nachricht
