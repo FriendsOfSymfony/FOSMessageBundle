@@ -22,7 +22,8 @@
         "symfony/form": "^3.3|^4.0",
         "symfony/framework-bundle": "^3.3|^4.0",
         "symfony/security": "^3.3|^4.0",
-        "symfony/twig-bundle": "^3.3|^4.0"
+        "symfony/twig-bundle": "^3.3|^4.0",
+        "symfony/asset": "^3.3|^4.0"
     },
     "require-dev": {
         "symfony/validator": "^3.3|^4.0",
