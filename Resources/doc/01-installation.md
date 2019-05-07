@@ -7,14 +7,20 @@ Setting up FOSMessageBundle
 > interfaces which can be swapped out if you're not using FOSUserBundle. See
 > [Using other UserBundles][] for more information.
 
-~~The first step is to tell composer that you want to download FOSMessageBundle which can
-be achieved by typing the following at the command prompt:~~
+The first step is to tell composer that you want to download FOSMessageBundle which can
+be achieved by typing the following at the command prompt:
 
-~~$ composer require friendsofsymfony/message-bundle~~
+```bash
+$ composer require friendsofsymfony/message-bundle
+```
 
-#### v2.0 (temporary installation instructions)
+**PLEASE NOTE:** Right now that command will install v1.3.0 due to issues with packagist.
 
-Still trying to get ahold of the packagist owner, for now add the following to your composer.json:
+#### v2.0 (temporary fix)
+
+To install the latest version we will have to use github as a VCS provider for composer.
+
+Add the following to your composer.json:
 
 ```json
 "repositories": [
@@ -28,7 +34,7 @@ Still trying to get ahold of the packagist owner, for now add the following to y
 Then type the following in the command prompt (instead of the above step).
 
 ```bash
-$ composer require friendsofsymfony/message-bundle:dev-master
+$ composer require friendsofsymfony/message-bundle:^2.0
 ```
 
 ### Step 2 - Setting up your user class
