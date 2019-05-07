@@ -6,3 +6,4 @@ vendor
 .php_cs
 Tests/Functional/cache
 Tests/Functional/logs
+var

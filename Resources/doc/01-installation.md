@@ -50,7 +50,9 @@ We provide examples for both Mongo DB and ORM.
 
 ### Step 4 - Enable the bundle in your kernel
 
-The bundle must be added to your `AppKernel`
+The bundle must be added to your `AppKernel`.
+
+**Step usually not necescary in Symfony 4**.
 
 ```php
 // app/AppKernel.php
@@ -76,6 +78,17 @@ fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
     prefix: /optional_routing_prefix
 ```
+
+### Step 6 - Check templating
+
+Make sure to add this to `framwork.yaml` (and check twig is installed) if you run into the non-existant service `templating` issue:
+
+```yaml
+templating:
+    engines:
+        twig
+```
+
 
 ## Installation Finished
 

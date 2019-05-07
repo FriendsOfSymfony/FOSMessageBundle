@@ -3,14 +3,18 @@
 namespace FOS\MessageBundle\Controller;
 
 use FOS\MessageBundle\Provider\ProviderInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class MessageController extends Controller implements ContainerAwareInterface
+class MessageController extends AbstractController
 {
+    public function __construct(ContainerInterface $container)
+    {
+        $this->setContainer($container);
+    }
+
     /**
      * @var ContainerInterface
      */
@@ -161,13 +165,5 @@ class MessageController extends Controller implements ContainerAwareInterface
     protected function getProvider()
     {
         return $this->container->get('fos_message.provider');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 }
