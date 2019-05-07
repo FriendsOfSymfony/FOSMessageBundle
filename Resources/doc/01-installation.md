@@ -14,6 +14,29 @@ be achieved by typing the following at the command prompt:
 $ composer require friendsofsymfony/message-bundle
 ```
 
+**PLEASE NOTE:** Right now that command will install v1.3.0 due to issues with packagist.
+
+#### v2.0 (temporary fix)
+
+To install the latest version we will have to use github as a VCS provider for composer.
+
+Add the following to your composer.json:
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/FriendsOfSymfony/FOSMessageBundle"
+    }
+]
+```
+
+Then type the following in the command prompt (instead of the above step).
+
+```bash
+$ composer require friendsofsymfony/message-bundle:^2.0
+```
+
 ### Step 2 - Setting up your user class
 
 FOSMessageBundle requires that your user class implement `ParticipantInterface`. This
