@@ -38,6 +38,6 @@ This bundle is under the MIT license. See the complete license in the bundle:
 Resources/meta/LICENSE
 ```
 
-[Read the documentation for the last stable (2.0)]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
+[Read the documentation for the last stable]: https://github.com/FriendsOfSymfony/FOSMessageBundle/blob/master/Resources/doc/00-index.md
 
 [deprecation coming November of this year (2019)]: https://symfony.com/roadmap/2.8
