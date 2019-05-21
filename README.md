@@ -29,12 +29,6 @@ If using versions older than Symfony3.4 (LTS), make sure to use version 1.3 of t
 
 https://github.com/FriendsOfSymfony/FOSMessageBundle/tree/v1.3.0
 
-When using composer, tag it as such but otherwise install as per the 1.3 docs:
-
-```bash
-composer require friendsofsymfony/message-bundle:1.3.0
-```
-
 License
 -------
 
