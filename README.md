@@ -16,7 +16,7 @@ Documentation
 
 Documentation for this bundle is stored under `Resources/doc` in this repository.
 
-[Read the documentation for the last stable (2.0)][]
+[Read the documentation for the last stable][]
 
 Legacy (Symfony 2, or <=3.3)
 ------
