@@ -1,0 +1,17 @@
+fos_message:
+  recipient:
+    blank: Geen ontvanger gespecifieerd
+  recipients:
+    blank: Geen ontvangers gespecifieerd
+  subject:
+    blank: Voer een onderwerp in
+    short: Het onderwerp is te kort|Het onderwerp is te kort
+    long: Het onderwerp is te lang|Het onderwerp is te kort
+  body:
+    blank: Gelieve een bericht in te voeren
+    short: Het bericht is te kort
+    spam: Sorry, uw bericht lijkt op spam
+  not_authorized: U bent niet bevoegd om dit bericht sturen
+  reply_not_authorized: U bent niet bevoegd om op dit bericht te antwoorden
+  self_recipient: U kunt niet een bericht naar u zelf sturen
+
