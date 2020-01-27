@@ -30,3 +30,5 @@ install:
   - ./phpunit install
 
 script: ./phpunit
+
+dist: trusty
