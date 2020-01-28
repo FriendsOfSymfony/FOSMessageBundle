@@ -16,7 +16,7 @@ class ThreadManagerTest extends TestCase
     protected $user;
     protected $date;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->user = $this->createParticipantMock('4711');
         $this->date = new \DateTime('2013-12-25');

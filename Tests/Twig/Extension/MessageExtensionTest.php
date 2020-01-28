@@ -16,7 +16,7 @@ class MessageExtensionTest extends TestCase
     private $authorizer;
     private $participant;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->participantProvider = $this->getMockBuilder('FOS\MessageBundle\Security\ParticipantProviderInterface')->getMock();
         $this->provider = $this->getMockBuilder('FOS\MessageBundle\Provider\ProviderInterface')->getMock();
