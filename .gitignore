@@ -7,3 +7,4 @@ vendor
 Tests/Functional/cache
 Tests/Functional/logs
 var
+.phpunit.result.cache
