@@ -12,7 +12,7 @@ class ThreadDenormalizerTest extends TestCase
 {
     protected $dates;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestIncomplete('Broken, needs to be fixed');
 
