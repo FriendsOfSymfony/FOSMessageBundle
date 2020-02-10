@@ -6,7 +6,7 @@
 
     <mapped-superclass name="FOS\MessageBundle\Document\MessageMetadata">
 
-        <field name="isRead" fieldName="isRead" type="boolean" />
+        <field name="isRead" field-name="isRead" type="boolean" />
 
         <!--<reference-one field="participant" target-document="Acme\UserBundle\Document\User" />-->
 
