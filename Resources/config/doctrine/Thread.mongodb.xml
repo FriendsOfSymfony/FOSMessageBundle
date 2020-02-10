@@ -6,7 +6,7 @@
 
     <mapped-superclass name="FOS\MessageBundle\Document\Thread" collection="fos_message_thread">
 
-        <field name="subject" fieldName="subject" type="string" />
+        <field name="subject" field-name="subject" type="string" />
 
         <!--<embed-many target-document="FOS\MessageBundle\Document\ThreadMetadata" field="metadata" />-->
 
@@ -16,19 +16,19 @@
 
         <!--<reference-one field="createdBy" target-document="Acme\UserBundle\Document\User" />-->
 
-        <field name="createdAt" fieldName="createdAt" type="date" />
+        <field name="createdAt" field-name="createdAt" type="date" />
 
-        <field name="lastMessageDate" fieldName="lastMessageDate" type="date" />
+        <field name="lastMessageDate" field-name="lastMessageDate" type="date" />
 
-        <field name="isSpam" fieldName="isSpam" type="boolean" />
+        <field name="isSpam" field-name="isSpam" type="boolean" />
 
-        <field name="keywords" fieldName="keywords" type="string" />
+        <field name="keywords" field-name="keywords" type="string" />
 
-        <field name="activeParticipants" fieldName="activeParticipants" type="collection" />
+        <field name="activeParticipants" field-name="activeParticipants" type="collection" />
 
-        <field name="activeRecipients" fieldName="activeRecipients" type="collection" />
+        <field name="activeRecipients" field-name="activeRecipients" type="collection" />
 
-        <field name="activeSenders" fieldName="activeSenders" type="collection" />
+        <field name="activeSenders" field-name="activeSenders" type="collection" />
 
         <indexes>
             <index>

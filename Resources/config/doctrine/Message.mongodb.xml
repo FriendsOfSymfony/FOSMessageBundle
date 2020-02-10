@@ -6,13 +6,13 @@
 
     <mapped-superclass name="FOS\MessageBundle\Document\Message" collection="fos_message_message">
 
-        <field name="body" fieldName="body" type="string" />
+        <field name="body" field-name="body" type="string" />
 
-        <field name="createdAt" fieldName="createdAt" type="date" />
+        <field name="createdAt" field-name="createdAt" type="date" />
 
-        <field name="isSpam" fieldName="isSpam" type="boolean" />
+        <field name="isSpam" field-name="isSpam" type="boolean" />
 
-        <field name="unreadForParticipants" fieldName="unreadForParticipants" type="collection" />
+        <field name="unreadForParticipants" field-name="unreadForParticipants" type="collection" />
 
         <!--<embed-many target-document="FOS\MessageBundle\Document\MessageMetadata" field="metadata" />-->
 
