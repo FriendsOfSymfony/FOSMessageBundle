@@ -28,8 +28,8 @@ before_install:
 
 install:
   - composer update $COMPOSER_FLAGS
-  - ./phpunit install
+#  - ./phpunit install
 
-script: ./phpunit
+script: ./vendor/bin/simple-phpunit
 
 dist: trusty
