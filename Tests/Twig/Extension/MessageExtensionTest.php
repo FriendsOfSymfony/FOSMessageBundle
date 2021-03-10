@@ -16,7 +16,11 @@ class MessageExtensionTest extends TestCase
     private $authorizer;
     private $participant;
 
-    public function setUp(): void
+    /**
+     * This method should be setUp(): void
+     * For compatibility reasons with old versions of PHP, we cannot use neither setUp(): void nor setUp().
+     */
+    public function setUpBeforeTest()
     {
         $this->participantProvider = $this->getMockBuilder('FOS\MessageBundle\Security\ParticipantProviderInterface')->getMock();
         $this->provider = $this->getMockBuilder('FOS\MessageBundle\Provider\ProviderInterface')->getMock();
@@ -27,6 +31,8 @@ class MessageExtensionTest extends TestCase
 
     public function testIsReadReturnsTrueWhenRead()
     {
+        $this->setUpBeforeTest();
+
         $this->participantProvider->expects($this->once())->method('getAuthenticatedParticipant')->will($this->returnValue($this->participant));
         $readAble = $this->getMockBuilder('FOS\MessageBundle\Model\ReadableInterface')->getMock();
         $readAble->expects($this->once())->method('isReadByParticipant')->with($this->participant)->will($this->returnValue(true));
@@ -35,6 +41,8 @@ class MessageExtensionTest extends TestCase
 
     public function testIsReadReturnsFalseWhenNotRead()
     {
+        $this->setUpBeforeTest();
+
         $this->participantProvider->expects($this->once())->method('getAuthenticatedParticipant')->will($this->returnValue($this->participant));
         $readAble = $this->getMockBuilder('FOS\MessageBundle\Model\ReadableInterface')->getMock();
         $readAble->expects($this->once())->method('isReadByParticipant')->with($this->participant)->will($this->returnValue(false));
@@ -43,6 +51,8 @@ class MessageExtensionTest extends TestCase
 
     public function testCanDeleteThreadWhenHasPermission()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->getThreadMock();
         $this->authorizer->expects($this->once())->method('canDeleteThread')->with($thread)->will($this->returnValue(true));
         $this->assertTrue($this->extension->canDeleteThread($thread));
@@ -50,6 +60,8 @@ class MessageExtensionTest extends TestCase
 
     public function testCanDeleteThreadWhenNoPermission()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->getThreadMock();
         $this->authorizer->expects($this->once())->method('canDeleteThread')->with($thread)->will($this->returnValue(false));
         $this->assertFalse($this->extension->canDeleteThread($thread));
@@ -57,6 +69,8 @@ class MessageExtensionTest extends TestCase
 
     public function testIsThreadDeletedByParticipantWhenDeleted()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->getThreadMock();
         $this->participantProvider->expects($this->once())->method('getAuthenticatedParticipant')->will($this->returnValue($this->participant));
         $thread->expects($this->once())->method('isDeletedByParticipant')->with($this->participant)->will($this->returnValue(true));
@@ -65,12 +79,16 @@ class MessageExtensionTest extends TestCase
 
     public function testGetNbUnreadCacheStartsEmpty()
     {
+        $this->setUpBeforeTest();
+
         $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
         $this->extension->getNbUnread();
     }
 
     public function testGetNbUnread()
     {
+        $this->setUpBeforeTest();
+
         $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
         $this->provider->expects($this->once())->method('getNbUnreadMessages')->will($this->returnValue(3));
         $this->assertEquals(3, $this->extension->getNbUnread());
@@ -78,6 +96,8 @@ class MessageExtensionTest extends TestCase
 
     public function testGetNbUnreadStoresCache()
     {
+        $this->setUpBeforeTest();
+
         $this->provider->expects($this->once())->method('getNbUnreadMessages')->will($this->returnValue(3));
         //we call it twice but expect to only get one call
         $this->extension->getNbUnread();
@@ -86,6 +106,8 @@ class MessageExtensionTest extends TestCase
 
     public function testGetName()
     {
+        $this->setUpBeforeTest();
+
         $this->assertEquals('fos_message', $this->extension->getName());
     }
 
