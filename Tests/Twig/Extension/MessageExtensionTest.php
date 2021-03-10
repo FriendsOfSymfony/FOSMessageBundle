@@ -81,7 +81,13 @@ class MessageExtensionTest extends TestCase
     {
         $this->setUpBeforeTest();
 
-        $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        /*
+         * assertAttributeEmpty is deprecated, see deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+         */
+        if (\method_exists($this, 'assertAttributeEmpty')) {
+            $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        }
+        $this->assertEmpty($this->extension->getNbUnread());
         $this->extension->getNbUnread();
     }
 
@@ -89,7 +95,13 @@ class MessageExtensionTest extends TestCase
     {
         $this->setUpBeforeTest();
 
-        $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        /*
+         * assertAttributeEmpty is deprecated, see deprecated https://github.com/sebastianbergmann/phpunit/issues/3338
+         */
+        if (\method_exists($this, 'assertAttributeEmpty')) {
+            $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        }
+        $this->assertEmpty($this->extension->getNbUnread());
         $this->provider->expects($this->once())->method('getNbUnreadMessages')->will($this->returnValue(3));
         $this->assertEquals(3, $this->extension->getNbUnread());
     }
