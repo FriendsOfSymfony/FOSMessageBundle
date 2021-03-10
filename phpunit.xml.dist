@@ -3,7 +3,7 @@
 <phpunit bootstrap="./vendor/autoload.php" color="true">
     <php>
         <ini name="xdebug.max_nesting_level" value="200" />
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+<!--        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>-->
     </php>
     <testsuites>
         <testsuite name="FOSMessageBundle">
