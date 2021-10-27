@@ -51,10 +51,9 @@ class User extends BaseUser implements ParticipantInterface
 FOSMessageBundle has multiple models that must be implemented by you in an application
 bundle (that may or may not be a child of FOSMessageBundle).
 
-We provide examples for both Mongo DB and ORM.
+We provide examples for ORM.
 
 - [Example entities for Doctrine ORM][]
-- [Example documents for Doctrine ODM][]
 
 ### Step 4 - Enable the bundle in your kernel
 

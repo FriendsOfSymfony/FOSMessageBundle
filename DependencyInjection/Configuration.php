@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('fos_message');
-        $rootNode = $treeBuilder->root('fos_message');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

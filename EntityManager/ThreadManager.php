@@ -21,7 +21,7 @@ class ThreadManager extends BaseThreadManager
     protected $em;
 
     /**
-     * @var DocumentRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     protected $repository;
 

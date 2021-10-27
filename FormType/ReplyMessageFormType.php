@@ -38,20 +38,4 @@ class ReplyMessageFormType extends AbstractType
     {
         return 'fos_message_reply_message';
     }
-
-    /**
-     * @deprecated To remove when supporting only Symfony 3
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $this->configureOptions($resolver);
-    }
-
-    /**
-     * @deprecated To remove when supporting only Symfony 3
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }

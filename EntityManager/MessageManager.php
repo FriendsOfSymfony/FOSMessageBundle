@@ -22,7 +22,7 @@ class MessageManager extends BaseMessageManager
     protected $em;
 
     /**
-     * @var DocumentRepository
+     * @var \Doctrine\ORM\EntityRepository
      */
     protected $repository;
 

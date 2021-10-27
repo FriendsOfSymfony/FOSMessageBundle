@@ -120,7 +120,7 @@ class ThreadManagerTest extends TestCase
      */
     protected function createMessageMock()
     {
-        $message = $this->getMockBuilder('FOS\MessageBundle\Document\Message')
+        $message = $this->getMockBuilder('FOS\MessageBundle\Entity\Message')
             ->getMock();
 
         $message->expects($this->any())

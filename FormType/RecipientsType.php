@@ -67,12 +67,4 @@ class RecipientsType extends AbstractType
     {
         return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType');
     }
-
-    /**
-     * @deprecated To remove when supporting only Symfony 3
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }

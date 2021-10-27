@@ -37,12 +37,4 @@ class NewThreadMultipleMessageFormType extends AbstractType
     {
         return 'fos_message_new_multiperson_thread';
     }
-
-    /**
-     * @deprecated To remove when supporting only Symfony 3
-     */
-    public function getName()
-    {
-        return $this->getBlockPrefix();
-    }
 }
