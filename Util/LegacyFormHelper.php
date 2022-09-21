@@ -11,15 +11,15 @@ namespace FOS\MessageBundle\Util;
  */
 final class LegacyFormHelper
 {
-    private static $map = array(
+    private static $map = [
         'FOS\UserBundle\Form\Type\UsernameFormType' => 'fos_user_username',
         'FOS\MessageBundle\FormType\RecipientsType' => 'recipients_selector',
         'Symfony\Component\Form\Extension\Core\Type\EmailType' => 'email',
         'Symfony\Component\Form\Extension\Core\Type\PasswordType' => 'password',
         'Symfony\Component\Form\Extension\Core\Type\RepeatedType' => 'repeated',
         'Symfony\Component\Form\Extension\Core\Type\TextType' => 'text',
-        'Symfony\Component\Form\Extension\Core\Type\TextareaType' => 'textarea',
-    );
+        'Symfony\Component\Form\Extension\Core\Type\TextareaType' => 'textarea'
+    ];
 
     public static function getType($class)
     {

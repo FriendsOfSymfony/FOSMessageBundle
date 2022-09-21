@@ -39,7 +39,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
             return '';
         }
 
-        $usernames = array();
+        $usernames = [];
 
         foreach ($recipients as $recipient) {
             $usernames[] = $this->userToUsernameTransformer->transform($recipient);

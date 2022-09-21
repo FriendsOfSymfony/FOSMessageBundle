@@ -42,9 +42,7 @@ class RecipientsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected recipient does not exist',
-        ));
+        $resolver->setDefaults(['invalid_message' => 'The selected recipient does not exist']);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

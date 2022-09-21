@@ -12,7 +12,6 @@ use FOS\MessageBundle\Search\QueryFactoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-// use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MessageController extends AbstractController
 {
@@ -41,10 +40,6 @@ class MessageController extends AbstractController
      */
     protected $newThreadFormHandler;
 
-    // public function __construct(ContainerInterface $container)
-    // {
-    //     $this->setContainer($container);
-    // }
     public function __construct(
         ProviderInterface $provider,
         FactoryInterface $replyFormfactory,
@@ -68,9 +63,7 @@ class MessageController extends AbstractController
     {
         $threads = $this->provider->getInboxThreads();
 
-        return $this->render('@FOSMessage/Message/inbox.html.twig', array(
-            'threads' => $threads,
-        ));
+        return $this->render('@FOSMessage/Message/inbox.html.twig', ['threads' => $threads]);
     }
 
     /**
@@ -82,9 +75,7 @@ class MessageController extends AbstractController
     {
         $threads = $this->provider->getSentThreads();
 
-        return $this->render('@FOSMessage/Message/sent.html.twig', array(
-            'threads' => $threads,
-        ));
+        return $this->render('@FOSMessage/Message/sent.html.twig', ['threads' => $threads]);
     }
 
     /**
@@ -96,9 +87,7 @@ class MessageController extends AbstractController
     {
         $threads = $this->provider->getDeletedThreads();
 
-        return $this->render('@FOSMessage/Message/deleted.html.twig', array(
-            'threads' => $threads,
-        ));
+        return $this->render('@FOSMessage/Message/deleted.html.twig', ['threads' => $threads]);
     }
 
     /**
@@ -111,21 +100,16 @@ class MessageController extends AbstractController
     public function threadAction($threadId)
     {
         $thread = $this->provider->getThread($threadId);
-        // $form = $this->container->get('fos_message.reply_form.factory')->create($thread);
         $form = $this->replyFormfactory->create($thread);
-        // $formHandler = $this->container->get('fos_message.reply_form.handler');
 
         if ($message = $this->replyFormHandler->process($form)) {
             return $this->redirectToRoute('fos_message_thread_view', ['threadId' => $message->getThread()->getId()]);
-            // return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-            //     'threadId' => $message->getThread()->getId(),
-            // )));
         }
 
-        return $this->render('@FOSMessage/Message/thread.html.twig', array(
+        return $this->render('@FOSMessage/Message/thread.html.twig', [
             'form' => $form->createView(),
-            'thread' => $thread,
-        ));
+            'thread' => $thread
+        ]);
     }
 
     /**
@@ -135,21 +119,16 @@ class MessageController extends AbstractController
      */
     public function newThreadAction()
     {
-        // $form = $this->container->get('fos_message.new_thread_form.factory')->create();
         $form = $this->newThreadFormFactory->create();
-        // $formHandler = $this->container->get('fos_message.new_thread_form.handler');
 
         if ($message = $this->newThreadFormHandler->process($form)) {
             return $this->redirectToRoute('fos_message_thread_view', ['threadId' => $message->getThread()->getId()]);
-            // return new RedirectResponse($this->container->get('router')->generate('fos_message_thread_view', array(
-            //     'threadId' => $message->getThread()->getId(),
-            // )));
         }
 
-        return $this->render('@FOSMessage/Message/newThread.html.twig', array(
+        return $this->render('@FOSMessage/Message/newThread.html.twig', [
             'form' => $form->createView(),
-            'data' => $form->getData(),
-        ));
+            'data' => $form->getData()
+        ]);
     }
 
     /**
@@ -162,12 +141,9 @@ class MessageController extends AbstractController
     public function deleteAction($threadId, DeleterInterface $deleter, ThreadManagerInterface $threadManager)
     {
         $thread = $this->provider->getThread($threadId);
-        // $this->container->get('fos_message.deleter')->markAsDeleted($thread);
         $deleter->markAsDeleted($thread);
-        // $this->container->get('fos_message.thread_manager')->saveThread($thread);
         $threadManager->saveThread($thread);
 
-        // return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
         return $this->redirectToRoute('fos_message_inbox');
     }
 
@@ -181,12 +157,9 @@ class MessageController extends AbstractController
     public function undeleteAction($threadId, DeleterInterface $deleter, ThreadManagerInterface $threadManager)
     {
         $thread = $this->provider->getThread($threadId);
-        // $this->container->get('fos_message.deleter')->markAsUndeleted($thread);
-        // $this->container->get('fos_message.thread_manager')->saveThread($thread);
         $deleter->markAsUndeleted($thread);
         $threadManager->saveThread($thread);
 
-        // return new RedirectResponse($this->container->get('router')->generate('fos_message_inbox'));
         return $this->redirectToRoute('fos_message_inbox');
     }
 
@@ -197,14 +170,9 @@ class MessageController extends AbstractController
      */
     public function searchAction(QueryFactoryInterface $queryFactory, FinderInterface $finder)
     {
-        // $query = $this->container->get('fos_message.search_query_factory')->createFromRequest();
-        // $threads = $this->container->get('fos_message.search_finder')->find($query);
         $query = $queryFactory->createFromRequest();
         $threads = $finder->find($query);
 
-        return $this->render('@FOSMessage/Message/search.html.twig', array(
-            'query' => $query,
-            'threads' => $threads,
-        ));
+        return $this->render('@FOSMessage/Message/search.html.twig', ['query' => $query, 'threads' => $threads]);
     }
 }
