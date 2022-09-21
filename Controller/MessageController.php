@@ -69,7 +69,7 @@ class MessageController extends AbstractController
         DeleterInterface $deleter,
         ThreadManagerInterface $threadManager,
         QueryFactoryInterface $queryFactory,
-        FinderInterface $finder,
+        FinderInterface $finder
     ) {
         $this->provider = $provider;
         $this->replyFormfactory = $replyFormfactory;
