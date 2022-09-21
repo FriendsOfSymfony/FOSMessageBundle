@@ -1,6 +1,7 @@
 composer.lock
 phpunit.xml
 .phpunit
+.phpunit.*
 vendor
 .php_cs.cache
 .php_cs

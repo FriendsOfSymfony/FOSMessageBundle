@@ -24,7 +24,7 @@ class User implements ParticipantInterface, UserInterface, PasswordAuthenticated
 
     public function getRoles(): array
     {
-        return array();
+        return [];
     }
 
     public function eraseCredentials()

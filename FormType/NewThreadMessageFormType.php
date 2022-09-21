@@ -18,25 +18,23 @@ class NewThreadMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('recipient', LegacyFormHelper::getType('FOS\UserBundle\Form\Type\UsernameFormType'), array(
+            ->add('recipient', LegacyFormHelper::getType('FOS\UserBundle\Form\Type\UsernameFormType'), [
                 'label' => 'recipient',
-                'translation_domain' => 'FOSMessageBundle',
-            ))
-            ->add('subject', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), array(
+                'translation_domain' => 'FOSMessageBundle'
+            ])
+            ->add('subject', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType'), [
                 'label' => 'subject',
-                'translation_domain' => 'FOSMessageBundle',
-            ))
-            ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), array(
+                'translation_domain' => 'FOSMessageBundle'
+            ])
+            ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), [
                 'label' => 'body',
-                'translation_domain' => 'FOSMessageBundle',
-            ));
+                'translation_domain' => 'FOSMessageBundle'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'intention' => 'message',
-        ));
+        $resolver->setDefaults(['intention' => 'message']);
     }
 
     /**

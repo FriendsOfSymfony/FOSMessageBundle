@@ -6,10 +6,7 @@ class FunctionalTest extends WebTestCase
 {
     public function testController()
     {
-        $client = self::createClient(array(), array(
-            'PHP_AUTH_USER' => 'guilhem',
-            'PHP_AUTH_PW' => 'pass',
-        ));
+        $client = self::createClient([], ['PHP_AUTH_USER' => 'guilhem', 'PHP_AUTH_PW' => 'pass']);
         $crawler = $client->request('GET', '/sent');
 
         $response = $client->getResponse();

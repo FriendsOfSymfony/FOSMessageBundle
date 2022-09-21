@@ -104,15 +104,15 @@ EOT
         $this->threadCollection = $this->getMongoCollectionForClass($registry, $this->getContainer()->getParameter('fos_message.thread_class'));
         $this->participantCollection = $this->getMongoCollectionForClass($registry, $input->getArgument('participantClass'));
 
-        $this->updateOptions = array(
+        $this->updateOptions = [
             'multiple' => false,
             'safe' => $input->getOption('safe'),
-            'fsync' => $input->getOption('fsync'),
-        );
+            'fsync' => $input->getOption('fsync')
+        ];
 
         $this->printStatusCallback = function () {
         };
-        register_tick_function(array($this, 'printStatus'));
+        register_tick_function([$this, 'printStatus']);
     }
 
     /**
@@ -124,7 +124,7 @@ EOT
         $this->migrateThreads($output);
 
         $size = memory_get_peak_usage(true);
-        $unit = array('b', 'k', 'm', 'g', 't', 'p');
+        $unit = ['b', 'k', 'm', 'g', 't', 'p'];
         $output->writeln(sprintf('Peak Memory Usage: <comment>%s</comment>', round($size / pow(1024, $i = floor(log($size, 1024))), 2).$unit[$i]));
     }
 
@@ -134,11 +134,8 @@ EOT
     private function migrateMessages(OutputInterface $output)
     {
         $cursor = $this->messageCollection->find(
-            array('metadata' => array('$exists' => false)),
-            array(
-                'isReadByParticipant' => 1,
-                'isSpam' => 1,
-            )
+            ['metadata' => ['$exists' => false]],
+            ['isReadByParticipant' => 1, 'isSpam' => 1]
         );
         $cursor->snapshot();
 
@@ -160,11 +157,11 @@ EOT
                 $this->createMessageUnreadForParticipants($message);
 
                 $this->messageCollection->update(
-                    array('_id' => $message['_id']),
-                    array('$set' => array(
+                    ['_id' => $message['_id']],
+                    ['$set' => [
                         'metadata' => $message['metadata'],
-                        'unreadForParticipants' => $message['unreadForParticipants'],
-                    )),
+                        'unreadForParticipants' => $message['unreadForParticipants']
+                    ]],
                     $this->updateOptions
                 );
                 ++$numProcessed;
@@ -181,15 +178,15 @@ EOT
     private function migrateThreads(OutputInterface $output)
     {
         $cursor = $this->threadCollection->find(
-            array('metadata' => array('$exists' => false)),
-            array(
+            ['metadata' => ['$exists' => false]],
+            [
                 'datesOfLastMessageWrittenByOtherParticipant' => 1,
                 'datesOfLastMessageWrittenByParticipant' => 1,
                 'isDeletedByParticipant' => 1,
                 'isSpam' => 1,
                 'messages' => 1,
-                'participants' => 1,
-            )
+                'participants' => 1
+            ]
         );
 
         $numProcessed = 0;
@@ -211,14 +208,14 @@ EOT
                 $this->createThreadActiveParticipantArrays($thread);
 
                 $this->threadCollection->update(
-                    array('_id' => $thread['_id']),
-                    array('$set' => array(
+                    ['_id' => $thread['_id']],
+                    ['$set' => [
                         'activeParticipants' => $thread['activeParticipants'],
                         'activeRecipients' => $thread['activeRecipients'],
                         'activeSenders' => $thread['activeSenders'],
                         'lastMessageDate' => $thread['lastMessageDate'],
-                        'metadata' => $thread['metadata'],
-                    )),
+                        'metadata' => $thread['metadata']
+                    ]],
                     $this->updateOptions
                 );
                 ++$numProcessed;
@@ -237,13 +234,13 @@ EOT
      */
     private function createMessageMetadata(array &$message)
     {
-        $metadata = array();
+        $metadata = [];
 
         foreach ($message['isReadByParticipant'] as $participantId => $isRead) {
-            $metadata[] = array(
+            $metadata[] = [
                 'isRead' => $isRead,
-                'participant' => $this->participantCollection->createDBRef(array('_id' => new \MongoId($participantId))) + array('$db' => (string) $this->participantCollection->db),
-            );
+                'participant' => $this->participantCollection->createDBRef(['_id' => new \MongoId($participantId)]) + ['$db' => (string) $this->participantCollection->db]
+            ];
         }
 
         $message['metadata'] = $metadata;
@@ -258,7 +255,7 @@ EOT
      */
     private function createMessageUnreadForParticipants(array &$message)
     {
-        $unreadForParticipants = array();
+        $unreadForParticipants = [];
 
         if (!$message['isSpam']) {
             foreach ($message['metadata'] as $metadata) {
@@ -281,15 +278,12 @@ EOT
      */
     private function createThreadMetadata(array &$thread)
     {
-        $metadata = array();
+        $metadata = [];
 
         $participantIds = array_keys($thread['datesOfLastMessageWrittenByOtherParticipant'] + $thread['datesOfLastMessageWrittenByParticipant'] + $thread['isDeletedByParticipant']);
 
         foreach ($participantIds as $participantId) {
-            $meta = array(
-                'isDeleted' => false,
-                'participant' => $this->participantCollection->createDBRef(array('_id' => new \MongoId($participantId))) + array('$db' => (string) $this->participantCollection->db),
-            );
+            $meta = ['isDeleted' => false, 'participant' => $this->participantCollection->createDBRef(['_id' => new \MongoId($participantId)]) + ['$db' => (string) $this->participantCollection->db]];
 
             if (isset($thread['isDeletedByParticipant'][$participantId])) {
                 $meta['isDeleted'] = $thread['isDeletedByParticipant'][$participantId];
@@ -320,8 +314,8 @@ EOT
 
         if (false !== $lastMessageRef) {
             $lastMessage = $this->messageCollection->findOne(
-                array('_id' => $lastMessageRef['$id']),
-                array('createdAt' => 1)
+                ['_id' => $lastMessageRef['$id']],
+                ['createdAt' => 1]
             );
         }
 
@@ -337,9 +331,9 @@ EOT
      */
     private function createThreadActiveParticipantArrays(array &$thread)
     {
-        $activeParticipants = array();
-        $activeRecipients = array();
-        $activeSenders = array();
+        $activeParticipants = [];
+        $activeRecipients = [];
+        $activeSenders = [];
 
         foreach ($thread['participants'] as $participantRef) {
             foreach ($thread['metadata'] as $metadata) {

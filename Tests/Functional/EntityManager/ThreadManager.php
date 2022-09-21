@@ -21,7 +21,7 @@ class ThreadManager extends BaseThreadManager
 
     public function findParticipantInboxThreads(ParticipantInterface $participant)
     {
-        return array(new Thread());
+        return [new Thread()];
     }
 
     public function getParticipantSentThreadsQueryBuilder(ParticipantInterface $participant)
@@ -30,7 +30,7 @@ class ThreadManager extends BaseThreadManager
 
     public function findParticipantSentThreads(ParticipantInterface $participant)
     {
-        return array();
+        return [];
     }
 
     public function getParticipantDeletedThreadsQueryBuilder(ParticipantInterface $participant)
@@ -39,7 +39,7 @@ class ThreadManager extends BaseThreadManager
 
     public function findParticipantDeletedThreads(ParticipantInterface $participant)
     {
-        return array();
+        return [];
     }
 
     public function getParticipantThreadsBySearchQueryBuilder(ParticipantInterface $participant, $search)
@@ -48,12 +48,12 @@ class ThreadManager extends BaseThreadManager
 
     public function findParticipantThreadsBySearch(ParticipantInterface $participant, $search)
     {
-        return array();
+        return [];
     }
 
     public function findThreadsCreatedBy(ParticipantInterface $participant)
     {
-        return array();
+        return [];
     }
 
     public function markAsReadByParticipant(ReadableInterface $readable, ParticipantInterface $participant)
