@@ -40,18 +40,46 @@ class MessageController extends AbstractController
      */
     protected $newThreadFormHandler;
 
+    /**
+     * @var DeleterInterface
+     */
+    protected $deleter;
+
+    /**
+     * @var ThreadManagerInterface
+     */
+    protected $threadManager;
+
+    /**
+     * @var QueryFactoryInterface
+     */
+    protected $queryFactory;
+
+    /**
+     * @var FinderInterface
+     */
+    protected $finder;
+
     public function __construct(
         ProviderInterface $provider,
         FactoryInterface $replyFormfactory,
         FormHandlerInterface $replyFormHandler,
         FactoryInterface $newThreadFormFactory,
-        FormHandlerInterface $newThreadFormHandler
+        FormHandlerInterface $newThreadFormHandler,
+        DeleterInterface $deleter,
+        ThreadManagerInterface $threadManager,
+        QueryFactoryInterface $queryFactory,
+        FinderInterface $finder,
     ) {
         $this->provider = $provider;
         $this->replyFormfactory = $replyFormfactory;
         $this->replyFormHandler = $replyFormHandler;
         $this->newThreadFormFactory = $newThreadFormFactory;
         $this->newThreadFormHandler = $newThreadFormHandler;
+        $this->deleter = $deleter;
+        $this->threadManager = $threadManager;
+        $this->queryFactory = $queryFactory;
+        $this->finder = $finder;
     }
 
     /**
@@ -138,11 +166,11 @@ class MessageController extends AbstractController
      *
      * @return RedirectResponse
      */
-    public function deleteAction($threadId, DeleterInterface $deleter, ThreadManagerInterface $threadManager)
+    public function deleteAction($threadId)
     {
         $thread = $this->provider->getThread($threadId);
-        $deleter->markAsDeleted($thread);
-        $threadManager->saveThread($thread);
+        $this->deleter->markAsDeleted($thread);
+        $this->threadManager->saveThread($thread);
 
         return $this->redirectToRoute('fos_message_inbox');
     }
@@ -168,10 +196,10 @@ class MessageController extends AbstractController
      *
      * @return Response
      */
-    public function searchAction(QueryFactoryInterface $queryFactory, FinderInterface $finder)
+    public function searchAction()
     {
-        $query = $queryFactory->createFromRequest();
-        $threads = $finder->find($query);
+        $query = $this->queryFactory->createFromRequest();
+        $threads = $this->finder->find($query);
 
         return $this->render('@FOSMessage/Message/search.html.twig', ['query' => $query, 'threads' => $threads]);
     }

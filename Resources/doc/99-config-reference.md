@@ -24,8 +24,8 @@ fos_message:
     twig_extension:         fos_message.twig_extension          # See Twig\Extension\MessageExtension
     user_transformer:       fos_user.user_transformer           # See Symfony\Component\Form\DataTransformerInterface
     search:
-        finder:             fos_message.search_finder           # See Finder\FinderInterface
-        query_factory:      fos_message.search_query_factory    # See Finder\QueryFactoryInterface
+        finder:             fos_message.search.finder           # See Finder\FinderInterface
+        query_factory:      fos_message.search.query_factory    # See Finder\QueryFactoryInterface
         query_parameter:    'q'                                     # Request query parameter containing the term
     new_thread_form:
         factory:            fos_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory

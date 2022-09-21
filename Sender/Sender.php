@@ -31,8 +31,11 @@ class Sender implements SenderInterface
      */
     protected $dispatcher;
 
-    public function __construct(MessageManagerInterface $messageManager, ThreadManagerInterface $threadManager, EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        MessageManagerInterface $messageManager,
+        ThreadManagerInterface $threadManager,
+        EventDispatcherInterface $dispatcher
+    ) {
         $this->messageManager = $messageManager;
         $this->threadManager = $threadManager;
         $this->dispatcher = $dispatcher;
@@ -54,6 +57,6 @@ class Sender implements SenderInterface
         $message->getThread()->setIsDeleted(false);
         $this->messageManager->saveMessage($message);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_SEND, new MessageEvent($message));
+        $this->dispatcher->dispatch(new MessageEvent($message), FOSMessageEvents::POST_SEND);
     }
 }
