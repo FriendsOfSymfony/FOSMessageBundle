@@ -33,7 +33,7 @@ class NewThreadMultipleMessageFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fos_message_new_multiperson_thread';
     }

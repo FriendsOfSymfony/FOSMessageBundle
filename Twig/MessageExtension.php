@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\Twig\Extension;
+namespace FOS\MessageBundle\Twig;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
@@ -29,7 +29,7 @@ class MessageExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('fos_message_is_read', array($this, 'isRead')),

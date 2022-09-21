@@ -3,16 +3,17 @@
 namespace FOS\MessageBundle\Tests\Functional\Entity;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements ParticipantInterface, UserInterface
+class User implements ParticipantInterface, UserInterface, PasswordAuthenticatedUserInterface
 {
-    public function getUsername()
+    public function getUserIdentifier(): string
     {
         return 'guilhem';
     }
 
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return 'pass';
     }
@@ -21,7 +22,7 @@ class User implements ParticipantInterface, UserInterface
     {
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return array();
     }

@@ -26,7 +26,7 @@ class Configuration implements ConfigurationInterface
             $rootNode = $treeBuilder->root(self::ROOT_NAME);
         }
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
                 ->scalarNode('thread_class')->isRequired()->cannotBeEmpty()->end()

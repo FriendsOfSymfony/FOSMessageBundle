@@ -19,7 +19,7 @@ class ReplyMessageFormFactory extends AbstractMessageFormFactory
      *
      * @return FormInterface
      */
-    public function create(ThreadInterface $thread)
+    public function create(?ThreadInterface $thread = null)
     {
         $message = $this->createModelInstance();
         $message->setThread($thread);

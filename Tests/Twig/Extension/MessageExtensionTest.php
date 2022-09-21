@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\Tests\Twig\Extension;
 
-use FOS\MessageBundle\Twig\Extension\MessageExtension;
+use FOS\MessageBundle\Twig\MessageExtension;
 use PHPUnit\Framework\TestCase;
 
 /**
