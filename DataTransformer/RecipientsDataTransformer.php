@@ -33,7 +33,7 @@ class RecipientsDataTransformer implements DataTransformerInterface
      *
      * @return string
      */
-    public function transform($recipients)
+    public function transform($recipients): mixed
     {
         if (null === $recipients || 0 === $recipients->count()) {
             return '';

@@ -8,10 +8,10 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 class UserToUsernameTransformer implements DataTransformerInterface
 {
-    public function transform($value)
+    public function transform($value): ?string
     {
         if (null === $value) {
-            return;
+            return null;
         }
 
         if (!$value instanceof User) {

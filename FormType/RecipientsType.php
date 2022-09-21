@@ -55,7 +55,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'recipients_selector';
     }
@@ -63,7 +63,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType');
     }

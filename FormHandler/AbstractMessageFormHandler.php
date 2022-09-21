@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-abstract class AbstractMessageFormHandler
+abstract class AbstractMessageFormHandler implements FormHandlerInterface
 {
     protected $request;
     protected $composer;

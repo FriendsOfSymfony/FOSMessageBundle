@@ -17,7 +17,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 /**
  * @author Guilhem N. <guilhem.niot@gmail.com>
@@ -29,14 +29,14 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    public function registerBundles()
+    public function registerBundles(): iterable
     {
-        $bundles = array(
+        $bundles = [
             new FrameworkBundle(),
             new SecurityBundle(),
             new TwigBundle(),
             new FOSMessageBundle(),
-        );
+        ];
 
         return $bundles;
     }
@@ -44,7 +44,7 @@ class TestKernel extends Kernel
     /**
      * {@inheritdoc}
      */
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RoutingConfigurator $routes)
     {
         $routes->import('@FOSMessageBundle/Resources/config/routing.xml');
     }
@@ -54,30 +54,28 @@ class TestKernel extends Kernel
      */
     protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
     {
-        $c->loadFromExtension('framework', array(
+        $c->loadFromExtension('framework', [
             'secret' => 'MySecretKey',
             'test' => null,
             'form' => null,
-            'templating' => array(
-                'engines' => array('twig'),
-            ),
-        ));
+            'http_method_override' => false
+        ]);
 
-        $c->loadFromExtension('security', array(
-            'providers' => array('permissive' => array('id' => 'app.user_provider')),
-            'encoders' => array('FOS\MessageBundle\Tests\Functional\Entity\User' => 'plaintext'),
-            'firewalls' => array('main' => array('http_basic' => true)),
-        ));
+        $c->loadFromExtension('security', [
+            'providers' => ['permissive' => ['id' => 'app.user_provider']],
+            'password_hashers' => ['FOS\MessageBundle\Tests\Functional\Entity\User' => 'plaintext'],
+            'firewalls' => ['main' => ['http_basic' => true]],
+        ]);
 
-        $c->loadFromExtension('twig', array(
+        $c->loadFromExtension('twig', [
             'strict_variables' => '%kernel.debug%',
-        ));
+        ]);
 
-        $c->loadFromExtension('fos_message', array(
+        $c->loadFromExtension('fos_message', [
             'db_driver' => 'orm',
             'thread_class' => Thread::class,
             'message_class' => Message::class,
-        ));
+        ]);
 
         $c->register('fos_user.user_to_username_transformer', UserToUsernameTransformer::class);
         $c->register('app.user_provider', UserProvider::class);

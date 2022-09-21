@@ -2,6 +2,7 @@
 
 namespace FOS\MessageBundle\FormFactory;
 
+use FOS\MessageBundle\Model\ThreadInterface;
 use Symfony\Component\Form\FormInterface;
 
 /**
@@ -16,7 +17,7 @@ class NewThreadMessageFormFactory extends AbstractMessageFormFactory
      *
      * @return FormInterface
      */
-    public function create()
+    public function create(?ThreadInterface $thread = null)
     {
         return $this->formFactory->createNamed($this->formName, $this->formType, $this->createModelInstance());
     }

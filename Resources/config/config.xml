@@ -5,12 +5,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-
         <service id="FOS\MessageBundle\Controller\MessageController" public="true">
-            <bind key="$container"
-                type="service"
-                id="service_container"
-            />
+            <!-- <bind key="$container" type="service" id="service_container" /> -->
+            <bind key="$provider" type="service" id="fos_message.provider" />
+            <bind key="$replyFormfactory" type="service" id="fos_message.reply_form.factory" />
+            <bind key="$replyFormHandler" type="service" id="fos_message.reply_form.handler" />
+            <bind key="$newThreadFormFactory" type="service" id="fos_message.new_thread_form.factory" />
+            <bind key="$newThreadFormHandler" type="service" id="fos_message.new_thread_form.handler" />
+            <call method="setContainer">
+                <argument type="service" id="Psr\Container\ContainerInterface" />
+            </call>
+            <tag name="container.service_subscriber" />
         </service>
 
         <service id="fos_message.sender.default" class="FOS\MessageBundle\Sender\Sender" public="false">
@@ -58,7 +63,7 @@
             <argument type="service" id="event_dispatcher" />
         </service>
 
-        <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\Extension\MessageExtension" public="false">
+        <service id="fos_message.twig_extension.default" class="FOS\MessageBundle\Twig\MessageExtension" public="false">
             <argument type="service" id="fos_message.participant_provider" />
             <argument type="service" id="fos_message.provider" />
             <argument type="service" id="fos_message.authorizer" />
