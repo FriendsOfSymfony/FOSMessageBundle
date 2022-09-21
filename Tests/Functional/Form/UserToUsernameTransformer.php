@@ -18,7 +18,7 @@ class UserToUsernameTransformer implements DataTransformerInterface
             throw new \RuntimeException();
         }
 
-        return $value->getUsername();
+        return $value->getUserIdentifier();
     }
 
     /**
