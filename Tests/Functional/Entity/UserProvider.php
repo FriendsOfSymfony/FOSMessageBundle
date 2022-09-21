@@ -26,4 +26,9 @@ class UserProvider implements UserProviderInterface
     {
         return new User();
     }
+
+    public function loadUserByUsername($username): UserInterface
+    {
+        return $this->loadUserByIdentifier($username);
+    }
 }
