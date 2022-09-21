@@ -84,9 +84,9 @@ class FOSMessageExtension extends Extension
         $container->setAlias('fos_message.reply_form.factory', new Alias($config['reply_form']['factory'], true));
         $container->setAlias('fos_message.reply_form.handler', new Alias($config['reply_form']['handler'], true));
 
-        $container->setAlias('fos_message.search_query_factory', new Alias($config['search']['query_factory'], true));
-        $container->setAlias('fos_message.search_finder', new Alias($config['search']['finder'], true));
-        $container->getDefinition('fos_message.search_query_factory.default')
+        $container->setAlias('fos_message.search.query_factory', new Alias($config['search']['query_factory'], true));
+        $container->setAlias('fos_message.search.finder', new Alias($config['search']['finder'], true));
+        $container->getDefinition('fos_message.search.query_factory.default')
             ->replaceArgument(1, $config['search']['query_parameter']);
 
         $container->getDefinition('fos_message.recipients_data_transformer')

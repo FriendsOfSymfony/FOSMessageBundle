@@ -6,12 +6,15 @@
 
     <services>
         <service id="FOS\MessageBundle\Controller\MessageController" public="true">
-            <!-- <bind key="$container" type="service" id="service_container" /> -->
             <bind key="$provider" type="service" id="fos_message.provider" />
             <bind key="$replyFormfactory" type="service" id="fos_message.reply_form.factory" />
             <bind key="$replyFormHandler" type="service" id="fos_message.reply_form.handler" />
             <bind key="$newThreadFormFactory" type="service" id="fos_message.new_thread_form.factory" />
             <bind key="$newThreadFormHandler" type="service" id="fos_message.new_thread_form.handler" />
+            <bind key="$deleter" type="service" id="fos_message.deleter" />
+            <bind key="$threadManager" type="service" id="fos_message.thread_manager" />
+            <bind key="$queryFactory" type="service" id="fos_message.search.query_factory" />
+            <bind key="$finder" type="service" id="fos_message.search.finder" />
             <call method="setContainer">
                 <argument type="service" id="Psr\Container\ContainerInterface" />
             </call>
@@ -70,12 +73,12 @@
             <tag name="twig.extension" alias="fos_message" />
         </service>
 
-        <service id="fos_message.search_query_factory.default" class="FOS\MessageBundle\Search\QueryFactory" public="true">
+        <service id="fos_message.search.query_factory.default" class="FOS\MessageBundle\Search\QueryFactory" public="true">
             <argument type="service" id="request_stack" />
             <argument /> <!-- query parameter containing the search terms -->
         </service>
 
-        <service id="fos_message.search_finder.default" class="FOS\MessageBundle\Search\Finder" public="true">
+        <service id="fos_message.search.finder.default" class="FOS\MessageBundle\Search\Finder" public="true">
             <argument type="service" id="fos_message.participant_provider" />
             <argument type="service" id="fos_message.thread_manager" />
         </service>

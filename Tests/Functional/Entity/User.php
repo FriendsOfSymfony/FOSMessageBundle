@@ -40,4 +40,9 @@ class User implements ParticipantInterface, UserInterface, PasswordAuthenticated
     {
         return $this->getUserIdentifier();
     }
+
+    public function __toString(): string
+    {
+        return $this->getUserIdentifier();
+    }
 }
