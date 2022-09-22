@@ -3,7 +3,7 @@
 namespace FOS\MessageBundle\Event;
 
 use FOS\MessageBundle\Model\ReadableInterface;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ReadableEvent extends Event
 {

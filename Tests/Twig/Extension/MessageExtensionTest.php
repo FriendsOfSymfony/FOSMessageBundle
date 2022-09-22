@@ -2,7 +2,7 @@
 
 namespace FOS\MessageBundle\Tests\Twig\Extension;
 
-use FOS\MessageBundle\Twig\Extension\MessageExtension;
+use FOS\MessageBundle\Twig\MessageExtension;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,7 +16,7 @@ class MessageExtensionTest extends TestCase
     private $authorizer;
     private $participant;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->participantProvider = $this->getMockBuilder('FOS\MessageBundle\Security\ParticipantProviderInterface')->getMock();
         $this->provider = $this->getMockBuilder('FOS\MessageBundle\Provider\ProviderInterface')->getMock();
@@ -65,13 +65,13 @@ class MessageExtensionTest extends TestCase
 
     public function testGetNbUnreadCacheStartsEmpty()
     {
-        $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        $this->assertEmpty($this->extension->getNbUnread());
         $this->extension->getNbUnread();
     }
 
     public function testGetNbUnread()
     {
-        $this->assertAttributeEmpty('nbUnreadMessagesCache', $this->extension);
+        $this->assertEmpty($this->extension->getNbUnread());
         $this->provider->expects($this->once())->method('getNbUnreadMessages')->will($this->returnValue(3));
         $this->assertEquals(3, $this->extension->getNbUnread());
     }

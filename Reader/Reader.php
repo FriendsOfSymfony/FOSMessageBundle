@@ -56,7 +56,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsReadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_READ, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(new ReadableEvent($readable), FOSMessageEvents::POST_READ);
     }
 
     /**
@@ -70,7 +70,7 @@ class Reader implements ReaderInterface
         }
         $this->readableManager->markAsUnreadByParticipant($readable, $participant);
 
-        $this->dispatcher->dispatch(FOSMessageEvents::POST_UNREAD, new ReadableEvent($readable));
+        $this->dispatcher->dispatch(new ReadableEvent($readable), FOSMessageEvents::POST_UNREAD);
     }
 
     /**

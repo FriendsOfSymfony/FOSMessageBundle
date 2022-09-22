@@ -133,7 +133,7 @@ class MessageManager extends BaseMessageManager
 
         $queryBuilder
             ->field('metadata.$.isRead')->set((bool) $isRead)
-            ->getQuery(array('multiple' => true))
+            ->getQuery(['multiple' => true])
             ->execute();
 
         /* If marking the message as unread for a participant, add their ID to
@@ -147,7 +147,7 @@ class MessageManager extends BaseMessageManager
                 ->field('metadata.participant.$id')->equals(new \MongoId($participant->getId()))
                 ->field('isSpam')->equals(false)
                 ->field('unreadForParticipants')->addToSet($participant->getId())
-                ->getQuery(array('multiple' => true))
+                ->getQuery(['multiple' => true])
                 ->execute();
         }
     }

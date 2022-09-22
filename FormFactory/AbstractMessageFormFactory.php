@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormFactoryInterface;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-abstract class AbstractMessageFormFactory
+abstract class AbstractMessageFormFactory implements FactoryInterface
 {
     /**
      * The Symfony form factory.

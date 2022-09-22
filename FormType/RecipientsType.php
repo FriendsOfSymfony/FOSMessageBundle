@@ -42,9 +42,7 @@ class RecipientsType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'invalid_message' => 'The selected recipient does not exist',
-        ));
+        $resolver->setDefaults(['invalid_message' => 'The selected recipient does not exist']);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -55,7 +53,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'recipients_selector';
     }
@@ -63,7 +61,7 @@ class RecipientsType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextType');
     }

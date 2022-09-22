@@ -4,12 +4,12 @@ Configuration Reference
 All configuration options are listed below::
 
 ```yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     db_driver:              orm
-    thread_class:           AppBundle\Entity\Thread
-    message_class:          AppBundle\Entity\Message
+    thread_class:           App\Entity\Thread
+    message_class:          App\Entity\Message
     message_manager:        fos_message.message_manager         # See ModelManager\MessageManagerInterface
     thread_manager:         fos_message.thread_manager          # See ModelManager\ThreadManagerInterface
     sender:                 fos_message.sender                  # See Sender\SenderInterface
@@ -24,8 +24,8 @@ fos_message:
     twig_extension:         fos_message.twig_extension          # See Twig\Extension\MessageExtension
     user_transformer:       fos_user.user_transformer           # See Symfony\Component\Form\DataTransformerInterface
     search:
-        finder:             fos_message.search_finder           # See Finder\FinderInterface
-        query_factory:      fos_message.search_query_factory    # See Finder\QueryFactoryInterface
+        finder:             fos_message.search.finder           # See Finder\FinderInterface
+        query_factory:      fos_message.search.query_factory    # See Finder\QueryFactoryInterface
         query_parameter:    'q'                                     # Request query parameter containing the term
     new_thread_form:
         factory:            fos_message.new_thread_form.factory # See FormFactory\NewThreadMessageFormFactory

@@ -9,7 +9,7 @@ namespace FOS\MessageBundle\Model;
  *
  * @author Thibault Duplessis <thibault.duplessis@gmail.com>
  */
-interface ParticipantInterface
+interface ParticipantInterface extends \Stringable
 {
     /**
      * Gets the unique identifier of the participant.

@@ -4,12 +4,12 @@ Configuring multiple recipients support
 Configure your application
 
 ```yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     db_driver: orm
-    thread_class: AppBundle\Entity\Thread
-    message_class: AppBundle\Entity\Message
+    thread_class: App\Entity\Thread
+    message_class: App\Entity\Message
     new_thread_form:
       type:               FOS\MessageBundle\FormType\NewThreadMultipleMessageFormType
       handler:            fos_message.new_thread_multiple_form.handler
