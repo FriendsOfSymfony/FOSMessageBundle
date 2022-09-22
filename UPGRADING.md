@@ -30,7 +30,7 @@ The 1.3 version added the support for Symfony 3.0+. Several changes were made fo
        # ...
        
        new_thread_form:
-           type: AppBundle\Form\Type\NewThreadFormType
+           type: App\Form\Type\NewThreadFormType
        reply_form:
-           type: AppBundle\Form\Type\ReplyFormType
+           type: App\Form\Type\ReplyFormType
    ```

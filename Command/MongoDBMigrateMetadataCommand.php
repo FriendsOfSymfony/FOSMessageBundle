@@ -66,7 +66,7 @@ The <info>fos:message:mongodb:migrate:metadata</info> command migrates old docum
 fields to a new schema optimized for MongoDB queries. This command requires the
 participant class to be provided as its first and only parameter:
 
-  <info>php app/console fos:message:mongodb:migrate:metadata "Acme\Document\User"</info>
+  <info>php bin/console fos:message:mongodb:migrate:metadata "Acme\Document\User"</info>
 
 The following hash fields will become obsolete after migration:
 

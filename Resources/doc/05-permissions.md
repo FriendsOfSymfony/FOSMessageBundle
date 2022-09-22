@@ -8,7 +8,7 @@ You can implement your own permissions service to replace the built in service a
 FOSMessageBundle about it:
 
 ```yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     authorizer: app.authorizer
