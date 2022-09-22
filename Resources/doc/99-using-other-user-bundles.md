@@ -13,16 +13,15 @@ You can base your own on this one:
 
 ``` php
 <?php
-// src/AppBundle/Form/DataTransformer/UserToUsernameTransformer.php
 
-namespace AppBundle\Form\DataTransformer;
+namespace App\Form\DataTransformer;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Doctrine\ORM\EntityRepository;
+use App\Entity\User;
+
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-
-use AppBundle\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Transforms between a User instance and a username string
@@ -30,60 +29,60 @@ use AppBundle\Entity\User;
 class UserToUsernameTransformer implements DataTransformerInterface
 {
     /**
-     * @var EntityRepository
+     * @var EntityManagerInterface
      */
-    protected $repository;
+    protected $em;
 
     /**
-     * @param Registry $doctrine
+     * UserToUsernameTransformer constructor.
      */
-    public function __construct(Registry $doctrine)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->repository = $doctrine->getManager()->getRepository('AppBundle:User');
+        $this->em = $em;
     }
 
     /**
-     * Transforms a User instance into a username string.
+     * Transforms a UserInterface instance into a username string.
      *
-     * @param User|null $value User instance
+     * @param UserInterface|null $value UserInterface instance
      *
      * @return string|null Username
      *
-     * @throws UnexpectedTypeException if the given value is not a User instance
+     * @throws UnexpectedTypeException if the given value is not a UserInterface instance
      */
-    public function transform($value)
+    public function transform($value): ?string
     {
         if (null === $value) {
             return null;
         }
 
-        if (! $value instanceof User) {
-            throw new UnexpectedTypeException($value, 'AppBundle\Entity\User');
+        if (!$value instanceof UserInterface) {
+            throw new UnexpectedTypeException($value, 'Symfony\Component\Security\Core\User\UserInterface');
         }
 
-        return $value->getUsername();
+        return $value->getUserIdentifier();
     }
 
     /**
-     * Transforms a username string into a User instance.
+     * Transforms a username string into a UserInterface instance.
      *
      * @param string $value Username
      *
-     * @return User the corresponding User instance
+     * @return UserInterface|null the corresponding UserInterface instance
      *
      * @throws UnexpectedTypeException if the given value is not a string
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?UserInterface
     {
         if (null === $value || '' === $value) {
             return null;
         }
 
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
 
-        return $this->repository->findOneByUsername($value);
+        return $this->em->getRepository(User::class)->findOneByIdentifier($value);
     }
 }
 ```
@@ -93,13 +92,140 @@ For the moment, there is no configuration key to do it so we will emulate the
 FOSUserBundle transformer by using its name as an alias of our own service:
 
 ``` xml
-<!-- app/config/services.xml -->
+<!-- config/services.xml -->
 
-<service id="app.user_to_username_transformer" class="AppBundle\Form\DataTransformer\UserToUsernameTransformer">
-    <argument type="service" id="doctrine" />
+<service id="app.user_to_username_transformer" class="App\Form\DataTransformer\UserToUsernameTransformer">
 </service>
 
 <service id="fos_user.user_to_username_transformer" alias="app.user_to_username_transformer" />
+```
+
+Or
+
+``` yaml
+# config/services.yaml
+services:
+    ...
+    app.user_to_username_transformer:
+        class: App\Form\DataTransformer\UserToUsernameTransformer
+    
+    fos_user.user_to_username_transformer:
+        alias: app.user_to_username_transformer
+```
+
+As `NewThreadMessageFormType` used `FOS\UserBundle\Form\Type\UsernameFormType` for recipied field, you need to create
+a new form type to replace it
+
+```php
+<?php
+// src/Form/Type/NewThreadMessageFormType.php
+
+namespace App\Form\Type;
+
+use App\Form\Type\UsernameFormType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+/**
+ * Message form type for starting a new conversation.
+ */
+class NewThreadMessageFormType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('recipient', UsernameFormType::class, [
+                'label' => 'recipient',
+                'translation_domain' => 'FOSMessageBundle',
+            ])
+            ->add('subject', TextType::class, [
+                'label' => 'subject',
+                'translation_domain' => 'FOSMessageBundle',
+            ])
+            ->add('body', TextareaType::class, [
+                'label' => 'body',
+                'translation_domain' => 'FOSMessageBundle',
+            ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'intention' => 'message',
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'new_thread_message';
+    }
+}
+```
+
+And create a new form type linked to `UserToUsernameTransformer`
+
+```php
+<?php
+// src/Form/Type/UsernameFormType.php
+
+namespace App\Form\Type;
+
+use App\Form\DataTransformer\UserToUsernameTransformer;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+/**
+ * Form type for representing a UserInterface instance by its username string.
+ */
+class UsernameFormType extends AbstractType
+{
+    /**
+     * @var UserToUsernameTransformer
+     */
+    protected $usernameTransformer;
+
+    /**
+     * Constructor.
+     *
+     * @param UserToUsernameTransformer $usernameTransformer
+     */
+    public function __construct(UserToUsernameTransformer $usernameTransformer)
+    {
+        $this->usernameTransformer = $usernameTransformer;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->addModelTransformer($this->usernameTransformer);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return TextType::class;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'app_username_type';
+    }
+}
+
 ```
 
 ### Problems you may encounter
@@ -113,32 +239,31 @@ made by the bundle.
 You can copy the default ones (in `FOS\MessageBundle\EntityManager` if you use the Doctrine ORM)
 into your bundle, change their queries and register them as services:
 
-``` xml
-<!-- app/config/services.xml -->
+``` yaml
+# config/services.yaml
 
-<service id="app.message_manager" class="AppBundle\EntityManager\MessageManager" public="false">
-    <argument type="service" id="doctrine.orm.entity_manager" />
-    <argument>%fos_message.message_class%</argument>
-    <argument>%fos_message.message_meta_class%</argument>
-</service>
+services:
+    ...
+    App\Manager\MessageManager:
+        bind:
+            $class: '%fos_message.message_class%'
+            $metaClass: '%fos_message.message_meta_class%'
 
-<service id="app.thread_manager" class="AppBundle\EntityManager\ThreadManager" public="false">
-    <argument type="service" id="doctrine.orm.entity_manager" />
-    <argument>%fos_message.thread_class%</argument>
-    <argument>%fos_message.thread_meta_class%</argument>
-    <argument type="service" id="app.message_manager" />
-</service>
+    App\Manager\ThreadManager:
+        bind:
+            $class: '%fos_message.thread_class%'
+            $metaClass: '%fos_message.thread_meta_class%'
 ```
 
 Once done, tell FOSMessageBundle to use them in the configuration:
 
 ``` yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
 	# ...
-    thread_manager: app.thread_manager
-    message_manager: app.message_manager
+    thread_manager: App\Manager\ThreadManager
+    message_manager: App\Manager\MessageManager
 ```
 
 #### The default form does not work with my User entity
@@ -150,11 +275,11 @@ You have to redefine two things :
 You can copy and paste the bundle versions into your application and define them as services:
 
 ``` xml
-<service id="app.new_thread_form_type" class="AppBundle\Form\NewThreadMessageFormType" public="false">
+<service id="app.new_thread_form_type" class="App\Form\NewThreadMessageFormType" public="false">
     <argument type="service" id="app.user_to_username_transformer" />
 </service>
 
-<service id="app.new_thread_form_factory" class="AppBundle\Form\NewThreadMessageFormFactory" public="false">
+<service id="app.new_thread_form_factory" class="App\Form\NewThreadMessageFormFactory" public="false">
     <argument type="service" id="form.factory" />
     <argument type="service" id="fos_message.new_thread_form.type" />
     <argument>%fos_message.new_thread_form.name%</argument>
@@ -167,7 +292,7 @@ You can copy and paste the bundle versions into your application and define them
 And configure the bundle to use your services:
 
 ``` yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     # ...

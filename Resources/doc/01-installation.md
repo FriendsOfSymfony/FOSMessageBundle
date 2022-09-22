@@ -32,7 +32,7 @@ Your user class may look something like the following:
 
 ```php
 <?php
-// src/AppBundle/Entity/User.php
+// src/Entity/User.php
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Model\ParticipantInterface;
@@ -58,21 +58,18 @@ We provide examples for both Mongo DB and ORM.
 
 ### Step 4 - Enable the bundle in your kernel
 
-The bundle must be added to your `AppKernel`.
+The bundle must be added to your `bundles.php`.
 
 **Step usually not necescary in Symfony 4**.
 
 ```php
-// app/AppKernel.php
+// config/bundles.php
 
-public function registerBundles()
-{
-    return array(
-        // ...
-        new FOS\MessageBundle\FOSMessageBundle(),
-        // ...
-    );
-}
+return [
+    // ...
+    FOS\MessageBundle\FOSMessageBundle::class => ['all' => true],
+    // ...
+];
 ```
 
 ### Step 5 - Import the bundle routing
@@ -80,7 +77,7 @@ public function registerBundles()
 Add FOSMessageBundle's routing to your application with an optional routing prefix.
 
 ```yaml
-# app/config/routing.yml
+# config/routing.yaml
 
 fos_message:
     resource: "@FOSMessageBundle/Resources/config/routing.xml"
@@ -89,13 +86,7 @@ fos_message:
 
 ### Step 6 - Check templating
 
-Make sure to add this to `framwork.yaml` (and check twig is installed) if you run into the non-existant service `templating` issue:
-
-```yaml
-templating:
-    engines:
-        twig
-```
+Make sure to have twig installed and ready to be used
 
 
 ## Installation Finished

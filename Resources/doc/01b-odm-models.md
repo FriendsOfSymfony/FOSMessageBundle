@@ -7,22 +7,22 @@ MongoDB ODM.
 Given the examples below with their namespaces and class names, you need to configure
 FOSMessageBundle to tell them about these classes.
 
-Add the following to your `app/config/config.yml` file.
+Add the following to your `config/fos_message.yaml` file.
 
 ```yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     db_driver: mongodb
-    thread_class: AppBundle\Document\Thread
-    message_class: AppBundle\Document\Message
+    thread_class: App\Document\Thread
+    message_class: App\Document\Message
 ```
 
 You may have to include the MessageBundle in your Doctrine mapping configuration,
 along with the bundle containing your custom Thread and Message classes:
 
 ```yaml
-# app/config/config.yml
+# config/doctrine.yaml
 
 doctrine_mongodb:
     document_managers:
@@ -39,9 +39,9 @@ Message class
 
 ```php
 <?php
-// src/AppBundle/Document/Message.php
+// src/Document/Message.php
 
-namespace AppBundle\Document;
+namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\MessageBundle\Document\Message as BaseMessage;
@@ -57,17 +57,17 @@ class Message extends BaseMessage
     protected $id;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument="AppBundle\Document\MessageMetadata")
+     * @MongoDB\EmbedMany(targetDocument="App\Document\MessageMetadata")
      */
     protected $metadata;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\Thread")
+     * @MongoDB\ReferenceOne(targetDocument="App\Document\Thread")
      */
     protected $thread;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\User")
+     * @MongoDB\ReferenceOne(targetDocument="App\Document\User")
      */
     protected $sender;
 }
@@ -78,9 +78,9 @@ MessageMetadata class
 
 ```php
 <?php
-// src/AppBundle/Document/MessageMetadata.php
+// src/Document/MessageMetadata.php
 
-namespace AppBundle\Document;
+namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use FOS\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
@@ -91,7 +91,7 @@ use FOS\MessageBundle\Document\MessageMetadata as BaseMessageMetadata;
 class MessageMetadata extends BaseMessageMetadata
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="AppBundle\Document\User")
+     * @ODM\ReferenceOne(targetDocument="App\Document\User")
      */
     protected $participant;
 }
@@ -102,9 +102,9 @@ Thread class
 
 ```php
 <?php
-// src/AppBundle/Document/Thread.php
+// src/Document/Thread.php
 
-namespace AppBundle\Document;
+namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\MessageBundle\Document\Thread as BaseThread;
@@ -120,22 +120,22 @@ class Thread extends BaseThread
     protected $id;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="AppBundle\Document\Message")
+     * @MongoDB\ReferenceMany(targetDocument="App\Document\Message")
      */
     protected $messages;
 
     /**
-     * @MongoDB\EmbedMany(targetDocument="AppBundle\Document\ThreadMetadata")
+     * @MongoDB\EmbedMany(targetDocument="App\Document\ThreadMetadata")
      */
     protected $metadata;
 
     /**
-     * @MongoDB\ReferenceMany(targetDocument="AppBundle\Document\User")
+     * @MongoDB\ReferenceMany(targetDocument="App\Document\User")
      */
     protected $participants;
 
     /**
-     * @MongoDB\ReferenceOne(targetDocument="AppBundle\Document\User")
+     * @MongoDB\ReferenceOne(targetDocument="App\Document\User")
      */
     protected $createdBy;
 }
@@ -146,9 +146,9 @@ ThreadMetadata class
 
 ```php
 <?php
-// src/AppBundle/Document/ThreadMetadata.php
+// src/Document/ThreadMetadata.php
 
-namespace AppBundle\Document;
+namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use FOS\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
@@ -159,7 +159,7 @@ use FOS\MessageBundle\Document\ThreadMetadata as BaseThreadMetadata;
 class ThreadMetadata extends BaseThreadMetadata
 {
     /**
-     * @ODM\ReferenceOne(targetDocument="AppBundle\Document\User")
+     * @ODM\ReferenceOne(targetDocument="App\Document\User")
      */
     protected $participant;
 }
