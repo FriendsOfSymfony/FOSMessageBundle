@@ -16,7 +16,11 @@ class ThreadManagerTest extends TestCase
     protected $user;
     protected $date;
 
-    public function setUp()
+    /**
+     * This method should be setUp(): void
+     * For compatibility reasons with old versions of PHP, we cannot use neither setUp(): void nor setUp().
+     */
+    public function setUpBeforeTest()
     {
         $this->user = $this->createParticipantMock('4711');
         $this->date = new \DateTime('2013-12-25');
@@ -27,6 +31,8 @@ class ThreadManagerTest extends TestCase
      */
     public function testDoCreatedByAndAt()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->createThreadMock();
         $thread->expects($this->exactly(1))->method('getFirstMessage')
             ->will($this->returnValue($this->createMessageMock()));
@@ -40,6 +46,8 @@ class ThreadManagerTest extends TestCase
      */
     public function testDoCreatedByAndAtWithCreatedBy()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->createThreadMock();
 
         $thread->expects($this->exactly(0))->method('setCreatedBy');
@@ -59,6 +67,8 @@ class ThreadManagerTest extends TestCase
      */
     public function testDoCreatedByAndAtWithCreatedAt()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->createThreadMock();
 
         $thread->expects($this->exactly(1))->method('setCreatedBy');
@@ -78,6 +88,8 @@ class ThreadManagerTest extends TestCase
      */
     public function testDoCreatedByAndAtWithCreatedAtAndBy()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->createThreadMock();
         $thread->expects($this->exactly(0))->method('setCreatedBy');
         $thread->expects($this->exactly(0))->method('setCreatedAt');
@@ -99,6 +111,8 @@ class ThreadManagerTest extends TestCase
      */
     public function testDoCreatedByAndNoMessage()
     {
+        $this->setUpBeforeTest();
+
         $thread = $this->createThreadMock();
         $thread->expects($this->exactly(0))->method('setCreatedBy');
         $thread->expects($this->exactly(0))->method('setCreatedAt');

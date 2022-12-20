@@ -12,7 +12,11 @@ class ThreadDenormalizerTest extends TestCase
 {
     protected $dates;
 
-    protected function setUp()
+    /**
+     * This method should be setUp(): void
+     * For compatibility reasons with old versions of PHP, we cannot use neither setUp(): void nor setUp().
+     */
+    protected function setUpBeforeTest()
     {
         $this->markTestIncomplete('Broken, needs to be fixed');
 
@@ -26,6 +30,8 @@ class ThreadDenormalizerTest extends TestCase
 
     public function testDenormalize()
     {
+        $this->setUpBeforeTest();
+
         $thread = new TestThread();
         $user1 = $this->createParticipantMock('u1');
         $user2 = $this->createParticipantMock('u2');

@@ -1,0 +1,30 @@
+name: CI
+on:
+  push: ~
+  pull_request: ~
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: ['ubuntu-latest']
+        php-versions: ['5.5', '5.6', '7.0', '7.1', '7.2', '7.3', '7.4', '8.0']
+        phpunit-versions: ['latest']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, intl
+          ini-values: post_max_size=256M, max_execution_time=180
+          tools: phpunit:${{ matrix.phpunit-versions }}
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --no-suggest --prefer-dist
+
+      - name: Process the tests
+        run: vendor/bin/simple-phpunit
