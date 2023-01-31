@@ -1,6 +1,6 @@
 <?php
 
-namespace FOS\MessageBundle\Twig\Extension;
+namespace FOS\MessageBundle\Twig;
 
 use FOS\MessageBundle\Model\ParticipantInterface;
 use FOS\MessageBundle\Model\ReadableInterface;
@@ -19,8 +19,11 @@ class MessageExtension extends AbstractExtension
 
     protected $nbUnreadMessagesCache;
 
-    public function __construct(ParticipantProviderInterface $participantProvider, ProviderInterface $provider, AuthorizerInterface $authorizer)
-    {
+    public function __construct(
+        ParticipantProviderInterface $participantProvider,
+        ProviderInterface $provider,
+        AuthorizerInterface $authorizer
+    ) {
         $this->participantProvider = $participantProvider;
         $this->provider = $provider;
         $this->authorizer = $authorizer;
@@ -29,14 +32,14 @@ class MessageExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('fos_message_is_read', array($this, 'isRead')),
-            new TwigFunction('fos_message_nb_unread', array($this, 'getNbUnread')),
-            new TwigFunction('fos_message_can_delete_thread', array($this, 'canDeleteThread')),
-            new TwigFunction('fos_message_deleted_by_participant', array($this, 'isThreadDeletedByParticipant')),
-        );
+        return [
+            new TwigFunction('fos_message_is_read', [$this, 'isRead']),
+            new TwigFunction('fos_message_nb_unread', [$this, 'getNbUnread']),
+            new TwigFunction('fos_message_can_delete_thread', [$this, 'canDeleteThread']),
+            new TwigFunction('fos_message_deleted_by_participant', [$this, 'isThreadDeletedByParticipant'])
+        ];
     }
 
     /**

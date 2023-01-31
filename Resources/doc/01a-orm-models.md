@@ -7,15 +7,15 @@ ORM.
 Given the examples below with their namespaces and class names, you need to configure
 FOSMessageBundle to tell them about these classes.
 
-Add the following to your `app/config/config.yml` file.
+Create and add the following config to your `config/fos_message.yaml` file.
 
 ```yaml
-# app/config/config.yml
+# config/fos_message.yaml
 
 fos_message:
     db_driver: orm
-    thread_class: AppBundle\Entity\Thread
-    message_class: AppBundle\Entity\Message
+    thread_class: App\Entity\Thread
+    message_class: App\Entity\Message
 ```
 
 [Continue with the installation][]
@@ -25,49 +25,38 @@ Message class
 
 ```php
 <?php
-// src/AppBundle/Entity/Message.php
+// src/Entity/Message.php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Entity\Message as BaseMessage;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class Message extends BaseMessage
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(
-     *   targetEntity="AppBundle\Entity\Thread",
-     *   inversedBy="messages"
-     * )
      * @var \FOS\MessageBundle\Model\ThreadInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Thread', inversedBy: 'messages')]
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     protected $sender;
 
     /**
-     * @ORM\OneToMany(
-     *   targetEntity="AppBundle\Entity\MessageMetadata",
-     *   mappedBy="message",
-     *   cascade={"all"}
-     * )
      * @var MessageMetadata[]|Collection
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\MessageMetadata', mappedBy: 'message', cascade: ['all'])]
     protected $metadata;
 }
 ```
@@ -77,38 +66,31 @@ MessageMetadata class
 
 ```php
 <?php
-// src/AppBundle/Entity/MessageMetadata.php
+// src/Entity/MessageMetadata.php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Entity\MessageMetadata as BaseMessageMetadata;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class MessageMetadata extends BaseMessageMetadata
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(
-     *   targetEntity="AppBundle\Entity\Message",
-     *   inversedBy="metadata"
-     * )
      * @var \FOS\MessageBundle\Model\MessageInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Message', inversedBy: 'metadata')]
     protected $message;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     protected $participant;
 }
 ```
@@ -118,49 +100,38 @@ Thread class
 
 ```php
 <?php
-// src/AppBundle/Entity/Thread.php
+// src/Entity/Thread.php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use FOS\MessageBundle\Entity\Thread as BaseThread;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class Thread extends BaseThread
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     protected $createdBy;
 
     /**
-     * @ORM\OneToMany(
-     *   targetEntity="AppBundle\Entity\Message",
-     *   mappedBy="thread"
-     * )
      * @var Message[]|Collection
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\Message', mappedBy: 'thread')]
     protected $messages;
 
     /**
-     * @ORM\OneToMany(
-     *   targetEntity="AppBundle\Entity\ThreadMetadata",
-     *   mappedBy="thread",
-     *   cascade={"all"}
-     * )
      * @var ThreadMetadata[]|Collection
      */
+    #[ORM\OneToMany(targetEntity: 'App\Entity\ThreadMetadata', mappedBy: 'thread', cascade: ['all'])]
     protected $metadata;
 }
 ```
@@ -170,38 +141,31 @@ ThreadMetadata class
 
 ```php
 <?php
-// src/AppBundle/Entity/ThreadMetadata.php
+// src/Entity/ThreadMetadata.php
 
-namespace AppBundle\Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\MessageBundle\Entity\ThreadMetadata as BaseThreadMetadata;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity]
 class ThreadMetadata extends BaseThreadMetadata
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
-     * @ORM\ManyToOne(
-     *   targetEntity="AppBundle\Entity\Thread",
-     *   inversedBy="metadata"
-     * )
      * @var \FOS\MessageBundle\Model\ThreadInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\Thread', inversedBy: 'metadata')]
     protected $thread;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      * @var \FOS\MessageBundle\Model\ParticipantInterface
      */
+    #[ORM\ManyToOne(targetEntity: 'App\Entity\User')]
     protected $participant;
 }
 ```

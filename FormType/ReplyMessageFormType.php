@@ -18,23 +18,22 @@ class ReplyMessageFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), array(
+            ->add('body', LegacyFormHelper::getType('Symfony\Component\Form\Extension\Core\Type\TextareaType'), [
                 'label' => 'body',
-                'translation_domain' => 'FOSMessageBundle',
-            ));
+                'translation_domain' => 'FOSMessageBundle'
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'intention' => 'reply',
-        ));
+        $resolver->setDefaults(['intention' => 'reply']);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'fos_message_reply_message';
     }

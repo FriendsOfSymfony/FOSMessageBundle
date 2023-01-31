@@ -31,7 +31,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeParticipants = array();
+    protected $activeParticipants = [];
 
     /**
      * The activeRecipients array will contain a participant's ID if the thread
@@ -40,7 +40,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeRecipients = array();
+    protected $activeRecipients = [];
 
     /**
      * The activeSenders array will contain a participant's ID if the thread is
@@ -49,7 +49,7 @@ abstract class Thread extends AbstractThread
      *
      * @var array of participant ID's
      */
-    protected $activeSenders = array();
+    protected $activeSenders = [];
 
     /**
      * Gets the users participating in this conversation.
@@ -186,9 +186,9 @@ abstract class Thread extends AbstractThread
      */
     protected function doEnsureActiveParticipantArrays()
     {
-        $this->activeParticipants = array();
-        $this->activeRecipients = array();
-        $this->activeSenders = array();
+        $this->activeParticipants = [];
+        $this->activeRecipients = [];
+        $this->activeSenders = [];
 
         foreach ($this->getParticipants() as $participant) {
             if ($this->isDeletedByParticipant($participant)) {

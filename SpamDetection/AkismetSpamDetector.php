@@ -29,9 +29,9 @@ class AkismetSpamDetector implements SpamDetectorInterface
      */
     public function isSpam(NewThreadMessage $message)
     {
-        return $this->akismet->isSpam(array(
+        return $this->akismet->isSpam([
             'comment_author' => (string) $this->participantProvider->getAuthenticatedParticipant(),
-            'comment_content' => $message->getBody(),
-        ));
+            'comment_content' => $message->getBody()
+        ]);
     }
 }
