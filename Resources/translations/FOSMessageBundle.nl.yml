@@ -21,3 +21,7 @@ on:             "Op %date%"
 by:             "Door %sender%"
 no_thread:      Geen onderwerpen gevonden
 delete:         Verwijder
+undelete:       Terugzetten
+recipient:      Ontvanger
+recipients:     Ontvangers
+body:           Body
